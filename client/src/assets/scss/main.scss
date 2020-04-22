@@ -1,0 +1,49 @@
+@import './prismjs';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #f4f6f8;
+}
+
+a {
+  text-decoration: none;
+}
+
+:not(pre) > code {
+  font-family: Inconsolata, Monaco, Consolas, 'Courier New', Courier, monospace;
+  background-color: #eeeeee;
+  padding: 2px 4px;
+  direction: ltr;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.react-datepicker__day--outside-month {
+  visibility: hidden;
+}
+.react-datepicker {
+  display: flex !important;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: auto;
+  max-width: 1100px;
+  margin: auto;
+  border: none !important;
+}
+.react-datepicker__month-container {
+  flex: 0 0 33.333333%;
+  padding: 3em 2em 1em 2em;
+}
