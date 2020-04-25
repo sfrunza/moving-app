@@ -36,23 +36,23 @@ function Invoices({ className, ...rest }) {
   const classes = useStyles();
   const [invoices, setInvoices] = useState([]);
 
-  useEffect(() => {
-    let mounted = true;
-
-    const fetchInvoices = () => {
-      axios.get('/api/management/customers/1/invoices').then(response => {
-        if (mounted) {
-          setInvoices(response.data.invoices);
-        }
-      });
-    }
-
-    fetchInvoices();
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
+  // useEffect(() => {
+  //   let mounted = true;
+  //
+  //   const fetchInvoices = () => {
+  //     axios.get('/api/management/customers/1/invoices').then(response => {
+  //       if (mounted) {
+  //         setInvoices(response.data.invoices);
+  //       }
+  //     });
+  //   }
+  //
+  //   fetchInvoices();
+  //
+  //   return () => {
+  //     mounted = false;
+  //   };
+  // }, []);
 
   const statusColors = {
     pending: colors.orange[600],

@@ -14,7 +14,6 @@ import Page from 'src/components/Page';
 import Header from './Header';
 import Summary from './Summary';
 import Invoices from './Invoices';
-import Logs from './Logs';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,8 +37,7 @@ function CustomerManagementDetails({ match, history }) {
 
   const tabs = [
     { value: 'summary', label: 'Summary' },
-    { value: 'invoices', label: 'Invoices' },
-    { value: 'logs', label: 'Logs' }
+    { value: 'invoices', label: 'Invoices' }
   ];
 
   const handleTabsChange = (event, value) => {
@@ -105,7 +103,6 @@ function CustomerManagementDetails({ match, history }) {
         <div className={classes.content}>
           {currentTab === 'summary' && <Summary match={match} history={history}/>}
           {currentTab === 'invoices' && <Invoices />}
-          {currentTab === 'logs' && <Logs />}
         </div>
       </Container>
     </Page>

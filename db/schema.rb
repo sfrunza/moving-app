@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2020_04_03_224439) do
     t.string "email"
     t.string "phone"
     t.bigint "job_id"
+    t.string "additional_info"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["job_id"], name: "index_customers_on_job_id"
@@ -29,6 +30,8 @@ ActiveRecord::Schema.define(version: 2020_04_03_224439) do
   create_table "destinations", force: :cascade do |t|
     t.string "address"
     t.bigint "job_id"
+    t.string "house_type_to"
+    t.string "apt_number_destination"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["job_id"], name: "index_destinations_on_job_id"
@@ -49,6 +52,8 @@ ActiveRecord::Schema.define(version: 2020_04_03_224439) do
     t.string "delivery_date"
     t.string "status"
     t.integer "job_time"
+    t.string "move_size"
+    t.string "move_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -56,6 +61,8 @@ ActiveRecord::Schema.define(version: 2020_04_03_224439) do
   create_table "origins", force: :cascade do |t|
     t.string "address"
     t.bigint "job_id"
+    t.string "house_type_from"
+    t.string "apt_number_origin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["job_id"], name: "index_origins_on_job_id"

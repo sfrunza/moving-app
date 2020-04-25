@@ -25,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
 
 function ProjectManagementList() {
   const classes = useStyles();
-  const [rowsPerPage] = useState(10);
-  const [page] = useState(0);
+  const [jobsPerPage, setJobsPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
   const [jobs, setJob] = useState([]);
 
   const handleFilter = () => {};
@@ -51,6 +51,14 @@ function ProjectManagementList() {
     };
   }, []);
 
+  //Get current Jobs
+  const idnexOfLastJob = currentPage * jobsPerPage;
+  const indexOfFirstJob = idnexOfLastJob - jobsPerPage;
+  const currentJobs = jobs.slice(indexOfFirstJob, idnexOfLastJob);
+
+  //Change page
+  const paginate = () => setCurrentPage(currentPage)
+
   return (
     <Page
       className={classes.root}
@@ -68,9 +76,9 @@ function ProjectManagementList() {
             gutterBottom
             variant="body2"
           >
-            {`${jobs.length} Records found. Page ${page + 1} of ${Math.ceil(jobs.length / rowsPerPage)}`}
+            {`${jobs.length} Records found. Page ${currentPage + 1} of ${Math.ceil(jobs.length / jobsPerPage)}`}
           </Typography>
-          {jobs.map((job) => (
+          {currentJobs.map((job) => (
             <JobCard
               key={job.id}
               job={job}
@@ -78,7 +86,7 @@ function ProjectManagementList() {
           ))}
         </div>
         <div className={classes.paginate}>
-          <Paginate pageCount={`${Math.ceil(jobs.length / rowsPerPage)}`} />
+          <Paginate pageCount={jobs.length / jobsPerPage} jobsPerPage={jobsPerPage} paginate={paginate}/>
         </div>
       </Container>
     </Page>

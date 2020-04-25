@@ -5,6 +5,8 @@ class CreateJobs < ActiveRecord::Migration[5.2]
       t.string :delivery_date
       t.string :status
       t.integer :job_time
+      t.string :move_size
+      t.string :move_type
 
 
       t.timestamps

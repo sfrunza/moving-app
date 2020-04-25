@@ -48,7 +48,7 @@ module Api::V1
 
       # Only allow a trusted parameter "white list" through.
       def customer_params
-        params.require(:customer).permit(:first_name, :last_name, :email, :phone, :job_id)
+        params.require(:customer).permit(:first_name, :last_name, :email, :phone, :job_id, :additional_info)
       end
   end
 end

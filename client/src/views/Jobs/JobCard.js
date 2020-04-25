@@ -71,7 +71,7 @@ function JobCard({ job, className, ...rest }) {
     "Completed": colors.blue[400],
     "Confirmed": colors.green[400]
   };
-  console.log(job);
+
   return (
     <Card
       {...rest}

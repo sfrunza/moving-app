@@ -65,11 +65,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Paginate({
-  perPage,
+  jobsPerPage,
   pageCount,
   pageRangeDisplayed,
   onPageChange,
   className,
+  paginate,
   ...rest
 }) {
   const classes = useStyles();
@@ -106,7 +107,7 @@ Paginate.propTypes = {
   onPageChange: PropTypes.func,
   pageCount: PropTypes.number,
   pageRangeDisplayed: PropTypes.number,
-  perPage: PropTypes.number.isRequired
+  jobsPerPage: PropTypes.number.isRequired
 };
 
 

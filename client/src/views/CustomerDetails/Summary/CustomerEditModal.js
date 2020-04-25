@@ -52,7 +52,6 @@ function CustomerEditModal({
           ? event.target.checked
           : event.target.value
     }));
-    console.log(event.target.value);
   };
 
   if (!open) {

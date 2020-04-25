@@ -55,7 +55,7 @@ function JobDetails({ match, history }) {
         history.push('/admin/jobs')
       })
   }
-console.log(job);
+  
   return (
     <Page
       className={classes.root}
