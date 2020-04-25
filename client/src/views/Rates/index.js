@@ -5,7 +5,6 @@ import "react-datepicker/dist/react-datepicker.css";
 const RateIndex = () => {
   const [date, changeDate] = useState();
 
-console.log(date);
   return(
     <div style={{ marginTop: '3rem' }}>
       <DatePicker

@@ -18,8 +18,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
-  DialogActions,
-  Paper
+  DialogActions
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import Label from 'src/components/Label';

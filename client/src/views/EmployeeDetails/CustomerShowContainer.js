@@ -24,7 +24,6 @@ class CostumerShowContainer extends Component {
   }
 
   componentDidMount(){
-    console.log("component did mount");
     fetch(`http://localhost:3001/api/v1/employees/${this.props.match.params.id}`)
       .then((response) => {
         return response.json()})

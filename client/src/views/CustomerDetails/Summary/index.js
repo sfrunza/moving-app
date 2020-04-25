@@ -7,7 +7,6 @@ import { Grid } from '@material-ui/core';
 import axios from 'src/utils/axios';
 import CustomerInfo from './CustomerInfo';
 import Invoices from './Invoices';
-import SendEmails from './SendEmails';
 import OtherActions from './OtherActions';
 
 const useStyles = makeStyles(() => ({

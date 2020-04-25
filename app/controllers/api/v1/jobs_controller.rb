@@ -53,7 +53,7 @@ module Api::V1
 
       # Only allow a trusted parameter "white list" through.
       def job_params
-        params.require(:job).permit(:pick_up_date, :delivery_date, :status, :job_time, :customer_id)
+        params.require(:job).permit(:pick_up_date, :delivery_date, :status, :job_time, :customer_id, :move_size, :move_type)
       end
   end
 end

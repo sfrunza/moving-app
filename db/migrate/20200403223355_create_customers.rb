@@ -6,6 +6,7 @@ class CreateCustomers < ActiveRecord::Migration[5.2]
       t.string :email
       t.string :phone
       t.belongs_to :job, index: true
+      t.string :additional_info
 
       t.timestamps
     end

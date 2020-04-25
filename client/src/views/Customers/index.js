@@ -20,14 +20,10 @@ const useStyles = makeStyles((theme) => ({
 function CustomerManagementList() {
   const classes = useStyles();
   const [customers, setCustomers] = useState([]);
-  const [filterInput, setFilterInput] = useState("");
 
   const handleFilter = (e) => {};
 
-  const handleSearch = (e) => {
-    const value = e.target.value || undefined;
-    setFilterInput(value);
-  };
+  const handleSearch = (e) => {};
 
   useEffect(() => {
     let mounted = true;
