@@ -1,129 +1,128 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import moment from 'moment';
-import { makeStyles } from '@material-ui/styles';
+import { Lightbox } from 'react-modal-image';
 import {
-  Card,
-  CardHeader,
-  CardContent,
-  CardActionArea,
-  CardMedia,
   Avatar,
+  Box,
+  Card,
+  CardActionArea,
+  CardHeader,
+  CardMedia,
+  Divider,
   Link,
   Typography,
-  Divider
+  makeStyles
 } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import Reactions from './Reactions';
-import CommentBubble from './CommentBubble';
-import CommentForm from './CommentForm';
+import Comment from './Comment';
+import CommentAdd from './CommentAdd';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {},
-  subheader: {
-    display: 'flex',
-    alignItems: 'center'
-  },
-  accessTimeIcon: {
-    color: theme.palette.text.secondary,
-    fontSize: '14px',
-    height: 14,
-    width: 14,
-    marginRight: 6
-  },
-  content: {
-    paddingTop: 0
-  },
-  message: {
-    marginBottom: theme.spacing(2)
-  },
-  mediaArea: {
-    marginBottom: theme.spacing(2)
+  date: {
+    marginLeft: 6
   },
   media: {
-    height: 400,
-    backgroundPosition: 'initial'
-  },
-  divider: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2)
+    height: 500,
+    backgroundPosition: 'top'
   }
 }));
 
-function PostCard({ post, className, ...rest }) {
+function PostCard({ className, post, ...rest }) {
   const classes = useStyles();
+  const [openedFile, setOpenedFile] = useState(null);
 
   return (
-    <Card
-      {...rest}
-      className={clsx(classes.root, className)}
-    >
-      <CardHeader
-        avatar={(
-          <Avatar
-            alt="Person"
-            className={classes.avatar}
-            component={RouterLink}
-            src={post.author.avatar}
-            to="/profile/1/timeline"
-          />
-        )}
-        disableTypography
-        subheader={(
-          <div className={classes.subheader}>
-            <AccessTimeIcon className={classes.accessTimeIcon} />
-            <Typography variant="body2">
-              {moment(post.created_at).fromNow()}
-            </Typography>
-          </div>
-        )}
-        title={(
-          <Link
-            color="textPrimary"
-            component={RouterLink}
-            to="/profile/1/timeline"
-            variant="h6"
-          >
-            {post.author.name}
-          </Link>
-        )}
-      />
-      <CardContent className={classes.content}>
-        <Typography
-          className={classes.message}
-          variant="body1"
-        >
-          {post.message}
-        </Typography>
-        {post.media && (
-          <CardActionArea className={classes.mediaArea}>
-            <CardMedia
-              className={classes.media}
-              image={post.media}
+    <>
+      <Card
+        className={clsx(classes.root, className)}
+        {...rest}
+      >
+        <CardHeader
+          avatar={(
+            <Avatar
+              alt="Person"
+              className={classes.avatar}
+              component={RouterLink}
+              src={post.author.avatar}
+              to="#"
             />
-          </CardActionArea>
-        )}
-        <Reactions
-          className={classes.reactions}
-          post={post}
+          )}
+          disableTypography
+          subheader={(
+            <Box
+              display="flex"
+              alignItems="center"
+            >
+              <AccessTimeIcon fontSize="small" />
+              <Typography
+                variant="caption"
+                color="textSecondary"
+                className={classes.date}
+              >
+                {moment(post.createdAt).fromNow()}
+              </Typography>
+            </Box>
+          )}
+          title={(
+            <Link
+              color="textPrimary"
+              component={RouterLink}
+              to="#"
+              variant="h6"
+            >
+              {post.author.name}
+            </Link>
+          )}
         />
-        <Divider className={classes.divider} />
-        {post.comments && (
-          <div className={classes.comments}>
-            {post.comments.map((comment) => (
-              <CommentBubble
-                comment={comment}
-                key={comment.id}
+        <Box px={3} pb={2}>
+          <Typography
+            variant="body1"
+            color="textPrimary"
+          >
+            {post.message}
+          </Typography>
+          {post.media && (
+          <Box mt={2}>
+            <CardActionArea onClick={() => setOpenedFile(post.media)}>
+              <CardMedia
+                className={classes.media}
+                image={post.media}
               />
-            ))}
-          </div>
-        )}
-        <Divider className={classes.divider} />
-        <CommentForm />
-      </CardContent>
-    </Card>
+            </CardActionArea>
+          </Box>
+          )}
+          <Box
+            mt={2}
+          >
+            <Reactions post={post} />
+          </Box>
+          <Box my={2}>
+            <Divider />
+          </Box>
+          {post.comments.map((comment) => (
+            <Comment
+              comment={comment}
+              key={comment.id}
+            />
+          ))}
+          <Box my={2}>
+            <Divider />
+          </Box>
+          <CommentAdd />
+        </Box>
+      </Card>
+      {openedFile && (
+        <Lightbox
+          large={openedFile}
+          onClose={() => setOpenedFile(null)}
+        />
+      )}
+    </>
   );
 }
 

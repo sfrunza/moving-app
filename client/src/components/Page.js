@@ -1,38 +1,41 @@
-/* eslint-disable no-undef */
-import React, { useEffect } from 'react';
+import React, {
+  forwardRef,
+  useEffect, useCallback
+} from 'react';
 import { Helmet } from 'react-helmet';
 import { useLocation } from 'react-router';
 import PropTypes from 'prop-types';
+import track from 'src/utils/analytics';
 
-const { NODE_ENV, REACT_APP_GA_MEASUREMENT_ID: GA_MEASUREMENT_ID } = process.env;
-
-function Page({ title, children, ...rest }) {
+const Page = forwardRef(({
+  title,
+  children,
+  ...rest
+}, ref) => {
   const location = useLocation();
 
+  const sendPageViewEvent = useCallback(() => {
+    track.pageview({
+      page_path: location.pathname
+    });
+  }, [location]);
+
   useEffect(() => {
-    if (NODE_ENV !== 'production') {
-      return;
-    }
-
-    if (window.gtag) {
-      window.gtag('config', GA_MEASUREMENT_ID, {
-        page_path: location.pathname,
-        page_name: title
-      });
-    }
-
-    // eslint-disable-next-line
-  }, []);
+    sendPageViewEvent();
+  }, [sendPageViewEvent]);
 
   return (
-    <div {...rest}>
+    <div
+      ref={ref}
+      {...rest}
+    >
       <Helmet>
         <title>{title}</title>
       </Helmet>
       {children}
     </div>
   );
-}
+});
 
 Page.propTypes = {
   children: PropTypes.node,

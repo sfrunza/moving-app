@@ -1,375 +1,303 @@
-import uuid from 'uuid/v1';
 import moment from 'moment';
+import { v4 as uuidv4 } from 'uuid';
 import mock from 'src/utils/mock';
+import _ from 'lodash';
 
-mock.onGet('/api/chat/conversations').reply(200, {
-  conversations: [
+const db = {
+  contacts: [
     {
-      id: uuid(),
-      otherUser: {
-        name: 'Adam Denisov',
-        avatar: '/images/avatars/avatar_7.png',
-        active: true,
-        lastActivity: moment()
-      },
-      messages: [
-        {
-          id: uuid(),
-          sender: {
-            authUser: false,
-            name: 'Adam Denisov',
-            avatar: '/images/avatars/avatar_7.png',
-            lastActivity: moment()
-          },
-          content:
-            'Hey, nice projects! I really liked the one in react. What\'s your quote on kinda similar project?',
-          contentType: 'text',
-          created_at: moment().subtract(10, 'hours')
-        },
-        {
-          id: uuid(),
-          sender: {
-            authUser: true,
-            name: 'Shen Zhi',
-            avatar: '/images/avatars/avatar_11.png'
-          },
-          content:
-            'I would need to know more details, but my hourly rate stats at $35/hour. Thanks!',
-          contentType: 'text',
-          created_at: moment().subtract(2, 'hours')
-        },
-        {
-          id: uuid(),
-          sender: {
-            authUser: false,
-            name: 'Adam Denisov',
-            avatar: '/images/avatars/avatar_7.png'
-          },
-          content:
-            'Well it\'s a really easy one, I\'m sure we can make it half of the price.',
-          contentType: 'text',
-          created_at: moment().subtract(5, 'minutes')
-        },
-        {
-          id: uuid(),
-          sender: {
-            authUser: true,
-            name: 'Shen Zhi',
-            avatar: '/images/avatars/avatar_11.png'
-          },
-          content:
-            'Then why don\'t you make it if it\'s that easy? Sorry I\'m not interetes, have fantastic day Adam!',
-          contentType: 'text',
-          created_at: moment().subtract(3, 'minutes')
-        },
-        {
-          id: uuid(),
-          sender: {
-            authUser: false,
-            name: 'Adam Denisov',
-            avatar: '/images/avatars/avatar_7.png'
-          },
-          content: 'Last offer, $25 per hour',
-          contentType: 'text',
-          created_at: moment().subtract(1, 'minute')
-        },
-        {
-          id: uuid(),
-          sender: {
-            authUser: false,
-            name: 'Adam Denisov',
-            avatar: '/images/avatars/avatar_7.png'
-          },
-          content: '/images/projects/project_1.jpg',
-          contentType: 'image',
-          created_at: moment().subtract(1, 'minute')
-        }
-      ],
-      unread: 0,
-      created_at: moment().subtract(1, 'minute')
+      id: '5e8891ab188cd2855e6029b7',
+      avatar: '/static/images/avatars/avatar_1.png',
+      isActive: true,
+      lastActivity: moment()
+        .toDate()
+        .getTime(),
+      name: 'Cooper Murray',
+      username: 'cooper.murray'
     },
     {
-      id: uuid(),
-      otherUser: {
-        name: 'Ekaterina Tankova',
-        avatar: '/images/avatars/avatar_2.png',
-        active: true,
-        lastActivity: moment()
-      },
-      messages: [
-        {
-          id: uuid(),
-          sender: {
-            authUser: true,
-            name: 'Shen Zhi',
-            avatar: '/images/avatars/avatar_11.png'
-          },
-          content: 'Hey, would you like to collaborate?',
-          contentType: 'text',
-          created_at: moment().subtract(6, 'minutes')
-        },
-        {
-          id: uuid(),
-          sender: {
-            authUser: false,
-            name: 'Ekaterina Tankova',
-            avatar: '/images/avatars/avatar_2.png'
-          },
-          content: 'I don\'t think that\'s ideal',
-          contentType: 'text',
-          created_at: moment().subtract(5, 'minutes')
-        }
-      ],
-      unread: 3,
-      created_at: moment().subtract(26, 'minutes')
+      id: '5e887a62195cc5aef7e8ca5d',
+      avatar: '/static/images/avatars/avatar_2.png',
+      isActive: false,
+      lastActivity: moment()
+        .subtract(2, 'hours')
+        .toDate()
+        .getTime(),
+      name: 'Ekaterina Tankova',
+      username: 'ekaterina.tankova'
     },
     {
-      id: uuid(),
-      otherUser: {
-        name: 'Emilee Simchenko',
-        avatar: '/images/avatars/avatar_9.png',
-        active: false,
-        lastActivity: moment().subtract(2, 'minutes')
-      },
-      messages: [
-        {
-          id: uuid(),
-          sender: {
-            authUser: false,
-            name: 'Emilee Simchenko',
-            avatar: '/images/avatars/avatar_9.png'
-          },
-          content: 'Hi Shen, we should submit the product today',
-          contentType: 'text',
-          created_at: moment().subtract(2, 'hours')
-        },
-        {
-          id: uuid(),
-          sender: {
-            authUser: true,
-            name: 'Shen Zhi',
-            avatar: '/images/avatars/avatar_11.png'
-          },
-          content: 'Oh, totally forgot about it',
-          contentType: 'text',
-          created_at: moment()
-            .subtract(1, 'hour')
-            .subtract(2, 'minutes')
-        },
-        {
-          id: uuid(),
-          sender: {
-            authUser: true,
-            name: 'Shen Zhi',
-            avatar: '/images/avatars/avatar_11.png'
-          },
-          content: 'Alright then',
-          contentType: 'text',
-          created_at: moment().subtract(1, 'hour')
-        }
-      ],
-      unread: 0,
-      created_at: moment().subtract(3, 'hours')
+      id: '5e887ac47eed253091be10cb',
+      avatar: '/static/images/avatars/avatar_3.png',
+      isActive: false,
+      lastActivity: moment()
+        .subtract(15, 'minutes')
+        .toDate()
+        .getTime(),
+      name: 'Cao Yu',
+      username: 'cao.yu'
     },
     {
-      id: uuid(),
-      otherUser: {
-        name: 'Kwak Seong-Min',
-        avatar: '/images/avatars/avatar_10.png',
-        active: true,
-        lastActivity: moment()
-      },
-      messages: [
-        {
-          id: uuid(),
-          sender: {
-            authUser: true,
-            name: 'Shen Zhi',
-            avatar: '/images/avatars/avatar_11.png'
-          },
-          content:
-            'Hi Kwak! I\'ve seen your projects and we can work together on a project. Will send you the details later.',
-          contentType: 'text',
-          created_at: moment().subtract(3, 'days')
-        },
-        {
-          id: uuid(),
-          sender: {
-            authUser: false,
-            name: 'Kwak Seong-Min',
-            avatar: '/images/avatars/avatar_10.png'
-          },
-          content: 'Haha, right, we\'ll do it',
-          contentType: 'text',
-          created_at: moment().subtract(2, 'days')
-        }
-      ],
-      unread: 1,
-      created_at: moment().subtract(2, 'days')
+      id: '5e887b209c28ac3dd97f6db5',
+      avatar: '/static/images/avatars/avatar_4.png',
+      isActive: true,
+      lastActivity: moment()
+        .toDate()
+        .getTime(),
+      name: 'Alex Richardson',
+      username: 'alex.richardson'
     },
     {
-      id: uuid(),
-      otherUser: {
-        name: 'Cao Yu',
-        avatar: '/images/avatars/avatar_3.png',
-        active: false,
-        lastActivity: moment().subtract(4, 'hours')
-      },
-      messages: [
-        {
-          id: uuid(),
-          sender: {
-            authUser: true,
-            name: 'Shen Zhi',
-            avatar: '/images/avatars/avatar_11.png'
-          },
-          content: 'Did you receive my email about the brief?',
-          contentType: 'text',
-          created_at: moment().subtract(3, 'days')
-        },
-        {
-          id: uuid(),
-          sender: {
-            authUser: false,
-            name: 'Cao Yu',
-            avatar: '/images/avatars/avatar_3.png'
-          },
-          content: 'I\'m not sure, but I will check it later',
-          contentType: 'text',
-          created_at: moment().subtract(2, 'days')
-        }
-      ],
-      unread: 0,
-      created_at: moment().subtract(5, 'days')
+      id: '5e887b7602bdbc4dbb234b27',
+      avatar: '/static/images/avatars/avatar_5.png',
+      isActive: true,
+      lastActivity: moment()
+        .toDate()
+        .getTime(),
+      name: 'Anje Keizer',
+      username: 'anje.keizer'
     },
     {
-      id: uuid(),
-      otherUser: {
-        name: 'Clarke Gillebert',
-        avatar: '/images/avatars/avatar_6.png',
-        active: true,
-        lastActivity: moment()
-      },
-      messages: [
-        {
-          id: uuid(),
-          sender: {
-            authUser: false,
-            name: 'Clarke Gillebert',
-            avatar: '/images/avatars/avatar_6.png'
-          },
-          content: 'Hey Shen! I love your projects!!!',
-          contentType: 'text',
-          created_at: moment().subtract(2, 'days')
-        },
-        {
-          id: uuid(),
-          sender: {
-            authUser: true,
-            name: 'Shen Zhi',
-            avatar: '/images/avatars/avatar_11.png'
-          },
-          content: 'Haha thank you Clarke, I\'m doing our best',
-          contentType: 'text',
-          created_at: moment().subtract(3, 'days')
-        }
-      ],
-      unread: 0,
-      created_at: moment().subtract(5, 'days')
-    }
-  ]
-});
-
-mock.onGet('/api/chat/activity').reply(200, {
-  groups: [
-    {
-      id: 'clients',
-      name: 'Clients'
+      id: '5e86805e2bafd54f66cc95c3',
+      avatar: '/static/images/avatars/avatar_7.png',
+      isActive: false,
+      lastActivity: moment()
+        .subtract(2, 'days')
+        .toDate()
+        .getTime(),
+      name: 'Adam Denisov',
+      username: 'adam.denisov'
     },
     {
-      id: 'friends',
-      name: 'Friends'
+      id: '5e887a1fbefd7938eea9c981',
+      avatar: '/static/images/avatars/avatar_8.png',
+      isActive: false,
+      lastActivity: moment()
+        .subtract(6, 'hours')
+        .toDate()
+        .getTime(),
+      name: 'Miller Edwards',
+      username: 'miller.edwards'
+    },
+    {
+      id: '5e887d0b3d090c1b8f162003',
+      avatar: '/static/images/avatars/avatar_9.png',
+      isActive: true,
+      lastActivity: moment()
+        .toDate()
+        .getTime(),
+      name: 'Emilee Simchenko',
+      username: 'emilee.simchenko',
+    },
+    {
+      id: '5e88792be2d4cfb4bf0971d9',
+      avatar: '/static/images/avatars/avatar_10.png',
+      isActive: true,
+      lastActivity: moment()
+        .toDate()
+        .getTime(),
+      name: 'Elliott Stone',
+      username: 'elliott.stone'
+    },
+    {
+      id: '5e8877da9a65442b11551975',
+      avatar: '/static/images/avatars/avatar_11.png',
+      isActive: true,
+      lastActivity: moment()
+        .toDate()
+        .getTime(),
+      name: 'Shen Zhi',
+      username: 'shen.zhi'
+    },
+    {
+      id: '5e8680e60cba5019c5ca6fda',
+      avatar: '/static/images/avatars/avatar_12.png',
+      isActive: true,
+      lastActivity: moment()
+        .toDate()
+        .getTime(),
+      name: 'Merrile Burgett',
+      username: 'merrile.burgett'
     }
   ],
-  connections: [
+  threads: [
     {
-      id: uuid(),
-      name: 'Ekaterina Tankova',
-      avatar: '/images/avatars/avatar_2.png',
-      active: false,
-      lastActivity: moment().subtract(24, 'minutes'),
-      group: 'clients'
+      id: '5e867eb9de721aecaccf4f7b',
+      key: 'adam.denisov',
+      type: 'ONE_TO_ONE',
+      messages: [
+        {
+          id: '5e867f0a5bc0ff2bfa07bfa6',
+          body: 'Hey, nice projects! I really liked the one in react. What\'s your quote on kinda similar project?',
+          contentType: 'text',
+          createdAt: moment()
+            .subtract(10, 'hours')
+            .toDate()
+            .getTime(),
+          senderId: '5e86805e2bafd54f66cc95c3'
+        },
+        {
+          id: '5e867f167d5f78109ae9f2a4',
+          body: 'I would need to know more details, but my hourly rate stats at $35/hour. Thanks!',
+          contentType: 'text',
+          createdAt: moment()
+            .subtract(2, 'hours')
+            .toDate()
+            .getTime(),
+          senderId: '5e86809283e28b96d2d38537'
+        },
+        {
+          id: '5e867f1c9ca72084693528f4',
+          body: 'Well it\'s a really easy one, I\'m sure we can make it half of the price.',
+          contentType: 'text',
+          createdAt: moment()
+            .subtract(5, 'minutes')
+            .toDate()
+            .getTime(),
+          senderId: '5e86809283e28b96d2d38537'
+        },
+        {
+          id: '5e867f22fd2e27a09849b4db',
+          body: 'Then why don\'t you make it if it\'s that easy? Sorry I\'m not interetes, have fantastic day Adam!',
+          contentType: 'text',
+          createdAt: moment()
+            .subtract(3, 'minutes')
+            .toDate()
+            .getTime(),
+          senderId: '5e86805e2bafd54f66cc95c3'
+        },
+        {
+          id: '5e867f28a34d45ac6eb5c41f',
+          body: 'Last offer, $25 per hour',
+          contentType: 'text',
+          createdAt: moment()
+            .subtract(1, 'minute')
+            .toDate()
+            .getTime(),
+          senderId: '5e86805e2bafd54f66cc95c3'
+        },
+        {
+          id: '5e867f2dba984a3f78b33526',
+          body: '/static/images/projects/project_4.png',
+          contentType: 'image',
+          createdAt: moment()
+            .subtract(1, 'minute')
+            .toDate()
+            .getTime(),
+          senderId: '5e86805e2bafd54f66cc95c3'
+        },
+      ],
+      participantIds: [
+        '5e86805e2bafd54f66cc95c3',
+        '5e86809283e28b96d2d38537'
+      ],
+      unreadCount: 2
     },
     {
-      id: uuid(),
-      name: 'Cao Yu',
-      avatar: '/images/avatars/avatar_3.png',
-      active: true,
-      lastActivity: moment(),
-      group: 'clients'
-    },
-    {
-      id: uuid(),
-      name: 'Anje Keizer',
-      avatar: '/images/avatars/avatar_5.png',
-      active: false,
-      lastActivity: moment().subtract(1, 'minutes'),
-      group: 'clients'
-    },
-    {
-      id: uuid(),
-      name: 'Ava Gregoraci',
-      avatar: '/images/avatars/avatar_8.png',
-      active: true,
-      lastActivity: moment(),
-      group: 'clients'
-    },
-    {
-      id: uuid(),
-      name: 'Clarke Gillebert',
-      avatar: '/images/avatars/avatar_6.png',
-      active: true,
-      lastActivity: moment(),
-      group: 'friends'
-    },
-    {
-      id: uuid(),
-      name: 'Adam Denisov',
-      avatar: '/images/avatars/avatar_7.png',
-      active: false,
-      lastActivity: moment().subtract(24, 'minutes'),
-      group: 'friends'
-    },
-    {
-      id: uuid(),
-      name: 'Emilee Simchenko',
-      avatar: '/images/avatars/avatar_9.png',
-      active: true,
-      lastActivity: moment(),
-      group: 'friends'
-    },
-    {
-      id: uuid(),
-      name: 'Kwak Seong-Min',
-      avatar: '/images/avatars/avatar_10.png',
-      active: true,
-      lastActivity: moment(),
-      group: 'friends'
-    },
-    {
-      id: uuid(),
-      name: 'Shen Zhi',
-      avatar: '/images/avatars/avatar_11.png',
-      active: true,
-      lastActivity: moment(),
-      group: 'friends'
-    },
-    {
-      id: uuid(),
-      name: 'Merrile Burgett',
-      avatar: '/images/avatars/avatar_12.png',
-      active: false,
-      lastActivity: moment().subtract(2, 'days')
+      id: '5e867fa7082c3c5921403a26',
+      key: 'merrile.burgett',
+      type: 'ONE_TO_ONE',
+      messages: [
+        {
+          id: '5e867fc180837d901bd9bca1',
+          body: 'Hey, would you like to collaborate?',
+          contentType: 'text',
+          createdAt: moment()
+            .subtract(6, 'minutes')
+            .toDate()
+            .getTime(),
+          senderId: '5e8680e60cba5019c5ca6fda'
+        },
+        {
+          id: '5e8d6fb695df7971237fc173',
+          body: 'I don\'t think that\'s ideal',
+          contentType: 'text',
+          createdAt: moment()
+            .subtract(5, 'minutes')
+            .toDate()
+            .getTime(),
+          senderId: '5e86809283e28b96d2d38537'
+        }
+      ],
+      participantIds: [
+        '5e8680e60cba5019c5ca6fda',
+        '5e86809283e28b96d2d38537'
+      ],
+      unreadCount: 0
     }
   ]
+};
+
+mock.onGet('/api/chat/contacts').reply(200, {
+  contacts: db.contacts
+});
+
+mock.onGet('/api/chat/threads').reply(200, {
+  threads: db.threads
+});
+
+mock.onGet('/api/chat/thread').reply((config) => {
+  const { threadKey } = config.params;
+  const thread = db.threads.find((_thread) => _thread.key === threadKey);
+
+  if (!thread) {
+    return [200, { thread: null }];
+  }
+
+  return [200, { thread }];
+});
+
+mock.onGet('/api/chat/thread/mark-as-seen').reply((config) => {
+  const { threadKey } = config.params;
+  const thread = db.threads.find((_thread) => _thread.key === threadKey);
+
+  if (thread) {
+    thread.unreadCount = 0;
+  }
+
+  return [200, true];
+});
+
+mock.onPost('/api/chat/messages/new').reply((request) => {
+  const { userId, threadKey, body } = JSON.parse(request.data);
+  const message = {
+    id: uuidv4(),
+    body,
+    contentType: 'text',
+    createdAt: moment()
+      .toDate()
+      .getTime(),
+    senderId: userId
+  };
+
+  let thread = db.threads.find((_thread) => _thread.key === threadKey);
+  const otherUser = db.contacts.find((contact) => contact.username === threadKey);
+
+  if (!thread) {
+    thread = {
+      id: uuidv4(),
+      key: threadKey,
+      type: 'ONE_TO_ONE',
+      messages: [message],
+      participantIds: [
+        otherUser.id,
+        userId
+      ],
+      unreadCount: 0
+    };
+
+    _.assign(db, {
+      threads: [...db.threads, thread]
+    });
+  } else {
+    _.assign(thread, {
+      messages: [...thread.messages, message]
+    });
+  }
+
+  return [200, {
+    threadKey,
+    otherUserId: otherUser.id,
+    message
+  }];
 });

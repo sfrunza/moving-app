@@ -1,42 +1,75 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
-import { renderRoutes } from 'react-router-config';
 import { createBrowserHistory } from 'history';
+import { create } from 'jss';
+import rtl from 'jss-rtl';
 import MomentUtils from '@date-io/moment';
-import { Provider as StoreProvider } from 'react-redux';
-import { ThemeProvider } from '@material-ui/styles';
+import { SnackbarProvider } from 'notistack';
+import {
+  createStyles,
+  jssPreset,
+  makeStyles,
+  StylesProvider,
+  ThemeProvider
+} from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import 'react-perfect-scrollbar/dist/css/styles.css';
-import { theme } from './theme';
-import { configureStore } from './store';
-import routes from './routes';
-import ScrollReset from './components/ScrollReset';
-import StylesProvider from './components/StylesProvider';
-import './mixins/chartjs';
-import './mixins/moment';
-import './mixins/validate';
-import './mixins/prismjs';
-import './assets/scss/main.scss';
-
+import Auth from 'src/components/Auth';
+import SettingsNotification from 'src/components/SettingsNotification';
+import GoogleAnalytics from 'src/components/GoogleAnalytics';
+import ScrollReset from 'src/components/ScrollReset';
+import useSettings from 'src/hooks/useSettings';
+import { createTheme } from 'src/theme';
+import Routes from 'src/Routes';
 
 const history = createBrowserHistory();
-const store = configureStore();
+const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
+
+const useStyles = makeStyles(() => createStyles({
+  '@global': {
+    '*': {
+      boxSizing: 'border-box',
+      margin: 0,
+      padding: 0,
+    },
+    html: {
+      '-webkit-font-smoothing': 'antialiased',
+      '-moz-osx-font-smoothing': 'grayscale',
+      height: '100%',
+      width: '100%'
+    },
+    body: {
+      height: '100%',
+      width: '100%'
+    },
+    '#root': {
+      height: '100%',
+      width: '100%'
+    }
+  }
+}));
 
 function App() {
+  useStyles();
+
+  const { settings } = useSettings();
 
   return (
-    <StoreProvider store={store}>
-      <ThemeProvider theme={theme}>
-        <StylesProvider>
-          <MuiPickersUtilsProvider utils={MomentUtils}>
+    <ThemeProvider theme={createTheme(settings)}>
+      <StylesProvider jss={jss}>
+        <MuiPickersUtilsProvider utils={MomentUtils}>
+          <SnackbarProvider maxSnack={1}>
             <Router history={history}>
-              <ScrollReset />
-              {renderRoutes(routes)}
+              <Auth>
+                <ScrollReset />
+                <GoogleAnalytics />
+                <SettingsNotification />
+                <Routes />
+              </Auth>
             </Router>
-          </MuiPickersUtilsProvider>
-        </StylesProvider>
-      </ThemeProvider>
-    </StoreProvider>
+          </SnackbarProvider>
+        </MuiPickersUtilsProvider>
+      </StylesProvider>
+    </ThemeProvider>
   );
 }
 

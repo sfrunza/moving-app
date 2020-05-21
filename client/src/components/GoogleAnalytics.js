@@ -1,8 +1,6 @@
-/* eslint-disable react/no-danger */
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
-// eslint-disable-next-line no-undef
 const GA_MEASUREMENT_ID = process.env.REACT_APP_GA_MEASUREMENT_ID;
 
 function GoogleAnalytics() {

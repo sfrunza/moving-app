@@ -1,83 +1,85 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/styles';
-import { Typography, colors } from '@material-ui/core';
+import {
+  fade,
+  makeStyles
+} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'inline-flex',
+    fontFamily: theme.typography.fontFamily,
     alignItems: 'center',
-    justifyContent: 'center',
-    flexGrow: 0,
-    flexShrink: 0,
     borderRadius: 2,
-    lineHeight: '10px',
-    fontSize: '10px',
-    height: 20,
-    minWidth: 20,
+    display: 'inline-flex',
+    flexGrow: 0,
     whiteSpace: 'nowrap',
-    padding: theme.spacing(0.5, 1)
+    cursor: 'default',
+    flexShrink: 0,
+    fontSize: theme.typography.pxToRem(12),
+    fontWeight: theme.typography.fontWeightMedium,
+    height: 20,
+    justifyContent: 'center',
+    letterSpacing: 0.5,
+    minWidth: 20,
+    padding: theme.spacing(0.5, 1),
+    textTransform: 'uppercase',
   },
-  rounded: {
-    borderRadius: 10,
-    padding: theme.spacing(0.5)
+  primary: {
+    color: theme.palette.primary.main,
+    backgroundColor: fade(theme.palette.primary.main, 0.08)
+  },
+  secondary: {
+    color: theme.palette.secondary.main,
+    backgroundColor: fade(theme.palette.secondary.main, 0.08)
+  },
+  error: {
+    color: theme.palette.error.main,
+    backgroundColor: fade(theme.palette.error.main, 0.08)
+  },
+  success: {
+    color: theme.palette.success.main,
+    backgroundColor: fade(theme.palette.success.main, 0.08)
+  },
+  warning: {
+    color: theme.palette.warning.main,
+    backgroundColor: fade(theme.palette.warning.main, 0.08)
   }
 }));
 
 function Label({
   className,
-  variant,
   color,
-  shape,
   children,
   style,
   ...rest
 }) {
   const classes = useStyles();
-  const rootClassName = clsx(
-    {
-      [classes.root]: true,
-      [classes.rounded]: shape === 'rounded'
-    },
-    className
-  );
-  const finalStyle = { ...style };
-
-  if (variant === 'contained') {
-    finalStyle.backgroundColor = color;
-    finalStyle.color = '#FFF';
-  } else {
-    finalStyle.border = `1px solid ${color}`;
-    finalStyle.color = color;
-  }
 
   return (
-    <Typography
+    <span
+      className={
+        clsx(classes.root, {
+          [classes[color]]: color
+        }, className)
+      }
       {...rest}
-      className={rootClassName}
-      style={finalStyle}
-      variant="overline"
     >
       {children}
-    </Typography>
+    </span>
   );
 }
 
 Label.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  color: PropTypes.string,
-  shape: PropTypes.oneOf(['square', 'rounded']),
   style: PropTypes.object,
-  variant: PropTypes.oneOf(['contained', 'outlined'])
+  color: PropTypes.oneOf(['primary', 'secondary', 'error', 'warning', 'success'])
 };
 
 Label.defaultProps = {
-  style: {},
-  color: colors.grey[600],
-  variant: 'contained',
-  shape: 'square'
+  className: '',
+  color: 'secondary'
 };
 
 export default Label;

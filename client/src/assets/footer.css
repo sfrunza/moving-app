@@ -1,0 +1,124 @@
+#insight-footer{
+  -webkit-font-smoothing: antialiased;
+  font-family: 'Maison Neue',sans-serif;
+  background: #0b0e0e;
+  color: #fff;
+  padding: 8% 0 0;
+}
+
+.insight-footer-tagline{
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  background: #353535;
+  height: 60px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: center;
+  margin-top: 4%;
+}
+.insight-footer-tagline p{
+  margin-bottom: 0px;
+}
+
+.insight-footer-tagline-copyright{
+  margin-left: 26px;
+}
+.insight-footer-tagline-copyright a{
+  margin-left: 26px;
+}
+
+.insight-footer-tagline a {
+    color: inherit;
+}
+.insight-footer-tagline a:hover{
+  color: #fff;
+  text-decoration: none;
+}
+
+
+
+@media (min-width: 35.5625em){
+
+  .insight-footer-tagline-copyright, .insight-footer-tagline a {
+      margin-left: 26px;
+  }
+}
+@media (max-width: 35.5em){
+
+  .insight-footer-tagline-copyright, .insight-footer-tagline a {
+      margin-left: 8px;
+  }
+}
+
+.x-container{
+  margin: 0 auto;
+  max-width: 1240px;
+  padding: 0 2.5%;
+}
+.x-col-2_md-12{
+  flex-basis: 16.66667%;
+  max-width: 16.66667%;
+}
+#insight-footer ul li {
+  list-style-type: none;
+}
+#insight-footer ul  {
+  margin: 0;
+  padding: 0;
+}
+#insight-footer strong{
+  font-family: 'Maison Neue Bold';
+}
+#insight-footer li a{
+  color: #fff;
+  display: block;
+  font-size: 16.949px;
+  font-size: 1.05932rem;
+  height: 34px;
+}
+#insight-footer li a:hover {
+    color: #ababab;
+    text-decoration: none;
+}
+
+@media screen and (max-width: 64em){
+  .x-col-2_md-12 {
+      -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+      max-width: 100%;
+      text-align: center;
+  }
+  #insight-footer strong {
+    padding-bottom: 1%;
+  }
+  .x-col-2_md-12 p{
+    margin-top: 2em;
+    margin-bottom: 0px !important;
+    font-weight: 700;
+  }
+  .x-col-2_md-12 ul li a{
+    height: 30px;
+  }
+
+}
+.insight-footer-insight{
+  width: 60%;
+  margin: auto;
+}
+@media (max-width: 35.5em){
+
+  .insight-footer-insight {
+      margin: 0 auto 5%;
+      max-width: 40%;
+      height: auto;
+  }
+}

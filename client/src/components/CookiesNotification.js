@@ -1,34 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, {
+  useState,
+  useEffect
+} from 'react';
 import Cookies from 'js-cookie';
-import { makeStyles } from '@material-ui/styles';
 import {
-  Paper, Typography, Link, Button
+  Box,
+  Button,
+  Link,
+  Portal,
+  Typography,
+  makeStyles
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 420,
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+    maxWidth: 600,
     position: 'fixed',
     bottom: 0,
-    right: 0,
+    left: 0,
     margin: theme.spacing(3),
+    padding: theme.spacing(3),
     outline: 'none',
     zIndex: 2000
   },
-  media: {
-    padding: theme.spacing(1, 2),
-    height: 180,
-    textAlign: 'center',
-    '& > img': {
-      height: '100%',
-      width: 'auto'
-    }
-  },
-  content: {
-    padding: theme.spacing(1, 2)
-  },
-  actions: {
-    padding: theme.spacing(2)
+  action: {
+    backgroundColor: theme.palette.common.white,
+    color: theme.palette.common.black,
   }
 }));
 
@@ -54,24 +53,19 @@ function CookiesNotification() {
   }
 
   return (
-    <Paper
-      className={classes.root}
-      elevation={3}
-    >
-      <div className={classes.media}>
-        <img
-          alt="Cookies"
-          src="/images/undraw_cookie_love_ulvn.svg"
-        />
-      </div>
-      <div className={classes.content}>
-        <Typography variant="body1">
+    <Portal>
+      <div className={classes.root}>
+        <Typography
+          variant="body1"
+          color="inherit"
+        >
           We use Cookies to ensure that we give you the best experience on our
           website. Read our
           {' '}
           <Link
-            className={classes.link}
             component="a"
+            color="inherit"
+            underline="always"
             href="https://devias.io/privacy-policy"
             target="_blank"
           >
@@ -79,18 +73,21 @@ function CookiesNotification() {
           </Link>
           .
         </Typography>
-      </div>
-      <div className={classes.actions}>
-        <Button
-          className={classes.agreeButton}
-          color="primary"
-          onClick={handleClose}
-          variant="contained"
+        <Box
+          mt={2}
+          display="flex"
+          justifyContent="flex-end"
         >
-          I Agree
-        </Button>
+          <Button
+            onClick={handleClose}
+            variant="contained"
+            className={classes.action}
+          >
+            I Agree
+          </Button>
+        </Box>
       </div>
-    </Paper>
+    </Portal>
   );
 }
 

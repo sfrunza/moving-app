@@ -1,0 +1,161 @@
+.service-image img{
+  border-radius: 6px;
+  transition: all 0.5s ease;
+  height: 150px;
+  width: 100%;
+  object-fit: cover;
+}
+
+
+.service-image img:hover{
+  -webkit-transform: translateY(-8px);
+  -moz-transform: translateY(-8px);
+  -o-transform: translateY(-8px);
+  -ms-transform: translateY(-8px);
+  transform: translateY(-8px);
+}
+#app div div div #insight-landing-page div .four-services{
+  margin: auto;
+  padding: 5em 0px;
+ }
+
+#app div div div #insight-landing-page div .four-services div.container{
+  width: auto;
+  margin: auto;
+  padding: 0px;
+  max-width: 1100px;
+}
+
+@media only screen and (max-width: 600px) {
+  .four-services-div {
+      flex-direction: column;
+      width: 100%;
+      margin: auto;
+      text-align: center;
+  }
+  .four-services-div .service-wrapper {
+    width: 100%;
+    margin: auto;
+    padding: 5% 0px;
+  }
+  #app div div div #insight-landing-page div .four-services div.container {
+    width: 60%;
+  }
+  .service-item .service-data {
+    padding: 13px 40px 15px;
+  }
+  .service-image img {
+    width: 80%;
+    object-fit: fill;
+  }
+}
+
+
+.four-services-div{
+  display: flex;
+  justify-content:space-between;
+}
+.service-wrapper {
+  width: 25% ;
+}
+.service-item{
+  margin-right: 15px;
+  margin-left: 15px;
+}
+.two{
+  margin-top: -25px;
+}
+.three{
+  margin-top: -50px;
+}
+.four{
+  margin-top: -75px;
+}
+.service-data{
+  text-align: initial;
+  padding: 10px 5px 15px;
+}
+.h4-heading {
+  color: #162438;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 19px;
+  line-height: 32px;
+  font-weight: 500;
+  letter-spacing: -0.2px;
+}
+.service-title-link h4{
+  font-family: 'Maison Neue Bold';
+}
+.service-title-link:hover{
+  text-decoration: none;
+}
+.paragraph {
+  color: #1d1d1f;
+  font-weight: 400;
+  font-family: 'Maison Neue',sans-serif;
+}
+.benefit-text{
+  display: inline-block;
+  margin-left: 15px;
+  font-family: 'Maison Neue',sans-serif;
+}
+.button-spacer {
+    margin-top: 20px;
+}
+.button.black {
+  padding-right: 50px;
+  padding-left: 50px;
+  background-color: #7e46ea;
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: 'Maison Neue',sans-serif;;
+}
+.button.black:hover {
+  text-decoration: none;
+}
+
+/* ----------------------  mobile veriosn -------------------- */
+
+
+@media (max-width: 35.5em){
+  #app div div div #insight-landing-page div .four-services {
+    max-width: 100%;
+    margin: auto;
+    padding: 0px 0px;
+  }
+  #app div div div #insight-landing-page div .four-services div.container{
+     width: 100%;
+  }
+  .insight-landing-services{
+    width: 100%;
+  }
+  .service-wrapper {
+    width: 100% !important;
+    text-align: center;
+  }
+  .service-image img {
+    height: 160px;
+    width: 290px;
+  }
+  .four-services-div{
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+  .service-data {
+    text-align: initial;
+    padding: 10px 15px 15px;
+  }
+  .two{
+    margin-top: 0px;
+  }
+  .three{
+    margin-top: 0px;
+  }
+  .four{
+    margin-top: 0px;
+  }
+}
