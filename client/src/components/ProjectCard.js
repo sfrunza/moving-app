@@ -3,203 +3,224 @@ import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import moment from 'moment';
-import { makeStyles } from '@material-ui/styles';
 import {
   Avatar,
-  Button,
+  Box,
   Card,
-  CardContent,
-  CardHeader,
+  CardMedia,
   Divider,
   Grid,
   IconButton,
   Link,
+  SvgIcon,
   Tooltip,
   Typography,
-  colors
+  colors,
+  makeStyles
 } from '@material-ui/core';
-import ShareIcon from '@material-ui/icons/Share';
+import { Rating } from '@material-ui/lab';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import { Users as UsersIcon } from 'react-feather';
 import getInitials from 'src/utils/getInitials';
-import Label from 'src/components/Label';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
-  header: {
-    paddingBottom: 0
-  },
-  content: {
-    padding: 0,
-    '&:last-child': {
-      paddingBottom: 0
-    }
-  },
-  description: {
-    padding: theme.spacing(2, 3, 1, 3)
-  },
-  tags: {
-    padding: theme.spacing(0, 3, 2, 3),
-    '& > * + *': {
-      marginLeft: theme.spacing(1)
-    }
-  },
-  learnMoreButton: {
-    marginLeft: theme.spacing(2)
+  media: {
+    height: 200,
+    backgroundColor: theme.palette.background.dark
   },
   likedButton: {
     color: colors.red[600]
   },
-  shareButton: {
-    marginLeft: theme.spacing(1)
-  },
-  details: {
-    padding: theme.spacing(2, 3)
+  subscribersIcon: {
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(1)
   }
 }));
 
 function ProjectCard({ project, className, ...rest }) {
   const classes = useStyles();
-  const [liked, setLiked] = useState(project.liked);
+  const [isLiked, setLiked] = useState(project.isLiked);
+  const [likes, setLikes] = useState(project.likes);
 
   const handleLike = () => {
     setLiked(true);
+    setLikes((prevLikes) => prevLikes + 1);
   };
 
   const handleUnlike = () => {
     setLiked(false);
+    setLikes((prevLikes) => prevLikes - 1);
   };
 
   return (
     <Card
-      {...rest}
       className={clsx(classes.root, className)}
+      {...rest}
     >
-      <CardHeader
-        avatar={(
+      <Box p={3}>
+        <CardMedia
+          className={classes.media}
+          image={project.media}
+        />
+        <Box
+          display="flex"
+          alignItems="center"
+          mt={2}
+        >
           <Avatar
             alt="Author"
             src={project.author.avatar}
           >
             {getInitials(project.author.name)}
           </Avatar>
-        )}
-        className={classes.header}
-        disableTypography
-        subheader={(
-          <Typography variant="body2">
-            by
-            {' '}
+          <Box ml={2}>
             <Link
               color="textPrimary"
               component={RouterLink}
-              to="/profile/1/timeline"
-              variant="h6"
+              to="#"
+              variant="h5"
             >
-              {project.author.name}
+              {project.title}
             </Link>
-            {' '}
-            | Updated:
-            {' '}
-            {moment(project.updated_at).fromNow()}
-          </Typography>
-        )}
-        title={(
-          <Link
-            color="textPrimary"
-            component={RouterLink}
-            to="/projects/1/overview"
-            variant="h5"
-          >
-            {project.title}
-          </Link>
-        )}
-      />
-      <CardContent className={classes.content}>
-        <div className={classes.description}>
-          <Typography
-            color="textSecondary"
-            variant="subtitle2"
-          >
-            We&apos;re looking for experienced Developers and Product Designers to
-            come aboard and help us build succesful businesses through software.
-          </Typography>
-        </div>
-        <div className={classes.tags}>
-          {project.tags.map((tag) => (
-            <Label
-              color={tag.color}
-              key={tag.text}
+            <Typography
+              variant="body2"
+              color="textSecondary"
             >
-              {tag.text}
-            </Label>
-          ))}
-        </div>
-        <Divider />
-        <div className={classes.details}>
-          <Grid
-            alignItems="center"
-            container
-            justify="space-between"
-            spacing={3}
-          >
-            <Grid item>
-              <Typography variant="h5">
-                $
-                {project.price}
-              </Typography>
-              <Typography variant="body2">Per Project</Typography>
-            </Grid>
-            <Grid item>
-              <Typography variant="h5">{project.location}</Typography>
-              <Typography variant="body2">Location</Typography>
-            </Grid>
-            <Grid item>
-              <Typography variant="h5">{project.type}</Typography>
-              <Typography variant="body2">Type</Typography>
-            </Grid>
-            <Grid item>
-              {liked ? (
-                <Tooltip title="Unlike">
-                  <IconButton
-                    className={classes.likedButton}
-                    onClick={handleUnlike}
-                    size="small"
-                  >
-                    <FavoriteIcon />
-                  </IconButton>
-                </Tooltip>
-              ) : (
-                <Tooltip title="Like">
-                  <IconButton
-                    className={classes.likeButton}
-                    onClick={handleLike}
-                    size="small"
-                  >
-                    <FavoriteBorderIcon />
-                  </IconButton>
-                </Tooltip>
-              )}
-              <Tooltip title="Share">
-                <IconButton
-                  className={classes.shareButton}
-                  size="small"
-                >
-                  <ShareIcon />
-                </IconButton>
-              </Tooltip>
-              <Button
-                className={classes.learnMoreButton}
+              by
+              {' '}
+              <Link
+                color="textPrimary"
                 component={RouterLink}
-                size="small"
-                to="/projects/1/overview"
+                to="#"
+                variant="h6"
               >
-                Learn more
-              </Button>
-            </Grid>
+                {project.author.name}
+              </Link>
+              {' '}
+              | Updated
+              {' '}
+              {moment(project.updatedAt).fromNow()}
+            </Typography>
+          </Box>
+        </Box>
+      </Box>
+      <Box
+        pb={2}
+        px={3}
+      >
+        <Typography
+          color="textSecondary"
+          variant="body2"
+        >
+          {project.description}
+        </Typography>
+      </Box>
+      <Box
+        py={2}
+        px={3}
+      >
+        <Grid
+          alignItems="center"
+          container
+          justify="space-between"
+          spacing={3}
+        >
+          <Grid item>
+            <Typography
+              variant="h5"
+              color="textPrimary"
+            >
+              {project.location}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+            >
+              Location
+            </Typography>
           </Grid>
-        </div>
-      </CardContent>
+          <Grid item>
+            <Typography
+              variant="h5"
+              color="textPrimary"
+            >
+              {project.type}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+            >
+              Type
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography
+              variant="h5"
+              color="textPrimary"
+            >
+              {project.technology}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+            >
+              Technology
+            </Typography>
+          </Grid>
+        </Grid>
+      </Box>
+      <Divider />
+      <Box
+        py={2}
+        pl={2}
+        pr={3}
+        display="flex"
+        alignItems="center"
+      >
+        {isLiked ? (
+          <Tooltip title="Unlike">
+            <IconButton
+              className={classes.likedButton}
+              onClick={handleUnlike}
+            >
+              <FavoriteIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <Tooltip title="Like">
+            <IconButton onClick={handleLike}>
+              <FavoriteBorderIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        )}
+        <Typography
+          variant="subtitle2"
+          color="textSecondary"
+        >
+          {likes}
+        </Typography>
+        <SvgIcon
+          fontSize="small"
+          color="action"
+          className={classes.subscribersIcon}
+        >
+          <UsersIcon />
+        </SvgIcon>
+        <Typography
+          variant="subtitle2"
+          color="textSecondary"
+        >
+          {project.subscribers}
+        </Typography>
+        <Box flexGrow={1} />
+        <Rating
+          value={project.rating}
+          size="small"
+          readOnly
+        />
+      </Box>
     </Card>
   );
 }

@@ -1,9 +1,13 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import uuid from 'uuid/v1';
-import { makeStyles } from '@material-ui/styles';
-import { Tooltip, Avatar } from '@material-ui/core';
+import {
+  Avatar,
+  Tooltip,
+  Typography,
+  colors,
+  makeStyles
+} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -11,28 +15,30 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: 20
   },
   avatar: {
-    border: `3px solid ${theme.palette.common.white}`,
+    border: `3px solid ${theme.palette.background.default}`,
     marginLeft: -20,
     '&:hover': {
       zIndex: 2
     }
   },
   more: {
-    backgroundColor: theme.palette.error.main,
-    color: theme.palette.error.contrastText,
-    fontSize: 14,
-    fontWeight: theme.typography.fontWeightMedium
+    backgroundColor: colors.red[600],
+    color: colors.common.white
   }
 }));
 
 function StackAvatars({
-  avatars, limit, className, ...rest
+  avatars,
+  limit,
+  className,
+  ...rest
 }) {
   const classes = useStyles();
+  let lastIndex = 0;
 
   const avatarNodes = avatars.slice(0, limit).map((item) => (
     <Tooltip
-      key={uuid()}
+      key={++lastIndex}
       title="View"
     >
       <Avatar
@@ -44,22 +50,25 @@ function StackAvatars({
 
   if (avatars.length > limit) {
     avatarNodes.push(
-      <Tooltip
-        key={uuid()}
-        title="View"
+      <Avatar
+        key={++lastIndex}
+        className={clsx(classes.avatar, classes.more)}
       >
-        <Avatar className={clsx(classes.avatar, classes.more)}>
+        <Typography
+          color="inherit"
+          variant="subtitle2"
+        >
           +
           {avatars.length - limit}
-        </Avatar>
-      </Tooltip>
+        </Typography>
+      </Avatar>
     );
   }
 
   return (
     <div
-      {...rest}
       className={clsx(classes.root, className)}
+      {...rest}
     >
       {avatarNodes}
     </div>

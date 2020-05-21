@@ -3,9 +3,8 @@ class CreateOrigins < ActiveRecord::Migration[5.2]
     create_table :origins do |t|
       t.string :address
       t.belongs_to :job, index: true
-      t.string :house_type_from
-      t.string :apt_number_origin
-
+      t.string :house_type
+      t.string :apt_number
       t.timestamps
     end
   end

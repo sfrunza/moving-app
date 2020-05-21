@@ -1,0 +1,527 @@
+.insight-landing-cover{
+  background-image: url("./img/moving-cover.jpg");
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 700px;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 100%;
+}
+.insight-landing-cover:before {
+  background: linear-gradient(#000,transparent);
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+.insight-landing-intro{
+  color: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-height: 700px;
+  padding: 8% 0;
+  position: relative;
+  text-align: center;
+  width: auto;
+  max-width: 1300px;
+  margin: auto;
+}
+
+.intro-info-landing{
+  margin: 80px auto;
+  position: relative;
+  z-index: 3;
+  max-width: 590px;
+}
+
+@media (max-width: 35.5em){
+
+  .insight-landing-cover{
+    height: 600px;
+  }
+  .insight-landing-intro{
+    min-height: 500px;
+    width: 100%;
+  }
+  .intro-info-landing{
+    margin: 180px auto;
+    max-width: 390px;
+    position: relative;
+    z-index: 3;
+  }
+  .insight-landing-intro{
+    width: 100%;
+  }
+
+
+}
+
+/*  intro and cover   */
+#insight-landing-page {
+  overflow: hidden;
+  padding-top: 66px;
+  position: relative;
+  top: -68px;
+  margin-bottom: -50px;
+}
+@media (max-width: 35.5em){
+  #insight-landing-page {
+    margin-bottom: 15px;
+    overflow: auto;
+    padding-top: 0px;
+    top: 0px;
+
+  }
+}
+
+
+/*  Calculator */
+
+
+
+.full-quote {
+  position: relative;
+  margin-top: -147px;
+  padding-right: 25px;
+  padding-left: 25px;
+}
+.calc-container {
+  width: 55%;
+  padding: 0 20px;
+  overflow: hidden;
+  margin: auto;
+}
+
+@media only screen and (max-width: 1400px) {
+  .calc-container {
+    width: 60%;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .calc-container {
+    width: 65%;
+  }
+}
+@media only screen and (max-width: 1000px) {
+  .calc-container {
+    width: 90%;
+  }
+}
+@media only screen and (max-width: 800px) {
+  .calc-container {
+    width: 100%;
+  }
+}
+
+
+.quote-background {
+  margin-right: 15px;
+  margin-left: 15px;
+  padding: 40px 30px 25px;
+  border-radius: 6px;
+  background-color: #ce1818a8;
+}
+.calc-header{
+  width: 100%;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.calc-header h3{
+  color: #fff;
+  font-family: 'Maison Neue Bold';
+  font-size: 20px;
+}
+
+.calc-form{
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+.form-container-result{
+  border-radius: 5px;
+  text-align: center;
+  color: white;
+}
+
+
+.form-element{
+  margin-bottom: 5px;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin: auto;
+  width: 30%;
+}
+
+.w-input::placeholder{
+  color: #fff;
+  font-size: 14px;
+}
+input, optgroup, select, textarea {
+    margin: 0;
+    font-family: inherit;
+    font-size: 14px !important;
+    line-height: inherit;
+}
+
+select {
+  height: 50px;
+    margin-bottom: 15px;
+    padding-top: 9px;
+    padding-right: 20px;
+    padding-left: 20px;
+    border: 1px none #000;
+    border-radius: 4px;
+    background-color: #9d6bffe0;
+    color: #fff !important;
+    font-size: 14px;
+    font-weight: 500;
+}
+select:focus {
+    background-color: #9d6bffe0;
+    border-color: #9d6bffe0;
+    outline: none;
+
+}
+
+.calculate-element{
+  width: 94%;
+  margin: auto;
+}
+.calculate-button{
+  color: #7e46ea ;
+  margin: auto ;
+  background-color: #fff ;
+  width: 100%;
+  text-align: center;
+  margin-top: 1.5em;
+  border-radius: 4px;
+  padding: 15px 40px;
+  font-family: 'Maison Neue Bold';
+  border: 1px solid #7e46ea;
+}
+.calculate-button:hover{
+  background-color: #7e46ea ;
+}
+.calculate-button:focus{
+  outline: none;
+}
+@media (max-width: 35.5em){
+  .form-element{
+    width: 100%;
+  }
+  .full-quote {
+    position: relative;
+    margin-top: -90px;
+  }
+  .calc-container{
+    width: 100%;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .quote-background {
+    margin-right: 0px;
+    margin-left: 0px;
+  }
+  .w-select {
+    margin-bottom: 15px;
+  }
+
+
+}
+
+
+
+/* =======================================*/
+
+/* rates section */
+
+
+.insight-landing-reviews, .insight-landing-services {
+  background: #fafafa;
+  width: auto;
+  max-width: 1300px;
+  margin: 1.25% auto;
+}
+.insight-landing-rates{
+  width: 100%;
+  margin: 1.25% auto;
+
+}
+
+.insight-landing-rates-header, .insight-landing-services-header, .insight-landing-reviews-header{
+  margin: 0 auto;
+  padding: 7%;
+  text-align: center;
+  background-color: #fafafa;
+  margin-bottom: 1.5%;
+  width: 80%;
+}
+.insight-landing-rates-header h3, .insight-landing-reviews-header h3{
+  font-family: 'Maison Neue Bold';
+  font-size: 32px;
+}
+.x-grid{
+  z-index: 0;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: auto;
+}
+
+.insight-landing-rates-hourly, .insight-landing-rates-flat{
+  flex: 0 1 auto;
+  margin: 0px;
+  background-color: #fafafa !important;
+  width: 49%;
+  padding: 8% 5%;
+}
+
+.insight-landing-rates-body{
+  width: auto;
+  max-width: 1300px;
+  margin: auto;
+  text-align: center;
+}
+.rate-body{
+  font-family: 'Maison Neue',sans-serif;
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+}
+.rate-header{
+  text-align: center;
+  font-family: 'Maison Neue Bold';
+  -webkit-font-smoothing: antialiased;
+}
+
+.hourly-rates, .flat-rates{
+  z-index: 0;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin: auto;
+  font-family: 'Maison Neue Bold';
+}
+.flat-rates{
+  flex-direction: column;
+  margin-top: 5%;
+}
+.pricing-rate{
+
+}
+
+.hourly-rates label {
+  font-size: 14px;
+  color: #000;
+  font-weight: 500;
+  display: block;
+  padding-top: 45px;
+  text-align: center;
+  text-transform: uppercase;
+  vertical-align: bottom;
+  padding-right: 20px;
+}
+.flat-rates label {
+  font-size: 14px;
+  color: #000;
+  font-weight: 500;
+  display: block;
+  padding-top: 30px;
+  text-align: center;
+  text-transform: uppercase;
+  vertical-align: bottom;
+}
+.two-way-arrow {
+    background-image: url(https://www.pinclipart.com/picdir/middle/165-1651998_two-way-arrows-two-way-arrow-png-clipart.png);
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: 1.2em;
+    display: inline-block;
+    text-indent: -999em;
+    height: 1em;
+    width: 2em;
+}
+.pricing-currency{
+  color:#7e46ea;
+  font-size: 40px;
+}
+.pricing-amount{
+  font-size: 60px !important;
+  color: #7e46ea;
+}
+.link-to-prices{
+  color: #7e46ea;
+  font-size: 14px;
+  line-height: 4rem;
+}
+.link-to-prices:hover{
+  color: #7e46ea;
+}
+
+
+/* ---------------------------------------------*/
+@media (max-width: 35.5em){
+  .insight-landing-rates-header{
+    margin: 35px auto;
+    padding-bottom: 5%;
+    text-align: center;
+  }
+  .insight-landing-rates {
+    margin-top: 0px;
+    width: 100%;
+    margin: 0px;
+  }
+  .insight-landing-reviews, .insight-landing-services {
+    margin-top: 15px;
+    margin-bottom: 0px;
+  }
+  .rate-container{
+    width: 100%;
+    margin-top: 15px;
+  }
+  .insight-landing-rates-body {
+    width: 100%;
+}
+
+  .insight-landing-rates-flat {
+    margin-top: 15px;
+    width: 100%;
+  }
+  .rate-body{
+    font-size: 16px;
+  }
+  .rate-header{
+    font-size: 25px;
+  }
+  .hourly-rates{
+    flex-direction: column;
+  }
+  .pricing-rate{
+    margin: auto;
+  }
+  .pricing-amount{
+    font-size: 50px !important;
+  }
+  .pricing-currency{
+    font-size: 30px !important;
+  }
+  .hourly-rates label {
+    font-size: 14px;
+    padding-top: 35px;
+  }
+}
+/* ---------------------------------------------*/
+
+/* services section */
+
+.insight-landing-services-header h3{
+  font-family: 'Maison Neue Bold';
+  font-size: 32px;
+}
+.insight-landing-services-header-subtitle{
+  color: #7e46ea;
+  font-size: 18px;
+  line-height: 27px;
+  font-family: 'Maison Neue',sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+@media (max-width: 35.5em){
+  .insight-landing-services-header h3, .insight-landing-reviews-header h3{
+    font-size: 25px;
+  }
+  .insight-landing-rates-header h3 {
+    font-size: 25px;
+  }
+  .card{
+    height: 200px;
+  }
+  .insight-landing-services-header-subtitle{
+    font-size: 14px;
+  }
+}
+
+
+
+/* --------------- reviews ----------------------------------------*/
+
+.reviews-header-title-purple, .reviews-footer-title-purple{
+  font-size: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #7e46ea ;
+  margin-bottom: 20px;
+  font-family: 'Maison Neue Bold';
+}
+
+.insigth-landing-reviews-tweets {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 5% 0 15%;
+}
+.insight-landing-reviews-tweet {
+    padding: 0 1.25%;
+    width: 33.3%;
+}
+#insight-landing-page div div div div.insight-landing-reviews-logos {
+  -webkit-box-align: space-between;
+  -ms-flex-align: space-between;
+  align-items: space-between;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  padding-top: 2.5%;
+  width: 80%;
+  margin: auto;
+}
+.insight-landing-reviews-logo{
+  -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 30px;
+    padding: 0 1.5%;
+    width: 200px;
+    margin: auto;
+}
+.insight-landing-reviews-logo img{
+  opacity: 0.5;
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+}
+/* .insight-landing-reviews{
+  padding: 8% 0px;
+} */
+.insight-landing-reviews-footer{
+  padding-bottom: 10%;
+}
+
+@media (max-width: 35.5em){
+  .reviews-header-title-blue, .reviews-footer-title-blue{
+    font-size: 14px;
+  }
+  .insight-landing-reviews, .insight-landing-services {
+    width: 100%;
+  }
+}

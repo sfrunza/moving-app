@@ -1,0 +1,76 @@
+.flat-price-body {
+  font-size: 16px;
+  font-family: 'Maison Neue',sans-serif;
+  -webkit-font-smoothing: antialiased;
+  width: 85%;
+  margin: auto;
+}
+
+.flat-rate-link{
+  color: #7e46ea;
+  width: 50%;
+  margin: auto;
+}
+.flat-rate-link-to span{
+  color: #7e46ea;
+  margin: 0px 6px;
+}
+
+.flat-rate-link:hover{
+  color: #7e46ea;
+}
+.card-description-service-section{
+  margin: 0px auto;
+  font-family: 'Maison Neue Bold';
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #7e46ea;
+}
+.services-section{
+  width: 65% !important;
+}
+.benefit-interstate img{
+  width: 15px;
+  height: 24px;
+}
+.benefit-interstate {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 50%;
+  margin: auto;
+}
+.benefit-interstate-text {
+  display: inline-block;
+  margin-left: -30px;
+  font-family: 'Maison Neue Demi';
+}
+/* ------------------------- mobile version----------------- */
+
+
+@media (max-width: 35.5em){
+  .flat-price-body {
+    font-size: 14px !important;
+    line-height: 27px;
+    width: 100%;
+    margin: 10px auto;
+  }
+  .flat-rate-link{
+    margin: 25px auto;
+  }
+  .services-section{
+    width: 100% !important;
+  }
+  .benefit-interstate img{
+    display: block;
+  }
+  .benefit-interstate-text {
+    margin-left: 5px;
+    margin-right: 25px;
+    font-size: 14px;
+  }
+  .benefit-interstate img{
+    width: 15%;
+  }
+
+}

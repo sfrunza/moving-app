@@ -30,8 +30,8 @@ ActiveRecord::Schema.define(version: 2020_04_03_224439) do
   create_table "destinations", force: :cascade do |t|
     t.string "address"
     t.bigint "job_id"
-    t.string "house_type_to"
-    t.string "apt_number_destination"
+    t.string "house_type"
+    t.string "apt_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["job_id"], name: "index_destinations_on_job_id"
@@ -61,8 +61,8 @@ ActiveRecord::Schema.define(version: 2020_04_03_224439) do
   create_table "origins", force: :cascade do |t|
     t.string "address"
     t.bigint "job_id"
-    t.string "house_type_from"
-    t.string "apt_number_origin"
+    t.string "house_type"
+    t.string "apt_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["job_id"], name: "index_origins_on_job_id"

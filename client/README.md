@@ -1,71 +1,37 @@
-# Devias Material Kit Pro
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Client & Admin Dashboard Kit
+## Available Scripts
 
-A professional kit that comes with plenty of ready-to-use Material-UI© components developed with one common goal in mind, help you build faster & beautiful applications. Each component is fully customizable, responsive and easy to integrate.
+In the project directory, you can run:
 
-### Features
+### `npm start` or `yarn start`
 
-- 32 Pages Examples
-- Fully Responsive
-- Built with React Hooks API
-- Redux as State Manager
-- Routing System
-- Light Functionality Components
-- Ready-to-deploy folder structure
-- Complete User Flows
-- Easy Color Changes
-- Consistent Updates
+Runs the app in development mode.<br>
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### Examples
+The page will automatically reload if you make changes to the code.<br>
+You will see the build errors and lint warnings in the console.
 
-- [Overview](https://react-material-kit.devias.io/overview)
-- [Default Dashboard Page](https://react-material-kit.devias.io/dashboards/default)
-- [Analytics Dashboard Page](https://react-material-kit.devias.io/dashboards/analytics)
-- [User Management List Page](https://react-material-kit.devias.io/management/customers)
-- [User Management Summary Page](https://react-material-kit.devias.io/management/customers/1/summary)
-- [User Management Invoices Page](https://react-material-kit.devias.io/management/customers/1/invoices)
-- [User Management Logs Page](https://react-material-kit.devias.io/management/customers/1/logs)
-- [Product Management List Page](https://react-material-kit.devias.io/management/projects)
-- [Order Management List Page](https://react-material-kit.devias.io/management/orders)
-- [Order Management Details Page](https://react-material-kit.devias.io/management/orders/1)
-- [Social Feed Page](https://react-material-kit.devias.io/social-feed)
-- [User Timeline Page](https://react-material-kit.devias.io/profile/1/timeline)
-- [User Connections Page](https://react-material-kit.devias.io/profile/1/connections)
-- [User Projects Page](https://react-material-kit.devias.io/profile/1/projects)
-- [User Reviews Page](https://react-material-kit.devias.io/profile/1/reviews)
-- [Project List Page](https://react-material-kit.devias.io/projects)
-- [Project Create Page](https://react-material-kit.devias.io/projects/create)
-- [Project Overview Page](https://react-material-kit.devias.io/projects/1/overview)
-- [Project Files Page](https://react-material-kit.devias.io/projects/1/files)
-- [Project Activity Page](https://react-material-kit.devias.io/projects/1/activity)
-- [Project Subscribers Page](https://react-material-kit.devias.io/projects/1/subscribers)
-- [Invoice Details Page](https://react-material-kit.devias.io/invoices/1)
-- [KanbanBoard Application](https://react-material-kit.devias.io/kanban-board)
-- [Mail Application](https://react-material-kit.devias.io/mail)
-- [Chat Application](https://react-material-kit.devias.io/chat)
-- [Calendar Application](https://react-material-kit.devias.io/calendar)
-- [Settings Page](https://react-material-kit.devias.io/settings)
-- [Sign Up Page](https://react-material-kit.devias.io/auth/register)
-- [Sign In Page](https://react-material-kit.devias.io/auth/login)
-- [Error 401 Page](https://react-material-kit.devias.io/errors/error-401)
-- [Error 404 Page](https://react-material-kit.devias.io/errors/error-404)
-- [Error 500 Page](https://react-material-kit.devias.io/errors/error-500)
+<p align='center'>
+<img src='https://cdn.jsdelivr.net/gh/marionebl/create-react-app@9f6282671c54f0874afd37a72f6689727b562498/screencast-error.svg' width='600' alt='Build errors'>
+</p>
 
-### Build with
+### `npm test` or `yarn test`
 
-- React
-- Material-UI
-- Redux
-- DraftJS
-- ChartJS
-- PrismJS
-- React Markdown
-- React Full Calendar
+Runs the test watcher in an interactive mode.<br>
+By default, runs tests related to files changed since the last commit.
 
-### Quick start
+[Read more about testing.](https://facebook.github.io/create-react-app/docs/running-tests)
 
-- Install dependencies: `npm install` or `yarn`
-- Start the server: `npm run start` or `yarn start`
-- Views are on: `localhost:3000`
-- Latest node & react versions recommended
+### `npm run build` or `yarn build`
+
+Builds the app for production to the `build` folder.<br>
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.<br>
+
+Your app is ready to be deployed.
+
+## User Guide
+
+You can find detailed instructions on using Create React App and many tips in [its documentation](https://facebook.github.io/create-react-app/).

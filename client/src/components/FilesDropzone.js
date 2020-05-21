@@ -1,11 +1,11 @@
+/* eslint-disable react/no-array-index-key */
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import uuid from 'uuid/v1';
 import { useDropzone } from 'react-dropzone';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { makeStyles } from '@material-ui/styles';
 import {
+  Box,
   Button,
   IconButton,
   Link,
@@ -13,9 +13,9 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Typography,
   Tooltip,
-  colors
+  Typography,
+  makeStyles
 } from '@material-ui/core';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -32,13 +32,13 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     alignItems: 'center',
     '&:hover': {
-      backgroundColor: colors.grey[50],
+      backgroundColor: theme.palette.action.hover,
       opacity: 0.5,
       cursor: 'pointer'
     }
   },
   dragActive: {
-    backgroundColor: colors.grey[50],
+    backgroundColor: theme.palette.action.active,
     opacity: 0.5
   },
   image: {
@@ -78,8 +78,8 @@ function FilesDropzone({ className, ...rest }) {
 
   return (
     <div
-      {...rest}
       className={clsx(classes.root, className)}
+      {...rest}
     >
       <div
         className={clsx({
@@ -93,7 +93,7 @@ function FilesDropzone({ className, ...rest }) {
           <img
             alt="Select file"
             className={classes.image}
-            src="/images/undraw_add_file2_gvbb.svg"
+            src="/static/images/undraw_add_file2_gvbb.svg"
           />
         </div>
         <div>
@@ -103,17 +103,18 @@ function FilesDropzone({ className, ...rest }) {
           >
             Select files
           </Typography>
-          <Typography
-            className={classes.info}
-            color="textSecondary"
-            variant="body1"
-          >
-            Drop files here or click
-            {' '}
-            <Link underline="always">browse</Link>
-            {' '}
-            thorough your machine
-          </Typography>
+          <Box mt={2}>
+            <Typography
+              color="textPrimary"
+              variant="body1"
+            >
+              Drop files here or click
+              {' '}
+              <Link underline="always">browse</Link>
+              {' '}
+              thorough your machine
+            </Typography>
+          </Box>
         </div>
       </div>
       {files.length > 0 && (
@@ -123,7 +124,7 @@ function FilesDropzone({ className, ...rest }) {
               {files.map((file, i) => (
                 <ListItem
                   divider={i < files.length - 1}
-                  key={uuid()}
+                  key={i}
                 >
                   <ListItemIcon>
                     <FileCopyIcon />

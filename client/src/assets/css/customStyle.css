@@ -1,0 +1,114 @@
+.form-conatiner {
+  height: 100%;
+}
+/* header */
+
+.calc-header {
+  font-family: 'Maison Neue Bold';
+  color: #fff;
+  padding-bottom: 0.5em;
+}
+
+
+/* form */
+.calc-form {
+  /* background-color: #9694ff; */
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  height: 100%;
+  justify-content: space-around;
+  padding: 1em 0em;
+  /* border-radius: 4px;
+  border: 1px solid white; */
+}
+
+
+/* input color */
+.calc-form .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+    border-color: #8b2aff;
+}
+
+.calc-form .MuiInputBase-input {
+    color: #fff !important;
+}
+
+.calc-form .MuiOutlinedInput-root {
+    background-color: #7900ff26;
+}
+
+.calc-form .MuiOutlinedInput-notchedOutline {
+    border-color: #fff ;
+    color: #000;
+}
+.calc-form .MuiFormControl-root label {
+    color: #fff !important;
+}
+.calc-form .MuiSvgIcon-root {
+    color: #fff;
+}
+
+/* first row */
+
+.first-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.7em 1em;
+}
+
+.first-row .form-element .MuiIconButton-root {
+    padding: 0px;
+}
+.first-row .form-element {
+  width: 30%;
+}
+.first-row .form-element input{
+  width: 100%;
+}
+
+/* secomnd row */
+.second-row {
+  padding: 0.7em 1em;
+}
+.second-row, .second-row div select{
+  width: 100%;
+}
+
+
+/* third row */
+.third-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.7em 1em;
+}
+.third-row .form-element {
+  width: 48%;
+}
+.third-row .form-element select {
+  width: 100%;
+}
+
+
+/* calculate button */
+.calculate-element{
+  width: 100%;
+  padding: 0.7em 1em;
+}
+.calculate-element button{
+  background-color: #fff;
+  width: 100%;
+  padding: 1em 0px;
+}
+.calculate-element button span{
+  color: #7b00ff;
+}
+
+ .calculate-element button:hover{
+  background-color: #e1b9ff;
+}
+.calculate-element button span:hover{
+  color: #7b00ff;
+}

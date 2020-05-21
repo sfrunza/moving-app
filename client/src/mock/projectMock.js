@@ -1,279 +1,382 @@
-import uuid from 'uuid/v1';
 import moment from 'moment';
-import { colors } from '@material-ui/core';
 import mock from 'src/utils/mock';
 
-mock.onGet('/api/projects').reply(200, {
+mock.onGet('/api/projects/account/statistics').reply(200, {
+  statistics: {
+    payout: '4,250',
+    projects: '12,500',
+    visitors: '230',
+    watching: '5'
+  }
+});
+
+mock.onGet('/api/projects/account/projects').reply(200, {
   projects: [
     {
-      id: uuid(),
-      title: 'Mella Full Screen Slider',
-      author: {
-        name: 'Anje Keizer',
-        avatar: '/images/avatars/avatar_5.png'
-      },
-      price: '12,500',
-      currency: '$',
-      type: 'Full-Time',
-      location: 'Europe',
-      members: 5,
-      tags: [
-        {
-          text: 'Angular JS',
-          color: colors.red[600]
-        }
-      ],
-      start_date: moment(),
-      end_date: moment(),
-      updated_at: moment().subtract(24, 'minutes')
-    },
-    {
-      id: uuid(),
-      title: 'Dashboard Design',
-      author: {
-        name: 'Emilee Simchenko',
-        avatar: '/images/avatars/avatar_9.png'
-      },
-      price: '15,750',
-      currency: '$',
-      type: 'Full-Time',
-      location: 'Europe',
-      members: 3,
-      tags: [
-        {
-          text: 'HTML & CSS',
-          color: colors.grey[600]
-        }
-      ],
-      start_date: moment(),
-      end_date: moment(),
-      updated_at: moment().subtract(1, 'hour')
-    },
-    {
-      id: uuid(),
+      id: '5e8dcf105a6732b3ed82cf7a',
       title: 'Ten80 Web Design',
+      media: '/static/images/projects/project_3.png',
       author: {
-        name: 'Kwak Seong-Min',
-        avatar: '/images/avatars/avatar_10.png'
+        id: '5e86809283e28b96d2d38537',
+        avatar: '/static/images/avatars/avatar_6.png',
+        name: 'Katarina Smith'
       },
-      price: '15,750',
-      currency: '$',
       type: 'Full-Time',
       location: 'Europe',
-      members: 8,
-      tags: [
-        {
-          text: 'React JS',
-          color: colors.indigo[600]
-        }
-      ],
-      start_date: moment(),
-      end_date: moment(),
-      updated_at: moment().subtract(16, 'hour')
-    },
-    {
-      id: uuid(),
-      title: 'Neura e-commerce UI Kit',
-      author: {
-        name: 'Shen Zhi',
-        avatar: '/images/avatars/avatar_11.png'
-      },
-      price: '12,500',
-      currency: '$',
-      type: 'Full-Time',
-      location: 'Europe',
-      members: 10,
-      tags: [
-        {
-          text: 'Vue JS',
-          color: colors.green[600]
-        }
-      ],
-      start_date: moment(),
-      end_date: moment(),
-      updated_at: moment().subtract(3, 'days')
-    },
-    {
-      id: uuid(),
-      title: 'Administrator Dashboard',
-      author: {
-        name: 'Cao Yu',
-        avatar: '/images/avatars/avatar_3.png'
-      },
-      price: '15,750',
-      currency: '$',
-      type: 'Full-Time',
-      location: 'Europe',
-      members: 2,
-      tags: [
-        {
-          text: 'Angular JS',
-          color: colors.red[600]
-        },
-        {
-          text: 'HTML & CSS',
-          color: colors.grey[600]
-        }
-      ],
-      start_date: moment(),
-      end_date: moment(),
-      updated_at: moment().subtract(7, 'days')
-    },
-    {
-      id: uuid(),
-      title: 'Kalli UI Kit',
-      author: {
-        name: 'Anje Keizer',
-        avatar: '/images/avatars/avatar_5.png'
-      },
-      price: '15,750',
-      currency: '$',
-      type: 'Full-Time',
-      location: 'Europe',
-      members: 12,
-      tags: [
-        {
-          text: 'Vue JS',
-          color: colors.green[600]
-        }
-      ],
-      start_date: moment(),
-      end_date: moment(),
-      updated_at: moment().subtract(8, 'days')
+      technology: 'Angular JS',
+      isLiked: true,
+      likes: 57,
+      rating: 3,
+      subscribers: 5,
+      updatedAt: moment()
+        .subtract(24, 'minutes')
+        .toDate()
+        .getTime()
     }
   ]
 });
 
-mock.onGet('/api/projects/1').reply(200, {
+mock.onGet('/api/projects/account/todos').reply(200, {
+  todos: [
+    {
+      id: '5e8dd0b59fb490099917eb29',
+      title: 'Finish the proposal design and contract for the client ASAP',
+      deadline: moment()
+        .subtract(2, 'days')
+        .toDate()
+        .getTime(),
+      done: false
+    },
+    {
+      id: '5e8dd0ba89c3f86059b41383',
+      title: 'Finish the proposal design and contract for the client ASAP',
+      deadline: moment()
+        .toDate()
+        .getTime(),
+      done: false
+    },
+    {
+      id: '5e8dd0c028284550358972c7',
+      title: 'Upload the files for the client @Adrian Stefan with the fonts, assets exported and all the fancy svgs',
+      deadline: moment()
+        .add(2, 'days')
+        .toDate()
+        .getTime(),
+      done: false
+    },
+    {
+      id: '5e8dd0c549ceb790f8c41e96',
+      title: 'Re-write the card component with hooks and context',
+      deadline: moment()
+        .add(5, 'days')
+        .toDate()
+        .getTime(),
+      done: false
+    },
+    {
+      id: '5e8dd0cb2fb6bf63b2e7d298',
+      title: 'Send proposal for the fintech project',
+      deadline: moment()
+        .add(5, 'days')
+        .toDate()
+        .getTime(),
+      done: false
+    },
+    {
+      id: '5e8dd0d2ad70962ca35da534',
+      title: 'Create todo app with react hooks just to get a better understanding of the concept',
+      deadline: moment()
+        .add(7, 'days')
+        .toDate()
+        .getTime(),
+      done: true
+    }
+  ]
+});
+
+mock.onGet('/api/projects/projects').reply(200, {
+  projects: [
+    {
+      id: '5e8dcef8f95685ce21f16f3d',
+      title: 'Mella Full Screen Slider',
+      media: '/static/images/projects/project_1.png',
+      description: `
+We're looking for experienced Developers and Product Designers to
+come aboard and help us build succesful businesses through software.
+      `,
+      author: {
+        id: '5e887b7602bdbc4dbb234b27',
+        name: 'Anje Keizer',
+        avatar: '/static/images/avatars/avatar_5.png'
+      },
+      type: 'Full-Time',
+      location: 'Europe',
+      technology: 'Vue JS',
+      isLiked: true,
+      likes: 7,
+      rating: 5,
+      subscribers: 2,
+      updatedAt: moment()
+        .subtract(24, 'minutes')
+        .toDate()
+        .getTime()
+    },
+    {
+      id: '5e8dcf076c50b9d8e756a5a2',
+      title: 'Dashboard Design',
+      media: '/static/images/projects/project_2.png',
+      description: `
+We're looking for experienced Developers and Product Designers to
+come aboard and help us build succesful businesses through software.
+      `,
+      author: {
+        id: '5e887d0b3d090c1b8f162003',
+        name: 'Emilee Simchenko',
+        avatar: '/static/images/avatars/avatar_9.png'
+      },
+      type: 'Full-Time',
+      location: 'Europe',
+      technology: 'Angular',
+      isLiked: false,
+      likes: 12,
+      rating: 4.5,
+      subscribers: 3,
+      updatedAt: moment()
+        .subtract(1, 'hour')
+        .toDate()
+        .getTime()
+    },
+    {
+      id: '5e8dcf105a6732b3ed82cf7a',
+      title: 'Ten80 Web Design',
+      media: '/static/images/projects/project_3.png',
+      description: `
+We're looking for experienced Developers and Product Designers to
+come aboard and help us build succesful businesses through software.
+      `,
+      author: {
+        id: '5e88792be2d4cfb4bf0971d9',
+        name: 'Elliott Stone',
+        avatar: '/static/images/avatars/avatar_10.png'
+      },
+      type: 'Full-Time',
+      location: 'Europe',
+      technology: 'Ember JS',
+      isLiked: true,
+      likes: 18,
+      rating: 4.7,
+      subscribers: 8,
+      updatedAt: moment()
+        .subtract(16, 'hour')
+        .toDate()
+        .getTime()
+    },
+    {
+      id: '5e8dcf1cc7155d0e947dc27f',
+      title: 'Neura e-commerce UI Kit',
+      media: '/static/images/projects/project_4.png',
+      description: `
+We're looking for experienced Developers and Product Designers to
+come aboard and help us build succesful businesses through software.
+      `,
+      author: {
+        id: '5e8877da9a65442b11551975',
+        name: 'Shen Zhi',
+        avatar: '/static/images/avatars/avatar_11.png'
+      },
+      type: 'Full-Time',
+      location: 'Europe',
+      technology: 'Java Spring',
+      isLiked: false,
+      likes: 1,
+      rating: 2,
+      subscribers: 10,
+      updatedAt: moment()
+        .subtract(3, 'days')
+        .toDate()
+        .getTime()
+    },
+    {
+      id: '5e8dcf252313876001e83221',
+      title: 'Administrator Dashboard',
+      media: '/static/images/projects/project_5.jpg',
+      description: `
+We're looking for experienced Developers and Product Designers to
+come aboard and help us build succesful businesses through software.
+      `,
+      author: {
+        id: '5e887ac47eed253091be10cb',
+        name: 'Cao Yu',
+        avatar: '/static/images/avatars/avatar_3.png'
+      },
+      type: 'Full-Time',
+      location: 'Europe',
+      technology: 'Django',
+      isLiked: false,
+      likes: 7,
+      rating: 5,
+      subscribers: 2,
+      updatedAt: moment()
+        .subtract(7, 'days')
+        .toDate()
+        .getTime()
+    },
+    {
+      id: '5e8dcf4250d77c954b04902e',
+      title: 'Kalli UI Kit',
+      media: '',
+      description: `
+We're looking for experienced Developers and Product Designers to
+come aboard and help us build succesful businesses through software.
+      `,
+      author: {
+        id: '5e887b7602bdbc4dbb234b27',
+        name: 'Anje Keizer',
+        avatar: '/static/images/avatars/avatar_5.png'
+      },
+      type: 'Full-Time',
+      location: 'Europe',
+      technology: 'React JS',
+      isLiked: true,
+      likes: 4,
+      rating: 4.2,
+      subscribers: 12,
+      updatedAt: moment()
+        .subtract(8, 'days')
+        .toDate()
+        .getTime()
+    }
+  ]
+});
+
+mock.onGet('/api/projects/projects/1').reply(200, {
   project: {
+    active: true,
+    endDate: moment()
+      .add(14, 'days')
+      .toDate()
+      .getTime(),
     title: 'Develop a PDF Export App',
     author: {
+      id: '5e887d0b3d090c1b8f162003',
       name: 'Emilee Simchenko',
-      avatar: '/images/avatars/avatar_9.png',
+      avatar: '/static/images/avatars/avatar_9.png',
       bio: 'We build beautiful functional themes for web professionals'
     },
     brief: `
-#### TL;DR
-
-The primary aim of the product is to convert survery responses into PDF reports, these reports are generated on to what we call templates. This product is designer to work with 3rd party survery providers. The first MVP will integrate with TypeForm, because the's no direct way to convert results to PDF from the form people create in TypeForm and then ask users to fill out.
-
-#### Background information
-
-Design files are attachedin the files tab.
+Design files are attached in the files tab.
 
 Develop the web app screens for our product called "PDFace". Please look at the wireframes, system activity workflow and read the section above to understand what we're trying to archive.
 
-There's not many screens we need designed, but there will be modals and various other system triggered evenets that will need to be considered.
+There's not many screens we need designed, but there will be modals and various other system triggered events that will need to be considered.
 
-The project has benn created in Sketch so let me know if there are any problmes opening this project and I'll try to convert into a usable file.
-
-I have attached a chat with our users most used devices.
-
-#### Goals:
-  - Maintainable Code
-  - Easy UX
-  - Readable Code
-  - No Redux
+The project has been created in Sketch so let me know if there are any problems opening this project and I'll try to convert into a usable file.
     `,
     price: '12,500',
     currency: 'USD',
-    tags: [
-      {
-        text: 'React JS',
-        color: colors.indigo[600]
-      }
-    ],
+    tags: ['React JS'],
     members: [
       {
-        id: uuid(),
+        id: '5e887a62195cc5aef7e8ca5d',
         name: 'Ekaterina Tankova',
-        avatar: '/images/avatars/avatar_2.png',
+        avatar: '/static/images/avatars/avatar_2.png',
         bio: 'Front End Developer'
       },
       {
-        id: uuid(),
+        id: '5e887ac47eed253091be10cb',
         name: 'Cao Yu',
-        avatar: '/images/avatars/avatar_3.png',
+        avatar: '/static/images/avatars/avatar_3.png',
         bio: 'UX Designer'
       },
       {
-        id: uuid(),
+        id: '5e887b7602bdbc4dbb234b27',
         name: 'Anje Keizer',
-        avatar: '/images/avatars/avatar_5.png',
+        avatar: '/static/images/avatars/avatar_5.png',
         bio: 'Copyright'
       }
     ],
     files: [
       {
-        id: uuid(),
+        id: '5e8dd0721b9e0fab56d7238b',
         name: 'example-project1.jpg',
-        url: '/images/projects/project_2.jpg',
+        url: '/static/images/projects/project_4.png',
         mimeType: 'image/png',
         size: 1024 * 1024 * 3
       },
       {
-        id: uuid(),
+        id: '5e8dd0784431995a30eb2586',
         name: 'docs.zip',
         url: '#',
         mimeType: 'application/zip',
         size: 1024 * 1024 * 25
       },
       {
-        id: uuid(),
+        id: '5e8dd07cbb62749296ecee1c',
         name: 'example-project2.jpg',
-        url: '/images/projects/project_1.jpg',
+        url: '/static/images/projects/project_1.png',
         mimeType: 'image/png',
         size: 1024 * 1024 * 2
       }
     ],
     activities: [
       {
-        id: uuid(),
+        id: '5e8dd0828d628e6f40abdfe8',
         subject: 'Project owner',
-        subject_type: 'user',
-        action_type: 'upload_file',
-        action_desc: 'has uploaded a new file',
-        created_at: moment().subtract(23, 'minutes')
+        type: 'upload_file',
+        description: 'has uploaded a new file',
+        createdAt: moment()
+          .subtract(23, 'minutes')
+          .toDate()
+          .getTime()
       },
       {
-        id: uuid(),
+        id: '5e8dd0893a6725f2bb603617',
         subject: 'Adrian Stefan',
-        subject_type: 'user',
-        action_type: 'join_team',
-        action_desc: 'joined team as a Front-End Developer',
-        created_at: moment().subtract(2, 'hours')
+        type: 'join_team',
+        description: 'joined team as a Front-End Developer',
+        createdAt: moment()
+          .subtract(2, 'hours')
+          .toDate()
+          .getTime()
       },
       {
-        id: uuid(),
-        subject: 'Alexandru Robert',
-        action_type: 'join_team',
-        action_desc: 'joined team as a Full Stack Developer',
-        created_at: moment().subtract(9, 'hours')
+        id: '5e8dd08f44603e3300b75cf1',
+        subject: 'Alexndru Robert',
+        type: 'join_team',
+        description: 'joined team as a Full Stack Developer',
+        createdAt: moment()
+          .subtract(9, 'hours')
+          .toDate()
+          .getTime()
       },
       {
-        id: uuid(),
+        id: '5e8dd0960f3f0fe04e64d8f4',
         subject: 'Project owner',
-        subject_type: 'user',
-        action_type: 'price_change',
-        action_desc: 'raised the project budget',
-        created_at: moment().subtract(2, 'days')
+        type: 'price_change',
+        description: 'raised the project budget',
+        createdAt: moment()
+          .subtract(2, 'days')
+          .toDate()
+          .getTime()
       },
       {
-        id: uuid(),
+        id: '5e8dd09db94421c502c53d13',
         subject: 'Contest',
-        subject_type: 'project',
-        action_type: 'contest_created',
-        action_desc: 'created',
-        created_at: moment().subtract(4, 'days')
+        type: 'contest_created',
+        description: 'created',
+        createdAt: moment()
+          .subtract(4, 'days')
+          .toDate()
+          .getTime()
       }
     ],
     subscribers: [
       {
-        id: uuid(),
+        id: '5e887a62195cc5aef7e8ca5d',
         name: 'Ekaterina Tankova',
-        avatar: '/images/avatars/avatar_2.png',
-        cover: '/images/covers/cover_1.jpg',
-        common_connections: 12,
+        avatar: '/static/images/avatars/avatar_2.png',
+        cover: '/static/images/covers/cover_2.jpg',
+        commonContacts: 12,
         labels: [
           'User Experience',
           'FrontEnd development',
@@ -283,11 +386,11 @@ I have attached a chat with our users most used devices.
         ]
       },
       {
-        id: uuid(),
+        id: '5e887ac47eed253091be10cb',
         name: 'Cao Yu',
-        avatar: '/images/avatars/avatar_3.png',
-        cover: '/images/covers/cover_2.jpg',
-        common_connections: 5,
+        avatar: '/static/images/avatars/avatar_3.png',
+        cover: '/static/images/covers/cover_3.jpg',
+        commonContacts: 5,
         labels: [
           'User Interface',
           'FullStack development',
@@ -296,15 +399,26 @@ I have attached a chat with our users most used devices.
         ]
       },
       {
-        id: uuid(),
-        name: 'Clarke Gillebert',
-        avatar: '/images/avatars/avatar_6.png',
-        cover: '/images/covers/cover_2.jpg',
-        common_connections: 17,
-        labels: ['BackEnd development', 'Firebase', 'MongoDB', 'ExpressJS']
+        id: '5e86809283e28b96d2d38537',
+        name: 'Katarina Smith',
+        avatar: '/static/images/avatars/avatar_6.png',
+        cover: '/static/images/covers/cover_1.jpg',
+        commonContacts: 17,
+        labels: [
+          'BackEnd development',
+          'Firebase',
+          'MongoDB',
+          'ExpressJS'
+        ]
       }
     ],
-    deadline: moment().add(7, 'days'),
-    updated_at: moment().subtract(23, 'minutes')
+    deadline: moment()
+      .add(7, 'days')
+      .toDate()
+      .getTime(),
+    updatedAt: moment()
+      .subtract(23, 'minutes')
+      .toDate()
+      .getTime()
   }
 });

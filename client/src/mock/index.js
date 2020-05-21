@@ -1,13 +1,11 @@
-export * from './accountMock';
-export * from './calendarMock';
-export * from './chatMock';
-
-export * from './mailMock';
-export * from './projectMock';
-export * from './socialFeedMock';
-export * from './userMock';
-export * from './invoiceMock';
-export * from './kanbanMock';
-export * from './taskMock';
-export * from './orderMock';
-export * from './dashboardMock';
+import './accountMock';
+import './searchMock';
+import './notificationsMock';
+import './reportsMock';
+import './managementMock';
+import './calendarMock';
+import './chatMock';
+import './kanbanMock';
+import './mailMock';
+import './projectMock';
+import './socialMock';
