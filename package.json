@@ -1,11 +1,16 @@
 {
-  "name": "react-and-rails",
+  "name": "moving-api",
   "engines": {
     "node": "10.15.0"
   },
   "scripts": {
     "build": "cd client && npm install && npm run build && cd ..",
     "deploy": "cp -a client/build/. public/",
-    "postinstall": "npm run build && npm run deploy && echo 'Client built!'"
+    "heroku-postbuild": "npm run build && npm run deploy && echo 'Client built!'"
+  },
+  "engines": {
+    "yarn": "1.12.3",
+    "npm": "6.11.3",
+    "node": "10.15.0"
   }
 }
