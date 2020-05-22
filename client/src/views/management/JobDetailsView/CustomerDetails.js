@@ -118,7 +118,7 @@ function CustomerDetails({ job, className, ...rest }) {
 
 
   const handleStatusUpdate = (status) => {
-    fetch(`http://localhost:3001/api/v1/jobs/${job.job.id}`,
+    fetch(`https://moving-co.herokuapp.com/api/v1/jobs/${job.job.id}`,
     {
       method: 'PUT',
       body: JSON.stringify({status: status}),
