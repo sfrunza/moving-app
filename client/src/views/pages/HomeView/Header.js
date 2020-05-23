@@ -32,7 +32,10 @@ const useStyles = makeStyles((theme) => ({
       backfaceVisibility: 'hidden',
       boxShadow: '0 0 1px 0 rgba(0,0,0,1), 0 11px 20px -8px rgba(0,0,0,1)',
       margin: 'auto',
-      borderRadius: '4px'
+      borderRadius: '4px',
+      [theme.breakpoints.down('xs')]: {
+        maxWidth: '100%'
+      },
     },
     '& > div:visited': {
       transform: 'none',

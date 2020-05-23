@@ -10,7 +10,9 @@ import CTA from './CTA';
 import FAQS from './FAQS';
 
 const useStyles = makeStyles(() => ({
-  root: {}
+  root: {
+    overflow: 'hidden'
+  }
 }));
 
 function HomeView() {

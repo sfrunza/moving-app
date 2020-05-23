@@ -98,6 +98,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: green[50],
       color: theme.palette.secondary.contrastText,
       border: 'none',
+      margin: '2px',
       opacity: 0.9,
       '& .fc-time': {
         ...theme.typography.h6,

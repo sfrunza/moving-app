@@ -16,7 +16,7 @@ import { deepPurple } from '@material-ui/core/colors'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.dark,
     paddingTop: 128,
     paddingBottom: 128
   },
@@ -42,7 +42,9 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     color: deepPurple[600],
-    backgroundColor: theme.palette.common.white,
+    margin: '3em auto',
+    width: '15em',
+    backgroundColor: theme.palette.common.dark,
     borderColor: deepPurple[500],
     '&:hover': {
       backgroundColor: deepPurple[50],

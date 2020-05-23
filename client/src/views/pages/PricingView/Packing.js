@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     minHeight: '100%',
     flexDirection: 'column',
-    paddingBottom: 80,
-    paddingTop: 80,
+    paddingBottom: 128,
+    paddingTop: 128,
     boxShadow: 'none'
   },
   backButton: {
