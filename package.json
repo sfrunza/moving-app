@@ -1,17 +1,13 @@
 {
   "name": "moving-app",
   "engines": {
-    "node": "10.15.0"
-  },
-  "scripts": {
-    "start": "npm start",
-    "build": "cd client && npm install && npm run build && cd ..",
-    "deploy": "cp -a client/build/. public/",
-    "heroku-postbuild": "npm run build && npm run deploy && echo 'Client built!'"
-  },
-  "engines": {
     "yarn": "1.12.3",
     "npm": "6.11.3",
     "node": "10.15.0"
+  },
+  "scripts": {
+    "build": "cd client && npm install && npm run build && cd ..",
+    "deploy": "cp -a client/build/. public/",
+    "postinstall": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   }
 }

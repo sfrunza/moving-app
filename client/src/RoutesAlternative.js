@@ -68,11 +68,6 @@ function Routes() {
             <CalendarLayout {...props}>
               <Suspense fallback={<LoadingScreen />}>
                 <Switch>
-                  <Redirect
-                    exact
-                    from="/calendar"
-                    to="/calendar"
-                  />
                   <Route
                     exact
                     path="/calendar"
@@ -137,13 +132,13 @@ function Routes() {
                   />
                   <Route
                     exact
-                    path="/app/management/products"
+                    path="/app/management/jobs"
                     component={lazy(() => import('src/views/management/JobListView'))}
                   />
                   <Route
                     exact
-                    path="/app/management/products/create"
-                    component={lazy(() => import('src/views/management/ProductCreateView'))}
+                    path="/app/management/jobs/:jobId"
+                    component={lazy(() => import('src/views/management/JobDetailsView'))}
                   />
                   <Route
                     exact
