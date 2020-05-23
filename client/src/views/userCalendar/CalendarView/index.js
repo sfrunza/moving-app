@@ -236,7 +236,7 @@ function CalendarView({history}) {
 
   const getEvents = useCallback(() => {
     axios
-      .get('https://moving-co.herokuapp.com/api/v1/jobs.json')
+      .get('http://localhost:3001/api/v1/jobs.json')
       .then((response) => {
         let data = response.data;
         let arr = []

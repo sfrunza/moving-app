@@ -85,7 +85,7 @@ function ProjectDetails({
           // Do API call to store step data in server session
           // It is important to have it on server to be able to reuse it if user
           // decides to continue later.
-          fetch('https://moving-co.herokuapp.com/api/v1/customers.json',{
+          fetch('http://localhost:3001/api/v1/customers.json',{
               method: "POST",
               body: JSON.stringify(values),
               headers: {

@@ -30,7 +30,7 @@ function JobListView() {
 
   const getJobs = useCallback(() => {
     axios
-      .get('https://moving-co.herokuapp.com/api/v1/jobs.json')
+      .get('http://localhost:3001/api/v1/jobs.json')
       .then((response) => {
         if (isMountedRef.current) {
           setJobs(response.data);

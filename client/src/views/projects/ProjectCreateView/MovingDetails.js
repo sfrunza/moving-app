@@ -317,7 +317,7 @@ function MovingDetails({
         setSubmitting
       }) => {
         try {
-          // fetch('https://moving-co.herokuapp.com/api/v1/jobs.json',{
+          // fetch('http://localhost:3001/api/v1/jobs.json',{
           //     method: "POST",
           //     body: JSON.stringify(values),
           //     headers: {
@@ -325,7 +325,7 @@ function MovingDetails({
           //       'Content-Type': 'application/json'
           //     },
           //   })
-          //   fetch('https://moving-co.herokuapp.com/api/v1/origins.json',{
+          //   fetch('http://localhost:3001/api/v1/origins.json',{
           //       method: "POST",
           //       body: JSON.stringify(values.origin),
           //       headers: {
@@ -333,7 +333,7 @@ function MovingDetails({
           //         'Content-Type': 'application/json'
           //       },
           //     })
-          //     fetch('https://moving-co.herokuapp.com/api/v1/destinations.json',{
+          //     fetch('http://localhost:3001/api/v1/destinations.json',{
           //         method: "POST",
           //         body: JSON.stringify(values.destination),
           //         headers: {

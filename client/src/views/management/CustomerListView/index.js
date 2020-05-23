@@ -30,7 +30,7 @@ function CustomerListView() {
 
   const getCustomers = useCallback(() => {
     axios
-      .get('https://moving-co.herokuapp.com/api/v1/customers.json')
+      .get('http://localhost:3001/api/v1/customers.json')
       .then((response) => {
         if (isMountedRef.current) {
           setCustomers(response.data);
