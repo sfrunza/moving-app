@@ -414,7 +414,7 @@ class MovingResult extends Component {
 
          arr4['4th floor']['elevator building']['2 Bedroom apartment'] = this.returnFunction('2', 80, '2 - 4')
          arr4['4th floor']['1st/Ground floor']['2 Bedroom apartment'] = this.returnFunction('3', 120, '5 - 7')
-         arr4['4th floor']['2nd floor']['2 Bedroom apartment'] = this.returnFunction('3', 120, '4 - 6')
+         arr4['4th floor']['2nd floor']['2 Bedroom apartment'] = this.returnFunction('4', 160, '5 - 7')
          arr4['4th floor']['3rd floor']['2 Bedroom apartment'] = this.returnFunction('4', 160, '5 - 7')
          arr4['4th floor']['4th floor']['2 Bedroom apartment'] = this.returnFunction('4', 160, '6 - 8')
          arr4['4th floor']['private house']['2 Bedroom apartment'] = this.returnFunction('3', 120, '5 - 7')
