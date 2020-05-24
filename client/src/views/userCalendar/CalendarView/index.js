@@ -230,14 +230,12 @@ function CalendarView({history}) {
   };
 
   const handleEventSelect = (arg) => {
-    console.log(history);
-    console.log(arg);
-    history.push(`/calendar/${arg.event.id}`);
+    window.open(`/calendar/${arg.event.id}`, '_blank');
   };
 
   const getEvents = useCallback(() => {
     axios
-      .get('http://localhost:3001/api/v1/jobs.json')
+      .get('/api/v1/jobs.json')
       .then((response) => {
         let data = response.data;
         let arr = []
