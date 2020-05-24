@@ -232,8 +232,9 @@ function CalendarView({history}) {
 
   const getEvents = useCallback(() => {
     axios
-      .get('http://localhost:3001/api/v1/jobs.json')
+      .get('/api/v1/jobs.json')
       .then((response) => {
+        debugger
         let data = response.data;
         let arr = []
         let title = "";
