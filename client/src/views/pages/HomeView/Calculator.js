@@ -103,9 +103,9 @@ class Calculator extends Component {
   }
 
   render() {
-    console.log(this.state);
     let chooseFrom = 'Choose From...'
     let chooseTo = 'Choose To...'
+    const onlyNumbers = (e) => { e.target.value = e.target.value.replace(/[^0-9]/g, '') };
     if(this.state.submitted){
       return(
         <div className='form-container-result animated fadeIn slower'>
@@ -152,7 +152,6 @@ class Calculator extends Component {
                   <TextField
                     id="origin-number"
                     label="From Zip"
-                    type="number"
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -160,7 +159,10 @@ class Calculator extends Component {
                     name='origin'
                     value={this.state.origin}
                     onChange={this.handleChange}
-                    onInput = {(e) =>{ e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,5)}}
+                    inputProps={
+                      {maxLength: 5}
+                    }
+                    onInput={(e) => onlyNumbers(e) }
                   />
                 </div>
 
@@ -168,7 +170,6 @@ class Calculator extends Component {
                   <TextField
                     id="destination-number"
                     label="To Zip"
-                    type="number"
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -176,7 +177,10 @@ class Calculator extends Component {
                     name='destination'
                     value={this.state.destination}
                     onChange={this.handleChange}
-                    onInput = {(e) =>{ e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,5)}}
+                    inputProps={
+                      {maxLength: 5}
+                    }
+                    onInput={(e) => onlyNumbers(e) }
                   />
                 </div>
               </div>

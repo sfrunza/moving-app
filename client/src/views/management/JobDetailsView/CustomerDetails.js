@@ -161,7 +161,7 @@ function CustomerDetails({ job, className, ...rest }) {
 
               </TableCell>
             </TableRow>
-            
+
             <TableRow>
               <TableCell>Change Status</TableCell>
               <TableCell>
