@@ -65,6 +65,9 @@ const useStyles = makeStyles((theme) => ({
   },
   list : {
     width : 200,
+    '& :nth-child(2)': {
+      marginTop: '2em'
+    }
   },
   item: {
     padding: '1em 2em'
@@ -141,6 +144,12 @@ function TopBar({ className, ...rest }) {
              onKeyDown={()=>{setDrawer(false)}}>
 
             <List className = {classes.list}>
+
+              <ListItem key = {10} button className = {classes.item}>
+                <RouterLink to="/">
+                  <Logo className={classes.logo} />
+                </RouterLink>
+              </ListItem>
                <ListItem key = {1} button divider className = {classes.item}>
                  <Link
                    className={classes.link}
