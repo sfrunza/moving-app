@@ -345,8 +345,7 @@ function MovingDetails({
         setSubmitting
       }) => {
         try {
-          console.log(values);
-          fetch('http://localhost:3001/api/v1/jobs.json',{
+          fetch('/api/v1/jobs.json',{
               method: "POST",
               body: JSON.stringify(values),
               headers: {
@@ -354,7 +353,7 @@ function MovingDetails({
                 'Content-Type': 'application/json'
               },
             })
-            fetch('http://localhost:3001/api/v1/origins.json',{
+            fetch('/api/v1/origins.json',{
                 method: "POST",
                 body: JSON.stringify(values.origin),
                 headers: {
@@ -362,7 +361,7 @@ function MovingDetails({
                   'Content-Type': 'application/json'
                 },
               })
-              fetch('http://localhost:3001/api/v1/destinations.json',{
+              fetch('/api/v1/destinations.json',{
                   method: "POST",
                   body: JSON.stringify(values.destination),
                   headers: {

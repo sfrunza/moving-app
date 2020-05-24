@@ -63,7 +63,6 @@ const useStyles = makeStyles((theme) => ({
 function LoginView() {
   const classes = useStyles();
   const history = useHistory();
-  console.log(history);
 
   const handleSubmitSuccess = () => {
     history.push('/app');

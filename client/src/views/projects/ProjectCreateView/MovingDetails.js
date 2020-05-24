@@ -120,7 +120,6 @@ function MovingDetails({
   id,
   ...rest
 }) {
-  console.log(rest);
   const classes = useStyles();
   const [tag, setTag] = useState('');
   const phoneRegExp = /^(\d{3})(\d{3})(\d{4})$/
@@ -206,7 +205,6 @@ function MovingDetails({
                   />
                   <div className="autocomplete-dropdown-container">
                     {suggestions.map(suggestion => {
-                      console.log(suggestion);
                        const style = {
                         backgroundColor: suggestion.active ? '#e0e0e0' : '#fff',
                         cursor: 'pointer',
@@ -237,7 +235,6 @@ function MovingDetails({
     let touch = form.touched;
     let error = form.errors;
     let name = field.name
-    console.log(form.values);
     return (
       <KeyboardDatePicker
         autoOk
@@ -317,7 +314,7 @@ function MovingDetails({
         setSubmitting
       }) => {
         try {
-          // fetch('http://localhost:3001/api/v1/jobs.json',{
+          // fetch('/api/v1/jobs.json',{
           //     method: "POST",
           //     body: JSON.stringify(values),
           //     headers: {
@@ -325,7 +322,7 @@ function MovingDetails({
           //       'Content-Type': 'application/json'
           //     },
           //   })
-          //   fetch('http://localhost:3001/api/v1/origins.json',{
+          //   fetch('/api/v1/origins.json',{
           //       method: "POST",
           //       body: JSON.stringify(values.origin),
           //       headers: {
@@ -333,7 +330,7 @@ function MovingDetails({
           //         'Content-Type': 'application/json'
           //       },
           //     })
-          //     fetch('http://localhost:3001/api/v1/destinations.json',{
+          //     fetch('/api/v1/destinations.json',{
           //         method: "POST",
           //         body: JSON.stringify(values.destination),
           //         headers: {

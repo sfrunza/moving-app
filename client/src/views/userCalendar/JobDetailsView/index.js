@@ -28,7 +28,7 @@ function JobDetails({ match, history }) {
 
 
     const fetchJob = () => {
-      axios.get(`http://localhost:3001/api/v1/jobs/${jobPath}`).then((response) => {
+      axios.get(`/api/v1/jobs/${jobPath}`).then((response) => {
         if (mounted) {
           setJob(response.data);
         }
@@ -47,7 +47,7 @@ function JobDetails({ match, history }) {
   }
 
   const handleDelete = (job) => {
-    fetch(`http://localhost:3001/api/v1/jobs/${jobPath}`,
+    fetch(`/api/v1/jobs/${jobPath}`,
     {
       method: 'DELETE',
       headers: {

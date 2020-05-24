@@ -55,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
   addInfoSubTitle: {
     backgroundColor: '#f7f7f7',
     padding: '15px',
+    wordWrap: 'break-word'
   }
 }));
 
