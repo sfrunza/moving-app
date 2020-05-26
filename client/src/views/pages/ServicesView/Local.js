@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { Link as RouterLink } from 'react-router-dom';
 import {
   Avatar,
   Button,
@@ -9,7 +10,8 @@ import {
   Grid,
   Typography,
   makeStyles,
-  CardMedia
+  CardMedia,
+  Link
 } from '@material-ui/core';
 import BusinessIcon from '@material-ui/icons/Business';
 import HomeIcon from '@material-ui/icons/Home';
@@ -33,14 +35,20 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     display: 'flex',
+    textTransform: 'uppercase',
     margin: '3em auto',
     width: '15em',
+    justifyContent: 'center',
+    padding: '0.7em',
+    borderRadius: '4px',
+    fontSize: '0.875rem',
     fontFamily: "Maison Neue Demi",
     [theme.breakpoints.down('sm')]: {
       display: 'flex'
     },
     color: deepPurple[600],
     backgroundColor: theme.palette.common.white,
+    border: '1.4px solid',
     borderColor: deepPurple[500],
     '&:hover': {
       backgroundColor: deepPurple[50],
@@ -183,14 +191,16 @@ function Local({ className, ...rest }) {
             </Grid>
           </Grid>
         </Box>
-        <Button
-          variant="outlined"
-          component="a"
-          href="#"
-          className={classes.button}
-        >
-          Book Us Now
-        </Button>
+          <Link
+            className={classes.button}
+            color="textSecondary"
+            component={RouterLink}
+            to="/book"
+            underline="none"
+            variant="body2"
+          >
+            Book Us Now
+          </Link>
       </Container>
     </div>
   );

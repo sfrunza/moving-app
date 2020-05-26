@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { Link as RouterLink } from 'react-router-dom';
 import {
   Button,
   Box,
@@ -8,7 +9,8 @@ import {
   Grid,
   Typography,
   makeStyles,
-  CardMedia
+  CardMedia,
+  Link
 } from '@material-ui/core';
 import clock from 'src/assets/img/clock-copy.png'
 import calendar from 'src/assets/img/calendar.png'
@@ -41,10 +43,21 @@ const useStyles = makeStyles((theme) => ({
     margin: '3em auto'
   },
   button: {
-    color: deepPurple[600],
+    display: 'flex',
+    textTransform: 'uppercase',
     margin: '3em auto',
     width: '15em',
-    backgroundColor: theme.palette.common.dark,
+    justifyContent: 'center',
+    padding: '0.7em',
+    borderRadius: '4px',
+    fontSize: '0.875rem',
+    fontFamily: "Maison Neue Demi",
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex'
+    },
+    color: deepPurple[600],
+    backgroundColor: theme.palette.background.dark,
+    border: '1.4px solid',
     borderColor: deepPurple[500],
     '&:hover': {
       backgroundColor: deepPurple[50],
@@ -189,14 +202,16 @@ function Storage({ className, ...rest }) {
           variant="h1"
           align="center"
         >
-          <Button
-            variant="outlined"
-            component="a"
-            href="/book"
+          <Link
             className={classes.button}
+            color="textSecondary"
+            component={RouterLink}
+            to="/book"
+            underline="none"
+            variant="body2"
           >
-            Book us now
-          </Button>
+            Book Us Now
+          </Link>
         </Typography>
       </Container>
     </div>

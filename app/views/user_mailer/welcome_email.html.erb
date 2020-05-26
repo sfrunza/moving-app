@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Welcome to <%= link_to "InsightMoving", @url %>, <%= @customer.first_name %> <%= @customer.last_name %></h1>
+    <p>
+      your login is: <%= @customer.job_id %>.<br>
+    </p>
+    <p>
+      your password is: <%= @customer.last_name %>.<br>
+    </p>
+    <p>
+      To view your moving details, just follow this link: <%= link_to "View My Moving Details", @login_url %>.
+    </p>
+    <p>Thanks for choosing InsightMoving and have a great day!</p>
+  </body>
+</html>

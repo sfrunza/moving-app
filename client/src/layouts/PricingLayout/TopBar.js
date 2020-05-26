@@ -64,13 +64,13 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '4px'
   },
   list : {
-    width : 200,
-    '& :nth-child(2)': {
-      marginTop: '2em'
-    }
+    width : 200
   },
   item: {
-    padding: '1em 2em'
+    padding: '1em 2em',
+    '&:first-child': {
+      marginBottom: '2em'
+    }
   },
   padding: {
     paddingRight : 30,

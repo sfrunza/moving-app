@@ -64,22 +64,22 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '4px'
   },
   list : {
-    width : 200,
-    '& :nth-child(2)': {
-      marginTop: '2em'
-    }
+    width : 200
   },
   item: {
-    padding: '1em 2em'
+    padding: '1em 2em',
+    '&:first-child': {
+      marginBottom: '2em'
+    }
   },
   padding: {
     paddingRight : 30,
-    cursor : "pointer",
+    cursor : "pointer"
   },
   sideBarIcon: {
     padding : 0,
     color : "#546e7a",
-    cursor : "pointer",
+    cursor : "pointer"
   }
 }));
 
@@ -275,17 +275,17 @@ function TopBar({ className, ...rest }) {
             </Link>
           </Box>
           <Box flexGrow={1} />
-          <Divider className={classes.divider} />
-          <Link
-            className={classes.button}
-            color="textSecondary"
-            component={RouterLink}
-            to="/book"
-            underline="none"
-            variant="body2"
-          >
-            GET STARTED
-          </Link>
+            <Divider className={classes.divider} />
+            <Link
+              className={classes.button}
+              color="textSecondary"
+              component={RouterLink}
+              to="/book"
+              underline="none"
+              variant="body2"
+            >
+              GET STARTED
+            </Link>
         </Toolbar>
       </AppBar>
     )

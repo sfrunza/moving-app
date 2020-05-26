@@ -105,6 +105,7 @@ function Packing({ className, ...rest }) {
     <div
       className={clsx(classes.root, className)}
       {...rest}
+      id='packing'
     >
       <Container style={{maxWidth: '1000px'}}>
         <Typography

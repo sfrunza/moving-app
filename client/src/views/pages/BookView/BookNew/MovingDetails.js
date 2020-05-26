@@ -125,19 +125,6 @@ function MovingDetails({
   const [tag, setTag] = useState('');
   const phoneRegExp = /^(\d{3})(\d{3})(\d{4})$/
   const [open, setOpen] = React.useState(false);
-  const isMountedRef = useIsMountedRef();
-
-  const apiScript = useCallback(() => {
-    return (
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADEDKabHN5FBcOroOU1W7BzUam0Az8gGQ&libraries=places&callback=initMap"
-          async defer>
-      </script>
-    )
-  }, [isMountedRef]);
-
-  useEffect(() => {
-    apiScript();
-  }, [apiScript]);
 
   const handleClose = () => {
     setOpen(false);
@@ -196,10 +183,7 @@ function MovingDetails({
     }
 
       return (
-        <div>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADEDKabHN5FBcOroOU1W7BzUam0Az8gGQ&libraries=places&callback=initMap"
-            async defer>
-        </script>
+
         <PlacesAutocomplete
           value={field.value}
           onChange={search => {
@@ -251,7 +235,7 @@ function MovingDetails({
             );
           }}
         </PlacesAutocomplete>
-        </div>
+        
       );
   }
 
