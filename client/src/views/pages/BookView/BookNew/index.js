@@ -23,6 +23,7 @@ import {
   withStyles,
   colors
 } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import {
@@ -113,6 +114,10 @@ const useStyles = makeStyles((theme) => ({
   item:{
     width: '100%',
     maxWidth: '100%'
+  },
+  alert: {
+    fontSize: '16px',
+    fontFamily: "Maison Neue Normal"
   }
 }));
 
@@ -254,8 +259,7 @@ function ProjectCreateView() {
                     color="textSecondary"
                     align="center"
                   >
-                    Donec ut augue sed nisi ullamcorper posuere sit amet eu mauris.
-                    Ut eget mauris scelerisque.
+                    <Alert severity="info" className={classes.alert}>An email has been sent to you with Login and Password to view your Moving Details!</Alert>
                   </Typography>
                 </Box>
                 <Box
@@ -269,7 +273,7 @@ function ProjectCreateView() {
                     component={RouterLink}
                     to="/app/projects/1"
                   >
-                    View your Job Details
+                    View your Moving Details
                   </Button>
                 </Box>
               </Box>

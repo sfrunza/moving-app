@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { Link as RouterLink } from 'react-router-dom';
 import {
   Button,
   Box,
@@ -8,7 +9,8 @@ import {
   Grid,
   Typography,
   makeStyles,
-  CardMedia
+  CardMedia,
+  Link
 } from '@material-ui/core';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { deepPurple, green } from '@material-ui/core/colors'
@@ -29,13 +31,22 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   button: {
+    display: 'flex',
+    textTransform: 'uppercase',
+    width: '50%',
+    justifyContent: 'center',
+    padding: '0.7em',
+    borderRadius: '4px',
+    fontSize: '0.875rem',
     fontFamily: "Maison Neue Demi",
     [theme.breakpoints.down('sm')]: {
       display: 'flex',
-      margin: '2em 0px 0px'
+      margin: '2em 0px 0px',
+      width: '100%'
     },
     color: deepPurple[600],
     backgroundColor: theme.palette.common.white,
+    border: '1.4px solid',
     borderColor: deepPurple[500],
     '&:hover': {
       backgroundColor: deepPurple[50],
@@ -134,14 +145,16 @@ function Services({ className, ...rest }) {
                   <Alert severity="success" className={classes.alert}>
                     <AlertTitle>Safe, Fast and Reliable</AlertTitle>
                   </Alert>
-                  <Button
-                    variant="outlined"
-                    component="a"
-                    href="https://sketch.cloud/s/q4a8e"
+                  <Link
                     className={classes.button}
+                    color="textSecondary"
+                    component={RouterLink}
+                    to="#"
+                    underline="none"
+                    variant="body2"
                   >
                     Read More
-                  </Button>
+                  </Link>
                 </Box>
               </Box>
             </Grid>
@@ -175,14 +188,16 @@ function Services({ className, ...rest }) {
                   <Alert severity="success" className={classes.alert}>
                     <AlertTitle>Flat Rate Moving</AlertTitle>
                   </Alert>
-                  <Button
-                    variant="outlined"
-                    component="a"
-                    href="https://sketch.cloud/s/q4a8e"
+                  <Link
                     className={classes.button}
+                    color="textSecondary"
+                    component={RouterLink}
+                    to="#"
+                    underline="none"
+                    variant="body2"
                   >
                     Read More
-                  </Button>
+                  </Link>
                 </Box>
               </Box>
             </Grid>
@@ -216,14 +231,16 @@ function Services({ className, ...rest }) {
                   <Alert severity="success" className={classes.alert}>
                     <AlertTitle>Full Home Packing Services</AlertTitle>
                   </Alert>
-                  <Button
-                    variant="outlined"
-                    component="a"
-                    href="https://sketch.cloud/s/q4a8e"
+                  <Link
                     className={classes.button}
+                    color="textSecondary"
+                    component={RouterLink}
+                    to="/services#packing"
+                    underline="none"
+                    variant="body2"
                   >
                     Read More
-                  </Button>
+                  </Link>
                 </Box>
               </Box>
             </Grid>
@@ -258,14 +275,16 @@ function Services({ className, ...rest }) {
                   <Alert severity="success" className={classes.alert}>
                     <AlertTitle>First 10 Days FREE Storage</AlertTitle>
                   </Alert>
-                  <Button
-                    variant="outlined"
-                    component="a"
-                    href="https://sketch.cloud/s/q4a8e"
+                  <Link
                     className={classes.button}
+                    color="textSecondary"
+                    component={RouterLink}
+                    to="#"
+                    underline="none"
+                    variant="body2"
                   >
                     Read More
-                  </Button>
+                  </Link>
                 </Box>
               </Box>
             </Grid>

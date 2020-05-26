@@ -20,6 +20,7 @@ module Api::V1
       @customer = Customer.new(customer_params)
 
       if @customer.save
+        UserMailer.with(customer: @customer).welcome_email.deliver_later
         render json: @customer, status: :created
       else
         render json: @customer.errors, status: :unprocessable_entity

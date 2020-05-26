@@ -13,25 +13,50 @@ import { deepPurple } from '@material-ui/core/colors'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: deepPurple[50],
-    paddingTop: '1em',
-    paddingBottom: '1em'
+    // backgroundColor: deepPurple[50],
+    // paddingTop: '1em',
+    // paddingBottom: '1em'
   },
   avatar: {
     backgroundColor: 'transparent',
-    color: '#000',
-    border: '1px solid',
-    borderColor: deepPurple[300],
-    fontWeight: 300
+    color: theme.palette.common.white,
+    borderColor: theme.palette.common.white,
+    fontWeight: 400,
+    fontSize: '2em'
 
   },
   text: {
     marginTop: '8px',
-    fontWeight: 300
+    color: theme.palette.common.white,
+    fontFamily: 'Maison Neue Demi'
+  },
+  firstBox: {
+    backgroundColor: '#e42c64',
+    display: 'flex',
+    justifyContent: 'center',
+    padding: '1em',
+    alignItems: 'baseline'
+
+  },
+  secondBox: {
+    backgroundColor: '#614ad3',
+    display: 'flex',
+    justifyContent: 'center',
+    padding: '1em',
+    alignItems: 'baseline'
+
   },
   lastBox: {
+    backgroundColor: '#2d248a',
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    padding: '1em',
+    alignItems: 'baseline'
+  },
+  container: {
+    paddingLeft: '0px',
+    paddingRight: '0px',
+    maxWidth: '100%'
   }
 }));
 
@@ -43,18 +68,17 @@ function SubHeader({ className, ...rest }) {
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <Container maxWidth="lg">
-        <Box mt={1}>
+      <Container className={classes.container}>
+        <Box>
           <Grid
             container
-            spacing={3}
           >
             <Grid
               item
               xs={12}
               md={4}
             >
-              <Box className={classes.lastBox}>
+              <Box className={classes.firstBox}>
                 <Avatar className={classes.avatar}>
                   01
                 </Avatar>
@@ -75,7 +99,7 @@ function SubHeader({ className, ...rest }) {
               xs={12}
               md={4}
             >
-              <Box className={classes.lastBox}>
+              <Box className={classes.secondBox}>
                 <Avatar className={classes.avatar}>
                   02
                 </Avatar>
