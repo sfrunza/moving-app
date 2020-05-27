@@ -5,6 +5,7 @@ import axios from 'axios';
 import Page from 'src/components/Page';
 import Header from './Header';
 import CustomerDetails from './CustomerDetails';
+import OtherActions from './OtherActions'
 import MovingDetails from './MovingDetails';
 
 const useStyles = makeStyles((theme) => ({
@@ -14,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
   },
   grid: {
     marginTop: theme.spacing(2)
+  },
+  otherActions: {
+    marginTop: '2em'
   }
 }));
 
@@ -76,7 +80,10 @@ function JobDetails({ match, history }) {
             xl={3}
             xs={12}
           >
-            <CustomerDetails job={job} />
+            <Grid item>
+              <CustomerDetails job={job} />
+              <OtherActions job={job} className={classes.otherActions}/>
+            </Grid>
           </Grid>
           <Grid
             item
