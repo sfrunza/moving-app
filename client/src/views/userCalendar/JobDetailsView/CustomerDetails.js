@@ -67,12 +67,11 @@ function CustomerDetails({ job, className, ...rest }) {
     },
     name: {
       fontSize: '16px',
-      color: purple[700],
       fontWeight: 'bold',
       fontSize: '16px'
     },
     emailButton: {
-      color: theme.palette.grey[700],
+      color: purple[500],
       display: 'flex',
       alignItems: 'center',
       textDecoration: 'none',
@@ -145,13 +144,9 @@ function CustomerDetails({ job, className, ...rest }) {
             <TableRow>
               <TableCell className={classes.infoField}>
                 <Avatar src="https://toppng.com/uploads/preview/roger-berry-avatar-placeholder-11562991561rbrfzlng6h.png" style={{height: '70px', width: '70px', marginBottom: '1em'}}/>
-                <Link
-                  component={RouterLink}
-                  to={`/app/management/customers/${job.customer.id}`}
-                  className={classes.name}
-                >
+                <Box className={classes.name}>
                   {job.customer.first_name} {job.customer.last_name}
-                </Link>
+                </Box>
                 <Box mt={1}>
                   <a className={classes.phoneButton} href={`tel:${job.customer.phone}`}><PhoneIcon style={{height: '15px'}}/>{formatPhoneNumber(job.customer.phone)}</a>
                 </Box>

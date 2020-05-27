@@ -26,6 +26,7 @@ import ReceiptIcon from '@material-ui/icons/ReceiptOutlined';
 import purple from '@material-ui/core/colors/deepPurple';
 import PhoneIcon from '@material-ui/icons/Phone';
 import EmailIcon from '@material-ui/icons/Email';
+import green from '@material-ui/core/colors/green';
 
 
 function CustomerDetails({ job, className, ...rest }) {
@@ -72,7 +73,7 @@ function CustomerDetails({ job, className, ...rest }) {
       fontSize: '16px'
     },
     emailButton: {
-      color: theme.palette.grey[700],
+      color: purple[500],
       display: 'flex',
       alignItems: 'center',
       textDecoration: 'none',
@@ -87,7 +88,7 @@ function CustomerDetails({ job, className, ...rest }) {
       alignItems: 'center',
       textDecoration: 'none',
       '&:hover': {
-        color: purple[500],
+        color: green[700],
         textDecoration: 'underline'
       }
     },
