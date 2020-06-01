@@ -27,8 +27,10 @@ const db = {
 
 mock.onPost('/api/account/login').reply((config) => {
   const { email, password } = JSON.parse(config.data);
+  console.log(email);
+  console.log(password);
 
-  if (email !== 'admin@devias.io' || password !== 'admin') {
+  if (email !== 'admin@mail.ru' || password !== 'admin') {
     return [400, { message: 'Please check your email and password' }];
   }
 

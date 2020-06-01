@@ -16,30 +16,9 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 200,
     paddingBottom: 200,
     textAlign: 'center',
-    [theme.breakpoints.down('md')]: {
-      paddingTop: 60,
-      paddingBottom: 60,
-    }
-  },
-  image: {
-    perspectiveOrigin: 'left center',
-    transformStyle: 'preserve-3d',
-    perspective: 1500,
-    '& > img': {
-      maxWidth: '90%',
-      height: 'auto',
-      transform: 'rotateY(-35deg) rotateX(15deg)',
-      backfaceVisibility: 'hidden',
-      boxShadow: theme.shadows[16]
-    }
-  },
-  shape: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    '& > img': {
-      maxWidth: '90%',
-      height: 'auto'
+    [theme.breakpoints.down('sm')]: {
+      paddingTop: 80,
+      paddingBottom: 80,
     }
   },
   header: {
@@ -65,7 +44,7 @@ function Header({ className, ...rest }) {
       <Container maxWidth="lg">
         <Grid
           container
-          spacing={3}
+          // spacing={3}
           style={{justifyContent: 'center'}}
         >
           <Grid
@@ -78,12 +57,6 @@ function Header({ className, ...rest }) {
               height="100%"
             >
               <Typography
-                variant="overline"
-                color="secondary"
-              >
-                Introducing
-              </Typography>
-              <Typography
                 variant="h1"
                 className={classes.header}
               >
@@ -95,55 +68,6 @@ function Header({ className, ...rest }) {
                 >
                   We treat your belongings with the utmost care
                 </Typography>
-              </Box>
-              <Box mt={3} className={classes.items}>
-                <Grid
-                  container
-                  spacing={3}
-                >
-                  <Grid item>
-                    <Typography
-                      variant="h1"
-                      color="secondary"
-                    >
-                      30+
-                    </Typography>
-                    <Typography
-                      variant="overline"
-                      color="textSecondary"
-                    >
-                      Demo Pages
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography
-                      variant="h1"
-                      color="secondary"
-                    >
-                      UX
-                    </Typography>
-                    <Typography
-                      variant="overline"
-                      color="textSecondary"
-                    >
-                      Complete Flows
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography
-                      variant="h1"
-                      color="secondary"
-                    >
-                      300+
-                    </Typography>
-                    <Typography
-                      variant="overline"
-                      color="textSecondary"
-                    >
-                      Components
-                    </Typography>
-                  </Grid>
-                </Grid>
               </Box>
             </Box>
           </Grid>

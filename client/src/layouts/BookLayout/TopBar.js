@@ -5,8 +5,6 @@ import PropTypes from 'prop-types';
 import {
   AppBar,
   Box,
-  Button,
-  Divider,
   Toolbar,
   Link,
   makeStyles,
@@ -106,7 +104,7 @@ function TopBar({ className, ...rest }) {
     return () => {
       mounted = false;
     };
-  });
+  }, []);
 
   const createDrawer = () => {
     return (
@@ -194,7 +192,7 @@ function TopBar({ className, ...rest }) {
                    underline="none"
                    variant="body2"
                  >
-                   Gallery
+                   Our Work
                  </Link>
                </ListItem>
                <ListItem key = {4} button divider className = {classes.item}>
@@ -270,7 +268,7 @@ function TopBar({ className, ...rest }) {
               underline="none"
               variant="body2"
             >
-              Gallery
+              Our Work
             </Link>
             <Link
               className={classes.link}

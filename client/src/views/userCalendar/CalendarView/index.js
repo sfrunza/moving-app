@@ -31,6 +31,7 @@ import Header from './Header';
 import Toolbar from './Toolbar';
 import AddEditEventModal from './AddEditEventModal';
 import green from '@material-ui/core/colors/green';
+import deepOrange from '@material-ui/core/colors/deepOrange';
 import MoveToInboxIcon from '@material-ui/icons/MoveToInbox';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 
@@ -38,8 +39,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
     minHeight: '100%',
-    width: 'auto',
-    minWidth :'1200px',
+    minWidth :'1600px',
     paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(3)
   },
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
       borderColor: theme.palette.divider
     },
     '& .fc-unthemed td.fc-today': {
-      backgroundColor: theme.palette.background.dark
+      backgroundColor: deepOrange[50]
     },
     '& .fc-head': {
       backgroundColor: theme.palette.background.dark
@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
       fontWeight: theme.typography.fontWeightMedium,
       color: theme.palette.text.secondary,
       padding: theme.spacing(1),
-      backgroundColor: theme.palette.background.dark
+      backgroundColor: theme.palette.background.dark,
     },
     '& .fc-day-top': {
       ...theme.typography.body2
@@ -92,10 +92,11 @@ const useStyles = makeStyles((theme) => ({
     },
     '& .fc-event:hover': {
       color: '#275827',
-      textDecoration: 'none'
+      textDecoration: 'none',
+      cursor: 'pointer'
     },
     '& .fc-event': {
-      backgroundColor: green[50],
+      backgroundColor: 'transparent',
       color: theme.palette.secondary.contrastText,
       border: 'none',
       margin: '2px',
@@ -106,12 +107,24 @@ const useStyles = makeStyles((theme) => ({
       },
       '& .fc-title': {
         ...theme.typography.body1,
-        color: '#275827',
+        color: green[700],
+        display: 'flex',
+        justifyContent: 'space-between',
         fontSize: '12px'
       }
     },
     '& .fc-list-empty': {
       ...theme.typography.subtitle1
+    },
+    '& .fc-day-grid.fc-row.fc-week.fc-widget-content': {
+      height: '300px !important'
+    },
+    '& .fc-day-number': {
+      float: 'left !important'
+    },
+    '& tbody .fc-row': {
+      height: 'auto !important',
+      minHeight: '128px !important'
     }
   }
 }));
@@ -126,16 +139,32 @@ function CalendarView({history}) {
   const [view, setView] = useState(mobileDevice ? 'listWeek' : 'dayGridMonth');
   const [date, setDate] = useState(moment().toDate());
   const [events, setEvents] = useState(null);
-  const [job, setJob] = useState()
+  const [jobSelect, setJobSelect] = useState(true)
   const [modal, setModal] = useState({
     event: null,
     mode: null,
     open: false
   });
 
+  function zoomOutMobile() {
+      var viewport = document.querySelector('meta[name="viewport"]');
+
+      if ( viewport ) {
+        viewport.content = "initial-scale=1";
+        viewport.content = "width=800";
+      }
+    }
+
+
+
   const EventDetail = ({ event, el }) => {
     let moveType = event.extendedProps.description
+    let status = event.extendedProps.status
     let symbol = "";
+    let completedColor = '';
+    if (status === "Completed") {
+      completedColor = "#5800ff"
+    }
     function image(){
       return (
         <img  src="https://freeiconshop.com/wp-content/uploads/edd/box-outline-filled.png" style={{width: '13px'}}/>
@@ -154,7 +183,7 @@ function CalendarView({history}) {
     }
       // extendedProps is used to access additional event properties.
       const content = (
-        <div className="fc-title" style={{display: 'flex', justifyContent: 'space-between'}}>
+        <div className="fc-title" style={{ color: `${completedColor}` }}>
           <div>{event.title}</div>
           <div style={{display: 'flex', alignItems: 'center'}}>{(symbol === "P") ? image() : symbol}</div>
           <div>4/2</div>
@@ -182,17 +211,6 @@ function CalendarView({history}) {
     }
   };
 
-  // const handleViewChange = (newView) => {
-  //   const calendarEl = calendarRef.current;
-  //
-  //   if (calendarEl) {
-  //     const calendarApi = calendarEl.getApi();
-  //
-  //     calendarApi.changeView(newView);
-  //     setView(newView);
-  //   }
-  // };
-
   const handleDatePrev = () => {
     const calendarEl = calendarRef.current;
 
@@ -215,22 +233,13 @@ function CalendarView({history}) {
     }
   };
 
-  const handleEventAddClick = () => {
-    setModal({
-      mode: 'add',
-      open: true,
-      event: {
-        allDay: false,
-        description: '',
-        end: moment().add(30, 'minutes').toDate(),
-        start: moment().toDate(),
-        title: ''
-      }
-    });
-  };
-
   const handleEventSelect = (arg) => {
-    window.open(`/calendar/${arg.event.id}`, '_blank');
+    let status = arg.event.extendedProps.status;
+    if (status === "Completed") {
+      return null
+    } else {
+      window.open(`/calendar/${arg.event.id}`, '_blank');
+    }
   };
 
   const getEvents = useCallback(() => {
@@ -243,11 +252,12 @@ function CalendarView({history}) {
         let description = "";
         let date = [];
         data.map((info) => {
-          setJob(info)
-          title = info.customer.first_name + " " + info.customer.last_name
-          description = info.status
-          date = moment(info.pick_up_date).format('YYYY-MM-DD')
-          return arr.push({ "id":info.id, "title": title, "date": date, "description": info.move_type, 'customRender': true})
+          if (info.status === "Confirmed" || info.status === "Completed") {
+            title = info.customer.first_name + " " + info.customer.last_name
+            description = info.status
+            date = moment(info.pick_up_date).format('YYYY-MM-DD')
+            return arr.push({ "id":info.id, "title": title, "date": date, "description": info.move_type, "status": info.status, 'customRender': true})
+          }
         })
 
         if (isMountedRef.current) {
@@ -270,6 +280,7 @@ function CalendarView({history}) {
       className={classes.root}
       title="Calendar"
     >
+    {zoomOutMobile()}
       <Container maxWidth={false}>
         <Toolbar
           date={date}
@@ -288,14 +299,13 @@ function CalendarView({history}) {
             allDayMaintainDuration
             defaultDate={date}
             droppable
-            editable
             eventClick={handleEventSelect}
-            eventLimit
+            // eventLimit={6}
             eventResizableFromStart
             events={events}
             eventRender={EventDetail}
             header={false}
-            height={800}
+            height={700}
             ref={calendarRef}
             rerenderDelay={10}
             selectable
@@ -308,6 +318,7 @@ function CalendarView({history}) {
               timelinePlugin
             ]}
             fixedWeekCount={false}
+            contentHeight='auto'
           />
         </Paper>
       </Container>

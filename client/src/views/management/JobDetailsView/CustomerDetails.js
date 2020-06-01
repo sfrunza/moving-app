@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import moment from 'moment';
 import { makeStyles } from '@material-ui/styles';
 import {
   Card,
@@ -70,7 +69,6 @@ function CustomerDetails({ job, className, ...rest }) {
       fontSize: '16px',
       color: purple[700],
       fontWeight: 'bold',
-      fontSize: '16px'
     },
     emailButton: {
       color: purple[500],

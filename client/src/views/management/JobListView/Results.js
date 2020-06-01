@@ -11,7 +11,6 @@ import {
   Card,
   Checkbox,
   InputAdornment,
-  FormControlLabel,
   IconButton,
   Link,
   SvgIcon,
@@ -30,29 +29,6 @@ import {
   Search as SearchIcon
 } from 'react-feather';
 import Label from 'src/components/Label';
-
-const categoryOptions = [
-  {
-    id: 'all',
-    name: 'All'
-  },
-  {
-    id: 'dress',
-    name: 'Dress'
-  },
-  {
-    id: 'jewelry',
-    name: 'Jewelry'
-  },
-  {
-    id: 'blouse',
-    name: 'Blouse'
-  },
-  {
-    id: 'beauty',
-    name: 'Beauty'
-  }
-];
 
 const avalabilityOptions = [
   {
@@ -75,25 +51,6 @@ const avalabilityOptions = [
   {
     id: 'confirmed',
     name: 'Confirmed'
-  }
-];
-
-const sortOptions = [
-  {
-    value: 'updatedAt|desc',
-    label: 'Last update (newest first)'
-  },
-  {
-    value: 'updatedAt|asc',
-    label: 'Last update (oldest first)'
-  },
-  {
-    value: 'createdAt|desc',
-    label: 'Creation date (newest first)'
-  },
-  {
-    value: 'createdAt|asc',
-    label: 'Creation date (oldest first)'
   }
 ];
 
@@ -225,7 +182,6 @@ function Results({ className, jobs, ...rest }) {
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
   const [query, setQuery] = useState('');
-  const [sort, setSort] = useState(sortOptions[0].value);
   const [filters, setFilters] = useState({
     category: null,
     availability: null,
@@ -235,21 +191,6 @@ function Results({ className, jobs, ...rest }) {
   const handleQueryChange = (event) => {
     event.persist();
     setQuery(event.target.value);
-  };
-
-  const handleCategoryChange = (event) => {
-    event.persist();
-
-    let value = null;
-
-    if (event.target.value !== 'all') {
-      value = event.target.value;
-    }
-
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      category: value
-    }));
   };
 
   const handleAvailabilityChange = (event) => {
@@ -265,41 +206,6 @@ function Results({ className, jobs, ...rest }) {
       ...prevFilters,
       availability: value
     }));
-  };
-
-  const handleStockChange = (event) => {
-    event.persist();
-
-    let value = null;
-
-    if (event.target.checked) {
-      value = true;
-    }
-
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      inStock: value
-    }));
-  };
-
-  const handleShippableChange = (event) => {
-    event.persist();
-
-    let value = null;
-
-    if (event.target.checked) {
-      value = true;
-    }
-
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      isShippable: value
-    }));
-  };
-
-  const handleSortChange = (event) => {
-    event.persist();
-    setSort(event.target.value);
   };
 
   const handleSelectAllJobs = (event) => {

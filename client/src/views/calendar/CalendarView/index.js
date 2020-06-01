@@ -31,6 +31,7 @@ import Header from './Header';
 import Toolbar from './Toolbar';
 import AddEditEventModal from './AddEditEventModal';
 import green from '@material-ui/core/colors/green';
+import deepOrange from '@material-ui/core/colors/deepOrange';
 import MoveToInboxIcon from '@material-ui/icons/MoveToInbox';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 
@@ -49,13 +50,13 @@ const useStyles = makeStyles((theme) => ({
       borderColor: theme.palette.divider
     },
     '& .fc-unthemed td.fc-today': {
-      backgroundColor: theme.palette.background.dark
+      backgroundColor: deepOrange[50]
     },
     '& .fc-head': {
       backgroundColor: theme.palette.background.dark
     },
     '& .fc-body': {
-      backgroundColor: theme.palette.background.default
+      backgroundColor: theme.palette.background.default,
     },
     '& .fc-axis': {
       ...theme.typography.body2
@@ -93,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
       textDecoration: 'none'
     },
     '& .fc-event': {
-      backgroundColor: green[50],
+      backgroundColor: 'transparent',
       color: theme.palette.secondary.contrastText,
       border: 'none',
       opacity: 0.9,
@@ -103,12 +104,21 @@ const useStyles = makeStyles((theme) => ({
       },
       '& .fc-title': {
         ...theme.typography.body1,
-        color: '#275827',
+        color: green[700],
+        display: 'flex',
+        justifyContent: 'space-between',
         fontSize: '12px'
       }
     },
     '& .fc-list-empty': {
       ...theme.typography.subtitle1
+    },
+    '& tbody .fc-row': {
+      height: 'auto !important',
+      minHeight: '128px !important'
+    },
+    '& .fc-day-number': {
+      float: 'left !important'
     }
   }
 }));
@@ -132,7 +142,16 @@ function CalendarView({history}) {
 
   const EventDetail = ({ event, el }) => {
     let moveType = event.extendedProps.description
+    let status = event.extendedProps.status
     let symbol = "";
+    let completedColor = '';
+    if (status === "Completed") {
+      completedColor = "#5800ff"
+    } else if (status === "Needs Attention") {
+      completedColor = 'orange'
+    } else if (status === "Canceled") {
+      completedColor = 'red'
+    }
     function image(){
       return (
         <img  src="https://freeiconshop.com/wp-content/uploads/edd/box-outline-filled.png" style={{width: '13px'}}/>
@@ -151,7 +170,7 @@ function CalendarView({history}) {
     }
       // extendedProps is used to access additional event properties.
       const content = (
-        <div className="fc-title" style={{display: 'flex', justifyContent: 'space-between'}}>
+        <div className="fc-title" style={{ color: `${completedColor}` }}>
           <div>{event.title}</div>
           <div style={{display: 'flex', alignItems: 'center'}}>{(symbol === "P") ? image() : symbol}</div>
           <div>4/2</div>
@@ -244,7 +263,7 @@ function CalendarView({history}) {
           title = info.customer.first_name + " " + info.customer.last_name
           description = info.status
           date = moment(info.pick_up_date).format('YYYY-MM-DD')
-          return arr.push({ "id":info.id, "title": title, "date": date, "description": info.move_type, 'customRender': true})
+          return arr.push({ "id":info.id, "title": title, "date": date, "description": info.move_type, "status": info.status, 'customRender': true})
         })
 
         if (isMountedRef.current) {
@@ -301,12 +320,18 @@ function CalendarView({history}) {
             droppable
             editable
             eventClick={handleEventSelect}
-            eventLimit
+            eventLimit={7}
             eventResizableFromStart
             events={events}
             eventRender={EventDetail}
-
-
+            eventContent={(arg) => (
+              <>
+                <b>{arg.timeText}</b>&nbsp;
+                <i>{arg.event.title}</i>
+                <i>{arg.event.id}</i>
+                <i>{arg.event.date}</i>
+              </>
+            )}
             header={false}
             height={800}
             ref={calendarRef}
@@ -321,6 +346,7 @@ function CalendarView({history}) {
               timelinePlugin
             ]}
             fixedWeekCount={false}
+            contentHeight='auto'
           />
         </Paper>
       </Container>

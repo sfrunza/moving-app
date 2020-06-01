@@ -41,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
     padding: '6em 4em',
     display: 'block',
     height: '100%',
+    [theme.breakpoints.down('xs')]: {
+      padding: '6em 0em'
+    }
   },
   item: {
     display: 'flex',
@@ -73,6 +76,14 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontFamily: "Maison Neue Bold",
     marginBottom: '2em'
+  },
+  subtitle: {
+    fontFamily: "Maison Neue",
+    [theme.breakpoints.down('xs')]: {
+      width: '80%',
+      margin: 'auto',
+    }
+
   }
 }));
 
@@ -84,7 +95,7 @@ function Rates({ className, ...rest }) {
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <Container maxWidth="lg" className={classes.xlConatiner}>
+      <Container maxWidth="xl" className={classes.xlConatiner}>
         <Typography
           variant="h1"
           align="center"
@@ -117,7 +128,7 @@ function Rates({ className, ...rest }) {
                     variant="body1"
                     color="textPrimary"
                     align="center"
-                    style={{fontFamily: "Maison Neue" }}
+                    className={classes.subtitle}
                   >
                     Within Boston & surrounding 125 miles.
                   </Typography>
@@ -186,7 +197,7 @@ function Rates({ className, ...rest }) {
                     variant="body1"
                     color="textPrimary"
                     align="center"
-                    style={{fontFamily: "Maison Neue" }}
+                    className={classes.subtitle}
                   >
                     House Flat Rate Moving is available upon request.
                   </Typography>

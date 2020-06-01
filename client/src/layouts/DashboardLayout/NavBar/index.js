@@ -23,7 +23,6 @@ import ReceiptIcon from '@material-ui/icons/ReceiptOutlined';
 import {
   Briefcase as BriefcaseIcon,
   Calendar as CalendarIcon,
-  ShoppingCart as ShoppingCartIcon,
   Folder as FolderIcon,
   BarChart as BarChartIcon,
   Lock as LockIcon,
@@ -151,10 +150,10 @@ const navConfig = [
             title: 'Browse Projects',
             href: '/app/projects/browse'
           },
-          {
-            title: 'Create Project',
-            href: '/app/projects/create'
-          },
+          // {
+          //   title: 'Create Project',
+          //   href: '/app/projects/create'
+          // },
           {
             title: 'View Project',
             href: '/app/projects/1'

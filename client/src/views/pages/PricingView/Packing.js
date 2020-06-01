@@ -10,7 +10,6 @@ import {
   colors,
   makeStyles
 } from '@material-ui/core';
-import Page from 'src/components/Page';
 import box from 'src/assets/img/box.png';
 import packing from 'src/assets/img/PikPng.com_moving-png_2431322.png'
 

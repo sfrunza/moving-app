@@ -1,28 +1,20 @@
-import React, { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import moment from 'moment';
 import { makeStyles } from '@material-ui/styles';
 import {
   Card,
-  CardActions,
   CardHeader,
   CardContent,
   Divider,
-  Button,
   Table,
   TableBody,
   TableRow,
   TableCell,
-  TextField,
-  Link,
   colors,
   Box,
   Avatar
 } from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
-import ReceiptIcon from '@material-ui/icons/ReceiptOutlined';
 import purple from '@material-ui/core/colors/deepPurple';
 import PhoneIcon from '@material-ui/icons/Phone';
 import EmailIcon from '@material-ui/icons/Email';
@@ -30,7 +22,7 @@ import EmailIcon from '@material-ui/icons/Email';
 
 function CustomerDetails({ job, className, ...rest }) {
 
-  const [status, setStatus] = useState(job.job.status);
+  const status = job.job.status;
 
   const formatPhoneNumber = (phoneNumberString) => {
     let cleaned = ('' + phoneNumberString).replace(/\D/g, '')
@@ -68,7 +60,6 @@ function CustomerDetails({ job, className, ...rest }) {
     name: {
       fontSize: '16px',
       fontWeight: 'bold',
-      fontSize: '16px'
     },
     emailButton: {
       color: purple[500],
@@ -99,7 +90,6 @@ function CustomerDetails({ job, className, ...rest }) {
       alignItems: 'center'
     }
   }));
-  const statusOptions = ['Needs Attention', 'Confirmed','Canceled', 'Completed'];
   const statusColors = {
     "Needs Attention": colors.orange[600],
     "Canceled": colors.red[600],
@@ -107,27 +97,6 @@ function CustomerDetails({ job, className, ...rest }) {
     "Confirmed": colors.green[600]
   };
   const classes = useStyles();
-
-
-  const handleChange = (event) => {
-    event.persist();
-    setStatus(event.target.value);
-    handleStatusUpdate(event.target.value)
-  };
-
-
-  const handleStatusUpdate = (status) => {
-    fetch(`/api/v1/jobs/${job.job.id}`,
-    {
-      method: 'PUT',
-      body: JSON.stringify({status: status}),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then((response) => {
-        setStatus(status)
-      })
-  }
 
   return (
     <Card
