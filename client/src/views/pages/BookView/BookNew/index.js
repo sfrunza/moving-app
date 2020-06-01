@@ -6,13 +6,11 @@ import axios from 'axios';
 import {
   Avatar,
   Box,
-  Breadcrumbs,
   Button,
   Card,
   CardContent,
   Container,
   Grid,
-  Link,
   Paper,
   Step,
   StepConnector,
@@ -25,12 +23,10 @@ import {
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import {
   User as UserIcon,
   Star as StarIcon,
-  Truck as TruckIcon,
-  File as FileIcon
+  Truck as TruckIcon
 } from 'react-feather';
 import Page from 'src/components/Page';
 import MovingDetails from './MovingDetails';
@@ -126,8 +122,6 @@ function ProjectCreateView() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState(false);
-  const [job, setJob] = useState({});
-  const [customer, setCustomer] = useState({})
   const [nextJobId, setNextJobId] = useState(null)
 
   const getNextJobId = useCallback(() => {
@@ -152,14 +146,6 @@ function ProjectCreateView() {
 
   if (!nextJobId) {
     return null;
-  }
-
-  const onChangeCustomer = (updatedCustomer) => {
-    setCustomer({
-      customer: {
-          ...updatedCustomer
-        }
-      });
   }
 
   const handleNext = () => {
@@ -271,7 +257,7 @@ function ProjectCreateView() {
                     variant="contained"
                     color="secondary"
                     component={RouterLink}
-                    to="/app/projects/1"
+                    to={`/app/management/jobs/${nextJobId}`}
                   >
                     View your Moving Details
                   </Button>

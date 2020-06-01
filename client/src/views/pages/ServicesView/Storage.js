@@ -1,53 +1,69 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { Link as RouterLink } from 'react-router-dom';
 import {
-  Button,
   Box,
   Container,
   Grid,
   Typography,
   makeStyles,
-  CardMedia
+  CardMedia,
+  Link
 } from '@material-ui/core';
-import calendar from 'src/assets/img/calendar.png'
 import clock from 'src/assets/img/clock-copy.png'
-
+import calendar from 'src/assets/img/calendar.png'
+import { deepPurple } from '@material-ui/core/colors'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
     paddingTop: 128,
-    paddingBottom: 128,
-    textAligh: 'center'
+    paddingBottom: 128
   },
-  media: {
-    width: '50%',
-    height: '300px',
-    margin: 'auto',
-    marginBottom: '3em',
-    borderRadius: '3px'
-  },
-  button: {
-    display: 'flex',
-    margin: 'auto',
-    width: '15em'
+  avatar: {
+    backgroundColor: theme.palette.secondary.main,
+    color: theme.palette.secondary.contrastText
   },
   rates: {
     display: 'flex',
     justifyContent: 'space-around',
     margin: '2em 0px',
-    color: '#7e46ea'
+    color: deepPurple['A200']
   },
-  info: {
-    textAlign: 'center !important',
+  overnightRate: {
+    color: deepPurple['A200'],
+    margin: '2em auto',
+    textAlign: 'center'
+  },
+  media: {
+    width: '65%',
+    height: '300px',
+    margin: '3em auto'
+  },
+  button: {
     display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    margin: 'auto'
+    textTransform: 'uppercase',
+    margin: '3em auto',
+    width: '15em',
+    justifyContent: 'center',
+    padding: '0.7em',
+    borderRadius: '4px',
+    fontSize: '0.875rem',
+    fontFamily: "Maison Neue Demi",
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex'
+    },
+    color: deepPurple[600],
+    backgroundColor: theme.palette.background.dark,
+    border: '1.4px solid',
+    borderColor: deepPurple[500],
+    '&:hover': {
+      backgroundColor: deepPurple[50],
+    }
   },
-  gridPadding: {
-    padding: '4em 2em 0em !important'
+  subHeader: {
+    color: deepPurple['A200']
   }
 }));
 
@@ -70,12 +86,12 @@ function Storage({ className, ...rest }) {
         <Typography
           component="p"
           variant="overline"
-          color="secondary"
           align="center"
+          className={classes.subHeader}
         >
-          Storage pricing varies based on size of inventory, duration of storage, and season.
+          Storage pricing varies based on size of inventoryn duration and season.
         </Typography>
-        <Box className={classes.info}>
+        <Box mt={8}>
           <Grid
             container
             spacing={3}
@@ -83,15 +99,15 @@ function Storage({ className, ...rest }) {
             <Grid
               item
               xs={12}
-              sm={6}
-              className={classes.gridPadding}
+              md={6}
             >
-              <Box>
-                <Box align="center">
+              <Box display="flex">
+                <Box ml={2}>
                   <Typography
-                    variant="h3"
+                    variant="h4"
                     gutterBottom
                     color="textPrimary"
+                    align="center"
                   >
                     Up to 6 months storage
                   </Typography>
@@ -105,7 +121,6 @@ function Storage({ className, ...rest }) {
                     <Typography
                       variant="h5"
                       gutterBottom
-                      align="center"
                     >
                       Room
                       <br></br>
@@ -131,6 +146,7 @@ function Storage({ className, ...rest }) {
                   <CardMedia
                     className={classes.media}
                     image={calendar}
+                    title="Residential"
                   />
                 </Box>
               </Box>
@@ -138,15 +154,15 @@ function Storage({ className, ...rest }) {
             <Grid
               item
               xs={12}
-              sm={6}
-              className={classes.gridPadding}
+              md={6}
             >
-              <Box>
-                <Box align="center">
+              <Box display="flex">
+                <Box ml={2}>
                   <Typography
-                    variant="h3"
+                    variant="h4"
                     gutterBottom
                     color="textPrimary"
+                    align="center"
                   >
                     Overnight Storage
                   </Typography>
@@ -155,12 +171,12 @@ function Storage({ className, ...rest }) {
                     color="textPrimary"
                     gutterBottom
                   >
-                  In case you have to move out in one day, but are not able to move into your new residence until the next day, we offer low cost Overnight On-Truck Storage.
+                    In case you have to move out in one day, but are not able to move into your new residence until the next day, we offer low cost Overnight On-Truck Storage.
                   </Typography>
                   <Typography
                     variant="h5"
-                    style={{ color: '#7e46ea' }}
                     gutterBottom
+                    className={classes.overnightRate}
                   >
                   WE COLLECT $100 FOR KEEPING YOUR ITEMS OVERNIGHT.
                   </Typography>
@@ -175,21 +191,27 @@ function Storage({ className, ...rest }) {
                   <CardMedia
                     className={classes.media}
                     image={clock}
-                    title="Residential"
                   />
                 </Box>
               </Box>
             </Grid>
           </Grid>
         </Box>
-        <Button
-          variant="outlined"
-          component="a"
-          href="#"
-          className={classes.button}
+        <Typography
+          variant="h1"
+          align="center"
         >
-          Book Us Now
-        </Button>
+          <Link
+            className={classes.button}
+            color="textSecondary"
+            component={RouterLink}
+            to="/book"
+            underline="none"
+            variant="body2"
+          >
+            Book Us Now
+          </Link>
+        </Typography>
       </Container>
     </div>
   );

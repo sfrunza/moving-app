@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
     borderTopRightRadius: 4,
     borderBottomRightRadius: 4,
     padding: theme.spacing(3),
-    backgroundSize: '100%',
+    backgroundSize: '90%',
     color: theme.palette.common.white,
     display: 'flex',
     flexDirection: 'column',
@@ -107,7 +107,7 @@ function Packing({ className, ...rest }) {
       {...rest}
       id='packing'
     >
-      <Container style={{maxWidth: '1000px'}}>
+      <Container maxWidth="lg">
         <Typography
           variant="h1"
           align="center"

@@ -1,41 +1,25 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-shadow */
-import React, { useState, useEffect, useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import * as Yup from 'yup';
-import { Formik, ErrorMessage, Field, getIn } from 'formik';
-import moment from 'moment'
+import { Formik, Field, getIn } from 'formik';
+import moment from 'moment';
 import {
   Box,
   Button,
-  Chip,
-  FormHelperText,
-  IconButton,
-  SvgIcon,
   TextField,
   Typography,
   makeStyles,
-  Paper,
   MenuItem,
   FormControl,
   Select,
-  InputLabel,
-  Tooltip,
-  Fade
+  InputLabel
 } from '@material-ui/core';
-import { Plus as PlusIcon } from 'react-feather';
-import QuillEditor from 'src/components/QuillEditor';
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import PlacesAutocomplete from 'react-places-autocomplete';
-import {
-  geocodeByAddress,
-  geocodeByPlaceId,
-  getLatLng,
-} from 'react-places-autocomplete';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-import useIsMountedRef from 'src/hooks/useIsMountedRef';
-
 
 const movingTypeOptions = [
   { key: '6', text: 'Moving', value: 'Moving' },
@@ -72,11 +56,6 @@ const useStyles = makeStyles((theme) => ({
   addTab: {
     marginLeft: theme.spacing(2)
   },
-  tag: {
-    '& + &': {
-      marginLeft: theme.spacing(1)
-    }
-  },
   datePicker: {
     '& + &': {
       marginLeft: theme.spacing(2)
@@ -89,28 +68,61 @@ const useStyles = makeStyles((theme) => ({
   },
   flexConatiner: {
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    [theme.breakpoints.down('xs')]: {
+      flexDirection: 'column'
+    },
   },
   flexItem: {
     flex: '0 0 47%'
   },
   flexItemFirst: {
-    flex: '0 0 65%'
+    flex: '0 0 65%',
+    [theme.breakpoints.down('xs')]: {
+      flex: '0 0 100%'
+    },
   },
   flexItemSecond: {
-    flex: '0 0 30%'
+    flex: '0 0 33%',
+  },
+  itemsContainerApt: {
+    flex: '0 0 30%',
+    [theme.breakpoints.down('xs')]: {
+      flex: '0 0 27%'
+    }
+  },
+  itemsContainerType: {
+    flex: '0 0 65%',
+    [theme.breakpoints.down('xs')]: {
+      flex: '0 0 70%'
+    }
   },
   addressContainer: {
     display: 'flex',
     justifyContent: 'space-between'
   },
   typeContainer: {
-    flex: '0 0 47%',
-    justifyContent: 'space-between',
-    display: 'flex'
+    flex: '0 0 48%',
+    justifyContent: 'space-evenly',
+    display: 'flex',
+    flexDirection: 'column',
   },
-  addressItem: {
-    flex: '0 0 47%',
+  itemsContainer: {
+    justifyContent: 'space-between',
+    display: 'flex',
+  },
+  disabled: {
+    backgroundColor: '#efefef',
+  },
+  destination: {
+    [theme.breakpoints.down('xs')]: {
+      marginTop: '32px'
+    },
+  },
+  dateMtop: {
+    [theme.breakpoints.down('xs')]: {
+      marginTop: '32px'
+    },
   }
 }));
 
@@ -122,18 +134,6 @@ function MovingDetails({
   ...rest
 }) {
   const classes = useStyles();
-  const [tag, setTag] = useState('');
-  const phoneRegExp = /^(\d{3})(\d{3})(\d{4})$/
-  const [open, setOpen] = React.useState(false);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
 
   const movingSizeOptionsSelect = () => {
     let moveSize = movingSizeOptions.map((item, index) => {
@@ -174,12 +174,16 @@ function MovingDetails({
   }
 
   const renderPlacesAutocomplete = ({ field, form }) => {
+
     const name = field.name
-    let label = '';
-    if (name === 'origin.address') {
-      label = 'Origin Address'
+    let noOrigin = false;
+    let bgColor = '#fff';
+
+    if(form.values.move_type === "Loading Help" || form.values.move_type === "Packing Only" || form.values.move_type === "Inside Move" || form.values.move_type === "Moving" || form.values.move_type === "Moving with Storage"){
+      noOrigin = false
     } else {
-      label = 'Destination Address'
+      noOrigin = true;
+      bgColor = "#efefef";
     }
 
       return (
@@ -202,13 +206,84 @@ function MovingDetails({
               <div className="autocomplete-root">
                   <TextField
                     {...autocompleteInputProps}
-                    label={label}
+                    label="Origin Address"
                     variant="outlined"
                     placeholder="Type Full Address"
-                    style={{width: '100%'}}
+                    style={{width: '100%', backgroundColor: bgColor}}
                     error={getIn(form.errors, name) && getIn(form.touched, name)
                       ? true
                       : false}
+                    disabled={noOrigin}
+                  />
+                  <div className="autocomplete-dropdown-container">
+                    {suggestions.map(suggestion => {
+                       const style = {
+                        backgroundColor: suggestion.active ? '#e0e0e0' : '#fff',
+                        cursor: 'pointer',
+                        fontFamily: 'Maison Neue Normal',
+                        padding: '10px',
+                        fontSize: '14px',
+                        borderBottom: '1px solid #b7b7b7',
+                        display: 'flex',
+                        alignItems: 'center'
+                      }
+                      return (
+                          <div {...getSuggestionItemProps(suggestion, { style })}>
+                            <LocationOnIcon/><span style={{fontFamily: 'Maison Neue Demi'}}>{suggestion.formattedSuggestion.mainText}</span>,{" "}{suggestion.formattedSuggestion.secondaryText}
+                          </div>
+
+                      )
+                    })}
+                  </div>
+              </div>
+            );
+          }}
+        </PlacesAutocomplete>
+
+      );
+  }
+
+  const renderDestinationAutocomplete = ({ field, form }) => {
+
+    const name = field.name
+    let noDestination = false;
+    let bgColor = '#fff'
+
+    if(form.values.move_type === "Unloading Help" || form.values.move_type === "Moving" || form.values.move_type === "Moving with Storage"){
+      noDestination = false
+    } else {
+      noDestination = true
+      bgColor = '#efefef'
+    }
+
+      return (
+
+        <PlacesAutocomplete
+          value={field.value}
+          onChange={search => {
+            handleAddressChange({ name: field.name, form, search });
+          }}
+        >
+          {({ getInputProps, getSuggestionItemProps, suggestions }) => {
+            const additionalProps = {
+              name: field.name,
+              className: 'form-input__field',
+            };
+
+            const autocompleteInputProps = getInputProps(additionalProps);
+            return (
+
+              <div className="autocomplete-root">
+                  <TextField
+                    {...autocompleteInputProps}
+                    label="Destination Address"
+                    variant="outlined"
+                    placeholder="Type Full Address"
+                    style={{width: '100%', backgroundColor: bgColor}}
+                    error={getIn(form.errors, name) && getIn(form.touched, name)
+                      ? true
+                      : false}
+                    disabled={noDestination}
                   />
                   <div className="autocomplete-dropdown-container">
                     {suggestions.map(suggestion => {
@@ -235,7 +310,7 @@ function MovingDetails({
             );
           }}
         </PlacesAutocomplete>
-        
+
       );
   }
 
@@ -272,20 +347,20 @@ function MovingDetails({
     );
   };
 
-    function validateDate(value) {
-      let error;
-      if (value === 'Invalid date' || value === null) {
-        error = 'Required';
-      }
-      return error;
+  function validateDate(value) {
+    let error;
+    if (value === 'Invalid date' || value === null) {
+      error = 'Required';
     }
-    function validateAddress(value) {
-      let error;
-      if (value === '') {
-        error = 'Required';
-      }
-      return error;
+    return error;
+  }
+  function validateAddress(value) {
+    let error;
+    if (value === '') {
+      error = 'Required';
     }
+    return error;
+  }
 
   return (
     <Formik
@@ -380,7 +455,26 @@ function MovingDetails({
         setFieldError,
         touched,
         values,
-      }) => (
+      }) => {
+        let noOrigin = false;
+        let noDestination = false;
+        let backgroundColorDestination = '#fff'
+        let backgroundColorOrigin = '#fff'
+
+        if(values.move_type === "Loading Help" || values.move_type === "Packing Only" || values.move_type === "Inside Move"){
+          noDestination = true;
+          backgroundColorDestination = "#efefef";
+          values.destination = Object.assign(values.destination, values.origin);
+          delete errors.destination
+        }
+        if(values.move_type === "Unloading Help"){
+          noOrigin = true;
+          backgroundColorOrigin = "#efefef";
+          values.origin = Object.assign(values.origin, values.destination);
+          delete errors.origin;
+        }
+
+        return (
         <form
           onSubmit={handleSubmit}
           className={clsx(classes.root, className)}
@@ -417,7 +511,7 @@ function MovingDetails({
                 </Select>
               </FormControl>
             </Box>
-            <Box className={classes.flexItemSecond}>
+            <Box className={clsx(classes.flexItemSecond, classes.dateMtop)}>
               <Field name='pick_up_date' component={SelectDate} value={values.pick_up_date} validate={validateDate}/>
             </Box>
           </Box>
@@ -450,88 +544,104 @@ function MovingDetails({
             }
             </Box>
           </Box>
-          <Box mt={4} className={classes.flexConatiner}>
-            <Box className={classes.addressItem}>
-              <Field
-                  name="origin.address"
-                  value={values.origin.address}
-                  handleBlur={handleBlur}
-                  component={renderPlacesAutocomplete}
-              />
-            </Box>
-            <Box className={classes.addressItem}>
-              <Field
-                  name="destination.address"
-                  value={values.destination.address}
-                  handleBlur={handleBlur}
-                  component={renderPlacesAutocomplete}
-              />
-            </Box>
-          </Box>
-          <Box mt={4} mb={2} className={classes.flexConatiner}>
-            <Box className={classes.typeContainer}>
-              <Box className={classes.flexItemSecond}>
-                <TextField
-                  id="apt-number-origin"
-                  label="Apt#"
-                  defaultValue=""
-                  variant="outlined"
-                  name='origin[apt_number]'
-                  onChange={handleChange}
-                  style={{width: '100%'}}
-                />
-              </Box>
-              <Box style={{width: '100%'}} className={classes.flexItemFirst}>
-                <FormControl variant="outlined" style={{width: '100%'}} error={getIn(errors, 'origin.house_type') && getIn(touched, 'origin.house_type')
-                  ? true
-                  : false}>
-                  <InputLabel>Select elevator/stairs...</InputLabel>
-                  <Select
-                    required
-                    id="origin[house_type]"
-                    defaultValue=""
-                    label="Select elevator/stairs..."
-                    variant="outlined"
-                    name="origin.house_type"
-                    value={values.origin.house_type}
-                    onChange={handleChange}
-                  >
-                    {houseTypeOptionsSelect()}
-                  </Select>
-                </FormControl>
-              </Box>
-            </Box>
-            <Box className={classes.typeContainer}>
-              <Box className={classes.flexItemSecond}>
-                <TextField
-                  id="apt-number-destination"
-                  label="Apt#"
-                  defaultValue=""
-                  variant="outlined"
-                  name='destination[apt_number]'
-                  onChange={handleChange}
-                  style={{width: '100%'}}
-                />
-              </Box>
-              <Box style={{width: '100%'}} className={classes.flexItemFirst}>
-                <FormControl variant="outlined" style={{width: '100%'}} error={getIn(errors, 'destination.house_type') && getIn(touched, 'destination.house_type')
-                  ? true
-                  : false}>
-                  <InputLabel>Select elevator/stairs...</InputLabel>
-                  <Select
-                    required
-                    id="destination[house_type]"
-                    defaultValue=""
-                    label="Select elevator/stairs..."
-                    variant="outlined"
-                    name="destination.house_type"
-                    value={values.destination.house_type}
-                    onChange={handleChange}
 
-                  >
-                    {houseTypeOptionsSelect()}
-                  </Select>
-                </FormControl>
+
+          <Box mt={4} className={classes.flexConatiner}>
+
+            <Box className={classes.typeContainer}>
+              <Box>
+                <Field
+                    name="origin.address"
+                    value={values.origin.address}
+                    handleBlur={handleBlur}
+                    component={renderPlacesAutocomplete}
+                    disabled={noOrigin}
+                    validate={validateAddress}
+
+                />
+              </Box>
+              <Box className={classes.itemsContainer} mt={4}>
+                <Box className={classes.itemsContainerApt}>
+                  <TextField
+                    id="origin.apt_number"
+                    label="Apt#"
+                    defaultValue=""
+                    variant="outlined"
+                    name='origin.apt_number'
+                    onChange={handleChange}
+                    disabled={noOrigin}
+                    style={{width: '100%', backgroundColor: backgroundColorOrigin}}
+                  />
+                </Box>
+                <Box className={classes.itemsContainerType} style={{width: '100%'}}>
+                  <FormControl variant="outlined" style={{width: '100%'}} error={getIn(errors, 'origin.house_type') && getIn(touched, 'origin.house_type')
+                    ? true
+                    : false}>
+                    <InputLabel>Select elevator/stairs...</InputLabel>
+                    <Select
+                      required
+                      id="origin.house_type"
+                      defaultValue=""
+                      label="Select elevator/stairs..."
+                      variant="outlined"
+                      name="origin.house_type"
+                      value={values.origin.house_type}
+                      onChange={handleChange}
+                      disabled={noOrigin}
+                      style={{backgroundColor: backgroundColorOrigin}}
+                    >
+                      {houseTypeOptionsSelect()}
+                    </Select>
+                  </FormControl>
+                </Box>
+              </Box>
+            </Box>
+
+            <Box className={clsx(classes.destination, classes.typeContainer)}>
+              <Box>
+                <Field
+                    name="destination.address"
+                    value={values.destination.address}
+                    handleBlur={handleBlur}
+                    component={renderDestinationAutocomplete}
+                    validate={validateAddress}
+                />
+              </Box>
+              <Box className={classes.itemsContainer} mt={4}>
+                <Box className={classes.itemsContainerApt}>
+                  <TextField
+                    id="destination.apt_number"
+                    label="Apt#"
+                    defaultValue=""
+                    variant="outlined"
+                    name='destination.apt_number'
+                    onChange={handleChange}
+                    disabled={noDestination}
+                    style={{width: '100%', backgroundColor: backgroundColorDestination}}
+                  />
+                </Box>
+                <Box style={{width: '100%'}} className={classes.itemsContainerType}>
+                  <FormControl variant="outlined" style={{width: '100%'}} error={getIn(errors, 'destination.house_type') && getIn(touched, 'destination.house_type')
+                    ? true
+                    : false}>
+                    <InputLabel>Select elevator/stairs...</InputLabel>
+                    <Select
+                      required
+                      id="destination.house_type"
+                      defaultValue=""
+                      label="Select elevator/stairs..."
+                      variant="outlined"
+                      name="destination.house_type"
+                      value={values.destination.house_type}
+                      onChange={handleChange}
+                      disabled={noDestination}
+                      style={{backgroundColor: backgroundColorDestination}}
+
+                    >
+                      {houseTypeOptionsSelect()}
+                    </Select>
+                  </FormControl>
+                </Box>
               </Box>
             </Box>
           </Box>
@@ -568,9 +678,11 @@ function MovingDetails({
           </div>
         </form>
       )}
+    }
 
     </Formik>
   );
+
 }
 
 MovingDetails.propTypes = {

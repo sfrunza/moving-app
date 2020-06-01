@@ -4,7 +4,6 @@ import clsx from 'clsx';
 import { Link as RouterLink } from 'react-router-dom';
 import {
   Avatar,
-  Button,
   Box,
   Container,
   Grid,
@@ -27,7 +26,10 @@ const useStyles = makeStyles((theme) => ({
   media: {
     height: 165,
     marginBottom: '3em',
-    borderRadius: '3px'
+    borderRadius: '3px',
+    [theme.breakpoints.down('xs')]: {
+      marginBottom: '1em',
+    }
   },
   avatar: {
     backgroundColor: deepPurple['A200'],
@@ -58,11 +60,19 @@ const useStyles = makeStyles((theme) => ({
     color: deepPurple['A200']
   },
   item: {
-    [theme.breakpoints.down('sm')]: {
-      width: 'auto',
-      maxWidth: '450px',
-      margin: 'auto'
+    width: '30%',
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+      // maxWidth: '450px',
+      margin: '2em auto'
     }
+  },
+  gridContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between'
+
   }
 }));
 
@@ -93,17 +103,15 @@ function Local({ className, ...rest }) {
         <Box mt={8}>
           <Grid
             container
-            spacing={3}
+            className={classes.gridContainer}
           >
             <Grid
               item
-              xs={12}
-              md={4}
+              // xs={12}
+              // md={4}
+              className={classes.item}
             >
-              <Box display="flex" className={classes.item}>
-                <Avatar className={classes.avatar}>
-                  <HomeIcon/>
-                </Avatar>
+              <Box display="flex" >
                 <Box ml={2}>
                   <CardMedia
                     className={classes.media}
@@ -128,13 +136,11 @@ function Local({ className, ...rest }) {
             </Grid>
             <Grid
               item
-              xs={12}
-              md={4}
+              // xs={12}
+              // md={4}
+              className={classes.item}
             >
-              <Box display="flex" className={classes.item}>
-                <Avatar className={classes.avatar}>
-                  <BusinessIcon />
-                </Avatar>
+              <Box display="flex" >
                 <Box ml={2}>
                   <CardMedia
                     className={classes.media}
@@ -159,13 +165,11 @@ function Local({ className, ...rest }) {
             </Grid>
             <Grid
               item
-              xs={12}
-              md={4}
+              // xs={12}
+              // md={4}
+              className={classes.item}
             >
-              <Box display="flex" className={classes.item}>
-                <Avatar className={classes.avatar}>
-                  <LocalShippingIcon/>
-                </Avatar>
+              <Box display="flex">
                 <Box ml={2}>
                   <CardMedia
                     className={classes.media}

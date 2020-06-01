@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { Link as RouterLink } from 'react-router-dom';
 import {
-  Button,
   Container,
   Typography,
   makeStyles,
@@ -61,7 +60,7 @@ function Local({ className, ...rest }) {
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <Container maxWidth="lg" id='hourly-rates'>
+      <Container maxWidth="md" id='hourly-rates'>
         <Typography
           variant="h1"
           align="center"

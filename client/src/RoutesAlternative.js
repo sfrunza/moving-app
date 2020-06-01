@@ -196,11 +196,6 @@ function Routes() {
                   />
                   <Route
                     exact
-                    path="/app/projects/create"
-                    component={lazy(() => import('src/views/projects/ProjectCreateView'))}
-                  />
-                  <Route
-                    exact
                     path="/app/projects/:id"
                     component={lazy(() => import('src/views/projects/ProjectDetailsView'))}
                   />

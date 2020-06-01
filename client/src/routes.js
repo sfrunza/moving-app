@@ -10,7 +10,6 @@ import {
   Route
 } from 'react-router-dom';
 import DashboardLayout from 'src/layouts/DashboardLayout';
-import DocsLayout from 'src/layouts/DocsLayout';
 import CalendarLayout from 'src/layouts/CalendarLayout'
 import MainLayout from 'src/layouts/MainLayout';
 import ServicesLayout from 'src/layouts/ServicesLayout'
@@ -82,7 +81,6 @@ const routesConfig = [
       }
     ]
   },
-  ,
   {
     path: '/book',
     layout: BookLayout,
@@ -174,11 +172,6 @@ const routesConfig = [
       },
       {
         exact: true,
-        path: '/app/management/jobs/create',
-        component: lazy(() => import('src/views/management/ProductCreateView'))
-      },
-      {
-        exact: true,
         path: '/app/management/orders',
         component: lazy(() => import('src/views/management/OrderListView'))
       },
@@ -248,11 +241,11 @@ const routesConfig = [
         path: '/app/projects/browse',
         component: lazy(() => import('src/views/projects/ProjectBrowseView'))
       },
-      {
-        exact: true,
-        path: '/app/projects/create',
-        component: lazy(() => import('src/views/projects/ProjectCreateView'))
-      },
+      // {
+      //   exact: true,
+      //   path: '/app/projects/create',
+      //   component: lazy(() => import('src/views/projects/ProjectCreateView'))
+      // },
       {
         exact: true,
         path: '/app/projects/:id',

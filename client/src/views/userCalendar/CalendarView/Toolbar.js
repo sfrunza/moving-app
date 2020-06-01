@@ -6,39 +6,9 @@ import {
   Button,
   ButtonGroup,
   Grid,
-  Hidden,
-  IconButton,
-  Tooltip,
   Typography,
   makeStyles
 } from '@material-ui/core';
-import ViewConfigIcon from '@material-ui/icons/ViewComfyOutlined';
-import ViewWeekIcon from '@material-ui/icons/ViewWeekOutlined';
-import ViewDayIcon from '@material-ui/icons/ViewDayOutlined';
-import ViewAgendaIcon from '@material-ui/icons/ViewAgendaOutlined';
-
-const viewOptions = [
-  {
-    label: 'Month',
-    value: 'dayGridMonth',
-    icon: ViewConfigIcon
-  },
-  {
-    label: 'Week',
-    value: 'timeGridWeek',
-    icon: ViewWeekIcon
-  },
-  {
-    label: 'Day',
-    value: 'timeGridDay',
-    icon: ViewDayIcon
-  },
-  {
-    label: 'Agenda',
-    value: 'listWeek',
-    icon: ViewAgendaIcon
-  }
-];
 
 const useStyles = makeStyles(() => ({
   root: {}

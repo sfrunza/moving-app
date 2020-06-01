@@ -9,21 +9,15 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import { deepPurple } from '@material-ui/core/colors'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    // backgroundColor: deepPurple[50],
-    // paddingTop: '1em',
-    // paddingBottom: '1em'
-  },
+  root: {},
   avatar: {
     backgroundColor: 'transparent',
     color: theme.palette.common.white,
     borderColor: theme.palette.common.white,
-    fontWeight: 400,
-    fontSize: '2em'
-
+    fontSize: '2em',
+    fontFamily: 'Maison Neue Normal'
   },
   text: {
     marginTop: '8px',
@@ -79,9 +73,9 @@ function SubHeader({ className, ...rest }) {
               md={4}
             >
               <Box className={classes.firstBox}>
-                <Avatar className={classes.avatar}>
+                <Box className={classes.avatar}>
                   01
-                </Avatar>
+                </Box>
                 <Box ml={2}>
                   <Typography
                     variant="h5"
@@ -100,9 +94,9 @@ function SubHeader({ className, ...rest }) {
               md={4}
             >
               <Box className={classes.secondBox}>
-                <Avatar className={classes.avatar}>
+                <Box className={classes.avatar}>
                   02
-                </Avatar>
+                </Box>
                 <Box ml={2}>
                   <Typography
                     variant="h5"
@@ -121,9 +115,9 @@ function SubHeader({ className, ...rest }) {
               md={4}
             >
               <Box className={classes.lastBox}>
-                <Avatar className={classes.avatar}>
+                <Box className={classes.avatar}>
                   03
-                </Avatar>
+                </Box>
                 <Box ml={2}>
                   <Typography
                     variant="h5"

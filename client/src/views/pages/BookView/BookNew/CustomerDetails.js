@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-shadow */
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import * as Yup from 'yup';
@@ -8,17 +8,10 @@ import { Formik } from 'formik';
 import {
   Box,
   Button,
-  Chip,
-  FormHelperText,
-  IconButton,
-  SvgIcon,
   TextField,
   Typography,
   makeStyles,
-  Paper
 } from '@material-ui/core';
-import { Plus as PlusIcon } from 'react-feather';
-import QuillEditor from 'src/components/QuillEditor';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -42,10 +35,20 @@ const useStyles = makeStyles((theme) => ({
   },
   flexConatiner: {
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    [theme.breakpoints.down('xs')]: {
+      flexDirection: 'column'
+    },
+
   },
   flexItem: {
-    flex: '0 0 47%'
+    flex: '0 0 47%',
+  },
+  flexItemSecond: {
+    flex: '0 0 47%',
+    [theme.breakpoints.down('xs')]: {
+      marginTop: '32px'
+    },
   }
 }));
 
@@ -57,7 +60,6 @@ function ProjectDetails({
   ...rest
 }) {
   const classes = useStyles();
-  const [tag, setTag] = useState('');
   const phoneRegExp = /^(\d{3})(\d{3})(\d{4})$/
 
   return (
@@ -144,7 +146,7 @@ function ProjectDetails({
                 variant="outlined"
               />
             </Box>
-            <Box className={classes.flexItem}>
+            <Box className={classes.flexItemSecond}>
               <TextField
                 error={Boolean(touched.last_name && errors.last_name)}
                 fullWidth
@@ -172,7 +174,7 @@ function ProjectDetails({
                 variant="outlined"
               />
             </Box>
-            <Box className={classes.flexItem}>
+            <Box className={classes.flexItemSecond}>
               <TextField
                 error={Boolean(touched.phone && errors.phone)}
                 fullWidth

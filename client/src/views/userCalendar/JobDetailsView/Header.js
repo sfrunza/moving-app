@@ -1,24 +1,12 @@
-import React, { useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import {
   Typography,
   Grid,
-  Button,
   colors,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  Paper,
-  Breadcrumbs,
-  Link
 } from '@material-ui/core';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -45,23 +33,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1)
   }
 }));
-function PaperComponent(props) {
-  return (
-      <Paper {...props} />
-  );
-}
 
 function Header({ handleDelete, job, className, ...rest }) {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   return (
     <div

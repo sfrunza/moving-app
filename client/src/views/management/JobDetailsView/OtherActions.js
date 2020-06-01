@@ -11,7 +11,6 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import NotInterestedIcon from '@material-ui/icons/NotInterested';
 import BeachAccessIcon from '@material-ui/icons/BeachAccess';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';

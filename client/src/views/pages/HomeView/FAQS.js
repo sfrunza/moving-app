@@ -17,14 +17,20 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(6),
     '& dt': {
       marginTop: theme.spacing(2)
-    },
-    container: {
-      display: 'flex !important',
-      flexWrap: 'wrap !important'
-    },
-    item: {
-      flex: '0 50% !important',
-      boxSizing: 'border-box !important'
+    }
+  },
+  container: {
+    display: 'flex !important',
+    flexWrap: 'wrap !important',
+    [theme.breakpoints.down('sm')]: {
+      display: 'table !important'
+    }
+  },
+  item: {
+    fontFamily: "Maison Neue",
+    width: '80%',
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
     }
   }
 }));
@@ -73,7 +79,7 @@ function FAQS({ className, ...rest }) {
         <Typography
           variant="h1"
           color="textPrimary"
-          style={{fontFamily: "Maison Neue Bold" }}
+          style={{fontFamily: "Maison Neue Bold", textAlign: 'center' }}
         >
           Frequently asked questions
         </Typography>
@@ -82,7 +88,7 @@ function FAQS({ className, ...rest }) {
         </Box>
 
           <Grid
-            style={{display: 'flex', flexWrap: 'wrap'}}
+            className={classes.container}
           >
             {
               data.map(item => {
@@ -101,7 +107,7 @@ function FAQS({ className, ...rest }) {
                       <Typography
                         variant="body1"
                         color="textSecondary"
-                        style={{fontFamily: "Maison Neue", width: '80%' }}
+                        className={classes.item}
                       >
                         {item.answer}
                       </Typography>

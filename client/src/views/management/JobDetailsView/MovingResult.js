@@ -697,7 +697,7 @@ class MovingResult extends Component {
         <TableRow >
           <TableCell >Estimated Quote:</TableCell>
           <TableCell style={{fontWeight: 600, fontSize: '18px'}}>
-            <label>${time[0]*rate}</label> - <label>${time[4]*rate}</label>
+            <label>${time[0]*rate}</label> - <label>${time.slice(4)*rate}</label>
           </TableCell>
         </TableRow>
       </TableBody>

@@ -20,11 +20,17 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: theme.typography.fontWeightRegular,
     fontFamily: "Maison Neue Demi"
   },
-  rating: {
+  ratingConatiner: {
     display: 'flex',
     justifyContent: 'center',
     alignContent: 'center',
-    paddingBottom: '1em'
+    paddingBottom: '1em',
+    marginRight: '1em',
+  },
+  ratingStars: {
+    marginRight: '1em',
+    display: 'flex',
+    textAlign: 'left'
   },
   header: {
     fontFamily: 'Maison Neue Bold',
@@ -49,8 +55,8 @@ function Testimonials({ className, ...rest }) {
         >
           What People Are Saying
         </Typography>
-        <Box borderColor="transparent" className={classes.rating} mt={6}>
-          <Rating name="read-only" value={value} readOnly style={{marginRight: '1em'}}/>
+        <Box borderColor="transparent" className={classes.ratingConatiner} mt={6}>
+          <Rating value={value} readOnly className={classes.ratingStars}/>
           <Typography component="legend" style={{fontFamily: "Maison Neue"}}>
               Rating: 5 - 271 reviews
           </Typography>
@@ -71,7 +77,7 @@ function Testimonials({ className, ...rest }) {
           justifyContent="center"
           alignItems="center"
         >
-          <Avatar src="/static/home/olivier.png" />
+          <Avatar src="/static/home/olivier.png" alt="ReviewUser" />
           <Box ml={2}>
             <Typography
               variant="body1"

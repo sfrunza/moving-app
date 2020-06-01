@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import PerfectScrollbar from 'react-perfect-scrollbar';
 import MovingResult from './MovingResult'
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -9,15 +8,9 @@ import {
   CardHeader,
   CardContent,
   Divider,
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell,
   Box
 } from '@material-ui/core';
 import {
-  withScriptjs,
   withGoogleMap,
   GoogleMap,
   DirectionsRenderer,

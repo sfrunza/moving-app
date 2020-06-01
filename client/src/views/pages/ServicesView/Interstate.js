@@ -16,7 +16,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import inter from 'src/assets/img/inter.JPG'
+import inter from 'src/assets/img/inter2.jpg'
 import road from 'src/assets/img/road.png'
 import { deepPurple, indigo } from '@material-ui/core/colors'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -48,7 +48,8 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: 'none'
   },
   content: {
-    padding: theme.spacing(8, 4, 3, 4)
+    padding: theme.spacing(8, 4, 3, 4),
+    backgroundColor: theme.palette.background.dark,
   },
   icon: {
     backgroundColor: colors.blue[400],
@@ -107,7 +108,7 @@ function Interstate({ className, ...rest }) {
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <Container style={{maxWidth: '1000px'}}>
+      <Container maxWidth="lg">
         <Typography
           variant="h1"
           align="center"

@@ -5,10 +5,10 @@ import clsx from 'clsx';
 import {
   Box,
   Button,
-  Link,
   Container,
   Typography,
-  makeStyles
+  makeStyles,
+  Link
 } from '@material-ui/core';
 import { deepPurple } from '@material-ui/core/colors'
 
@@ -24,7 +24,14 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: deepPurple[500],
     '&:hover': {
       backgroundColor: deepPurple[700],
-    }
+    },
+    padding: '10px 10px',
+    borderRadius: '4px',
+    display: 'flex',
+    width: '16em',
+    justifyContent: 'center',
+    margin: '2em auto',
+    fontSize: '16px'
   },
   subHeader: {
     color: deepPurple['A200'],
@@ -61,22 +68,16 @@ function CTA({ className, ...rest }) {
         >
           Reserve your movers with a few clicks
         </Typography>
-        <Box
-          mt={6}
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Button
-            color="secondary"
+          <Link
+            className={classes.browseButton}
+            color="textSecondary"
             component={RouterLink}
             to="/book"
-            variant="contained"
-            className={classes.browseButton}
+            underline="none"
+            variant="body2"
           >
             Request Your Move Online
-          </Button>
-        </Box>
+          </Link>
       </Container>
     </div>
   );

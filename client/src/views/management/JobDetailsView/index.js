@@ -43,7 +43,7 @@ function JobDetails({ match, history }) {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [jobPath]);
 
   if (!job) {
     return null;
