@@ -235,7 +235,10 @@ function CalendarView({history}) {
 
   const handleEventSelect = (arg) => {
     let status = arg.event.extendedProps.status;
-    if (status === "Completed") {
+    let date = arg.event.start
+    let tomorrow = moment().add(1, 'day').endOf('day')
+
+    if (status === "Completed" || date > tomorrow ) {
       return null
     } else {
       window.open(`/calendar/${arg.event.id}`, '_blank');

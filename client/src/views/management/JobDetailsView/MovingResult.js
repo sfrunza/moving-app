@@ -625,7 +625,18 @@ class MovingResult extends Component {
             {this.props.job.job.pick_up_date}
           </TableCell>
         </TableRow>
-
+        {
+          (this.props.job.job.delivery_date === null )
+          ?
+          null
+          :
+            <TableRow>
+              <TableCell>Delivery Date: </TableCell>
+              <TableCell style={{fontWeight: 'bold'}}>
+                {this.props.job.job.delivery_date}
+              </TableCell>
+            </TableRow>
+        }
         <TableRow>
           <TableCell>Moving From: </TableCell>
           <TableCell>

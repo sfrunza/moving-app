@@ -625,7 +625,18 @@ class MovingResult extends Component {
             {this.props.job.job.pick_up_date}
           </TableCell>
         </TableRow>
-
+        {
+          (this.props.job.job.delivery_date === null )
+          ?
+          null
+          :
+            <TableRow>
+              <TableCell>Delivery Date: </TableCell>
+              <TableCell style={{fontWeight: 'bold'}}>
+                {this.props.job.job.delivery_date}
+              </TableCell>
+            </TableRow>
+        }
         <TableRow>
           <TableCell>Moving From: </TableCell>
           <TableCell>
@@ -697,7 +708,7 @@ class MovingResult extends Component {
         <TableRow >
           <TableCell >Estimated Quote:</TableCell>
           <TableCell style={{fontWeight: 600, fontSize: '18px'}}>
-            <label>${time[0]*rate}</label> - <label>${time[4]*rate}</label>
+            <label>${time[0]*rate}</label> - <label>${time.slice(4)*rate}</label>
           </TableCell>
         </TableRow>
       </TableBody>
