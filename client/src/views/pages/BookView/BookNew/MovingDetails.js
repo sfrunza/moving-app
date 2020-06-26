@@ -123,6 +123,10 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('xs')]: {
       marginTop: '32px'
     },
+  },
+  icon: {
+    position: 'relative',
+    top: '3px'
   }
 }));
 
@@ -199,6 +203,8 @@ function MovingDetails({
               name: field.name,
               className: 'form-input__field',
             };
+            const text = () => { return(<span>powered by </span>)}
+            const icon = () => { return(<img src="https://cdn.worldvectorlogo.com/logos/google-2015.svg" style={{width: '17%', marginLeft: '5px'}}/>)}
 
             const autocompleteInputProps = getInputProps(additionalProps);
             return (
@@ -224,17 +230,19 @@ function MovingDetails({
                         padding: '10px',
                         fontSize: '14px',
                         borderBottom: '1px solid #b7b7b7',
-                        display: 'flex',
                         alignItems: 'center'
                       }
                       return (
                           <div {...getSuggestionItemProps(suggestion, { style })}>
-                            <LocationOnIcon/><span style={{fontFamily: 'Maison Neue Demi'}}>{suggestion.formattedSuggestion.mainText}</span>,{" "}{suggestion.formattedSuggestion.secondaryText}
+                            <LocationOnIcon className={classes.icon}/><span style={{fontFamily: 'Maison Neue Demi'}}>{suggestion.formattedSuggestion.mainText}</span>,{" "}{suggestion.formattedSuggestion.secondaryText}
                           </div>
 
                       )
                     })}
                   </div>
+                  {
+                    suggestions.length != 0 ?<div style={{display: 'flex', alignItems: 'center', float: 'right', justifyContent: 'flex-end', marginTop: '5px'}}>{text()} {icon()}</div> : null
+                  }
               </div>
             );
           }}
@@ -270,6 +278,9 @@ function MovingDetails({
               className: 'form-input__field',
             };
 
+            const text = () => { return(<span>powered by </span>)}
+            const icon = () => { return(<img src="https://cdn.worldvectorlogo.com/logos/google-2015.svg" style={{width: '17%', marginLeft: '5px'}}/>)}
+
             const autocompleteInputProps = getInputProps(additionalProps);
             return (
 
@@ -294,18 +305,20 @@ function MovingDetails({
                         padding: '10px',
                         fontSize: '14px',
                         borderBottom: '1px solid #b7b7b7',
-                        display: 'flex',
                         alignItems: 'center'
                       }
                       return (
 
                           <div {...getSuggestionItemProps(suggestion, { style })}>
-                            <LocationOnIcon/><span style={{fontFamily: 'Maison Neue Demi'}}>{suggestion.formattedSuggestion.mainText}</span>,{" "}{suggestion.formattedSuggestion.secondaryText}
+                            <LocationOnIcon className={classes.icon}/><span style={{fontFamily: 'Maison Neue Demi'}}>{suggestion.formattedSuggestion.mainText}</span>,{" "}{suggestion.formattedSuggestion.secondaryText}
                           </div>
 
                       )
                     })}
                   </div>
+                  {
+                    suggestions.length != 0 ?<div style={{display: 'flex', alignItems: 'center', float: 'right', justifyContent: 'flex-end', marginTop: '5px'}}>{text()} {icon()}</div> : null
+                  }
               </div>
             );
           }}
