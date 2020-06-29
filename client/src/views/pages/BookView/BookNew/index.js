@@ -92,10 +92,11 @@ CustomStepIcon.propTypes = {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.dark,
+    backgroundImage: 'linear-gradient(to bottom, #663ab787, #663ab78c), url(https://images.unsplash.com/photo-1570129042283-dbebdfd894de?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80)',
+    backgroundSize: 'cover',
     minHeight: '100%',
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(3)
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1)
   },
   avatar: {
     backgroundColor: colors.red[600]
@@ -105,7 +106,7 @@ const useStyles = makeStyles((theme) => ({
     alignContent: 'center',
     maxWidth: '747px',
     margin: 'auto',
-    padding: '4em 0em'
+    padding: '2em 0em',
   },
   item:{
     width: '100%',
@@ -126,7 +127,7 @@ function ProjectCreateView() {
 
   const getNextJobId = useCallback(() => {
     axios
-      .get('/api/v1/jobs.json')
+      .get('http://localhost:3001/api/v1/jobs.json')
       .then((response) => {
         let newId;
         if (response.data.length === 0 ) {
@@ -165,7 +166,7 @@ function ProjectCreateView() {
       className={classes.root}
       title="Book"
     >
-      <Container maxWidth="lg">
+      <Container maxWidth="md">
         <Box mb={3}>
         </Box>
         {!completed ? (

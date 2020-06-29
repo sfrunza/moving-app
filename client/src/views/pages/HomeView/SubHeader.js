@@ -7,25 +7,31 @@ import {
   Container,
   Grid,
   Typography,
-  makeStyles
+  makeStyles,
+  Alert
 } from '@material-ui/core';
+import { deepPurple, indigo, green } from '@material-ui/core/colors'
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+    // paddingTop: 128,
+    // paddingBottom: 128,
+    // borderBottom: '12px solid white'
+  },
   avatar: {
     backgroundColor: 'transparent',
-    color: theme.palette.common.white,
-    borderColor: theme.palette.common.white,
+    color: theme.palette.common.dark,
+    borderColor: theme.palette.common.dark,
     fontSize: '2em',
     fontFamily: 'Maison Neue Normal'
   },
   text: {
     marginTop: '8px',
-    color: theme.palette.common.white,
-    fontFamily: 'Maison Neue Demi'
+    color: theme.palette.common.dark,
+    fontFamily: 'Maison Neue Normal'
   },
   firstBox: {
-    backgroundColor: '#e42c64',
+    // backgroundColor: '#e42c64',
     display: 'flex',
     justifyContent: 'center',
     padding: '1em',
@@ -33,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
   },
   secondBox: {
-    backgroundColor: '#614ad3',
+    // backgroundColor: '#614ad3',
     display: 'flex',
     justifyContent: 'center',
     padding: '1em',
@@ -41,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 
   },
   lastBox: {
-    backgroundColor: '#2d248a',
+    // backgroundColor: '#2d248a',
     display: 'flex',
     justifyContent: 'center',
     padding: '1em',
@@ -50,7 +56,13 @@ const useStyles = makeStyles((theme) => ({
   container: {
     paddingLeft: '0px',
     paddingRight: '0px',
-    maxWidth: '100%'
+    backgroundColor: green[50],
+    borderRadius: '4px',
+  },
+  header: {
+    textAlign: 'center',
+    paddingBottom: 20,
+    fontFamily: 'Maison Neue Bold',
   }
 }));
 
@@ -62,7 +74,7 @@ function SubHeader({ className, ...rest }) {
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <Container className={classes.container}>
+      <Container className={classes.container} maxWidth="xl">
         <Box>
           <Grid
             container
@@ -78,7 +90,7 @@ function SubHeader({ className, ...rest }) {
                 </Box>
                 <Box ml={2}>
                   <Typography
-                    variant="h5"
+                    variant="h4"
                     gutterBottom
                     color="textPrimary"
                     className={classes.text}
@@ -99,7 +111,7 @@ function SubHeader({ className, ...rest }) {
                 </Box>
                 <Box ml={2}>
                   <Typography
-                    variant="h5"
+                    variant="h4"
                     gutterBottom
                     color="textPrimary"
                     className={classes.text}
@@ -120,7 +132,7 @@ function SubHeader({ className, ...rest }) {
                 </Box>
                 <Box ml={2}>
                   <Typography
-                    variant="h5"
+                    variant="h4"
                     gutterBottom
                     color="textPrimary"
                     className={classes.text}

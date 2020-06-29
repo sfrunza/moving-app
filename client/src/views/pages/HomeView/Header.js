@@ -12,10 +12,13 @@ import Calculator from './Calculator'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7)), url(https://s3-us-east-2.amazonaws.com/redefined/wp-content/uploads/2020/03/12175952/Boston_cytis_pixabay.jpg)',
+    // backgroundImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7)), url(https://images.unsplash.com/photo-1570129042283-dbebdfd894de?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80)',
+      backgroundImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)), url(https://images.unsplash.com/photo-1570129042283-dbebdfd894de?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80)',
     backgroundSize: '100% 110%',
     paddingTop: 100,
     paddingBottom: 100,
+    backgroundRepeat: 'no-repeat',
+    // backgroundAttachment: 'fixed',
     [theme.breakpoints.down('md')]: {
       paddingTop: 60,
       paddingBottom: 60
@@ -83,7 +86,7 @@ function Header({ className, ...rest }) {
             >
               <Typography
                 variant="h1"
-                style={{color: '#fff', fontFamily: "Maison Neue Bold"}}
+                style={{color: '#fff', fontFamily: "Maison Neue Bold", textAlign: 'center'}}
               >
                 A Badass Moving Company in Boston.
               </Typography>

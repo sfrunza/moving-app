@@ -12,7 +12,7 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.dark,
     paddingTop: theme.spacing(6),
     paddingBottom: theme.spacing(6),
     '& dt': {
@@ -22,6 +22,8 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex !important',
     flexWrap: 'wrap !important',
+    maxWidth: '1100px',
+    margin: 'auto 0px auto auto',
     [theme.breakpoints.down('sm')]: {
       display: 'table !important'
     }
