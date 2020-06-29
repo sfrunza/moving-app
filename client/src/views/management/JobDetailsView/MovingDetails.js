@@ -123,7 +123,6 @@ function MovingDetails({ job, className, ...rest }) {
               }
             });
 
-
           }
         })
       )(props =>

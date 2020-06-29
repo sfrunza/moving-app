@@ -21,13 +21,13 @@ function HomeView() {
   return (
     <Page
       className={classes.root}
-      title="Home"
+      title="Insight Moving"
     >
       <Header />
-      <SubHeader />
       <Services />
       <Rates />
       <Testimonials />
+      <SubHeader />
       <CTA />
       <FAQS />
     </Page>

@@ -18,8 +18,8 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
-    paddingTop: 128,
-    paddingBottom: 128,
+    // paddingTop: 128,
+    paddingBottom: 18,
     [theme.breakpoints.down('sm')]: {
       paddingBottom: 20
     }
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '60px'
   },
   items: {
-    backgroundColor: '#fff',
+    backgroundColor: theme.palette.background.paper,
     padding: '6em 4em',
     display: 'block',
     height: '100%',
@@ -55,8 +55,12 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     fontFamily: "Maison Neue Normal",
     width: 'fit-content',
+    fontSize: '16px',
     margin: 'auto',
     color: indigo['A400'],
+    '&:hover': {
+      textDecoration: 'underline',
+    },
     alignItems: 'center',
     '& svg': {
       width: '0.8em'
@@ -75,7 +79,8 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     fontFamily: "Maison Neue Bold",
-    marginBottom: '2em'
+    // marginBottom: '2em',
+    padding: '2em'
   },
   subtitle: {
     fontFamily: "Maison Neue",
@@ -107,75 +112,85 @@ function Rates({ className, ...rest }) {
         <Box>
           <Grid
             container
-            spacing={3}
+            spacing={2}
           >
             <Grid
               item
               xs={12}
               md={6}
             >
-              <Box display="flex" className={classes.items}>
-                <Box className={classes.item}>
-                  <Typography
-                    variant="h2"
-                    color="textPrimary"
-                    align="center"
-                    style={{fontFamily: "Maison Neue Bold" }}
-                  >
-                    Local Hourly Rates
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    color="textPrimary"
-                    align="center"
-                    className={classes.subtitle}
-                  >
-                    Within Boston & surrounding 125 miles.
-                  </Typography>
-                  <Box my={2}>
-                    <Divider />
-                  </Box>
-                  <Link
-                    component={RouterLink}
-                    to="/pricing#hourly-rates"
-                    variant="body2"
-                    color="secondary"
-                    className={classes.link}
-                  >
-                    View all Pricing Plans <ChevronRightIcon />
-                  </Link>
-                  <Box className={classes.rates}>
+              <Link
+                component={RouterLink}
+                to="/pricing"
+                underline="none"
+                variant="body2"
+              >
+                <Box display="flex" className={classes.items}>
+                  <Box className={classes.item}>
                     <Typography
-                      variant="h5"
-                      style={{fontFamily: "Maison Neue Demi" }}
+                      variant="h2"
+                      color="textPrimary"
+                      align="center"
+                      style={{fontFamily: "Maison Neue Bold" }}
+                    >
+                      Local Hourly Rates
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      color="textPrimary"
+                      align="center"
+                      className={classes.subtitle}
+                    >
+                      Within Boston & surrounding 125 miles.
+                    </Typography>
+                    <Box my={2}>
+                      <Divider />
+                    </Box>
+                    <Typography
+                      variant="body1"
+                      color="textPrimary"
+                      gutterBottom
+                      className={classes.link}
+                    >
+                      View all Pricing Plans <ChevronRightIcon />
+                    </Typography>
+                    <Box className={classes.rates}>
+                      <Typography
+                        variant="h5"
+                        color="textPrimary"
+                        style={{fontFamily: "Maison Neue Demi" }}
 
-                    >
-                      2 MOVERS & TRUCK
-                    </Typography>
-                    <Typography
-                      variant="h5"
-                      style={{fontFamily: "Maison Neue Demi" }}
+                      >
+                        2 MOVERS & TRUCK
+                      </Typography>
+                      <Typography
+                        variant="h5"
+                        style={{fontFamily: "Maison Neue Demi" }}
+                        color="textPrimary"
 
-                    >
-                      <span className={classes.ratesSpan}>$90</span>/ hour
-                    </Typography>
-                  </Box>
-                  <Box className={classes.rates}>
-                    <Typography
-                      variant="h5"
-                      style={{fontFamily: "Maison Neue Demi" }}
-                    >
-                      3 MOVERS & TRUCK
-                    </Typography>
-                    <Typography
-                      variant="h5"
-                      style={{fontFamily: "Maison Neue Demi" }}
-                    >
-                      <span className={classes.ratesSpan}>$120</span>/ hour
-                    </Typography>
+                      >
+                        <span className={classes.ratesSpan}>$90</span>/ hour
+                      </Typography>
+                    </Box>
+                    <Box className={classes.rates}>
+                      <Typography
+                        variant="h5"
+                        color="textPrimary"
+                        style={{fontFamily: "Maison Neue Demi" }}
+                      >
+                        3 MOVERS & TRUCK
+                      </Typography>
+                      <Typography
+                        variant="h5"
+                        style={{fontFamily: "Maison Neue Demi" }}
+                        color="textPrimary"
+                      >
+                        <span className={classes.ratesSpan}>$120</span>/ hour
+                      </Typography>
+                    </Box>
                   </Box>
                 </Box>
-              </Box>
+              </Link>
             </Grid>
 
             <Grid
@@ -183,52 +198,60 @@ function Rates({ className, ...rest }) {
               xs={12}
               md={6}
             >
-              <Box display="flex" className={classes.items}>
-                <Box className={classes.item}>
-                  <Typography
-                    variant="h2"
-                    color="textPrimary"
-                    align="center"
-                    style={{fontFamily: "Maison Neue Bold" }}
-                  >
-                    Flat Rate Moving
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    color="textPrimary"
-                    align="center"
-                    className={classes.subtitle}
-                  >
-                    House Flat Rate Moving is available upon request.
-                  </Typography>
-                  <Box my={2}>
-                    <Divider />
+              <Link
+                component={RouterLink}
+                to="/pricing"
+                underline="none"
+                variant="body2"
+              >
+                <Box display="flex" className={classes.items}>
+                  <Box className={classes.item}>
+                    <Typography
+                      variant="h2"
+                      color="textPrimary"
+                      align="center"
+                      style={{fontFamily: "Maison Neue Bold" }}
+                    >
+                      Flat Rate Moving
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      color="textPrimary"
+                      align="center"
+                      className={classes.subtitle}
+                    >
+                      House Flat Rate Moving is available upon request.
+                    </Typography>
+                    <Box my={2}>
+                      <Divider />
+                    </Box>
+                    <Typography
+                      variant="body1"
+                      color="textPrimary"
+                      gutterBottom
+                      className={classes.link}
+                    >
+                      View Flat Rates <ChevronRightIcon />
+                    </Typography>
+                    <Typography
+                      variant="h5"
+                      style={{ margin: '3em 0em 1em 0em', fontFamily: "Maison Neue Demi"}}
+                      align="center"
+                      color="textPrimary"
+                    >
+                    NEW YORK <SyncAltIcon className={classes.icon}/>BOSTON
+                    </Typography>
+                    <Typography
+                      variant="h5"
+                      align="center"
+                      style={{fontFamily: "Maison Neue Demi" }}
+                      color="textPrimary"
+                    >
+                      from <span className={classes.ratesSpan}>$950</span>
+                    </Typography>
                   </Box>
-                  <Link
-                    component={RouterLink}
-                    to="/pricing#flat-rates"
-                    variant="body2"
-                    color="secondary"
-                    className={classes.link}
-                  >
-                    View Flat Rates <ChevronRightIcon />
-                  </Link>
-                  <Typography
-                    variant="h5"
-                    style={{ margin: '3em 0em 1em 0em', fontFamily: "Maison Neue Demi"}}
-                    align="center"
-                  >
-                  NEW YORK <SyncAltIcon className={classes.icon}/>BOSTON
-                  </Typography>
-                  <Typography
-                    variant="h5"
-                    align="center"
-                    style={{fontFamily: "Maison Neue Demi" }}
-                  >
-                    from <span className={classes.ratesSpan}>$950</span>
-                  </Typography>
                 </Box>
-              </Box>
+              </Link>
             </Grid>
           </Grid>
         </Box>

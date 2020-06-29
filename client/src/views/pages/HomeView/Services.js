@@ -12,59 +12,59 @@ import {
   Link
 } from '@material-ui/core';
 import { Alert, AlertTitle } from '@material-ui/lab';
-import { deepPurple, green } from '@material-ui/core/colors'
+import { deepPurple, indigo, green } from '@material-ui/core/colors'
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+// import box from 'src/assets/img/graphic-3578346_640.png';
+// import loc from 'src/assets/img/loc.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.default,
-    paddingTop: 128,
-    paddingBottom: 128
+    backgroundColor: theme.palette.background.white,
+    borderBottom: '15px solid white'
   },
   alert: {
-    backgroundColor: '#fff',
+    backgroundColor: 'transparent',
     color: green[500],
+    display: 'flex',
+    justifyContent: 'center',
     fontFamily: "Maison Neue Bold",
     padding: '6px 1px',
-    [theme.breakpoints.down('sm')]: {
-      display: 'none'
-    }
+    // [theme.breakpoints.down('sm')]: {
+    //   display: 'none'
+    // }
   },
   button: {
     display: 'flex',
-    textTransform: 'uppercase',
-    width: '50%',
+    width: 'fit-content',
+    margin: 'auto',
+    alignItems: 'center',
     justifyContent: 'center',
-    padding: '0.7em',
-    borderRadius: '4px',
-    fontSize: '0.875rem',
-    fontFamily: "Maison Neue Demi",
+    fontSize: '16px',
+    fontFamily: "Maison Neue Normal",
     [theme.breakpoints.down('sm')]: {
       display: 'flex',
-      margin: '2em 0px 0px',
       width: '100%'
     },
-    color: deepPurple[600],
-    backgroundColor: theme.palette.common.white,
-    border: '1.4px solid',
-    borderColor: deepPurple[500],
+    color: indigo['A400'],
+    backgroundColor: "transparent",
     '&:hover': {
-      backgroundColor: deepPurple[50],
+      textDecoration: 'underline',
     }
   },
   media: {
-    height: 140,
+    height: 250,
     margin: '1em auto',
     borderRadius: '4px',
     transition: 'all 0.5s ease',
-    '&:hover': {
-      transform: 'translateY(-8px)',
-    }
+    backgroundSize: 'contain'
   },
   box: {
     margin: 'auto !important',
+    textAlign: 'center',
     [theme.breakpoints.down('sm')]: {
       width: '100%'
-    }
+    },
+    padding: '4em 0em'
   },
   header: {
     fontFamily: "Maison Neue Bold",
@@ -78,10 +78,27 @@ const useStyles = makeStyles((theme) => ({
   },
   description: {
     fontFamily: "Maison Neue",
+    textAlign: 'center',
+    width: '60%',
+    margin: 'auto',
     [theme.breakpoints.down('sm')]: {
-      display: 'none'
+      width: '80%'
     }
-  }
+  },
+  service: {
+    backgroundColor: theme.palette.background.dark,
+  },
+  mainContainer: {
+    paddingLeft: '16px',
+    paddingRight: '16px',
+    [theme.breakpoints.down('sm')]: {
+      paddingLeft: '0px',
+      paddingRight: '0px',
+    },
+  },
+  arrow: {
+    width: '19px',
+  },
 }));
 
 function Services({ className, ...rest }) {
@@ -92,200 +109,213 @@ function Services({ className, ...rest }) {
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <Container maxWidth="lg">
-        <Typography
-          variant="h1"
-          align="center"
-          color="textPrimary"
-          style={{fontFamily: "Maison Neue Bold" }}
-        >
-          Complete solutions for your moving needs.
-        </Typography>
-        <Typography
-          component="p"
-          variant="overline"
-          align="center"
-          className={classes.subHeader}
-        >
-          SELECT THE SERVICE YOU NEED TO LEARN MORE.
-        </Typography>
-        <Box mt={8}>
+      <Container maxWidth="xl" className={classes.mainContainer}>
+        <Box mt={2}>
           <Grid
             container
-            spacing={3}
+            spacing={2}
           >
             <Grid
               item
-              xs={6}
-              sm={3}
+              xs={12}
+              sm={6}
             >
-              <Box display="flex">
-                <Box ml={2} className={classes.box}>
-                  <CardMedia
-                    className={classes.media}
-                    image="https://www.movesforseniors.com/wp-content/uploads/2018/05/senior-facilitation_small.jpg"
-                    title="Local Moving"
-                  />
-                  <Typography
-                    variant="h4"
-                    gutterBottom
-                    color="textPrimary"
-                    className={classes.header}
-                  >
-                    Local Moving
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    color="textPrimary"
-                    className={classes.description}
-                  >
-                    Hourly based full moving services in Metro Boston and 125 miles around it.
-                  </Typography>
-                  <Alert severity="success" className={classes.alert}>
-                    <AlertTitle>Safe, Fast and Reliable</AlertTitle>
-                  </Alert>
-                  <Link
-                    className={classes.button}
-                    color="textSecondary"
-                    component={RouterLink}
-                    to="#"
-                    underline="none"
-                    variant="body2"
-                  >
-                    Read More
-                  </Link>
+              <Link
+                className={classes.service}
+                component={RouterLink}
+                to="/services"
+                underline="none"
+                variant="body2"
+              >
+                <Box display="flex" className={classes.service}>
+                  <Box ml={2} className={classes.box}>
+
+                    <Typography
+                      variant="h1"
+                      gutterBottom
+                      color="textPrimary"
+                      className={classes.header}
+                    >
+                      Local Moving
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      color="textPrimary"
+                      className={classes.description}
+                    >
+                      Hourly based full moving services in Metro Boston and 125 miles around it.
+                    </Typography>
+                    <Alert severity="success" className={classes.alert}>
+                      <AlertTitle>Safe, Fast and Reliable</AlertTitle>
+                    </Alert>
+                    <Typography
+                      variant="body1"
+                      color="textPrimary"
+                      gutterBottom
+                      className={classes.button}
+                    >
+                      Read More <ChevronRightIcon className={classes.arrow}/>
+                    </Typography>
+                    <CardMedia
+                      className={classes.media}
+                      image="https://kiwimove.co.nz/wp-content/uploads/2019/06/moving-3671446_1280-1.png"
+                      title="Local Moving"
+                    />
+                  </Box>
                 </Box>
-              </Box>
+              </Link>
             </Grid>
             <Grid
               item
-              xs={6}
-              sm={3}
+              xs={12}
+              sm={6}
             >
-              <Box display="flex">
-                <Box ml={2} className={classes.box}>
-                  <CardMedia
-                    className={classes.media}
-                    image="https://vanexpressnj.com/wp-content/uploads/2019/10/road-signs-936137_640.jpg"
-                    title="Interstate Moving"
-                  />
-                  <Typography
-                    variant="h4"
-                    gutterBottom
-                    color="textPrimary"
-                    className={classes.header}
-                  >
-                    Interstate Moving
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    color="textPrimary"
-                    className={classes.description}
-                  >
-                    Flat Rate Moving. Same or Next Day moving services on distance up to 1,500 miles.
-                  </Typography>
-                  <Alert severity="success" className={classes.alert}>
-                    <AlertTitle>Flat Rate Moving</AlertTitle>
-                  </Alert>
-                  <Link
-                    className={classes.button}
-                    color="textSecondary"
-                    component={RouterLink}
-                    to="#"
-                    underline="none"
-                    variant="body2"
-                  >
-                    Read More
-                  </Link>
+              <Link
+                className={classes.service}
+                component={RouterLink}
+                to="/services"
+                underline="none"
+                variant="body2"
+              >
+                <Box display="flex" className={classes.service}>
+                  <Box ml={2} className={classes.box}>
+
+                    <Typography
+                      variant="h1"
+                      gutterBottom
+                      color="textPrimary"
+                      className={classes.header}
+                    >
+                      Interstate Moving
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      color="textPrimary"
+                      className={classes.description}
+                    >
+                      Flat Rate Moving. Same or Next Day moving services on distance up to 1,500 miles.
+                    </Typography>
+                    <Alert severity="success" className={classes.alert}>
+                      <AlertTitle>Flat Rate Moving</AlertTitle>
+                    </Alert>
+                    <Typography
+                      variant="body1"
+                      color="textPrimary"
+                      gutterBottom
+                      className={classes.button}
+                    >
+                      Read More <ChevronRightIcon className={classes.arrow}/>
+                    </Typography>
+                    <CardMedia
+                      className={classes.media}
+                      image="https://moveinterstate.com/wp-content/uploads/2020/02/Header-1.svg"
+                      title="Interstate Moving"
+                    />
+                  </Box>
                 </Box>
-              </Box>
+              </Link>
             </Grid>
             <Grid
               item
-              xs={6}
-              sm={3}
+              xs={12}
+              sm={6}
             >
-              <Box display="flex">
-                <Box ml={2} className={classes.box}>
-                  <CardMedia
-                    className={classes.media}
-                    image="https://www.thespruce.com/thmb/iiNTHSJr7-cMwIcbVryPdMKDuXI=/960x0/filters:no_upscale():max_bytes(150000):strip_icc()/moving_boxes-168274883-5908e7473df78c928394d7c2.jpg"
-                    title="Packing Services"
-                  />
-                  <Typography
-                    variant="h4"
-                    gutterBottom
-                    color="textPrimary"
-                    className={classes.header}
-                  >
-                    Packing Services
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    color="textPrimary"
-                    className={classes.description}
-                  >
-                    Our experienced movers will have all necessary packing materials to pack up everything.
-                  </Typography>
-                  <Alert severity="success" className={classes.alert}>
-                    <AlertTitle>Full Home Packing Services</AlertTitle>
-                  </Alert>
-                  <Link
-                    className={classes.button}
-                    color="textSecondary"
-                    component={RouterLink}
-                    to="/services#packing"
-                    underline="none"
-                    variant="body2"
-                  >
-                    Read More
-                  </Link>
+              <Link
+                className={classes.service}
+                component={RouterLink}
+                to="/services"
+                underline="none"
+                variant="body2"
+              >
+                <Box display="flex" className={classes.service}>
+                  <Box ml={2} className={classes.box}>
+
+                    <Typography
+                      variant="h1"
+                      gutterBottom
+                      color="textPrimary"
+                      className={classes.header}
+                    >
+                      Packing Services
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      color="textPrimary"
+                      className={classes.description}
+                    >
+                      Our experienced movers will have all necessary packing materials to pack up everything.
+                    </Typography>
+                    <Alert severity="success" className={classes.alert}>
+                      <AlertTitle>Full Home Packing Services</AlertTitle>
+                    </Alert>
+                    <Typography
+                      variant="body1"
+                      color="textPrimary"
+                      gutterBottom
+                      className={classes.button}
+                    >
+                      Read More <ChevronRightIcon className={classes.arrow}/>
+                    </Typography>
+                    <CardMedia
+                      className={classes.media}
+                      image="https://alltimemoving.ca/wp-content/uploads/2019/06/moving-services@2x.png"
+                    />
+                  </Box>
                 </Box>
-              </Box>
+              </Link>
             </Grid>
+
             <Grid
               item
-              xs={6}
-              sm={3}
+              xs={12}
+              sm={6}
             >
-              <Box display="flex">
-                <Box ml={2} className={classes.box}>
-                  <CardMedia
-                    className={classes.media}
-                    image="https://uploads.website.storedge.com/a0756a77-5ab9-4c50-b715-fd5a68030d77/storagemart-1750-maryland-route-3-south-lane-gambrills-storage-unit.jpg"
-                    title="Storage Solutions"
-                  />
-                  <Typography
-                    variant="h4"
-                    gutterBottom
-                    color="textPrimary"
-                    className={classes.header}
-                  >
-                    Storage Solutions
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    color="textPrimary"
-                    gutterBottom
-                    className={classes.description}
-                  >
-                    Insight Moving provides climate controlled storage for up to 6 months.
-                  </Typography>
-                  <Alert severity="success" className={classes.alert}>
-                    <AlertTitle>First 10 Days FREE Storage</AlertTitle>
-                  </Alert>
-                  <Link
-                    className={classes.button}
-                    color="textSecondary"
-                    component={RouterLink}
-                    to="#"
-                    underline="none"
-                    variant="body2"
-                  >
-                    Read More
-                  </Link>
+              <Link
+                className={classes.service}
+                component={RouterLink}
+                to="/services"
+                underline="none"
+                variant="body2"
+              >
+                <Box display="flex" className={classes.service}>
+                  <Box ml={2} className={classes.box}>
+
+                    <Typography
+                      variant="h1"
+                      gutterBottom
+                      color="textPrimary"
+                      className={classes.header}
+                    >
+                      Storage Solutions
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      color="textPrimary"
+                      gutterBottom
+                      className={classes.description}
+                    >
+                      Insight Moving provides climate controlled storage for up to 6 months.
+                    </Typography>
+                    <Alert severity="success" className={classes.alert}>
+                      <AlertTitle>First 10 Days FREE Storage</AlertTitle>
+                    </Alert>
+                    <Typography
+                      variant="body1"
+                      color="textPrimary"
+                      gutterBottom
+                      className={classes.button}
+                    >
+                      Read More <ChevronRightIcon className={classes.arrow}/>
+                    </Typography>
+
+                    <CardMedia
+                      className={classes.media}
+                      image="https://lakesidestoragefl.com/wp-content/uploads/2020/01/self-storage.svg"
+                      title="Storage Solutions"
+                    />
+                  </Box>
                 </Box>
-              </Box>
+              </Link>
             </Grid>
           </Grid>
         </Box>

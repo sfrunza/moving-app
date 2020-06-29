@@ -12,9 +12,9 @@ import Rating from '@material-ui/lab/Rating';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.dark,
     paddingTop: 128,
-    paddingBottom: 128
+    paddingBottom: 128,
   },
   ratingTitle: {
     fontWeight: theme.typography.fontWeightRegular,
@@ -46,14 +46,14 @@ function Testimonials({ className, ...rest }) {
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <Container maxWidth="md">
+      <Container maxWidth="xl">
         <Typography
           variant="h1"
           align="center"
           color="textPrimary"
           className={classes.header}
         >
-          What People Are Saying
+          What people are saying
         </Typography>
         <Box borderColor="transparent" className={classes.ratingConatiner} mt={6}>
           <Rating value={value} readOnly className={classes.ratingStars}/>

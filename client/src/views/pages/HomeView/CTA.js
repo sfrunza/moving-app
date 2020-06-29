@@ -14,9 +14,9 @@ import { deepPurple } from '@material-ui/core/colors'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.dark,
+    backgroundColor: theme.palette.background.paper,
     paddingTop: 128,
-    paddingBottom: 128
+    paddingBottom: 128,
   },
   browseButton: {
     fontFamily: "Maison Neue Demi",
@@ -52,21 +52,21 @@ function CTA({ className, ...rest }) {
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         <Typography
           variant="h1"
           align="center"
           color="textPrimary"
           style={{fontFamily: "Maison Neue Bold" }}
         >
-          Ready to Move?
+          We make moving easy.
         </Typography>
         <Typography
-          variant="h2"
+          variant="h4"
           align="center"
           className={classes.subHeader}
         >
-          Reserve your movers with a few clicks
+          Our quick application process takes only 2 minutes.
         </Typography>
           <Link
             className={classes.browseButton}
