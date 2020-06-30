@@ -127,7 +127,7 @@ function ProjectCreateView() {
 
   const getNextJobId = useCallback(() => {
     axios
-      .get('http://localhost:3001/api/v1/jobs.json')
+      .get('/api/v1/jobs.json')
       .then((response) => {
         let newId;
         if (response.data.length === 0 ) {

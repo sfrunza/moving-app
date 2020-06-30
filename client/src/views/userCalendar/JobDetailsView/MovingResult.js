@@ -5,9 +5,12 @@ import {
   TableRow,
   TableCell,
   Box,
-  Divider
+  Divider,
+  Link,
+  Button
 } from '@material-ui/core';
 import deepPurple from '@material-ui/core/colors/deepPurple';
+import { Link as RouterLink } from 'react-router-dom';
 
 class MovingResult extends Component {
   constructor(props) {
@@ -616,6 +619,11 @@ class MovingResult extends Component {
   }
 
   returnFunction(movers, rate, time){
+
+    const showInMapClicked = (address) => {
+      window.open(`https://maps.google.com?q=${address}`);
+    };
+
     return(
 
       <TableBody>
@@ -640,7 +648,14 @@ class MovingResult extends Component {
         <TableRow>
           <TableCell>Moving From: </TableCell>
           <TableCell>
-            <Box>{this.props.job.origin.address}</Box>
+            <Box>
+              <Button
+                style={{padding: '0px'}}
+                onClick={() => showInMapClicked(this.props.job.origin.address)}
+              >
+                {this.props.job.origin.address}
+              </Button>
+            </Box>
             <Box component="div" display="inline" style={{fontWeight: 'bold'}}>*{this.props.job.origin.house_type}</Box>
             <Box component="div" display="inline" ml={2}>Apt#{(this.props.job.origin.apt_number === "") ? ' unknown' : " "+this.props.job.origin.apt_number}</Box>
           </TableCell>
@@ -648,7 +663,14 @@ class MovingResult extends Component {
         <TableRow >
           <TableCell>Moving To:</TableCell>
           <TableCell>
-            <Box>{this.props.job.destination.address}</Box>
+            <Box>
+              <Button
+                style={{padding: '0px'}}
+                onClick={() => showInMapClicked(this.props.job.destination.address)}
+              >
+                {this.props.job.destination.address}
+              </Button>
+            </Box>
             <Box component="div" display="inline" style={{fontWeight: 'bold'}}>*{this.props.job.destination.house_type}</Box>
             <Box component="div" display="inline" ml={2}>Apt#{(this.props.job.destination.apt_number === "") ? ' unknown' : " "+this.props.job.destination.apt_number}</Box>
           </TableCell>
