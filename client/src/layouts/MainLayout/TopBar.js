@@ -148,6 +148,18 @@ function TopBar({ className, ...rest }) {
                   <Logo className={classes.logo} />
                 </RouterLink>
               </ListItem>
+              <ListItem key = {6} button divider className = {classes.item}>
+                <Link
+                  className={classes.link}
+                  color="textSecondary"
+                  component={RouterLink}
+                  to="/"
+                  underline="none"
+                  variant="body2"
+                >
+                  Home
+                </Link>
+              </ListItem>
                <ListItem key = {1} button divider className = {classes.item}>
                  <Link
                    className={classes.link}
@@ -231,6 +243,16 @@ function TopBar({ className, ...rest }) {
           </RouterLink>
           <Box flexGrow={1} />
           <Box flexGrow={2} className={classes.box}>
+            <Link
+              className={classes.link}
+              color="textSecondary"
+              component={RouterLink}
+              to="/"
+              underline="none"
+              variant="body2"
+            >
+              Home
+            </Link>
             <Link
               className={classes.link}
               color="textSecondary"
