@@ -86,7 +86,7 @@ function TopBar({ user, loggedInStatus, handleLogout, history, className, ...res
   const [drawerActivate, setDrawerActivate] = useState(false)
 
   const handleClick = () => {
-    axios.delete('/api/v1/users/sign_out', {withCredentials: true})
+    axios.delete('/users/sign_out', {withCredentials: true})
     .then(response => {
       handleLogout()
       history.push('/')

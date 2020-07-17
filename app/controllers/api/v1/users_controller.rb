@@ -5,9 +5,9 @@ module Api::V1
       if current_user
         @users = User.all
         @current_user = current_user
-        render json: {users: @users, current_user: @current_user}
+        render json: {users: @users, current_user: @current_user, logged_in: true,}
       else
-        render json: {current_user: nil, message: "Please sign in.", status: 401}
+        render json: {current_user: nil, message: "Please sign in.", status: 401, logged_in: false,}
       end
 
     end
@@ -28,7 +28,7 @@ module Api::V1
 
     protected
     def user_params
-      params.require(:user).permit(:email,)
+      params.require(:user).permit(:email, :admin)
     end
   end
 end
