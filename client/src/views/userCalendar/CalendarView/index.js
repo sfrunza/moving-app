@@ -255,7 +255,6 @@ function CalendarView({history, user, loggedInStatus, handleLogout}) {
         let description = "";
         let date = [];
         data.map((info) => {
-          debugger
           if (info.status === "Confirmed" || info.status === "Completed") {
             title = info.customer.first_name + " " + info.customer.last_name
             description = info.status
