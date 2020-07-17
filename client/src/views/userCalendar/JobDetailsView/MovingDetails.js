@@ -8,7 +8,8 @@ import {
   CardHeader,
   CardContent,
   Divider,
-  Box
+  Box,
+  Link
 } from '@material-ui/core';
 import {
   withGoogleMap,

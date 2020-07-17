@@ -5,8 +5,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT,
-  SILENT_LOGIN,
-  UPDATE_PROFILE
+  SILENT_LOGIN
 } from 'src/actions/accountActions';
 
 const initialState = {
@@ -50,13 +49,13 @@ const accountReducer = (state = initialState, action) => {
       });
     }
 
-    case UPDATE_PROFILE: {
-      const { user } = action.payload;
-
-      return produce(state, (draft) => {
-        draft.user = user;
-      });
-    }
+    // case UPDATE_PROFILE: {
+    //   const { user } = action.payload;
+    //
+    //   return produce(state, (draft) => {
+    //     draft.user = user;
+    //   });
+    // }
 
     default: {
       return state;

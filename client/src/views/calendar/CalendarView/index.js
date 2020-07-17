@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
     minHeight: '100%',
+    minWidth :'1400px',
     paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(3)
   },
@@ -91,7 +92,8 @@ const useStyles = makeStyles((theme) => ({
     },
     '& .fc-event:hover': {
       color: '#275827',
-      textDecoration: 'none'
+      textDecoration: 'none',
+      cursor: 'pointer'
     },
     '& .fc-event': {
       backgroundColor: 'transparent',
@@ -134,11 +136,15 @@ function CalendarView({history}) {
   const [date, setDate] = useState(moment().toDate());
   const [events, setEvents] = useState(null);
   const [job, setJob] = useState()
-  const [modal, setModal] = useState({
-    event: null,
-    mode: null,
-    open: false
-  });
+
+  function zoomOutMobile() {
+      var viewport = document.querySelector('meta[name="viewport"]');
+
+      if ( viewport ) {
+        viewport.content = "initial-scale=1";
+        viewport.content = "width=500";
+      }
+    }
 
   const EventDetail = ({ event, el }) => {
     let moveType = event.extendedProps.description
@@ -180,13 +186,6 @@ function CalendarView({history}) {
       return el;
     };
 
-  const resetModal = () => {
-    setModal({
-      event: null,
-      mode: null,
-      open: false
-    });
-  };
   const handleDateToday = () => {
     const calendarEl = calendarRef.current;
 
@@ -195,17 +194,6 @@ function CalendarView({history}) {
 
       calendarApi.today();
       setDate(calendarApi.getDate());
-    }
-  };
-
-  const handleViewChange = (newView) => {
-    const calendarEl = calendarRef.current;
-
-    if (calendarEl) {
-      const calendarApi = calendarEl.getApi();
-
-      calendarApi.changeView(newView);
-      setView(newView);
     }
   };
 
@@ -229,20 +217,6 @@ function CalendarView({history}) {
       calendarApi.next();
       setDate(calendarApi.getDate());
     }
-  };
-
-  const handleEventAddClick = () => {
-    setModal({
-      mode: 'add',
-      open: true,
-      event: {
-        allDay: false,
-        description: '',
-        end: moment().add(30, 'minutes').toDate(),
-        start: moment().toDate(),
-        title: ''
-      }
-    });
   };
 
   const handleEventSelect = (arg) => {
@@ -277,18 +251,6 @@ function CalendarView({history}) {
     getEvents();
   }, [getEvents]);
 
-  useEffect(() => {
-    const calendarEl = calendarRef.current;
-
-    if (calendarEl) {
-      const calendarApi = calendarEl.getApi();
-      const newView = mobileDevice ? 'listWeek' : 'dayGridMonth';
-
-      calendarApi.changeView(newView);
-      setView(newView);
-    }
-  }, [mobileDevice]);
-
   if (!events) {
     return null;
   }
@@ -298,14 +260,14 @@ function CalendarView({history}) {
       className={classes.root}
       title="Calendar"
     >
+    {zoomOutMobile()}
       <Container maxWidth={false}>
         <Toolbar
           date={date}
           onDateNext={handleDateNext}
           onDatePrev={handleDatePrev}
           onDateToday={handleDateToday}
-          onViewChange={handleViewChange}
-          view={view}
+          view=""
         />
         <Paper
           className={classes.calendar}
@@ -316,22 +278,12 @@ function CalendarView({history}) {
           <FullCalendar
             allDayMaintainDuration
             defaultDate={date}
-            defaultView={view}
             droppable
-            editable
             eventClick={handleEventSelect}
             eventLimit={7}
             eventResizableFromStart
             events={events}
             eventRender={EventDetail}
-            eventContent={(arg) => (
-              <>
-                <b>{arg.timeText}</b>&nbsp;
-                <i>{arg.event.title}</i>
-                <i>{arg.event.id}</i>
-                <i>{arg.event.date}</i>
-              </>
-            )}
             header={false}
             height={800}
             ref={calendarRef}

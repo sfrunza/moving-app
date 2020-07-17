@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
+import TopBar from './TopBar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,24 +28,26 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function PricingLayout({ children }) {
+function CalendarLayout({ children, user, loggedInStatus, handleLogout, history }) {
   const classes = useStyles();
 
-  return (
-    <div className={classes.root}>
-      <div className={classes.wrapper}>
-        <div className={classes.contentContainer}>
-          <div className={classes.content}>
-            {children}
+      return (
+        <div className={classes.root}>
+          <TopBar user={user} loggedInStatus={loggedInStatus} handleLogout={handleLogout} history={history}/>
+          <div className={classes.wrapper}>
+            <div className={classes.contentContainer}>
+              <div className={classes.content}>
+                {children}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  );
+        );
+
 }
 
-PricingLayout.propTypes = {
+CalendarLayout.propTypes = {
   children: PropTypes.any
 };
 
-export default PricingLayout;
+export default CalendarLayout;

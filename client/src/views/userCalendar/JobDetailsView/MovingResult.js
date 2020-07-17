@@ -620,8 +620,12 @@ class MovingResult extends Component {
 
   returnFunction(movers, rate, time){
 
-    const showInMapClicked = (address) => {
-      window.open(`https://maps.google.com?q=${address}`);
+    const showInMapClickedOrigin = () => {
+      window.open(`https://maps.google.com?q=${this.props.job.origin.address}`);
+    };
+
+    const showInMapClickedDestination = () => {
+      window.open(`https://maps.google.com?q=${this.props.job.destination.address}`);
     };
 
     return(
@@ -651,7 +655,7 @@ class MovingResult extends Component {
             <Box>
               <Button
                 style={{padding: '0px'}}
-                onClick={() => showInMapClicked(this.props.job.origin.address)}
+                onClick={showInMapClickedOrigin}
               >
                 {this.props.job.origin.address}
               </Button>
@@ -666,7 +670,7 @@ class MovingResult extends Component {
             <Box>
               <Button
                 style={{padding: '0px'}}
-                onClick={() => showInMapClicked(this.props.job.destination.address)}
+                onClick={showInMapClickedDestination}
               >
                 {this.props.job.destination.address}
               </Button>

@@ -6,6 +6,7 @@ import Page from 'src/components/Page';
 import Header from './Header';
 import CustomerDetails from './CustomerDetails';
 import MovingDetails from './MovingDetails';
+import OtherActions from './OtherActions'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
   },
   grid: {
     marginTop: theme.spacing(2)
+  },
+  otherActions: {
+    marginTop: '2em'
   }
 }));
 
@@ -46,26 +50,13 @@ function JobDetails({ match, history }) {
     return null;
   }
 
-  const handleDelete = (job) => {
-    fetch(`/api/v1/jobs/${jobPath}`,
-    {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then((response) => {
-        setJob(job)
-        history.push('/app/management/jobs')
-      })
-  }
-
   return (
     <Page
       className={classes.root}
       title="Job Details"
     >
       <Container maxWidth={false}>
-        <Header job={job} handleDelete={handleDelete}/>
+        <Header job={job}/>
         <Grid
           className={classes.grid}
           container
@@ -77,7 +68,10 @@ function JobDetails({ match, history }) {
             xl={3}
             xs={12}
           >
-            <CustomerDetails job={job} />
+            <Grid item>
+              <CustomerDetails job={job} />
+              <OtherActions job={job} className={classes.otherActions}/>
+            </Grid>
           </Grid>
           <Grid
             item

@@ -130,7 +130,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function CalendarView({history}) {
+function CalendarView({history, user, loggedInStatus, handleLogout}) {
   const classes = useStyles();
   const calendarRef = useRef(null);
   const isMountedRef = useIsMountedRef();
@@ -151,7 +151,7 @@ function CalendarView({history}) {
 
       if ( viewport ) {
         viewport.content = "initial-scale=1";
-        viewport.content = "width=800";
+        viewport.content = "width=500";
       }
     }
 
@@ -255,6 +255,7 @@ function CalendarView({history}) {
         let description = "";
         let date = [];
         data.map((info) => {
+          debugger
           if (info.status === "Confirmed" || info.status === "Completed") {
             title = info.customer.first_name + " " + info.customer.last_name
             description = info.status
@@ -283,7 +284,6 @@ function CalendarView({history}) {
       className={classes.root}
       title="Calendar"
     >
-    {zoomOutMobile()}
       <Container maxWidth={false}>
         <Toolbar
           date={date}
@@ -325,6 +325,7 @@ function CalendarView({history}) {
           />
         </Paper>
       </Container>
+
     </Page>
   );
 }

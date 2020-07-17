@@ -18,7 +18,7 @@ import { Alert } from '@material-ui/lab';
 import LockIcon from '@material-ui/icons/Lock';
 import Page from 'src/components/Page';
 import Logo from 'src/components/Logo';
-import LoginForm from './LoginForm';
+import Login from 'src/registrations/Login'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,13 +60,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function LoginView() {
+function LoginView({handleLogin, loggedInStatus, user, history}) {
   const classes = useStyles();
-  const history = useHistory();
-
-  const handleSubmitSuccess = () => {
-    history.push('/app');
-  };
 
   return (
     <Page
@@ -108,19 +103,8 @@ function LoginView() {
               Sign in on the internal platform
             </Typography>
             <Box mt={3}>
-              <LoginForm onSubmitSuccess={handleSubmitSuccess} />
+              <Login handleLogin={handleLogin} loggedInStatus={loggedInStatus} user={user} history={history}/>
             </Box>
-            <Box my={2}>
-              <Divider />
-            </Box>
-            <Link
-              component={RouterLink}
-              to="/register"
-              variant="body2"
-              color="textSecondary"
-            >
-              Create new account
-            </Link>
           </CardContent>
 
         </Card>

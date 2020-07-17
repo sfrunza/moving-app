@@ -14,8 +14,8 @@ import {
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { deepPurple, indigo, green } from '@material-ui/core/colors'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-// import box from 'src/assets/img/graphic-3578346_640.png';
-// import loc from 'src/assets/img/loc.png';
+import box from 'src/assets/img/graphic-3578346_640.png';
+import loc from 'src/assets/img/loc.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {

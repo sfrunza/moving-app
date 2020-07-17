@@ -127,11 +127,6 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     position: 'relative',
     top: '3px'
-  },
-  deliveryDate: {
-    [theme.breakpoints.down('xs')]: {
-      marginTop: '32px'
-    },  
   }
 }));
 
@@ -557,7 +552,7 @@ function MovingDetails({
               (
                   <div></div>
               ) : (
-                <Field name='delivery_date' component={SelectDate} value={values.delivery_date} validate={validateDate} className={classes.deliveryDate}/>
+                <Field name='delivery_date' component={SelectDate} value={values.delivery_date} validate={validateDate}/>
               )
             }
             </Box>

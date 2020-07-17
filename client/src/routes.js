@@ -16,19 +16,16 @@ import ServicesLayout from 'src/layouts/ServicesLayout'
 import BookLayout from 'src/layouts/BookLayout'
 import PricingLayout from 'src/layouts/PricingLayout'
 import HomeView from 'src/views/pages/HomeView';
-import ServicesView from 'src/views/pages/ServicesView';
-import PricingView from 'src/views/pages/PricingView';
-import BookNew from 'src/views/pages/BookView/BookNew';
 import LoadingScreen from 'src/components/LoadingScreen';
 import AuthGuard from 'src/components/AuthGuard';
 import GuestGuard from 'src/components/GuestGuard';
 
 const routesConfig = [
-  // {
-  //   exact: true,
-  //   path: '/',
-  //   component: () => <Redirect to="/" />
-  // },
+  {
+    exact: true,
+    path: '/',
+    component: () => <Redirect to="/home" />
+  },
   {
     exact: true,
     path: '/404',
@@ -56,48 +53,48 @@ const routesConfig = [
     path: '/register-unprotected',
     component: lazy(() => import('src/views/auth/RegisterView'))
   },
-  // {
-  //   path: '/services',
-  //   layout: ServicesLayout,
-  //   routes: [
-  //     {
-  //       exact: true,
-  //       path: '/services',
-  //       component: lazy(() => import('src/views/pages/ServicesView'))
-  //     },
-  //     {
-  //       component: () => <Redirect to="/404" />
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: '/pricing',
-  //   layout: PricingLayout,
-  //   routes: [
-  //     {
-  //       exact: true,
-  //       path: '/pricing',
-  //       component: lazy(() => import('src/views/pages/PricingView'))
-  //     },
-  //     {
-  //       component: () => <Redirect to="/404" />
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: '/book',
-  //   layout: BookLayout,
-  //   routes: [
-  //     {
-  //       exact: true,
-  //       path: '/book',
-  //       component: lazy(() => import('src/views/pages/BookView/BookNew'))
-  //     },
-  //     {
-  //       component: () => <Redirect to="/404" />
-  //     }
-  //   ]
-  // },
+  {
+    path: '/services',
+    layout: ServicesLayout,
+    routes: [
+      {
+        exact: true,
+        path: '/services',
+        component: lazy(() => import('src/views/pages/ServicesView'))
+      },
+      {
+        component: () => <Redirect to="/404" />
+      }
+    ]
+  },
+  {
+    path: '/pricing',
+    layout: PricingLayout,
+    routes: [
+      {
+        exact: true,
+        path: '/pricing',
+        component: lazy(() => import('src/views/pages/PricingView'))
+      },
+      {
+        component: () => <Redirect to="/404" />
+      }
+    ]
+  },
+  {
+    path: '/book',
+    layout: BookLayout,
+    routes: [
+      {
+        exact: true,
+        path: '/book',
+        component: lazy(() => import('src/views/pages/BookView/BookNew'))
+      },
+      {
+        component: () => <Redirect to="/404" />
+      }
+    ]
+  },
   {
     path: '/calendar',
     guard: AuthGuard,
@@ -310,25 +307,9 @@ const routesConfig = [
     routes: [
       {
         exact: true,
-        path: '/',
+        path: '/home',
         component: HomeView
       },
-      {
-        exact: true,
-        path: '/services',
-        component: ServicesView
-      },
-      {
-        exact: true,
-        path: '/pricing',
-        component: PricingView
-      },
-      {
-        exact: true,
-        path: '/book',
-        component: BookNew
-      },
-
       {
         component: () => <Redirect to="/404" />
       }

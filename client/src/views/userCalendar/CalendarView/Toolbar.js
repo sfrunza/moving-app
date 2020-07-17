@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
-  root: {}
+  root: {paddingTop: '60px'}
 }));
 
 function Toolbar({
