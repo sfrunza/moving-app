@@ -1,11 +1,9 @@
 Rails.application.routes.draw do
 
+devise_for :users, controllers: { registrations: :registrations, sessions: :sessions }
+
   namespace :api do
     namespace :v1 do
-
-      get '/logged_in', to: 'users#is_logged_in?'
-      devise_for :users, controllers: { registrations: :registrations, sessions: :sessions }
-
 
       resources :employees do
         resources :jobs
@@ -20,6 +18,7 @@ Rails.application.routes.draw do
       resources :customers
       resources :origins
       resources :destinations
+      resources :users, only: [:index]
 
     end
   end

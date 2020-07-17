@@ -30,11 +30,10 @@ class Routes extends Component {
     }
 
     loginStatus = () => {
-        axios.get('/api/v1/logged_in', {withCredentials: true})
+        axios.get('/api/v1/users', {withCredentials: true})
         .then(response => {
-
           if (response.data.logged_in) {
-            this.handleLogin(response.data.user)
+            this.handleLogin(response.data.current_user)
           } else {
             this.handleLogout()
           }
