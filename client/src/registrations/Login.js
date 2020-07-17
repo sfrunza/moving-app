@@ -35,7 +35,7 @@ let user = {
       password: password
     }
 
-    axios.post('http://localhost:3001/users/sign_in', {user}, {withCredentials: true})
+    axios.post('/api/v1/users/sign_in', {user}, {withCredentials: true})
     .then(response => {
       if (response.data) {
         this.props.handleLogin(response.data)
