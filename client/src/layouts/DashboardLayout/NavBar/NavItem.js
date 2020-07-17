@@ -65,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
 
 function NavItem({
   title,
+  user,
   href,
   depth,
   children,

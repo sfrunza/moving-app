@@ -19,7 +19,7 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import { updateProfile } from 'src/actions/accountActions';
+// import { updateProfile } from 'src/actions/accountActions';
 
 const stateOptions = ['Alabama', 'New York', 'San Francisco'];
 
@@ -58,7 +58,7 @@ function GeneralSettings({ user, className, ...rest }) {
         setSubmitting
       }) => {
         try {
-          await dispatch(updateProfile(values));
+          // await dispatch(updateProfile(values));
           resetForm();
           setStatus({ success: true });
           enqueueSnackbar('Profile updated', {

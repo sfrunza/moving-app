@@ -99,7 +99,7 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
               type="submit"
               variant="contained"
             >
-              Log In
+              Log In man
             </Button>
             {errors.submit && (
               <Box mt={3}>

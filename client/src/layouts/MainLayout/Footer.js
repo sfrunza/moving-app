@@ -19,7 +19,8 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Maison Neue",
   },
   link: {
-    cursor: 'pointer'
+    cursor: 'pointer',
+    color: theme.palette.common.black,
   },
   content: {
     fontFamily: "Maison Neue",
@@ -31,7 +32,7 @@ function Footer({ children }) {
 
   return (
     <Grid className={classes.root}>
-      <Container maxWidth="sm"className={classes.wrapper}>
+      <Container maxWidth="xs"className={classes.wrapper}>
         <Typography className={classes.content}>
           Make moving chill.
         </Typography>

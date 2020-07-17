@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold'
   },
   addInfoSubTitle: {
-    backgroundColor: '#f7f7f7',
+    backgroundColor: theme.palette.background.dark,
     padding: '15px',
     wordWrap: 'break-word'
   }
@@ -122,6 +122,7 @@ function MovingDetails({ job, className, ...rest }) {
                 setDistance(result.routes[0].legs[0].distance.text)
               }
             });
+
 
           }
         })

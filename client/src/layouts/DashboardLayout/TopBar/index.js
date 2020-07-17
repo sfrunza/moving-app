@@ -39,6 +39,8 @@ const useStyles = makeStyles((theme) => ({
 function TopBar({
   className,
   onMobileNavOpen,
+  user,
+  handleLogout,
   ...rest
 }) {
   const classes = useStyles();
@@ -74,7 +76,7 @@ function TopBar({
         <Notifications />
         <Settings />
         <Box ml={2}>
-          <Account />
+          <Account user={user} handleLogout={handleLogout}/>
         </Box>
       </Toolbar>
     </AppBar>

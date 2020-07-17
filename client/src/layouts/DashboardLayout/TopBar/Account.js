@@ -2,21 +2,16 @@ import React, {
   useRef,
   useState
 } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 import { useHistory } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
-import { useSnackbar } from 'notistack';
+import axios from 'axios'
 import {
-  Avatar,
   Box,
   ButtonBase,
-  Hidden,
   Menu,
   MenuItem,
   Typography,
   makeStyles
 } from '@material-ui/core';
-import { logout } from 'src/actions/accountActions';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -29,13 +24,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Account() {
+function Account({ user, handleLogout }) {
   const classes = useStyles();
   const history = useHistory();
   const ref = useRef(null);
-  const dispatch = useDispatch();
-  const account = useSelector((state) => state.account);
-  const { enqueueSnackbar } = useSnackbar();
   const [isOpen, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -46,17 +38,16 @@ function Account() {
     setOpen(false);
   };
 
-  const handleLogout = async () => {
-    try {
-      handleClose();
-      await dispatch(logout());
-      history.push('/');
-    } catch (error) {
-      enqueueSnackbar('Unable to logout', {
-        variant: 'error'
-      });
+  const handleClick = () => {
+    axios.delete('http://localhost:3001/users/sign_out', {withCredentials: true})
+    .then(response => {
+      handleLogout()
+      history.push('/')
+    })
+    .catch(error => console.log(error))
+
     }
-  };
+
 
   return (
     <>
@@ -67,19 +58,12 @@ function Account() {
         onClick={handleOpen}
         ref={ref}
       >
-        <Avatar
-          alt="User"
-          className={classes.avatar}
-          src={account.user.avatar}
-        />
-        <Hidden smDown>
-          <Typography
-            variant="h6"
-            color="inherit"
-          >
-            {`${account.user.firstName} ${account.user.lastName}`}
-          </Typography>
-        </Hidden>
+        <Typography
+          variant="h6"
+          color="inherit"
+        >
+          {user.email}
+        </Typography>
       </Box>
       <Menu
         onClose={handleClose}
@@ -93,19 +77,8 @@ function Account() {
         anchorEl={ref.current}
         open={isOpen}
       >
-        <MenuItem
-          component={RouterLink}
-          to="/app/social/profile"
-        >
-          Profile
-        </MenuItem>
-        <MenuItem
-          component={RouterLink}
-          to="/app/account"
-        >
-          Account
-        </MenuItem>
-        <MenuItem onClick={handleLogout}>
+
+        <MenuItem onClick={handleClick}>
           Logout
         </MenuItem>
       </Menu>

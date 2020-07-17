@@ -13,8 +13,7 @@ import {
   TableCell,
   colors,
   Box,
-  Avatar,
-  Typography
+  Avatar
 } from '@material-ui/core';
 import purple from '@material-ui/core/colors/deepPurple';
 import PhoneIcon from '@material-ui/icons/Phone';
@@ -62,18 +61,23 @@ function CustomerDetails({ job, className, ...rest }) {
       fontSize: '16px',
       fontWeight: 'bold',
     },
-    email: {
-      display: 'flex',
-      alignItems: 'center',
-      color: theme.palette.grey[700],
-    },
-    phoneButton: {
+    emailButton: {
       color: purple[500],
       display: 'flex',
-      fontSize: '16px',
       alignItems: 'center',
       textDecoration: 'none',
       '&:hover': {
+        color: purple[500],
+        textDecoration: 'underline'
+      }
+    },
+    phoneButton: {
+      color: theme.palette.grey[700],
+      display: 'flex',
+      alignItems: 'center',
+      textDecoration: 'none',
+      '&:hover': {
+        color: purple[500],
         textDecoration: 'underline'
       }
     },
@@ -116,15 +120,9 @@ function CustomerDetails({ job, className, ...rest }) {
                   <a className={classes.phoneButton} href={`tel:${job.customer.phone}`}><PhoneIcon style={{height: '15px'}}/>{formatPhoneNumber(job.customer.phone)}</a>
                 </Box>
                 <Box mt={1}>
-                  <Typography
-                    variant="body2"
-                    color="textPrimary"
-                    gutterBottom
-                    className={classes.email}
-                  >
-                    <EmailIcon style={{height: '15px'}}/> {job.customer.email}
-                  </Typography>
+                  <a className={classes.emailButton} href={`mailto:${job.customer.email}`}><EmailIcon style={{height: '15px'}}/>{job.customer.email}</a>
                 </Box>
+
               </TableCell>
             </TableRow>
           </TableBody>

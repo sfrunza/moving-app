@@ -22,10 +22,10 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.default
+    backgroundColor: theme.palette.background.default,
   },
   toolbar: {
-    height: 64
+    height: 64,
   },
   logo: {
     marginRight: theme.spacing(2)
@@ -148,7 +148,7 @@ function TopBar({ className, ...rest }) {
                   <Logo className={classes.logo} />
                 </RouterLink>
               </ListItem>
-              <ListItem key = {6} button divider className = {classes.item}>
+              <ListItem key = {1} button divider className = {classes.item}>
                 <Link
                   className={classes.link}
                   color="textSecondary"
@@ -160,7 +160,7 @@ function TopBar({ className, ...rest }) {
                   Home
                 </Link>
               </ListItem>
-               <ListItem key = {1} button divider className = {classes.item}>
+               <ListItem key = {2} button divider className = {classes.item}>
                  <Link
                    className={classes.link}
                    color="textSecondary"
@@ -172,7 +172,7 @@ function TopBar({ className, ...rest }) {
                    Services
                  </Link>
                </ListItem>
-               <ListItem key = {2} button divider className = {classes.item}>
+               <ListItem key = {3} button divider className = {classes.item}>
                  <Link
                    className={classes.link}
                    color="textSecondary"
@@ -184,7 +184,7 @@ function TopBar({ className, ...rest }) {
                    Pricing
                  </Link>
                </ListItem>
-               <ListItem key = {3} button divider className = {classes.item}>
+               <ListItem key = {4} button divider className = {classes.item}>
                  <Link
                    className={classes.link}
                    color="textSecondary"
@@ -196,7 +196,7 @@ function TopBar({ className, ...rest }) {
                    Our Work
                  </Link>
                </ListItem>
-               <ListItem key = {4} button divider className = {classes.item}>
+               <ListItem key = {5} button divider className = {classes.item}>
                  <Link
                    className={classes.link}
                    color="textSecondary"
@@ -209,7 +209,7 @@ function TopBar({ className, ...rest }) {
                    Client Login
                  </Link>
                </ListItem>
-               <ListItem key = {5} button className = {classes.item}>
+               <ListItem key = {6} button className = {classes.item}>
                  <Link
                    className={classes.button}
                    color="textSecondary"
@@ -277,7 +277,7 @@ function TopBar({ className, ...rest }) {
               className={classes.link}
               color="textSecondary"
               component={RouterLink}
-              to="/docs"
+              to="/work"
               underline="none"
               variant="body2"
             >
