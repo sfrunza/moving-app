@@ -6,7 +6,8 @@ import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-// import CalculatorResult from "./CalculatorResult"
+import CalculatorResult from "./CalculatorResult"
+import Result from "./Result"
 
 
 
@@ -109,18 +110,14 @@ class Calculator extends Component {
     if(this.state.submitted){
       return(
         <div className='form-container-result animated fadeIn slower'>
-      {/*  <CalculatorResult
+        <Result
                 origin={this.state.origin}
                 destination={this.state.destination}
-                submitted={this.state.submitted}
-                movingSize={this.state.movingSize}
-                typeFrom={this.state.typeFrom}
-                typeTo={this.state.typeTo}
-                arraySize={movingSizeOptions}
-                arrayType={movingTypeOptions}
+                movingsize={this.state.movingSize}
+                typefrom={this.state.typeFrom}
+                typeto={this.state.typeTo}
                 />
-              */}
-              sdfjskdfklsdfklsdmflsmf
+
         </div>
       )
     } else {

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
+import LoadingScreen from 'src/components/LoadingScreen';
 import axios from 'axios';
 import {
   Avatar,
@@ -146,7 +147,7 @@ function ProjectCreateView() {
   }, [getNextJobId]);
 
   if (!nextJobId) {
-    return null;
+    return <LoadingScreen />
   }
 
   const handleNext = () => {

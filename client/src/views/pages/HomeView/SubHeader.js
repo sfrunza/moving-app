@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     backgroundColor: 'transparent',
-    color: theme.palette.common.dark,
+    color: '#4c4c4c',
     borderColor: theme.palette.common.dark,
     fontSize: '2em',
     fontFamily: 'Maison Neue Normal'

@@ -64,7 +64,7 @@ class Routes extends Component {
 
     const LoginRoute = ({ loggedInStatus }) => (
       <Route
-        exact path='/users/sign_in'
+        exact path='/login'
         render={(props) => (
         <LoginView history={props.history} handleLogin={this.handleLogin} loggedInStatus={this.state.isLoggedIn}/>
         )}
@@ -81,7 +81,7 @@ class Routes extends Component {
             component={lazy(() => import('src/views/pages/Error404View'))}
           />
           <Route
-            exact path='/users/sign_in'
+            exact path='/login'
             render={props => (
               <LoginRoute loggedInStatus={this.state.isLoggedIn}/>
             )}
@@ -305,6 +305,11 @@ class Routes extends Component {
                       exact
                       path="/work"
                       component={lazy(() => import('src/views/pages/WorkView'))}
+                    />
+                    <Route
+                      exact
+                      path="/privacy"
+                      component={lazy(() => import('src/views/pages/PrivacyView'))}
                     />
                     <Redirect to="/404" />
                   </Switch>

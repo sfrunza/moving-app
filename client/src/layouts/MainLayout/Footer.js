@@ -40,10 +40,10 @@ function Footer({ children }) {
           © {new Date().getFullYear()}
         </Typography>
         <Typography className={classes.content}>
-          <Link to="#" className={classes.link}>Privacy</Link>
+          <Link to="/privacy" component={RouterLink} className={classes.link}>Privacy</Link>
         </Typography>
         <Typography className={classes.content}>
-          <Link to="#" className={classes.link}>Terms</Link>
+          <Link to="/" component={RouterLink} className={classes.link}>Terms</Link>
         </Typography>
       </Container>
     </Grid>

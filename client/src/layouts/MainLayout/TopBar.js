@@ -19,6 +19,10 @@ import Logo from 'src/components/Logo';
 import PersonIcon from '@material-ui/icons/Person';
 import { deepPurple } from '@material-ui/core/colors'
 import MenuIcon from '@material-ui/icons/Menu';
+import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
+import AttachMoneyRoundedIcon from '@material-ui/icons/AttachMoneyRounded';
+import ImageRoundedIcon from '@material-ui/icons/ImageRounded';
+import LocalShippingRoundedIcon from '@material-ui/icons/LocalShippingRounded';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,12 +38,23 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: theme.typography.fontWeightMedium,
     display: 'flex',
     alignItems: 'center',
+    fontFamily: "Maison Neue Demi",
     '& + &': {
       marginLeft: theme.spacing(2)
     },
     '&:hover': {
       color: deepPurple['A200']
-    }
+    },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '14px',
+      display: 'flex',
+      alignItems: 'center',
+      lineHeight: '20px',
+      width: '100%',
+      verticalAlign: 'middle',
+      fontFamily: "Maison Neue Normal",
+    },
+
   },
   divider: {
     width: 1,
@@ -56,6 +71,10 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Maison Neue Demi",
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
+    textAlign: 'center',
     '&:hover': {
       backgroundColor: deepPurple[700],
     },
@@ -66,7 +85,8 @@ const useStyles = makeStyles((theme) => ({
     width : 200
   },
   item: {
-    padding: '1em 2em',
+    padding: '1em',
+    height: '48px',
     '&:first-child': {
       marginBottom: '2em'
     }
@@ -79,6 +99,9 @@ const useStyles = makeStyles((theme) => ({
     padding : 0,
     color : "#546e7a",
     cursor : "pointer"
+  },
+  serviceText: {
+    marginLeft: '16px',
   }
 }));
 
@@ -94,7 +117,7 @@ function TopBar({ className, ...rest }) {
       setDrawerActivate(true);
     }
     window.addEventListener('resize',()=>{
-      if(window.innerWidth <= 700){
+      if(window.innerWidth <= 960){
         setDrawerActivate(true);
       }
       else{
@@ -134,7 +157,8 @@ function TopBar({ className, ...rest }) {
         <SwipeableDrawer
          open={drawer}
          onClose={()=>{setDrawer(false)}}
-         onOpen={()=>{setDrawer(true)}}>
+         onOpen={()=>{setDrawer(true)}}
+         >
 
            <div
              tabIndex={0}
@@ -148,7 +172,7 @@ function TopBar({ className, ...rest }) {
                   <Logo className={classes.logo} />
                 </RouterLink>
               </ListItem>
-              <ListItem key = {1} button divider className = {classes.item}>
+              <ListItem key = {1} button  className = {classes.item}>
                 <Link
                   className={classes.link}
                   color="textSecondary"
@@ -157,10 +181,11 @@ function TopBar({ className, ...rest }) {
                   underline="none"
                   variant="body2"
                 >
-                  Home
+                  <div><HomeRoundedIcon /></div>
+                  <div className = {classes.serviceText}>Home</div>
                 </Link>
               </ListItem>
-               <ListItem key = {2} button divider className = {classes.item}>
+               <ListItem key = {2} button  className = {classes.item}>
                  <Link
                    className={classes.link}
                    color="textSecondary"
@@ -169,10 +194,11 @@ function TopBar({ className, ...rest }) {
                    underline="none"
                    variant="body2"
                  >
-                   Services
+                   <div><LocalShippingRoundedIcon /></div>
+                   <div className = {classes.serviceText}>Services</div>
                  </Link>
                </ListItem>
-               <ListItem key = {3} button divider className = {classes.item}>
+               <ListItem key = {3} button  className = {classes.item}>
                  <Link
                    className={classes.link}
                    color="textSecondary"
@@ -181,7 +207,8 @@ function TopBar({ className, ...rest }) {
                    underline="none"
                    variant="body2"
                  >
-                   Pricing
+                   <div><AttachMoneyRoundedIcon /></div>
+                   <div className = {classes.serviceText}>Pricing</div>
                  </Link>
                </ListItem>
                <ListItem key = {4} button divider className = {classes.item}>
@@ -193,10 +220,11 @@ function TopBar({ className, ...rest }) {
                    underline="none"
                    variant="body2"
                  >
-                   Our Work
+                 <div><ImageRoundedIcon /></div>
+                 <div className = {classes.serviceText}>Our Work</div>
                  </Link>
                </ListItem>
-               <ListItem key = {5} button divider className = {classes.item}>
+               <ListItem key = {5} button className = {classes.item} style={{marginTop: '15px'}}>
                  <Link
                    className={classes.link}
                    color="textSecondary"
@@ -205,8 +233,8 @@ function TopBar({ className, ...rest }) {
                    underline="none"
                    variant="body2"
                  >
-                   <PersonIcon style={{height: '0.9em'}}/>
-                   Client Login
+                   <div><PersonIcon /></div>
+                   <div className = {classes.serviceText}>Client Login</div>
                  </Link>
                </ListItem>
                <ListItem key = {6} button className = {classes.item}>

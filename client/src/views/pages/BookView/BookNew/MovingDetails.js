@@ -512,7 +512,6 @@ function MovingDetails({
               <FormControl variant="outlined" style={{width: '100%'}} error={Boolean(touched.move_size && errors.move_size)}>
                 <InputLabel>Size of Move</InputLabel>
                 <Select
-                  required
                   id="move_size"
                   label="Size of Move"
                   variant="outlined"
@@ -533,7 +532,6 @@ function MovingDetails({
               <FormControl variant="outlined" style={{width: '100%'}} error={Boolean(touched.move_type && errors.move_type)}>
                 <InputLabel>Type of Service</InputLabel>
                 <Select
-                  required
                   id="move_type"
                   label="Type of Service"
                   variant="outlined"
@@ -552,7 +550,7 @@ function MovingDetails({
               (
                   <div></div>
               ) : (
-                <Field name='delivery_date' component={SelectDate} value={values.delivery_date} validate={validateDate}/>
+                <Field name='delivery_date' component={SelectDate} value={values.delivery_date} validate={validateDate} className={classes.dateMtop}/>
               )
             }
             </Box>
@@ -592,7 +590,6 @@ function MovingDetails({
                     : false}>
                     <InputLabel>Select elevator/stairs...</InputLabel>
                     <Select
-                      required
                       id="origin.house_type"
                       defaultValue=""
                       label="Select elevator/stairs..."
@@ -639,7 +636,7 @@ function MovingDetails({
                     : false}>
                     <InputLabel>Select elevator/stairs...</InputLabel>
                     <Select
-                      required
+      
                       id="destination.house_type"
                       defaultValue=""
                       label="Select elevator/stairs..."
