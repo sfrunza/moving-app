@@ -18,7 +18,7 @@ class SignIn extends Component {
      this.handleSubmit = this.handleSubmit.bind(this)
   }
   UNSAFE_componentWillMount() {
-    return !this.props.loggedInStatus ? this.redirect('/users/sign_in') : this.redirect('/')
+    return !this.props.loggedInStatus ? this.redirect('/login') : this.redirect('/')
   }
 
 handleChange = (event) => {

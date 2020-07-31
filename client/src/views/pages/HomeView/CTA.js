@@ -14,7 +14,7 @@ import { deepPurple } from '@material-ui/core/colors'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.dark,
     paddingTop: 128,
     paddingBottom: 128,
   },
@@ -31,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
     width: '16em',
     justifyContent: 'center',
     margin: '2em auto',
-    fontSize: '16px'
+    fontSize: '16px',
+    textTransform: 'uppercase',
   },
   subHeader: {
     color: deepPurple['A200'],

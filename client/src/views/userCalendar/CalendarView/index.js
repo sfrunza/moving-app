@@ -151,7 +151,7 @@ function CalendarView({history, user, loggedInStatus, handleLogout}) {
 
       if ( viewport ) {
         viewport.content = "initial-scale=1";
-        viewport.content = "width=500";
+        viewport.content = "width=800";
       }
     }
 
@@ -297,6 +297,7 @@ function CalendarView({history, user, loggedInStatus, handleLogout}) {
           mt={3}
           p={2}
         >
+          {zoomOutMobile()}
           <FullCalendar
             allDayMaintainDuration
             defaultDate={date}

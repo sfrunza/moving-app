@@ -12,7 +12,7 @@ import Rating from '@material-ui/lab/Rating';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.dark,
+    backgroundColor: theme.palette.background.paper,
     paddingTop: 128,
     paddingBottom: 128,
   },

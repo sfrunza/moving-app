@@ -7,12 +7,16 @@ import {
   Divider,
   Grid,
   Typography,
-  makeStyles
+  makeStyles,
 } from '@material-ui/core';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.dark,
+    backgroundColor: theme.palette.background.paper,
     paddingTop: theme.spacing(6),
     paddingBottom: theme.spacing(6),
     '& dt': {
@@ -20,21 +24,28 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   container: {
-    display: 'flex !important',
-    flexWrap: 'wrap !important',
+    display: 'flex',
+    flexWrap: 'wrap',
     maxWidth: '1100px',
-    margin: 'auto 0px auto auto',
+    justifyContent: 'space-between',
+    margin: 'auto',
     [theme.breakpoints.down('sm')]: {
-      display: 'table !important'
+      display: 'table !important',
     }
   },
   item: {
     fontFamily: "Maison Neue",
-    width: '80%',
-    [theme.breakpoints.down('xs')]: {
+    width: '48%',
+    [theme.breakpoints.down('sm')]: {
       width: '100%',
     }
-  }
+  },
+  heading: {
+    fontFamily: "Maison Neue Demi",
+  },
+  body: {
+    fontFamily: "Maison Neue Normal",
+  },
 }));
 const data = [
   {
@@ -71,6 +82,11 @@ const data = [
 
 function FAQS({ className, ...rest }) {
   const classes = useStyles();
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
 
   return (
     <div
@@ -92,29 +108,34 @@ function FAQS({ className, ...rest }) {
           <Grid
             className={classes.container}
           >
+
             {
               data.map(item => {
                 return (
-                  <Box mt={6} style={{flex: '0 50%', boxSizing: 'border-box'}} key={item.id}>
-                    <dd>
+                  <Accordion expanded={expanded === item.id} onChange={handleChange(item.id)} key={item.id} className={classes.item}>
+                    <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls={`${item.id}-content`}
+                    id={`${item.id}}-header`}
+                    key={item.id}
+                    style={{margin: '10px 0px'}}
+                    >
                       <Typography
-                        variant="h4"
-                        color="textPrimary"
-                        style={{fontFamily: "Maison Neue Bold" }}
+                        className={classes.heading}
+                        variant='h5'
                       >
                         {item.question}
                       </Typography>
-                    </dd>
-                    <dt>
+                    </AccordionSummary>
+                    <AccordionDetails>
                       <Typography
-                        variant="body1"
-                        color="textSecondary"
-                        className={classes.item}
+                        variant='h5'
+                        className={classes.body}
                       >
                         {item.answer}
                       </Typography>
-                    </dt>
-                  </Box>
+                    </AccordionDetails>
+                  </Accordion>
                 )
               })
             }

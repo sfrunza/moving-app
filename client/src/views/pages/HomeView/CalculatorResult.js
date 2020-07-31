@@ -7,6 +7,17 @@ import {
   DirectionsRenderer,
 } from "react-google-maps";
 import { compose, withProps, lifecycle } from "recompose";
+import {
+  Box,
+  Button,
+  Container,
+  Typography,
+  makeStyles,
+  Link
+} from '@material-ui/core';
+
+
+const google = window.google = window.google ? window.google : {}
 
 class CalculatorResult extends Component {
   constructor(props) {
@@ -30,7 +41,7 @@ class CalculatorResult extends Component {
   }
   reloadPage(e){
     e.preventDefault();
-	   location.reload();
+
   }
 
 
@@ -152,20 +163,6 @@ class CalculatorResult extends Component {
     handleResult(moveFrom, moveTo, sizeMove){
       let sizeArray = this.props.arraySize
       let typeArray = this.props.arrayType
-
-      let arr = [];
-      sizeArray.map(item => {
-            if(item.value.length !=0 || item.value != ''){
-              arr.push(item.value)
-            }
-
-      })
-      let arr2 = []
-      typeArray.map(item => {
-        if(item.value.length !=0 || item.value != ''){
-          arr2.push(item.value)
-        }
-      })
 
       let arr4 = new Array();
           arr4['elevator building'] = new Array()

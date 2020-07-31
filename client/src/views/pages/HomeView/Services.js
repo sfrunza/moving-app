@@ -16,6 +16,7 @@ import { deepPurple, indigo, green } from '@material-ui/core/colors'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import box from 'src/assets/img/graphic-3578346_640.png';
 import loc from 'src/assets/img/loc.png';
+import CheckIcon from '@material-ui/icons/Check';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,8 +28,14 @@ const useStyles = makeStyles((theme) => ({
     color: green[500],
     display: 'flex',
     justifyContent: 'center',
-    fontFamily: "Maison Neue Bold",
+    fontFamily: "Maison Neue Normal",
     padding: '6px 1px',
+    '& >div': {
+      fontSize: '16px',
+    },
+    '& svg': {
+      fontSize: '20px',
+    }
     // [theme.breakpoints.down('sm')]: {
     //   display: 'none'
     // }
@@ -87,6 +94,7 @@ const useStyles = makeStyles((theme) => ({
   },
   service: {
     backgroundColor: theme.palette.background.dark,
+    height: '100%',
   },
   mainContainer: {
     paddingLeft: '16px',
@@ -131,7 +139,7 @@ function Services({ className, ...rest }) {
                   <Box ml={2} className={classes.box}>
 
                     <Typography
-                      variant="h1"
+                      variant="h2"
                       gutterBottom
                       color="textPrimary"
                       className={classes.header}
@@ -145,9 +153,9 @@ function Services({ className, ...rest }) {
                     >
                       Hourly based full moving services in Metro Boston and 125 miles around it.
                     </Typography>
-                    <Alert severity="success" className={classes.alert}>
-                      <AlertTitle>Safe, Fast and Reliable</AlertTitle>
-                    </Alert>
+                      <Alert icon={<CheckIcon />} severity="success" className={classes.alert}>
+                        Safe, Fast and Reliable
+                      </Alert>
                     <Typography
                       variant="body1"
                       color="textPrimary"
@@ -195,8 +203,8 @@ function Services({ className, ...rest }) {
                     >
                       Flat Rate Moving. Same or Next Day moving services on distance up to 1,500 miles.
                     </Typography>
-                    <Alert severity="success" className={classes.alert}>
-                      <AlertTitle>Flat Rate Moving</AlertTitle>
+                    <Alert icon={<CheckIcon />} severity="success" className={classes.alert}>
+                      Flat Rate Moving
                     </Alert>
                     <Typography
                       variant="body1"
@@ -245,8 +253,8 @@ function Services({ className, ...rest }) {
                     >
                       Our experienced movers will have all necessary packing materials to pack up everything.
                     </Typography>
-                    <Alert severity="success" className={classes.alert}>
-                      <AlertTitle>Full Home Packing Services</AlertTitle>
+                    <Alert icon={<CheckIcon />} severity="success" className={classes.alert}>
+                      Full Home Packing Services
                     </Alert>
                     <Typography
                       variant="body1"
@@ -296,8 +304,8 @@ function Services({ className, ...rest }) {
                     >
                       Insight Moving provides climate controlled storage for up to 6 months.
                     </Typography>
-                    <Alert severity="success" className={classes.alert}>
-                      <AlertTitle>First 10 Days FREE Storage</AlertTitle>
+                    <Alert icon={<CheckIcon />} severity="success" className={classes.alert}>
+                      First 10 Days FREE Storage
                     </Alert>
                     <Typography
                       variant="body1"

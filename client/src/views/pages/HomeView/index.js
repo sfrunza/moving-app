@@ -8,6 +8,8 @@ import Services from './Services'
 import Testimonials from './Testimonials';
 import CTA from './CTA';
 import FAQS from './FAQS';
+import TimelineComponent from './TimelineComponent'
+import Contact from './Contact'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -26,6 +28,7 @@ function HomeView() {
       <Header />
       <Services />
       <Rates />
+      {/*<TimelineComponent />*/}
       <Testimonials />
       <SubHeader />
       <CTA />
