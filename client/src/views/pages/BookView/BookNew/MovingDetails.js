@@ -469,6 +469,7 @@ function MovingDetails({
         touched,
         values,
       }) => {
+        console.log(values);
         let noOrigin = false;
         let noDestination = false;
         let backgroundColorDestination = '#fff'
@@ -636,7 +637,7 @@ function MovingDetails({
                     : false}>
                     <InputLabel>Select elevator/stairs...</InputLabel>
                     <Select
-      
+
                       id="destination.house_type"
                       defaultValue=""
                       label="Select elevator/stairs..."

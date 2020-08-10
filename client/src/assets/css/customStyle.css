@@ -112,3 +112,7 @@
 .calculate-element button span:hover{
   color: #7b00ff;
 }
+
+.ReactModal__Overlay--after-open{
+  margin-top: 4em;
+}

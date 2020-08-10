@@ -26,11 +26,13 @@ import purple from '@material-ui/core/colors/deepPurple';
 import PhoneIcon from '@material-ui/icons/Phone';
 import EmailIcon from '@material-ui/icons/Email';
 import green from '@material-ui/core/colors/green';
+import { useSnackbar } from 'notistack';
 
 
 function CustomerDetails({ job, className, ...rest }) {
 
   const [status, setStatus] = useState(job.job.status);
+  const { enqueueSnackbar } = useSnackbar();
 
   const formatPhoneNumber = (phoneNumberString) => {
     let cleaned = ('' + phoneNumberString).replace(/\D/g, '')
@@ -126,6 +128,9 @@ function CustomerDetails({ job, className, ...rest }) {
       }
     }).then((response) => {
         setStatus(status)
+        enqueueSnackbar('Status Changed', {
+          variant: 'success'
+        });
       })
   }
 

@@ -216,7 +216,7 @@ function TopBar({ className, ...rest }) {
                    className={classes.link}
                    color="textSecondary"
                    component={RouterLink}
-                   to="/docs"
+                   to="/work"
                    underline="none"
                    variant="body2"
                  >
