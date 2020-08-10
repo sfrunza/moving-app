@@ -19,6 +19,7 @@ devise_for :users, controllers: { registrations: :registrations, sessions: :sess
       resources :origins
       resources :destinations
       resources :users, only: [:index]
+      resources :images, only: [:index, :show, :create, :destroy]
 
     end
   end

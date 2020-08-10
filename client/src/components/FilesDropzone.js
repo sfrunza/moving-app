@@ -21,6 +21,7 @@ import FileCopyIcon from '@material-ui/icons/FileCopy';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import bytesToSize from 'src/utils/bytesToSize';
 
+
 const useStyles = makeStyles((theme) => ({
   root: {},
   dropZone: {
@@ -60,20 +61,31 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function FilesDropzone({ className, ...rest }) {
+function FilesDropzone({ className, setFieldValue, handleSubmit, ...rest }) {
   const classes = useStyles();
   const [files, setFiles] = useState([]);
 
+
+
   const handleDrop = useCallback((acceptedFiles) => {
-    setFiles((prevFiles) => [...prevFiles].concat(acceptedFiles));
+
+    setFiles(acceptedFiles);
+    setFieldValue("photo", acceptedFiles)
+    setFieldValue("image", acceptedFiles[0].name)
+
   }, []);
+
 
   const handleRemoveAll = () => {
     setFiles([]);
   };
+  const handleFunction = () => {
+    handleSubmit();
+    handleRemoveAll();
+  }
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop: handleDrop
+    onDrop: handleDrop,
   });
 
   return (
@@ -81,42 +93,15 @@ function FilesDropzone({ className, ...rest }) {
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <div
-        className={clsx({
-          [classes.dropZone]: true,
-          [classes.dragActive]: isDragActive
-        })}
+      <Button
+        className={classes.button}
+        variant="outlined"
+        color="primary"
         {...getRootProps()}
       >
         <input {...getInputProps()} />
-        <div>
-          <img
-            alt="Select file"
-            className={classes.image}
-            src="/static/images/undraw_add_file2_gvbb.svg"
-          />
-        </div>
-        <div>
-          <Typography
-            gutterBottom
-            variant="h3"
-          >
-            Select files
-          </Typography>
-          <Box mt={2}>
-            <Typography
-              color="textPrimary"
-              variant="body1"
-            >
-              Drop files here or click
-              {' '}
-              <Link underline="always">browse</Link>
-              {' '}
-              thorough your machine
-            </Typography>
-          </Box>
-        </div>
-      </div>
+        Upload Image
+      </Button>
       {files.length > 0 && (
         <>
           <PerfectScrollbar options={{ suppressScrollX: true }}>
@@ -134,30 +119,29 @@ function FilesDropzone({ className, ...rest }) {
                     primaryTypographyProps={{ variant: 'h5' }}
                     secondary={bytesToSize(file.size)}
                   />
-                  <Tooltip title="More options">
-                    <IconButton edge="end">
-                      <MoreIcon />
-                    </IconButton>
-                  </Tooltip>
+
                 </ListItem>
               ))}
+              <ListItem>
+                <div className={classes.actions}>
+                  <Button
+                    onClick={handleRemoveAll}
+                    size="small"
+                  >
+                    Remove
+                  </Button>
+                  <Button
+                    color="secondary"
+                    size="small"
+                    variant="contained"
+                    onClick={handleFunction}
+                  >
+                    Upload
+                  </Button>
+                </div>
+              </ListItem>
             </List>
           </PerfectScrollbar>
-          <div className={classes.actions}>
-            <Button
-              onClick={handleRemoveAll}
-              size="small"
-            >
-              Remove all
-            </Button>
-            <Button
-              color="secondary"
-              size="small"
-              variant="contained"
-            >
-              Upload files
-            </Button>
-          </div>
         </>
       )}
     </div>

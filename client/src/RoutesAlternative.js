@@ -169,6 +169,11 @@ class Routes extends Component {
                     />
                     <Route
                       exact
+                      path="/app/management/images"
+                      component={lazy(() => import('src/views/management/ImagesListView'))}
+                    />
+                    <Route
+                      exact
                       path="/app/management/jobs/:jobId"
                       component={lazy(() => import('src/views/management/JobDetailsView'))}
                     />

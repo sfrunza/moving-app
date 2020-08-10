@@ -84,21 +84,11 @@ const navConfig = [
         icon: UsersIcon,
         href: '/app/management/customers',
       },
-      // {
-      //   title: 'Orders',
-      //   icon: FolderIcon,
-      //   href: '/app/management/orders',
-      //   items: [
-      //     {
-      //       title: 'List Orders',
-      //       href: '/app/management/orders'
-      //     },
-      //     {
-      //       title: 'View Order',
-      //       href: '/app/management/orders/1'
-      //     }
-      //   ]
-      // },
+      {
+        title: 'Images',
+        icon: FolderIcon,
+        href: '/app/management/images',
+      },
       // {
       //   title: 'Invoices',
       //   icon: ReceiptIcon,
