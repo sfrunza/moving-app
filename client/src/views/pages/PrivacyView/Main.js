@@ -1,16 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import {
   Box,
-  Button,
   Container,
   Typography,
   makeStyles,
-  Link
 } from '@material-ui/core';
-import { deepPurple } from '@material-ui/core/colors'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -116,7 +112,6 @@ function Main({ className, ...rest }) {
           <Typography
             variant="body1"
             color="textSecondary"
-            className={classes.subHeader}
             className={clsx(classes.subHeader, classes.address)}
           >
             Insight Moving LLC. 1111 LOL Street Boston, MA 02001

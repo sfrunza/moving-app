@@ -9,7 +9,7 @@ pre {
 code[class*="language-"],
 pre[class*="language-"] {
   color: rgb(191, 199, 213);
-  font-family: Inconsolata, Monaco, Consolas, 'Courier New', Courier, monospace;
+  font-family: "-apple-system, BlinkMacSystemFont, sans-serif";
   direction: ltr;
   text-align: left;
   white-space: pre;
@@ -171,4 +171,17 @@ pre[class*="language-"] {
 
 .token.italic {
   font-style: italic;
+}
+.ReactModal__Overlay--after-open {
+  margin-top: 0px !important;
+}
+body { font-size: 16px; }
+input, select { font-size: 100%; }
+
+@media screen and (device-aspect-ratio: 2/3) {
+    select, textarea, input[type="text"], input[type="password"],
+    input[type="datetime"], input[type="datetime-local"],
+    input[type="date"], input[type="month"], input[type="time"],
+    input[type="week"], input[type="number"], input[type="email"],
+    input[type="url"]{ font-size: 16px; }
 }

@@ -1,79 +1,96 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import {
-  Box,
-  Container,
-  Grid,
-  Typography,
-  makeStyles
-} from '@material-ui/core';
+import withWidth from '@material-ui/core/withWidth';
+import { useMediaQuery } from '@material-ui/core';
+import { SectionHeader, TypedText } from 'src/components/molecules';
+import { makeStyles, useTheme} from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
-    backgroundImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(https://meelheimsmoving.com/wp-content/uploads/2017/04/bigstock-Packed-household-goods-for-mov-131525006.jpg)',
-    backgroundSize: '100% 110%',
-    paddingTop: 200,
-    paddingBottom: 200,
-    textAlign: 'center',
-    [theme.breakpoints.down('sm')]: {
-      paddingTop: 80,
-      paddingBottom: 80,
-    }
   },
-  header: {
-    color: '#fff',
-    textShadow: '2px 2px 5px #000',
-    zIndex: 1,
+  typed: {
+    fontWeight: 'bold',
+    color: 'orange'
   },
-  subHeader: {
-    color: '#fff',
-    textShadow: '2px 2px 5px #000',
-    zIndex: 1,
-  }
+  calculator: {
+    padding: theme.spacing(3, 2),
+    maxWidth: 800,
+    margin: '0 auto',
+  },
+  drawer: {
+    borderRadius: '16px 16px 0px 0px',
+  },
+  button: {
+    borderRadius: '24px',
+    border: '1px solid #673ab7',
+    color: '#673ab7',
+    padding: '10px 20px',
+    backgroundColor: '#fff',
+    '&:hover': {
+      color: '#fff',
+      backgroundColor: '#673ab7',
+      border: 'none',
+    },
+  },
+  textWhite: {
+    color: 'white',
+  },
 }));
 
 function Header({ className, ...rest }) {
+
   const classes = useStyles();
+  const [openBottombar, setOpenBottombar] = React.useState(false);
+
+  const handleBottombarOpen = () => {
+    setOpenBottombar(true);
+  };
+
+  const handleBottombarClose = () => {
+    setOpenBottombar(false);
+  };
+
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up('md'), {
+    defaultMatches: true,
+  });
 
   return (
-    <div
-      className={clsx(classes.root, className)}
-      {...rest}
-    >
-      <Container maxWidth="lg">
-        <Grid
-          container
-          // spacing={3}
-          style={{justifyContent: 'center'}}
-        >
-          <Grid
-            item
-          >
-            <Box
-              display="flex"
-              flexDirection="column"
-              justifyContent="center"
-              height="100%"
-            >
-              <Typography
-                variant="h1"
-                className={classes.header}
-              >
-                Moving Services
-              </Typography>
-              <Box mt={3} className={classes.subHeader}>
-                <Typography
-                  variant="body1"
-                >
-                  We treat your belongings with the utmost care
-                </Typography>
-              </Box>
-            </Box>
-          </Grid>
-
-        </Grid>
-      </Container>
+    <div className={clsx(classes.root, className)} {...rest}>
+      <SectionHeader
+        title={
+          <>
+            <span className={classes.textWhite}>
+              Moving Services
+            </span>
+            <br />
+            <TypedText
+              component="span"
+              variant="h1"
+              className={classes.typed}
+              typedProps={{
+                strings: [
+                  'Responsible',
+                  'Efficient',
+                  'Reliable',
+                ],
+                typeSpeed: 100,
+                loop: true,
+              }}
+            />
+          </>
+        }
+        align="center"
+        titleProps={{
+          variant: 'h1',
+        }}
+        subtitleProps={{
+          variant: 'h4',
+        }}
+        data-aos="fade-up"
+        disableGutter
+      />
     </div>
   );
 }
@@ -82,4 +99,4 @@ Header.propTypes = {
   className: PropTypes.string
 };
 
-export default Header;
+export default withWidth()(Header);

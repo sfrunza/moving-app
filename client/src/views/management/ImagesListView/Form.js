@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 
 function AddImageFrom({ addImage }) {
   const [value, setValue] = useState({
     image: '',
-    photo: null
+    photo: null,
+    height: null,
+    width: null
   });
+
+  const imgInput = useRef()
 
   const handleSubmit = e => {
 
@@ -30,8 +34,9 @@ console.log(value);
     <form onSubmit={handleSubmit}>
       <input
         type="file"
+        ref={imgInput}
         className="input"
-        onChange={e => setValue({image: e.target.files[0].name, photo: e.target.files[0]})}
+        onChange={e => setValue({image: e.target.files[0].name, photo: e.target.files[0], height: imgInput, width: imgInput})}
       />
       <button type='submit'>Submit</button>
     </form>

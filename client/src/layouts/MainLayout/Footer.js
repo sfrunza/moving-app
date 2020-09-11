@@ -1,62 +1,149 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
+import { NavLink as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Link as RouterLink } from 'react-router-dom';
-import { makeStyles, Grid, Typography, Divider, Link, Container } from '@material-ui/core';
+import clsx from 'clsx';
+import { makeStyles } from '@material-ui/core/styles';
+import {
+  Typography,
+  IconButton,
+  Grid,
+  List,
+  ListItem,
+  Link,
+} from '@material-ui/core';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import PinterestIcon from '@material-ui/icons/Pinterest';
+import logo from 'src/assets/img/looool.png'
 
+import { Image } from 'src/components/atoms';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
-    backgroundColor: theme.palette.background.dark,
-    height: '10%',
+    padding: theme.spacing(4, 0),
+    background: '#1b1642',
     overflow: 'hidden',
     width: '100%',
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    flexDirection: 'column',
   },
   wrapper: {
     display: 'flex',
-    justifyContent: 'space-between',
-    fontFamily: "Maison Neue",
+    justifyContent: 'space-evenly',
+    // fontFamily: "Maison Neue",
+    padding: theme.spacing(4, 0),
+    color: '#fff',
+
+    minWidth: '370px',
+    margin: 'auto',
+    // [theme.breakpoints.down('md')]: {
+    //   maxWidth: '',
+    // },
   },
   link: {
     cursor: 'pointer',
-    color: theme.palette.common.black,
+    color: '#fff'
   },
   content: {
-    fontFamily: "Maison Neue",
-  }
+    color: '#fff',
+  },
+
+  logoContainerItem: {
+    paddingTop: 0,
+  },
+  logoContainer: {
+    width: 120,
+    height: 60,
+    backgroundColor: '#ffffffd1',
+    borderRadius: '10px',
+    padding: '3px 3px',
+  },
+  socialContainer: {
+    justifyContent: 'center',
+  },
+  logoImage: {
+    width: '100%',
+    height: '100%',
+  },
+  socialIcon: {
+    padding: 0,
+    marginRight: theme.spacing(1),
+    color: 'rgba(255,255,255,.6)',
+    '&:hover': {
+      background: 'transparent',
+    },
+    '&:last-child': {
+      marginRight: 0,
+    },
+  },
+  icon: {
+    fontSize: 24,
+  },
 }));
 
-function Footer({ children }) {
+const Footer = props => {
+  const { pages, className, ...rest } = props;
+
   const classes = useStyles();
 
   return (
-    <Grid className={classes.root}>
-      <Container maxWidth="xs"className={classes.wrapper}>
-        <Typography className={classes.content}>
-          Make moving chill.
-        </Typography>
-        <Typography className={classes.content}>
-          © {new Date().getFullYear()}
-        </Typography>
-        <Typography className={classes.content}>
-          <Link to="/privacy" component={RouterLink} className={classes.link}>Privacy</Link>
-        </Typography>
-        <Typography className={classes.content}>
-          <Link to="/" component={RouterLink} className={classes.link}>Terms</Link>
-        </Typography>
-      </Container>
-    </Grid>
+    <div {...rest} className={clsx(classes.root, className)}>
+      <Grid className={classes.root}>
+        <Grid item >
+          <List >
+            <ListItem  className={classes.logoContainerItem}>
+              <div className={classes.logoContainer}>
+                <Link to="/" component={RouterLink}>
+                  <Image
+                    className={classes.logoImage}
+                    src={logo}
+                    alt="thefront"
+                    lazy={false}
+                  />
+                </Link>
+              </div>
+            </ListItem>
+            <ListItem className={classes.socialContainer}>
+              <IconButton className={classes.socialIcon}>
+                <FacebookIcon className={classes.icon} />
+              </IconButton>
+              <IconButton className={classes.socialIcon}>
+                <InstagramIcon className={classes.icon} />
+              </IconButton>
+              <IconButton className={classes.socialIcon}>
+                <TwitterIcon className={classes.icon} />
+              </IconButton>
+              <IconButton className={classes.socialIcon}>
+                <PinterestIcon className={classes.icon} />
+              </IconButton>
+            </ListItem>
+          </List>
+        </Grid>
+
+        <Grid item className={classes.wrapper}>
+          <Typography className={classes.content}>
+            Make moving chill.
+          </Typography>
+          <Typography className={classes.content}>
+            © {new Date().getFullYear()}
+          </Typography>
+          <Typography className={classes.content}>
+            <Link to="/privacy" component={RouterLink} className={classes.link}>Privacy</Link>
+          </Typography>
+          <Typography className={classes.content}>
+            <Link to="/terms" component={RouterLink} className={classes.link}>Terms</Link>
+          </Typography>
+        </Grid>
+      </Grid>
+    </div>
   );
-}
+};
 
 Footer.propTypes = {
-  children: PropTypes.any
+  className: PropTypes.string,
+  pages: PropTypes.object.isRequired,
 };
 
 export default Footer;
-
-
-// <div className="insight-footer-tagline">
-//   <p><span>Make moving chill.</span><span className="insight-footer-tagline-copyright">© 2020</span><a href="#" target="_blank" rel="noopener noreferrer">Privacy</a><a href="#" target="_blank" rel="noopener noreferrer">Terms</a></p>
-// </div>

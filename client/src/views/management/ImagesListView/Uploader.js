@@ -91,7 +91,7 @@ function Uploader({ className, addImage, ...rest }) {
         touched,
         values,
       }) => {
-      
+
         return(
         <form
           onSubmit={handleSubmit}

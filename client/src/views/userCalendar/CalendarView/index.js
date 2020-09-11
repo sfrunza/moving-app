@@ -297,7 +297,7 @@ function CalendarView({history, user, loggedInStatus, handleLogout}) {
           mt={3}
           p={2}
         >
-          {zoomOutMobile()}
+
           <FullCalendar
             allDayMaintainDuration
             defaultDate={date}

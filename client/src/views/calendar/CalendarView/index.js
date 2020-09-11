@@ -260,7 +260,7 @@ function CalendarView({history}) {
       className={classes.root}
       title="Calendar"
     >
-    {zoomOutMobile()}
+    
       <Container maxWidth={false}>
         <Toolbar
           date={date}
