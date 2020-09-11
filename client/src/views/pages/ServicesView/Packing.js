@@ -9,11 +9,26 @@ import { SectionHeader, OverlapedImages } from 'src/components/molecules';
 
 const useStyles = makeStyles(() => ({
   root: {},
+  subtitle: {
+    whiteSpace: 'pre-line',
+  }
 }));
 
 const Packing = props => {
   const { className, ...rest } = props;
   const classes = useStyles();
+
+  const paragraph = 'We will send experienced, professional packers to your place and will deliver all necessary equipment such as boxes, packing paper, bubble wrap, stretch and shrink wrap, rolls of tape, blankets, and home protection. \n Packers will apply their techniques and skills to make sure your belongings are delivered safe and secured to any desired destination, whether it is a local move within Boston area or a long-distance journey.'
+  const result = paragraph.match( /[^\.!\?]+[\.!\?]+/g );
+  const newParagaraph = () => {
+    return (
+      <div>
+        {result[0]}
+        <br/>
+        {result[1]}
+      </div>
+    )
+  }
 
   return (
     <div className={clsx(classes.root, className)} {...rest}>
@@ -26,7 +41,8 @@ const Packing = props => {
                   Service
               </span>
             }
-            subtitle="Rather than worrying about switching offices every couple years, you can instead stay in the same location and grow-up from your shared coworking space to an office that takes up an entire floor."
+            subtitle={paragraph}
+            className={classes.subtitle}
             align="left"
             subtitleColor="textSecondary"
             subtitleVariant='body1'

@@ -18,8 +18,6 @@ import { deepPurple } from '@material-ui/core/colors'
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
-    paddingTop: 128,
-    paddingBottom: 128
   },
   avatar: {
     backgroundColor: theme.palette.secondary.main,

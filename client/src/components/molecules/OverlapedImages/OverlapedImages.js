@@ -26,6 +26,9 @@ const useStyles = makeStyles(theme => ({
     marginTop: '4rem',
   },
   imageGridLastItem: {
+    [theme.breakpoints.down('sm')]: {
+      marginTop: '6rem'
+    },
     marginTop: '8rem',
     float: 'right',
   },

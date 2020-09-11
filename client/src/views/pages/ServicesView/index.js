@@ -8,7 +8,7 @@ import {
   Drawer,
 } from '@material-ui/core';
 import clsx from 'clsx';
-import ForumIcon from '@material-ui/icons/Forum';
+import PhoneRoundedIcon from '@material-ui/icons/PhoneRounded';
 import Page from 'src/components/Page';
 import { ContactForm } from 'src/common';
 import { Section } from 'src/components/organisms';
@@ -44,28 +44,23 @@ const useStyles = makeStyles(theme => ({
     margin: '0 auto',
     padding: theme.spacing(0, 2),
   },
-  chatIconButton: {
+  phoneIconButton: {
     position: 'absolute',
     right: theme.spacing(3),
     left: 'auto',
     top: theme.spacing(-3),
-    background: theme.palette.primary.main,
+    background: theme.palette.success.main,
     width: 55,
     height: 55,
     boxShadow: '0 2px 10px 0 rgba(23,70,161,.11)',
     '&:hover': {
-      background: theme.palette.primary.main,
+      background: theme.palette.success.main,
     },
   },
-  forumIcon: {
+  phoneIcon: {
     color: 'white',
-    width: 25,
-    height: 25,
-  },
-  contactForm: {
-    padding: theme.spacing(3, 2),
-    maxWidth: 800,
-    margin: '0 auto',
+    width: 30,
+    height: 30,
   },
   headerSection: {
     backgroundColor: '#00000080',
@@ -147,20 +142,11 @@ const ServicesView = () => {
       <AppBar position="fixed" className={classes.appBarBottom}>
         <Toolbar disableGutters className={classes.toolbarBottom}>
           <IconButton
-            className={classes.chatIconButton}
-            onClick={handleBottombarOpen}
+            className={classes.phoneIconButton}
+            href="tel:6172060968"
           >
-            <ForumIcon className={classes.forumIcon} />
+            <PhoneRoundedIcon className={classes.phoneIcon} />
           </IconButton>
-          <Drawer
-            anchor="bottom"
-            open={openBottombar}
-            onClose={handleBottombarClose}
-          >
-            <div className={classes.contactForm}>
-              <ContactForm />
-            </div>
-          </Drawer>
         </Toolbar>
       </AppBar>
     </Page>
