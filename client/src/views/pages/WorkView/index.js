@@ -1,33 +1,25 @@
-import React, {
-  useState,
-  useEffect,
-  useCallback
-} from 'react';
+import React, { useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   AppBar,
   Toolbar,
   IconButton,
   Divider,
-  Drawer,
 } from '@material-ui/core';
-import axios from 'axios'
 import clsx from 'clsx';
-import ForumIcon from '@material-ui/icons/Forum';
+import PhoneRoundedIcon from '@material-ui/icons/PhoneRounded';
 import Page from 'src/components/Page';
-import { ContactForm } from 'src/common';
-import useIsMountedRef from 'src/hooks/useIsMountedRef';
-import { Section, SectionAlternate } from 'src/components/organisms';
-import { Parallax, Background } from 'react-parallax';
+import { Section } from 'src/components/organisms';
+import { Parallax } from 'react-parallax';
 import Header from './Header'
 import Gallery from './Gallery'
 import Partners from './Partners'
 import Reviews from 'src/views/pages/HomeView/Testimonials'
+import BookSection from 'src/views/pages/HomeView/BookSection'
 import {
-  reviews
+  reviews,
+  partners
 } from 'src/views/pages/HomeView/data';
-
-import { gallery, partners } from './data';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -52,28 +44,23 @@ const useStyles = makeStyles(theme => ({
     margin: '0 auto',
     padding: theme.spacing(0, 2),
   },
-  chatIconButton: {
+  phoneIconButton: {
     position: 'absolute',
     right: theme.spacing(3),
     left: 'auto',
     top: theme.spacing(-3),
-    background: theme.palette.primary.main,
+    background: theme.palette.success.main,
     width: 55,
     height: 55,
     boxShadow: '0 2px 10px 0 rgba(23,70,161,.11)',
     '&:hover': {
-      background: theme.palette.primary.main,
+      background: theme.palette.success.main,
     },
   },
-  forumIcon: {
+  phoneIcon: {
     color: 'white',
-    width: 25,
-    height: 25,
-  },
-  contactForm: {
-    padding: theme.spacing(3, 2),
-    maxWidth: 800,
-    margin: '0 auto',
+    width: 30,
+    height: 30,
   },
   headerSection: {
     backgroundColor: '#00000080',
@@ -94,47 +81,26 @@ const useStyles = makeStyles(theme => ({
     // top: '20% !important',
     minWidth: '1000px !important',
     minHeight: '80vh !important',
+    [theme.breakpoints.down('xs')]: {
+      left: '82% !important',
+    },
   }
 }));
 
-const WorkView = () => {
+const WorkView = props => {
   const classes = useStyles();
-  const isMountedRef = useIsMountedRef();
-  const [images, setImages] = useState(null);
-  const [openBottombar, setOpenBottombar] = useState(false);
-
-  const getImages = useCallback(() => {
-    axios
-      .get('/api/v1/images.json')
-      .then((response) => {
-        if (isMountedRef.current) {
-          setImages(response.data);
-        }
-      });
-  }, [isMountedRef]);
+  const [images, setImages] = useState()
 
   useEffect(() => {
-    getImages();
-  }, [getImages]);
-
-  if (!images) {
-    return null;
-  }
-
-  const handleBottombarOpen = () => {
-    setOpenBottombar(true);
-  };
-
-  const handleBottombarClose = () => {
-    setOpenBottombar(false);
-  };
+    setImages(props.images)
+  });
 
   return (
     <Page title="Our Work" className={classes.root}>
       <Parallax
-            bgImage='https://leesmovers.com/wp-content/uploads/banner.jpg'
+            bgImage='https://lh3.googleusercontent.com/proxy/CXNTNtzgxCGljho7QTs0iG-hbQ23uwcyUr5Qj8c-OWqpVGAHWAmk0GnMTvExZ9rF17GDO5CbPPKyECQbZd9SqJ8ajz4g1eucEL1r5RmEp3_1xlI3ln6gxRCHYQEFnJEZ'
             bgImageAlt="bg"
-            strength={300}
+            strength={400}
             bgClassName={classes.bgImage}
         >
         <div className={clsx(classes.fullHeight, classes.headerSection)}>
@@ -148,10 +114,16 @@ const WorkView = () => {
 
         <Partners data={partners} />
 
-        <Gallery images={images} />
+        <Gallery images={!images ? null : images} />
 
         <Section>
           <Reviews data={reviews}/>
+        </Section>
+
+        <Divider />
+
+        <Section>
+          <BookSection />
         </Section>
 
       </Section>
@@ -159,20 +131,11 @@ const WorkView = () => {
       <AppBar position="fixed" className={classes.appBarBottom}>
         <Toolbar disableGutters className={classes.toolbarBottom}>
           <IconButton
-            className={classes.chatIconButton}
-            onClick={handleBottombarOpen}
+            className={classes.phoneIconButton}
+            href="tel:6172060968"
           >
-            <ForumIcon className={classes.forumIcon} />
+            <PhoneRoundedIcon className={classes.phoneIcon} />
           </IconButton>
-          <Drawer
-            anchor="bottom"
-            open={openBottombar}
-            onClose={handleBottombarClose}
-          >
-            <div className={classes.contactForm}>
-              <ContactForm />
-            </div>
-          </Drawer>
         </Toolbar>
       </AppBar>
     </Page>

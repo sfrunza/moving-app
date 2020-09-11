@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { SectionHeader } from 'src/components/molecules';
+import { Image } from 'src/components/atoms';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,6 +27,7 @@ const useStyles = makeStyles(theme => ({
   },
   logoImg: {
     maxWidth: 100,
+    height: 'auto !important',
   },
   fontWeight700: {
     fontWeight: 700,
@@ -52,14 +54,15 @@ const Partners = props => {
           data-aos="fade-up"
           align="center"
         />
-        <Grid container justify="space-between">
+        <Grid container justify="space-between" alignItems='center'>
           {data.map((partner, index) => (
             <Grid item xs={6} sm={2} key={index}>
-              <Typography
+              <Image
+                src={partner.logo}
+                alt={partner.name}
                 className={classes.logoImg}
-              >
-                {partner.name}
-              </Typography>
+                lazy={false}
+              />
             </Grid>
           ))}
         </Grid>

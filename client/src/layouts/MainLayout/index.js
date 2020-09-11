@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
 
 const MainLayout = props => {
   const { children } = props;
-
   const classes = useStyles();
 
   const theme = useTheme();

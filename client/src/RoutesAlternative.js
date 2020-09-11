@@ -14,6 +14,7 @@ import MainLayout from 'src/layouts/MainLayout';
 import CalendarLayout from 'src/layouts/CalendarLayout'
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoginView from 'src/views/auth/LoginView'
+import WorkView from 'src/views/pages/WorkView'
 import Signup from 'src/registrations/Signup'
 import PrivateRoute from 'src/registrations/PrivateRoute';
 import RouteWithLayout from './common/RouteWithLayout';
@@ -23,11 +24,14 @@ class Routes extends Component {
     super(props);
     this.state = {
       isLoggedIn: null,
-      user: {}
+      user: {},
+      images: {}
      };
   }
     UNSAFE_componentWillMount() {
+      this.getImages()
       return this.loginStatus()
+
     }
 
     loginStatus = () => {
@@ -41,6 +45,15 @@ class Routes extends Component {
         })
         .catch(error => console.log('api errors:', error))
       }
+
+    getImages = () => {
+        axios.get('/api/v1/images.json')
+        .then(response => {
+          this.setState({images: response.data})
+        })
+        .catch(error => console.log('api errors:', error))
+      }
+
     handleLogin = (data) => {
         this.setState({
           user: data,
@@ -121,7 +134,7 @@ class Routes extends Component {
                     <Redirect
                       exact
                       from="/app"
-                      to="/app/calendar"
+                      to="/app/reports/dashboard"
                     />
                     <Route
                       exact
@@ -283,7 +296,7 @@ class Routes extends Component {
           <Route
             path="/"
             render={(props) => (
-              <MainLayout {...props}>
+              <MainLayout {...props} images={this.state.images}>
                   <Switch>
 
                     <Route
@@ -307,9 +320,10 @@ class Routes extends Component {
                       component={lazy(() => import('src/views/pages/BookView/BookNew'))}
                     />
                     <Route
-                      exact
-                      path="/work"
-                      component={lazy(() => import('src/views/pages/WorkView'))}
+                      exact path='/work'
+                      render={props => (
+                        <WorkView images={this.state.images}/>
+                      )}
                     />
                     <Route
                       exact

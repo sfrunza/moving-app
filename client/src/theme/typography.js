@@ -34,7 +34,7 @@ export default {
   h6: {
     color: palette.text.primary,
     fontWeight: 500,
-    fontSize: '14px',
+    fontSize: '18px',
     lineHeight: 1.45,
   },
   subtitle1: {
