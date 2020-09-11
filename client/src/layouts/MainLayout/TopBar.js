@@ -1,354 +1,248 @@
-import React, { useState, useEffect } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import React, { forwardRef } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
+import { NavLink as RouterLink } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   AppBar,
-  Box,
-  Divider,
   Toolbar,
-  Link,
-  makeStyles,
-  Typography,
+  Hidden,
   List,
   ListItem,
-  Grid,
-  SwipeableDrawer
+  Typography,
+  IconButton,
+  Button,
+  colors,
+  Link
 } from '@material-ui/core';
-import Logo from 'src/components/Logo';
-import PersonIcon from '@material-ui/icons/Person';
-import { deepPurple } from '@material-ui/core/colors'
 import MenuIcon from '@material-ui/icons/Menu';
-import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
-import AttachMoneyRoundedIcon from '@material-ui/icons/AttachMoneyRounded';
-import ImageRoundedIcon from '@material-ui/icons/ImageRounded';
-import LocalShippingRoundedIcon from '@material-ui/icons/LocalShippingRounded';
 
-const useStyles = makeStyles((theme) => ({
+import { Image } from 'src/components/atoms';
+import logo from 'src/assets/img/looool.png'
+import PersonIcon from '@material-ui/icons/Person';
+
+const useStyles = makeStyles(theme => ({
   root: {
-    backgroundColor: theme.palette.background.default,
+    boxShadow: 'none',
+    background: theme.palette.white,
+    borderBottom: `1px solid ${colors.grey[200]}`,
+    backgroundColor: '#fff',
+  },
+  flexGrow: {
+    flexGrow: 1,
+  },
+  navigationContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   toolbar: {
-    height: 64,
+    maxWidth: 1100,
+    width: '100%',
+    margin: '0 auto',
+    padding: theme.spacing(0, 2),
   },
-  logo: {
-    marginRight: theme.spacing(2)
-  },
-  link: {
-    fontWeight: theme.typography.fontWeightMedium,
-    display: 'flex',
-    alignItems: 'center',
-    fontFamily: "Maison Neue Demi",
-    '& + &': {
-      marginLeft: theme.spacing(2)
-    },
+  navLink: {
+    fontWeight: 300,
     '&:hover': {
-      color: deepPurple['A200']
+      color: theme.palette.primary.dark,
     },
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '14px',
-      display: 'flex',
-      alignItems: 'center',
-      lineHeight: '20px',
-      width: '100%',
-      verticalAlign: 'middle',
-      fontFamily: "Maison Neue Normal",
+  },
+  listItem: {
+    width: 'auto',
+  },
+  listItemActive: {
+    '&> .menu-item': {
+      color: theme.palette.primary.dark,
     },
-
   },
-  divider: {
-    width: 1,
-    height: 32,
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2)
+  listItemText: {
+    flex: '0 0 auto',
+    marginRight: theme.spacing(2),
+    whiteSpace: 'nowrap',
+    '&:hover': {
+      color: theme.palette.primary.dark,
+      cursor: 'pointer',
+    },
   },
-  box: {
+  listItemIcon: {
+    minWidth: 'auto',
+  },
+  popover: {
+    padding: theme.spacing(4),
+    border: theme.spacing(2),
+    boxShadow: '0 0.5rem 2rem 2px rgba(116, 123, 144, 0.09)',
+    minWidth: 350,
+    marginTop: theme.spacing(2),
+  },
+  iconButton: {
+    padding: 0,
+    '&:hover': {
+      background: 'transparent',
+    },
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+    color: theme.palette.primary.dark,
+  },
+  logoContainer: {
+    width: 70,
+    height: 40,
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-around'
+    [theme.breakpoints.up('md')]: {
+      width: 95,
+      height: 50,
+    },
+  },
+  logoImage: {
+    width: '100%',
+    height: '100%',
+  },
+  menu: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  menuItem: {
+    marginRight: theme.spacing(5),
+    '&:last-child': {
+      marginRight: 0,
+    },
+  },
+  menuGroupItem: {
+    paddingTop: 0,
+  },
+  menuGroupTitle: {
+    textTransform: 'uppercase',
   },
   button: {
-    fontFamily: "Maison Neue Demi",
-    color: theme.palette.getContrastText(deepPurple[500]),
-    backgroundColor: deepPurple[500],
-    [theme.breakpoints.down('sm')]: {
-      width: '100%',
-    },
-    textAlign: 'center',
-    '&:hover': {
-      backgroundColor: deepPurple[700],
-    },
-    padding: '5px 10px',
-    borderRadius: '4px'
+    borderRadius: '24px',
   },
-  list : {
-    width : 200
-  },
-  item: {
-    padding: '1em',
-    height: '48px',
-    '&:first-child': {
-      marginBottom: '2em'
-    }
-  },
-  padding: {
-    paddingRight : 30,
-    cursor : "pointer"
-  },
-  sideBarIcon: {
-    padding : 0,
-    color : "#546e7a",
-    cursor : "pointer"
-  },
-  serviceText: {
-    marginLeft: '16px',
+  loginLink: {
+    display: 'flex',
+    alignItems: 'center',
   }
 }));
 
-function TopBar({ className, ...rest }) {
+const CustomRouterLink = forwardRef((props, ref) => (
+  <div ref={ref}>
+    <RouterLink {...props} />
+  </div>
+));
+
+const Topbar = props => {
+  const { className, onSidebarOpen, pages, ...rest } = props;
+
   const classes = useStyles();
-  const [drawer, setDrawer] = useState(false)
-  const [drawerActivate, setDrawerActivate] = useState(false)
-
-  useEffect(() => {
-    let mounted = true;
-
-    if(window.innerWidth <= 700){
-      setDrawerActivate(true);
-    }
-    window.addEventListener('resize',()=>{
-      if(window.innerWidth <= 960){
-        setDrawerActivate(true);
-      }
-      else{
-        setDrawerActivate(false)
-      }
-    });
-
-    return () => {
-      mounted = false;
-    };
-  },[]);
-
-  const createDrawer = () => {
-    return (
-      <div>
-        <AppBar
-          className={clsx(classes.root, className)}
-          color="default"
-          {...rest}
-        >
-          <Toolbar className={classes.toolbar}>
-            <Grid container direction = "row" justify = "space-between" alignItems="center">
-              <MenuIcon
-                className = {classes.sideBarIcon}
-                onClick={()=>{setDrawer(true)}} />
-
-              <Typography color="inherit" variant = "h3">
-                <RouterLink to="/">
-                  <Logo className={classes.logo} />
-                </RouterLink>
-              </Typography>
-              <Typography color="inherit" variant = "h3"></Typography>
-            </Grid>
-          </Toolbar>
-        </AppBar>
-
-        <SwipeableDrawer
-         open={drawer}
-         onClose={()=>{setDrawer(false)}}
-         onOpen={()=>{setDrawer(true)}}
-         >
-
-           <div
-             tabIndex={0}
-             role="button"
-             onClick={()=>{setDrawer(false)}}
-             onKeyDown={()=>{setDrawer(false)}}>
-
-            <List className = {classes.list}>
-              <ListItem key = {10} button className = {classes.item}>
-                <RouterLink to="/">
-                  <Logo className={classes.logo} />
-                </RouterLink>
-              </ListItem>
-              <ListItem key = {1} button  className = {classes.item}>
-                <Link
-                  className={classes.link}
-                  color="textSecondary"
-                  component={RouterLink}
-                  to="/"
-                  underline="none"
-                  variant="body2"
-                >
-                  <div><HomeRoundedIcon /></div>
-                  <div className = {classes.serviceText}>Home</div>
-                </Link>
-              </ListItem>
-               <ListItem key = {2} button  className = {classes.item}>
-                 <Link
-                   className={classes.link}
-                   color="textSecondary"
-                   component={RouterLink}
-                   to="/services"
-                   underline="none"
-                   variant="body2"
-                 >
-                   <div><LocalShippingRoundedIcon /></div>
-                   <div className = {classes.serviceText}>Services</div>
-                 </Link>
-               </ListItem>
-               <ListItem key = {3} button  className = {classes.item}>
-                 <Link
-                   className={classes.link}
-                   color="textSecondary"
-                   component={RouterLink}
-                   to="/pricing"
-                   underline="none"
-                   variant="body2"
-                 >
-                   <div><AttachMoneyRoundedIcon /></div>
-                   <div className = {classes.serviceText}>Pricing</div>
-                 </Link>
-               </ListItem>
-               <ListItem key = {4} button divider className = {classes.item}>
-                 <Link
-                   className={classes.link}
-                   color="textSecondary"
-                   component={RouterLink}
-                   to="/work"
-                   underline="none"
-                   variant="body2"
-                 >
-                 <div><ImageRoundedIcon /></div>
-                 <div className = {classes.serviceText}>Our Work</div>
-                 </Link>
-               </ListItem>
-               <ListItem key = {5} button className = {classes.item} style={{marginTop: '15px'}}>
-                 <Link
-                   className={classes.link}
-                   color="textSecondary"
-                   component={RouterLink}
-                   to="/docs"
-                   underline="none"
-                   variant="body2"
-                 >
-                   <div><PersonIcon /></div>
-                   <div className = {classes.serviceText}>Client Login</div>
-                 </Link>
-               </ListItem>
-               <ListItem key = {6} button className = {classes.item}>
-                 <Link
-                   className={classes.button}
-                   color="textSecondary"
-                   component={RouterLink}
-                   to="/book"
-                   underline="none"
-                   variant="body2"
-                 >
-                   GET STARTED
-                 </Link>
-               </ListItem>
-             </List>
-
-         </div>
-       </SwipeableDrawer>
-
-      </div>
-    );
-  }
-
-  const destroyDrawer = () => {
-    return (
-      <AppBar
-        className={clsx(classes.root, className)}
-        color="default"
-        {...rest}
-      >
-        <Toolbar className={classes.toolbar}>
-          <RouterLink to="/">
-            <Logo className={classes.logo} />
-          </RouterLink>
-          <Box flexGrow={1} />
-          <Box flexGrow={2} className={classes.box}>
-            <Link
-              className={classes.link}
-              color="textSecondary"
-              component={RouterLink}
-              to="/"
-              underline="none"
-              variant="body2"
-            >
-              Home
-            </Link>
-            <Link
-              className={classes.link}
-              color="textSecondary"
-              component={RouterLink}
-              to="/services"
-              underline="none"
-              variant="body2"
-            >
-              Services
-            </Link>
-            <Link
-              className={classes.link}
-              color="textSecondary"
-              component={RouterLink}
-              to="/pricing"
-              underline="none"
-              variant="body2"
-            >
-              Pricing
-            </Link>
-            <Link
-              className={classes.link}
-              color="textSecondary"
-              component={RouterLink}
-              to="/work"
-              underline="none"
-              variant="body2"
-            >
-              Our Work
-            </Link>
-            <Link
-              className={classes.link}
-              color="textSecondary"
-              component={RouterLink}
-              to="/docs"
-              underline="none"
-              variant="body2"
-            >
-              <PersonIcon style={{height: '0.9em'}}/>
-              Client Login
-            </Link>
-          </Box>
-          <Box flexGrow={1} />
-            <Divider className={classes.divider} />
-            <Link
-              className={classes.button}
-              color="textSecondary"
-              component={RouterLink}
-              to="/book"
-              underline="none"
-              variant="body2"
-            >
-              GET STARTED
-            </Link>
-        </Toolbar>
-      </AppBar>
-    )
-  }
 
   return (
-    <div>
-      {drawerActivate ? createDrawer() : destroyDrawer()}
-    </div>
-  );
-}
+    <AppBar
+      {...rest}
+      position="relative"
+      className={clsx(classes.root, className)}
+    >
+      <Toolbar disableGutters className={classes.toolbar}>
+        <div className={classes.logoContainer}>
+          <Link to="/" component={CustomRouterLink}>
+            <Image
+              className={classes.logoImage}
+              src={logo}
+              alt="insightmoving"
+              lazy={false}
+            />
+          </Link>
+        </div>
+        <div className={classes.flexGrow} />
+        <Hidden smDown>
+          <List className={classes.navigationContainer}>
+            <ListItem className={classes.listItem}>
+              <Typography
+              variant="body1"
+              color="textSecondary"
+              className={classes.listItemText}
+              component={CustomRouterLink}
+              to="/"
+              >
+                Home
+              </Typography>
+            </ListItem>
 
-TopBar.propTypes = {
-  className: PropTypes.string
+            <ListItem className={classes.listItem}>
+              <Typography
+                variant="body1"
+                color="textSecondary"
+                className={classes.listItemText}
+                component={CustomRouterLink}
+                to="/services"
+              >
+                Services
+              </Typography>
+            </ListItem>
+            <ListItem className={classes.listItem}>
+              <Typography
+                variant="body1"
+                color="textSecondary"
+                className={classes.listItemText}
+                component={CustomRouterLink}
+                to="/pricing"
+              >
+                Pricing
+              </Typography>
+            </ListItem>
+            <ListItem className={classes.listItem}>
+              <Typography
+                variant="body1"
+                color="textSecondary"
+                className={classes.listItemText}
+                component={CustomRouterLink}
+                to="/work"
+              >
+                Our Work
+              </Typography>
+            </ListItem>
+            <ListItem className={classes.listItem}>
+              <Typography
+                variant="body1"
+                color="textSecondary"
+                className={clsx(classes.listItemText, classes.loginLink)}
+                component={CustomRouterLink}
+                to="/sign_in"
+              >
+                <PersonIcon style={{height: '0.9em'}}/>
+                Client Login
+              </Typography>
+            </ListItem>
+            <ListItem className={classes.listItem}>
+              <Button
+                size="large"
+                variant="contained"
+                color="secondary"
+                component={CustomRouterLink}
+                to="/book"
+                className={classes.button}
+              >
+                Get Started
+              </Button>
+            </ListItem>
+          </List>
+        </Hidden>
+        <Hidden mdUp>
+          <IconButton
+            className={classes.iconButton}
+            onClick={onSidebarOpen}
+            aria-label="Menu"
+          >
+            <MenuIcon />
+          </IconButton>
+        </Hidden>
+      </Toolbar>
+    </AppBar>
+  );
 };
 
-export default TopBar;
+Topbar.propTypes = {
+  className: PropTypes.string,
+  onSidebarOpen: PropTypes.func,
+  pages: PropTypes.object.isRequired,
+};
+
+export default Topbar;

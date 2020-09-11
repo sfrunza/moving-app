@@ -16,6 +16,7 @@ import LoadingScreen from 'src/components/LoadingScreen';
 import LoginView from 'src/views/auth/LoginView'
 import Signup from 'src/registrations/Signup'
 import PrivateRoute from 'src/registrations/PrivateRoute';
+import RouteWithLayout from './common/RouteWithLayout';
 
 class Routes extends Component {
   constructor(props) {
@@ -283,7 +284,6 @@ class Routes extends Component {
             path="/"
             render={(props) => (
               <MainLayout {...props}>
-                <Suspense fallback={<LoadingScreen />}>
                   <Switch>
 
                     <Route
@@ -313,12 +313,16 @@ class Routes extends Component {
                     />
                     <Route
                       exact
+                      path="/client-login"
+                      component={lazy(() => import('src/views/pages/ClientLogin'))}
+                    />
+                    <Route
+                      exact
                       path="/privacy"
                       component={lazy(() => import('src/views/pages/PrivacyView'))}
                     />
                     <Redirect to="/404" />
                   </Switch>
-                </Suspense>
               </MainLayout>
             )}
           />

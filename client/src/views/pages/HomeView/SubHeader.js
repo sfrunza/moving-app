@@ -1,156 +1,86 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import {
-  Avatar,
-  Box,
-  Container,
-  Grid,
-  Typography,
-  makeStyles,
-  Alert
-} from '@material-ui/core';
-import { deepPurple, indigo, green } from '@material-ui/core/colors'
+import { makeStyles } from '@material-ui/core/styles';
+import { Grid, Typography } from '@material-ui/core';
+import { Image } from 'src/components/atoms';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
-    // paddingTop: 128,
-    // paddingBottom: 128,
-    // borderBottom: '12px solid white'
+    backgroundColor: theme.palette.background.dark,
+    width: '100%',
   },
-  avatar: {
-    backgroundColor: 'transparent',
-    color: '#4c4c4c',
-    borderColor: theme.palette.common.dark,
-    fontSize: '2em',
-    fontFamily: 'Maison Neue Normal'
+  noBg: {
+    background: 'transparent',
   },
-  text: {
-    marginTop: '8px',
-    color: theme.palette.common.dark,
-    fontFamily: 'Maison Neue Normal'
-  },
-  firstBox: {
-    // backgroundColor: '#e42c64',
-    display: 'flex',
-    justifyContent: 'center',
-    padding: '1em',
-    alignItems: 'baseline'
-
-  },
-  secondBox: {
-    // backgroundColor: '#614ad3',
-    display: 'flex',
-    justifyContent: 'center',
-    padding: '1em',
-    alignItems: 'baseline'
-
-  },
-  lastBox: {
-    // backgroundColor: '#2d248a',
-    display: 'flex',
-    justifyContent: 'center',
-    padding: '1em',
-    alignItems: 'baseline'
-  },
-  container: {
-    paddingLeft: '0px',
-    paddingRight: '0px',
-    backgroundColor: green[50],
-    borderRadius: '4px',
-  },
-  header: {
+  copy: {
     textAlign: 'center',
-    paddingBottom: 20,
-    fontFamily: 'Maison Neue Bold',
-  }
+    maxWidth: 700,
+    margin: '0 auto',
+    padding: theme.spacing(2, 2),
+    [theme.breakpoints.up('md')]: {
+      padding: theme.spacing(4, 2),
+    },
+  },
+  title: {
+    marginBottom: theme.spacing(2),
+  },
+  logoImg: {
+    maxWidth: 100,
+    height: 'auto !important',
+  },
+  fontWeight700: {
+    fontWeight: 700,
+  },
 }));
 
-function SubHeader({ className, ...rest }) {
+const Partners = props => {
+  const { data, className, ...rest } = props;
   const classes = useStyles();
 
   return (
-    <div
-      className={clsx(classes.root, className)}
-      {...rest}
-    >
-      <Container className={classes.container} maxWidth="xl">
-        <Box>
-          <Grid
-            container
-          >
-            <Grid
-              item
-              xs={12}
-              md={4}
+    <div className={clsx(classes.root, className)} data-aos="fade-up" {...rest}>
+      <div className={classes.copy}>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Typography
+              variant="h6"
+              color="textSecondary"
+              align="center"
+              className={classes.fontWeight700}
             >
-              <Box className={classes.firstBox}>
-                <Box className={classes.avatar}>
-                  01
-                </Box>
-                <Box ml={2}>
-                  <Typography
-                    variant="h4"
-                    gutterBottom
-                    color="textPrimary"
-                    className={classes.text}
-                  >
-                    Free Instant Quote
-                  </Typography>
-                </Box>
-              </Box>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              md={4}
-            >
-              <Box className={classes.secondBox}>
-                <Box className={classes.avatar}>
-                  02
-                </Box>
-                <Box ml={2}>
-                  <Typography
-                    variant="h4"
-                    gutterBottom
-                    color="textPrimary"
-                    className={classes.text}
-                  >
-                    Clear Pricing. Affordable Rates
-                  </Typography>
-                </Box>
-              </Box>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              md={4}
-            >
-              <Box className={classes.lastBox}>
-                <Box className={classes.avatar}>
-                  03
-                </Box>
-                <Box ml={2}>
-                  <Typography
-                    variant="h4"
-                    gutterBottom
-                    color="textPrimary"
-                    className={classes.text}
-                  >
-                    Easy Online Booking
-                  </Typography>
-                </Box>
-              </Box>
+              Our work has been featured in:
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid container justify="space-between" alignItems='center'>
+              {data.map((partner, index) => (
+                <Grid item xs={6} sm={2} key={index}>
+                  <Image
+                    src={partner.logo}
+                    alt={partner.name}
+                    className={classes.logoImg}
+                    lazy={false}
+                  />
+                </Grid>
+              ))}
             </Grid>
           </Grid>
-        </Box>
-      </Container>
+        </Grid>
+      </div>
     </div>
   );
-}
-
-SubHeader.propTypes = {
-  className: PropTypes.string
 };
 
-export default SubHeader;
+Partners.propTypes = {
+  /**
+   * External classes
+   */
+  className: PropTypes.string,
+  /**
+   * data to be rendered
+   */
+  data: PropTypes.array.isRequired,
+};
+
+export default Partners;

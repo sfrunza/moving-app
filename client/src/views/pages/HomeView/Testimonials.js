@@ -1,99 +1,115 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import {
-  Avatar,
-  Box,
-  Container,
-  Typography,
-  makeStyles
-} from '@material-ui/core';
-import Rating from '@material-ui/lab/Rating';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useMediaQuery } from '@material-ui/core';
+import { Grid, Button, colors, Box, Typography } from '@material-ui/core';
+import { Image } from 'src/components/atoms';
+import { SectionHeader, IconAlternate } from 'src/components/molecules';
+import { CardReview } from 'src/components/organisms';
+import stars from 'src/assets/img/rated-by-our-customer.png'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.paper,
-    paddingTop: 128,
-    paddingBottom: 128,
+  root: {},
+  sectionHeadlineStars: {
+    maxWidth: 120,
   },
-  ratingTitle: {
-    fontWeight: theme.typography.fontWeightRegular,
-    fontFamily: "Maison Neue Demi"
+  rating: {
+    maxWidth: '20em',
+    margin: '0px auto',
+    padding: theme.spacing(0, 0, 3),
   },
-  ratingConatiner: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignContent: 'center',
-    paddingBottom: '1em',
-    marginRight: '1em',
-  },
-  ratingStars: {
-    marginRight: '1em',
-    display: 'flex',
-    textAlign: 'left'
-  },
-  header: {
-    fontFamily: 'Maison Neue Bold',
+  button: {
+    borderRadius: '24px',
   }
 }));
 
-function Testimonials({ className, ...rest }) {
+const Testimonials = props => {
+  const { data, className, ...rest } = props;
   const classes = useStyles();
-  const [value] = React.useState(5);
+
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up('md'), {
+    defaultMatches: true,
+  });
 
   return (
-    <div
-      className={clsx(classes.root, className)}
-      {...rest}
-    >
-      <Container maxWidth="xl">
-        <Typography
-          variant="h1"
-          align="center"
-          color="textPrimary"
-          className={classes.header}
-        >
-          What people are saying
-        </Typography>
-        <Box borderColor="transparent" className={classes.ratingConatiner} mt={6}>
-          <Rating value={value} readOnly className={classes.ratingStars}/>
-          <Typography component="legend" style={{fontFamily: "Maison Neue"}}>
-              Rating: 5 - 271 reviews
+    <div className={clsx(classes.root, className)} data-aos="fade-up" {...rest}>
+      <SectionHeader
+        title={
+          <span>
+            What people are saying
+          </span>
+        }
+        fadeUp
+      />
+      <Grid container className={classes.rating} justify="space-evenly" alignItems='center'>
+        <Box>
+          <Image
+            src={stars}
+            alt="rating"
+            className={classes.sectionHeadlineStars}
+            width="auto"
+          />
+        </Box>
+        <Box>
+          <Typography>
+            Rating: 5 - 271 reviews
           </Typography>
         </Box>
-        <Typography
-          variant="h3"
-          align="center"
-          color="textPrimary"
-          className={classes.ratingTitle}
-        >
-          &quot;Devias builds some of the best templates you can find for React.
-          <br />
-          They will save you time.&quot;
-        </Typography>
-        <Box
-          mt={6}
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Avatar src="/static/home/olivier.png" alt="ReviewUser" />
-          <Box ml={2}>
-            <Typography
-              variant="body1"
-              color="textPrimary"
-            >
-              Olivier Tassinari
-            </Typography>
-          </Box>
-        </Box>
-      </Container>
+
+      </Grid>
+      <Grid container spacing={isMd ? 4 : 2}>
+        {data.map((review, index) => (
+          <Grid
+            key={index}
+            item
+            container
+            alignItems="center"
+            direction="column"
+            xs={12}
+            sm={4}
+            data-aos="fade-up"
+          >
+            <CardReview
+              variant="outlined"
+              text={review.feedback}
+              icon={
+                <IconAlternate
+                  color={colors.blue}
+                  fontIconClass="fas fa-quote-right"
+                />
+              }
+              authorName={review.authorName}
+              authorTitle={review.authorOccupation}
+              authorPhoto={review.authorPhoto}
+            />
+          </Grid>
+        ))}
+        <Grid item container xs={12} justify="center">
+          <Button
+            variant="outlined"
+            size={isMd ? 'large' : 'medium'}
+            color="secondary"
+            className={classes.button}
+          >
+            See all reviews
+          </Button>
+        </Grid>
+      </Grid>
     </div>
   );
-}
+};
 
 Testimonials.propTypes = {
-  className: PropTypes.string
+  /**
+   * External classes
+   */
+  className: PropTypes.string,
+  /**
+   * data to be rendered
+   */
+  data: PropTypes.array.isRequired,
 };
 
 export default Testimonials;

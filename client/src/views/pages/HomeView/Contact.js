@@ -1,183 +1,165 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {
-  Box,
-  Container,
-  Grid,
-  Typography,
-  makeStyles,
-  CardMedia,
-  Button,
-  Popover,
-  Modal,
-  Fade,
-  Backdrop,
-  Fab,
+  useMediaQuery,
+  List,
+  ListItem,
+  ListItemText,
   Avatar,
-  Tooltip
+  Button,
 } from '@material-ui/core';
-import Calculator from './Calculator'
-import CalcHooks from './CalcHooks'
-import CallIcon from '@material-ui/icons/Call';
+import { SectionHeader } from 'src/components/molecules';
+import PhoneRoundedIcon from '@material-ui/icons/PhoneRounded';
 import EmailIcon from '@material-ui/icons/Email';
-import { deepPurple, amber, deepOrange, blueGrey } from '@material-ui/core/colors'
+import RoomIcon from '@material-ui/icons/Room';
+import { Link as RouterLink } from 'react-router-dom';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-  },
-  callFab: {
-    backgroundColor: theme.palette.background.paper,
-    fontSize: '16px',
-    fontFamily: "Maison Neue Demi",
-    boxShadow: '0 0 1px 0 rgba(0, 0, 0, 0.18), 0 4px 6px -2px rgba(0, 0, 0, 0.71)',
-    '&:hover': {
-      backgroundColor: theme.palette.background.paper,
+const useStyles = makeStyles(theme => ({
+  root: {},
+  list: {
+    display: 'flex',
+    flexDirection: 'column',
+    [theme.breakpoints.up('md')]: {
+      flexDirection: 'row',
     },
-    '& > span > div': {
-      [theme.breakpoints.down('sm')]: {
-        display: 'none'
-      },
-    }
-
   },
-  callIcon: {
-    fontSize: '2em',
+  listItemText: {
+    display: 'flex',
+    flexDirection: 'column',
+    flex: '0 0 auto',
   },
-  callBox: {
-    // position: 'fixed',
-    // width: 'fit-content',
-    // zIndex: '1',
-    // display: 'flex',
-    // flexDirection: 'column',
-    // justifyContent: 'space-between',
-    // alignItems: 'flex-end',
-    // height: '10em',
-    // position: 'relative',
-    // top: '-21em',
-    // display: 'flex',
-    // justifyContent: 'flex-end',
-    // [theme.breakpoints.down('sm')]: {
-    //   flexDirection: 'row',
-    //   bottom: '1em',
-    //   left: '1em',
-    //   minWidth: '140px',
-    //   height: 'auto',
-    // },
+  listItem: {
+    justifyContent: 'flex-start',
+    [theme.breakpoints.up('md')]: {
+      justifyContent: 'center',
+    },
   },
-  callConatiner: {
-    // justifyContent: 'center',
-    // alignItems: 'flex-end',
-    // flexDirection: 'column',
-    // display: 'flex',
+  icon: {
+    background: 'transparent',
+    borderRadius: 0,
   },
-  phone: {
-    color: 'green',
+  listItemAvatar: {
+    backgroundColor: 'orange',
+    margin: theme.spacing(0, 2),
   },
-  email: {
-    color: 'red',
-    textTransform: 'lowercase',
-  },
-  ggg: {
-    fontFamily: "Maison Neue Demi",
-    fontSize: '14px',
-    textTransform: 'lowercase',
-    marginLeft: '10px'
-  },
-  tooltipCall: {
-    fontSize: '25px',
-
+  button: {
+    borderRadius: '24px',
   }
 }));
 
-function Contact({ className, ...rest }) {
+const Team = props => {
+  const { className, ...rest } = props;
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const email = 'info@insightmoving.com'
-  const phoneNr = '+16172060968'
-  const [isShown, setIsShown] = useState(false);
-  const [emailShown, setEmailShown] = useState(false);
 
-  const isMobile = window.innerWidth < 960;
-  const setVariant = isMobile ? "round" : "extended";
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up('md'), {
+    defaultMatches: true,
+  });
 
   return (
-    <div
-      className={clsx(classes.root, className)}
-      {...rest}
-    >
-      <Container maxWidth="xl" className={classes.callConatiner}>
-      {!isMobile ?
-        <Grid item container xs={6} className={classes.callBox}>
-            <Fab
-              aria-label="call"
-              className={clsx(classes.callFab, classes.phone)}
-              variant="extended"
-              size='large'
-              href={"tel:" + phoneNr}
-              onMouseOver={() => setIsShown(true)}
-              onMouseLeave={() => setIsShown(false)}
+    <div className={clsx(classes.root, className)} data-aos="fade-up" {...rest}>
+      <SectionHeader
+        title="Why Choose Us"
+        subtitle="We are a small company of professional movers. Unlike movers from big companies, we will treat your belongings as ours. We will walk you through our smooth and simple process."
+        ctaGroup={[
+          <Button
+            variant="outlined"
+            size={isMd ? 'large' : 'medium'}
+            color="secondary"
+            className={classes.button}
+            component={RouterLink}
+            to='/book'
+          >
+            Book Us Now
+          </Button>,
+        ]}
+        fadeUp
+      />
+      <List disablePadding className={classes.list}>
+        <ListItem
+          disableGutters
+          data-aos="fade-up"
+          className={classes.listItem}
+        >
+          <Avatar className={classes.listItemAvatar}>
+            <PhoneRoundedIcon className={classes.icon}/>
+          </Avatar>
+          <ListItemText
+            className={classes.listItemText}
+            primary="Phone"
+            secondary="+1 617-206-0968"
+            primaryTypographyProps={{
+              className: classes.title,
+              variant: 'subtitle1',
+              color: 'textSecondary',
+            }}
+            secondaryTypographyProps={{
+              variant: 'subtitle1',
+              color: 'textPrimary',
+              component: 'span',
+            }}
+          />
+        </ListItem>
+        <ListItem
+          disableGutters
+          data-aos="fade-up"
+          className={classes.listItem}
+        >
+          <Avatar className={classes.listItemAvatar}>
+            <EmailIcon className={classes.icon}/>
+          </Avatar>
+          <ListItemText
+            className={classes.listItemText}
+            primary="Email"
+            secondary="info@insightmoving.com"
+            primaryTypographyProps={{
+              className: classes.title,
+              variant: 'subtitle1',
+              color: 'textSecondary',
+            }}
+            secondaryTypographyProps={{
+              variant: 'subtitle1',
+              color: 'textPrimary',
+            }}
+          />
+        </ListItem>
+        <ListItem
+          disableGutters
+          data-aos="fade-up"
+          className={classes.listItem}
+        >
 
-            >
+          <Avatar className={classes.listItemAvatar}>
+            <RoomIcon className={classes.icon}/>
+          </Avatar>
 
-              {!isShown ? <CallIcon className={classes.callIcon}/> : (<div>(617)-206-0968</div>)}
-            </Fab>
-            <Fab
-              aria-label="email"
-              className={clsx(classes.callFab, classes.email)}
-              variant="extended"
-              size='large'
-              href={"mailto:" + email}
-              onMouseOver={() => setEmailShown(true)}
-              onMouseLeave={() => setEmailShown(false)}
-
-            >
-
-              {!emailShown ? <EmailIcon className={classes.callIcon}/> : (<div>info@insightmoving.com</div>)}
-
-            </Fab>
-        </Grid>
-        :
-        <Grid item container xs={6} className={classes.callBox}>
-            <Fab
-              aria-label="call"
-              className={clsx(classes.callFab, classes.phone)}
-              variant="round"
-              size='large'
-              href={"tel:" + phoneNr}
-            >
-
-              <CallIcon className={classes.callIcon}/>
-            </Fab>
-            <Fab
-              aria-label="email"
-              className={clsx(classes.callFab, classes.email)}
-              variant="round"
-              size='large'
-              href={"mailto:" + email}
-            >
-
-              <EmailIcon className={classes.callIcon}/>
-
-            </Fab>
-        </Grid>
-      }
-
-      </Container>
+          <ListItemText
+            className={classes.listItemText}
+            primary="Head Office"
+            secondary="100 Washington st. Boston, MA "
+            primaryTypographyProps={{
+              className: classes.title,
+              variant: 'subtitle1',
+              color: 'textSecondary',
+            }}
+            secondaryTypographyProps={{
+              variant: 'subtitle1',
+              color: 'textPrimary',
+            }}
+          />
+        </ListItem>
+      </List>
     </div>
   );
-}
-
-Contact.propTypes = {
-  className: PropTypes.string
 };
 
-export default Contact;
+Team.propTypes = {
+  /**
+   * External classes
+   */
+  className: PropTypes.string,
+};
+
+export default Team;

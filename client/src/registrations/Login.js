@@ -30,21 +30,24 @@ handleChange = (event) => {
 handleSubmit(event) {
     event.preventDefault()
     const { email, password} = this.state
-let user = {
-      email: email,
-      password: password
-    }
+    let user = {
+          email: email,
+          password: password
+        }
 
     axios.post('/users/sign_in', {user}, {withCredentials: true})
     .then(response => {
+      debugger
       if (response.data) {
+
+        console.log(response.data.status);
         this.props.handleLogin(response.data)
         if (response.data.admin === true) {
           this.redirect('/app/calendar')
         } else this.redirect('/calendar')
       } else {
         this.setState({
-          errors: response.errors
+          errors: response.data.errors
         })
       }
     })

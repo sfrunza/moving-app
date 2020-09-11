@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core';
+import clsx from 'clsx';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useMediaQuery } from '@material-ui/core';
 import TopBar from './TopBar';
 import Footer from './Footer'
+import Sidebar from './Sidebar'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.default,
-    display: 'flex',
     height: '100%',
-    overflow: 'hidden',
     width: '100%'
   },
   wrapper: {
@@ -30,26 +31,83 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function MainLayout({ children }) {
+const MainLayout = props => {
+  const { children } = props;
+
   const classes = useStyles();
 
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up('md'), {
+    defaultMatches: true,
+  });
+
+  const pages = {
+    landings: {
+      title: 'Landings',
+      id: 'landing-pages',
+      children: {
+        services: {
+          groupTitle: 'Services',
+          pages: [
+            {
+              title: 'Home',
+              href: '/',
+            },
+            {
+              title: 'Services',
+              href: '/services',
+            },
+            {
+              title: 'Pricing',
+              href: '/pricing',
+            },
+            {
+              title: 'Our Work',
+              href: '/work',
+            },
+            {
+              title: 'Client Login',
+              href: '/sign_in',
+            },
+          ],
+        },
+      },
+    },
+  };
+
+  const [openSidebar, setOpenSidebar] = useState(false);
+
+  const handleSidebarOpen = () => {
+    setOpenSidebar(true);
+  };
+
+  const handleSidebarClose = () => {
+    setOpenSidebar(false);
+  };
+
+  const open = isMd ? false : openSidebar;
+
   return (
-    <div className={classes.root}>
-      <TopBar />
-      <div className={classes.wrapper}>
-        <div className={classes.contentContainer}>
-          <div className={classes.content}>
-            {children}
-            <Footer />
-          </div>
-        </div>
-      </div>
+    <div
+      className={clsx({
+        [classes.root]: true,
+      })}
+    >
+      <TopBar onSidebarOpen={handleSidebarOpen} pages={pages} />
+      <Sidebar
+        onClose={handleSidebarClose}
+        open={open}
+        variant="temporary"
+        pages={pages}
+      />
+      <main>{children}</main>
+      <Footer pages={pages} />
     </div>
   );
-}
+};
 
 MainLayout.propTypes = {
-  children: PropTypes.any
+  children: PropTypes.node,
 };
 
 export default MainLayout;

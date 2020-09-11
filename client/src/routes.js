@@ -12,9 +12,6 @@ import {
 import DashboardLayout from 'src/layouts/DashboardLayout';
 import CalendarLayout from 'src/layouts/CalendarLayout'
 import MainLayout from 'src/layouts/MainLayout';
-import ServicesLayout from 'src/layouts/ServicesLayout'
-import BookLayout from 'src/layouts/BookLayout'
-import PricingLayout from 'src/layouts/PricingLayout'
 import HomeView from 'src/views/pages/HomeView';
 import LoadingScreen from 'src/components/LoadingScreen';
 import AuthGuard from 'src/components/AuthGuard';
@@ -53,48 +50,8 @@ const routesConfig = [
     path: '/register-unprotected',
     component: lazy(() => import('src/views/auth/RegisterView'))
   },
-  {
-    path: '/services',
-    layout: ServicesLayout,
-    routes: [
-      {
-        exact: true,
-        path: '/services',
-        component: lazy(() => import('src/views/pages/ServicesView'))
-      },
-      {
-        component: () => <Redirect to="/404" />
-      }
-    ]
-  },
-  {
-    path: '/pricing',
-    layout: PricingLayout,
-    routes: [
-      {
-        exact: true,
-        path: '/pricing',
-        component: lazy(() => import('src/views/pages/PricingView'))
-      },
-      {
-        component: () => <Redirect to="/404" />
-      }
-    ]
-  },
-  {
-    path: '/book',
-    layout: BookLayout,
-    routes: [
-      {
-        exact: true,
-        path: '/book',
-        component: lazy(() => import('src/views/pages/BookView/BookNew'))
-      },
-      {
-        component: () => <Redirect to="/404" />
-      }
-    ]
-  },
+
+
   {
     path: '/calendar',
     guard: AuthGuard,
@@ -309,6 +266,21 @@ const routesConfig = [
         exact: true,
         path: '/home',
         component: HomeView
+      },
+      {
+        exact: true,
+        path: '/services',
+        component: lazy(() => import('src/views/pages/ServicesView'))
+      },
+      {
+        exact: true,
+        path: '/prices',
+        component: lazy(() => import('src/views/pages/PricingView'))
+      },
+      {
+        exact: true,
+        path: '/work',
+        component: lazy(() => import('src/views/pages/WorkView'))
       },
       {
         component: () => <Redirect to="/404" />

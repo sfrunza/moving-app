@@ -19,6 +19,7 @@ import LockIcon from '@material-ui/icons/Lock';
 import Page from 'src/components/Page';
 import Logo from 'src/components/Logo';
 import Login from 'src/registrations/Login'
+import LoginForm from './LoginForm'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -103,7 +104,7 @@ function LoginView({handleLogin, loggedInStatus, user, history}) {
               Sign in on the internal platform
             </Typography>
             <Box mt={3}>
-              <Login handleLogin={handleLogin} loggedInStatus={loggedInStatus} user={user} history={history}/>
+              <LoginForm handleLogin={handleLogin} loggedInStatus={loggedInStatus} user={user} history={history}/>
             </Box>
           </CardContent>
 

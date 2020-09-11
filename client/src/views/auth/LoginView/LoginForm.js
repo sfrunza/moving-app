@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
+import axios from 'axios'
 import {
   Box,
   Button,
@@ -17,15 +18,20 @@ const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-function LoginForm({ className, onSubmitSuccess, ...rest }) {
+function LoginForm({ className, handleLogin, history, loggedInStatus, onSubmitSuccess, ...rest }) {
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  const redirect = (path) => {
+      history.push(path)
+    }
 
   return (
     <Formik
       initialValues={{
         email: '',
-        password: ''
+        password: '',
+        errors: ''
       }}
       validationSchema={Yup.object().shape({
         email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
@@ -34,11 +40,29 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
       onSubmit={async (values, {
         setErrors,
         setStatus,
-        setSubmitting
+        setSubmitting,
+        actions
       }) => {
         try {
-          await dispatch(login(values.email, values.password));
-          onSubmitSuccess();
+          const user = {
+                email: values.email,
+                password: values.password
+              }
+
+          axios.post('/users/sign_in', {user}, {withCredentials: true})
+          .then(response => {
+            debugger
+            if (response.data) {
+              console.log(response.data.status);
+              handleLogin(response.data)
+              if (response.data.admin === true) {
+                redirect('/app/calendar')
+              } else redirect('/calendar')
+            } else {
+              setErrors(response.data.errors)
+            }
+          })
+          // .catch(error => console.log('api errors:', error))
         } catch (error) {
           const message = (error.response && error.response.data.message) || 'Something went wrong';
 
@@ -55,7 +79,8 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
         handleSubmit,
         isSubmitting,
         touched,
-        values
+        values,
+        status
       }) => (
         <form
           noValidate
@@ -101,13 +126,17 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
             >
               Log In man
             </Button>
-            {errors.submit && (
-              <Box mt={3}>
-                <FormHelperText error>
-                  {errors.submit}
-                </FormHelperText>
-              </Box>
-            )}
+            {status && status.email ? (
+            <div>API Error: {status.email}</div>
+          ) : (
+            errors.email && <div>Validation Error: {errors.email}</div>
+          )}
+
+          {status && status.pswrd ? (
+            <div>API Error: {status.pswrd}</div>
+          ) : (
+            errors.pswrd && <div>Validation Error: {errors.pswrd}</div>
+          )}
           </Box>
         </form>
       )}

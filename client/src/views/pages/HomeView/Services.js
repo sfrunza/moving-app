@@ -1,339 +1,174 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { Link as RouterLink } from 'react-router-dom';
-import {
-  Box,
-  Container,
-  Grid,
-  Typography,
-  makeStyles,
-  CardMedia,
-  Link
-} from '@material-ui/core';
-import { Alert, AlertTitle } from '@material-ui/lab';
-import { deepPurple, indigo, green } from '@material-ui/core/colors'
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import box from 'src/assets/img/graphic-3578346_640.png';
-import loc from 'src/assets/img/loc.png';
-import CheckIcon from '@material-ui/icons/Check';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useMediaQuery, Typography, Grid } from '@material-ui/core';
+import { Image, LearnMoreLink } from 'src/components/atoms';
+import { CardProduct } from 'src/components/organisms';
+import { SectionHeader } from 'src/components/molecules';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
-    backgroundColor: theme.palette.background.white,
-    borderBottom: '15px solid white'
+    margin: theme.spacing(12, 0, 0, 0),
   },
-  alert: {
-    backgroundColor: 'transparent',
-    color: green[500],
+  cardProduct: {
     display: 'flex',
-    justifyContent: 'center',
-    fontFamily: "Maison Neue Normal",
-    padding: '6px 1px',
-    '& >div': {
-      fontSize: '16px',
+    flexDirection: 'column',
+    borderRadius: theme.spacing(1),
+    boxShadow: 'none',
+    background: 'transparent',
+    paddingBottom: theme.spacing(2),
+    '& .card-product__content': {
+      padding: theme.spacing(4),
+      zIndex: 1,
+      background: 'white',
+      width: '90%',
+      margin: '0 auto',
+      marginTop: theme.spacing(-6),
+      borderRadius: theme.spacing(1),
+      boxShadow: '0 3px 10px 2px rgba(0, 0, 0, 0.1)',
     },
-    '& svg': {
-      fontSize: '20px',
-    }
-    // [theme.breakpoints.down('sm')]: {
-    //   display: 'none'
-    // }
-  },
-  button: {
-    display: 'flex',
-    width: 'fit-content',
-    margin: 'auto',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: '16px',
-    fontFamily: "Maison Neue Normal",
-    [theme.breakpoints.down('sm')]: {
-      display: 'flex',
-      width: '100%'
+    '& .card-product__media': {
+      minHeight: 300,
+      '& img': {
+        transitionDuration: '.7s',
+        transform: 'scale(1.0)',
+      },
     },
-    color: indigo['A400'],
-    backgroundColor: "transparent",
     '&:hover': {
-      textDecoration: 'underline',
-    }
-  },
-  media: {
-    height: 250,
-    margin: '1em auto',
-    borderRadius: '4px',
-    transition: 'all 0.5s ease',
-    backgroundSize: 'contain'
-  },
-  box: {
-    margin: 'auto !important',
-    textAlign: 'center',
-    [theme.breakpoints.down('sm')]: {
-      width: '100%'
-    },
-    padding: '4em 0em'
-  },
-  header: {
-    fontFamily: "Maison Neue Bold",
-    [theme.breakpoints.down('sm')]: {
-      textAlign: 'center'
-    }
-  },
-  subHeader: {
-    fontFamily: "Maison Neue Demi",
-    color: deepPurple['A200']
-  },
-  description: {
-    fontFamily: "Maison Neue",
-    textAlign: 'center',
-    width: '60%',
-    margin: 'auto',
-    [theme.breakpoints.down('sm')]: {
-      width: '80%'
-    }
-  },
-  service: {
-    backgroundColor: theme.palette.background.dark,
-    height: '100%',
-  },
-  mainContainer: {
-    paddingLeft: '16px',
-    paddingRight: '16px',
-    [theme.breakpoints.down('sm')]: {
-      paddingLeft: '0px',
-      paddingRight: '0px',
+      '& .card-product__media img': {
+        transform: 'scale(1.2)',
+      },
     },
   },
-  arrow: {
-    width: '19px',
+  image: {
+    objectFit: 'cover',
+  },
+  blogTitle: {
+    fontWeight: 700,
+    margin: theme.spacing(0, 2, 2, 0),
+  },
+  tags: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    margin: theme.spacing(3, 0, 0, 0),
+  },
+  tag: {
+    padding: theme.spacing(1 / 2, 1),
+    borderRadius: theme.spacing(1 / 2),
+    color: '#4caf50',
+    border: '1px solid #4caf50',
+    margin: theme.spacing(0, 1, 1, 0),
+    [theme.breakpoints.up('md')]: {
+      margin: theme.spacing(0, 2, 2, 0),
+    },
+  },
+  author: {
+    margin: theme.spacing(1, 0),
+    [theme.breakpoints.up('md')]: {
+      margin: theme.spacing(2, 0),
+    },
+  },
+  fontWeightBold: {
+    fontWeight: 'bold',
+  },
+  learnMoreLink: {
+    marginTop: theme.spacing(2),
   },
 }));
 
-function Services({ className, ...rest }) {
+const Services = props => {
+  const { data, className, ...rest } = props;
   const classes = useStyles();
 
-  return (
-    <div
-      className={clsx(classes.root, className)}
-      {...rest}
-    >
-      <Container maxWidth="xl" className={classes.mainContainer}>
-        <Box mt={2}>
-          <Grid
-            container
-            spacing={2}
-          >
-            <Grid
-              item
-              xs={12}
-              sm={6}
-            >
-              <Link
-                className={classes.service}
-                component={RouterLink}
-                to="/services"
-                underline="none"
-                variant="body2"
-              >
-                <Box display="flex" className={classes.service}>
-                  <Box ml={2} className={classes.box}>
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up('md'), {
+    defaultMatches: true,
+  });
 
-                    <Typography
-                      variant="h2"
-                      gutterBottom
-                      color="textPrimary"
-                      className={classes.header}
-                    >
-                      Local Moving
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      color="textPrimary"
-                      className={classes.description}
-                    >
-                      Hourly based full moving services in Metro Boston and 125 miles around it.
-                    </Typography>
-                      <Alert icon={<CheckIcon />} severity="success" className={classes.alert}>
-                        Safe, Fast and Reliable
-                      </Alert>
-                    <Typography
-                      variant="body1"
-                      color="textPrimary"
-                      gutterBottom
-                      className={classes.button}
-                    >
-                      Read More <ChevronRightIcon className={classes.arrow}/>
-                    </Typography>
-                    <CardMedia
-                      className={classes.media}
-                      image="https://kiwimove.co.nz/wp-content/uploads/2019/06/moving-3671446_1280-1.png"
-                      title="Local Moving"
-                    />
-                  </Box>
-                </Box>
-              </Link>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={6}
-            >
-              <Link
-                className={classes.service}
-                component={RouterLink}
-                to="/services"
-                underline="none"
-                variant="body2"
-              >
-                <Box display="flex" className={classes.service}>
-                  <Box ml={2} className={classes.box}>
+  const BlogMediaContent = props => (
+    <Image
+      {...props}
+      className={classes.image}
+      lazyProps={{ width: '100%', height: '100%' }}
+    />
+  );
 
-                    <Typography
-                      variant="h1"
-                      gutterBottom
-                      color="textPrimary"
-                      className={classes.header}
-                    >
-                      Interstate Moving
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      color="textPrimary"
-                      className={classes.description}
-                    >
-                      Flat Rate Moving. Same or Next Day moving services on distance up to 1,500 miles.
-                    </Typography>
-                    <Alert icon={<CheckIcon />} severity="success" className={classes.alert}>
-                      Flat Rate Moving
-                    </Alert>
-                    <Typography
-                      variant="body1"
-                      color="textPrimary"
-                      gutterBottom
-                      className={classes.button}
-                    >
-                      Read More <ChevronRightIcon className={classes.arrow}/>
-                    </Typography>
-                    <CardMedia
-                      className={classes.media}
-                      image="https://moveinterstate.com/wp-content/uploads/2020/02/Header-1.svg"
-                      title="Interstate Moving"
-                    />
-                  </Box>
-                </Box>
-              </Link>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={6}
-            >
-              <Link
-                className={classes.service}
-                component={RouterLink}
-                to="/services"
-                underline="none"
-                variant="body2"
-              >
-                <Box display="flex" className={classes.service}>
-                  <Box ml={2} className={classes.box}>
-
-                    <Typography
-                      variant="h1"
-                      gutterBottom
-                      color="textPrimary"
-                      className={classes.header}
-                    >
-                      Packing Services
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      color="textPrimary"
-                      className={classes.description}
-                    >
-                      Our experienced movers will have all necessary packing materials to pack up everything.
-                    </Typography>
-                    <Alert icon={<CheckIcon />} severity="success" className={classes.alert}>
-                      Full Home Packing Services
-                    </Alert>
-                    <Typography
-                      variant="body1"
-                      color="textPrimary"
-                      gutterBottom
-                      className={classes.button}
-                    >
-                      Read More <ChevronRightIcon className={classes.arrow}/>
-                    </Typography>
-                    <CardMedia
-                      className={classes.media}
-                      image="https://alltimemoving.ca/wp-content/uploads/2019/06/moving-services@2x.png"
-                    />
-                  </Box>
-                </Box>
-              </Link>
-            </Grid>
-
-            <Grid
-              item
-              xs={12}
-              sm={6}
-            >
-              <Link
-                className={classes.service}
-                component={RouterLink}
-                to="/services"
-                underline="none"
-                variant="body2"
-              >
-                <Box display="flex" className={classes.service}>
-                  <Box ml={2} className={classes.box}>
-
-                    <Typography
-                      variant="h1"
-                      gutterBottom
-                      color="textPrimary"
-                      className={classes.header}
-                    >
-                      Storage Solutions
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      color="textPrimary"
-                      gutterBottom
-                      className={classes.description}
-                    >
-                      Insight Moving provides climate controlled storage for up to 6 months.
-                    </Typography>
-                    <Alert icon={<CheckIcon />} severity="success" className={classes.alert}>
-                      First 10 Days FREE Storage
-                    </Alert>
-                    <Typography
-                      variant="body1"
-                      color="textPrimary"
-                      gutterBottom
-                      className={classes.button}
-                    >
-                      Read More <ChevronRightIcon className={classes.arrow}/>
-                    </Typography>
-
-                    <CardMedia
-                      className={classes.media}
-                      image="https://lakesidestoragefl.com/wp-content/uploads/2020/01/self-storage.svg"
-                      title="Storage Solutions"
-                    />
-                  </Box>
-                </Box>
-              </Link>
-            </Grid>
-          </Grid>
-        </Box>
-      </Container>
+  const BlogContent = props => (
+    <div>
+      <Typography
+        variant="h5"
+        color="textPrimary"
+        className={classes.blogTitle}
+      >
+        {props.title}
+      </Typography>
+      <Typography variant="body1" color="textPrimary">
+        {props.subtitle}
+      </Typography>
+      <div className={classes.tags}>
+        {props.tags.map((item, index) => (
+          <Typography variant="body1" className={classes.tag} key={index}>
+            {item}
+          </Typography>
+        ))}
+      </div>
+      <LearnMoreLink
+        title="Learn more"
+        variant="body1"
+        className={classes.learnMoreLink}
+        to='/services'
+      />
     </div>
   );
-}
+
+  return (
+    <div className={clsx(classes.root, className)} {...rest}>
+      <Grid container spacing={isMd ? 10 : 6}>
+        <SectionHeader
+          title={
+            <span>
+              Service that{' '}
+              <span className="text-highlighted">
+                Works for You
+              </span>
+            </span>
+          }
+          data-aos="fade-up"
+        />
+        {data.map((item, index) => (
+          <Grid item xs={12} sm={6} key={index} data-aos="fade-up">
+            <CardProduct
+              className={classes.cardProduct}
+              mediaContent={
+                <BlogMediaContent {...item.cover} alt={item.title} />
+              }
+              cardContent={
+                <BlogContent
+                  title={item.title}
+                  subtitle={item.subtitle}
+                  author={item.author}
+                  date={item.date}
+                  tags={item.tags}
+                />
+              }
+            />
+          </Grid>
+        ))}
+      </Grid>
+    </div>
+  );
+};
 
 Services.propTypes = {
-  className: PropTypes.string
+  /**
+   * External classes
+   */
+  className: PropTypes.string,
+  /**
+   * data to be rendered
+   */
+  data: PropTypes.array.isRequired,
 };
 
 export default Services;
