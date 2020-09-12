@@ -30,8 +30,7 @@ class Routes extends Component {
   }
     UNSAFE_componentWillMount() {
       this.getImages()
-      return this.loginStatus()
-
+      this.loginStatus()
     }
 
     loginStatus = () => {
@@ -321,8 +320,7 @@ class Routes extends Component {
                     />
                     <Route
                       exact path='/work'
-                      render={props => (
-                        <WorkView images={this.state.images}/>
+                      render={props => ( this.state.images[0] == null ? <LoadingScreen /> : <WorkView images={this.state.images}/>
                       )}
                     />
                     <Route
