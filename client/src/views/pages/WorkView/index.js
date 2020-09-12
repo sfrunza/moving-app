@@ -89,11 +89,6 @@ const useStyles = makeStyles(theme => ({
 
 const WorkView = props => {
   const classes = useStyles();
-  const [images, setImages] = useState()
-
-  useEffect(() => {
-    setImages(props.images)
-  });
 
   return (
     <Page title="Our Work" className={classes.root}>
@@ -114,7 +109,7 @@ const WorkView = props => {
 
         <Partners data={partners} />
 
-        <Gallery images={!images ? null : images} />
+        <Gallery images={props.images} />
 
         <Section>
           <Reviews data={reviews}/>

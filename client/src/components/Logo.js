@@ -1,12 +1,13 @@
 import React from 'react';
+import logo from 'src/assets/img/looool.png'
 
 function Logo(props) {
   return (
     <img
       alt="Logo"
-      src="/static/home/logo.jpg"
+      src={logo}
       {...props}
-      style={{height: '30px', borderRadius: '3px'}}
+      style={{height: '40px', borderRadius: '3px', backgroundColor: '#fff'}}
     />
   );
 }
