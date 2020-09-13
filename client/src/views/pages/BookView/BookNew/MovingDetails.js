@@ -469,7 +469,6 @@ function MovingDetails({
         touched,
         values,
       }) => {
-        console.log(values);
         let noOrigin = false;
         let noDestination = false;
         let backgroundColorDestination = '#fff'

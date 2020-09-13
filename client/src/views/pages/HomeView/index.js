@@ -25,6 +25,7 @@ import SubHeader from './SubHeader';
 import FAQS from './FAQS';
 import Contact from './Contact';
 import IncludeSection from './IncludeSection';
+import backgroundImage from 'src/assets/img/home-background.jpg'
 import {
   services,
   places,
@@ -113,7 +114,7 @@ const HomeView = () => {
   return (
     <Page title="Insigh Moving | Boston Movers" className={classes.root}>
       <Parallax
-            bgImage='https://www.udr.com/globalassets/communities/345-harrison/images/mainheader_neighborhood_1900x874_345-harrison-south-end-brownstone-houses.jpg'
+            bgImage={backgroundImage}
             bgImageAlt="bg"
             strength={300}
             bgClassName={classes.bgImage}
