@@ -16,14 +16,6 @@ import { deepPurple, amber, deepOrange } from '@material-ui/core/colors'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    paddingTop: 20,
-    paddingBottom: 20,
-    borderRadius: 12,
-    minWidth: '720px',
-    [theme.breakpoints.down('xs')]: {
-      width: '98%',
-      minWidth: '315px'
-    },
   },
   browseButton: {
     padding: '10px 10px',
@@ -69,7 +61,6 @@ const useStyles = makeStyles((theme) => ({
   },
   header: {
     padding: '5px',
-    // fontFamily: "Maison Neue Demi",
   },
   info: {
     fontSize: '20px',
@@ -90,6 +81,11 @@ const useStyles = makeStyles((theme) => ({
   cityName: {
     display: 'inline-block',
     color: deepPurple[500],
+  },
+  container: {
+    [theme.breakpoints.down('xs')]: {
+      padding: '0px'
+    },
   }
 }));
 
@@ -800,9 +796,9 @@ function Result({ className, onClose, ...rest }) {
       {...rest}
     >
 
-      <Container maxWidth="md">
+      <Container maxWidth="md" className={classes.container}>
         <Typography
-          variant="h5"
+          variant="h6"
           align="center"
           color='textSecondary'
           gutterBottom
@@ -822,7 +818,7 @@ function Result({ className, onClose, ...rest }) {
            >{rest.typeto}</label>
         </Typography>
 
-        <Grid container spacing={3}>
+        <Grid container spacing={3, 0}>
           <Grid item xs>
             <Paper className={classes.paper}>From{" "}<div id='origin' className={classes.cityName}> {getAddress(rest.origin, 'origin')}</div></Paper>
           </Grid>
@@ -836,28 +832,34 @@ function Result({ className, onClose, ...rest }) {
 
           {handleResult(rest.typefrom, rest.typeto, rest.movingsize)}
 
-          <Grid container spacing={3} >
-            <Grid item xs={6}>
-              <Button
-                onClick={onClose}
-                className={clsx(classes.browseButton, classes.backButton)}
-              >
-                Cancel
-              </Button>
-            </Grid>
-            <Grid item xs={6}>
-              <Link
-                className={clsx(classes.browseButton, classes.nextButton)}
-                color="textSecondary"
-                component={RouterLink}
-                to="/book"
-                underline="none"
-                variant="body2"
-              >
-                Let&apos;s Get Started
-              </Link>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Grid container justify="space-evenly">
+                  <Grid  item xs={6} sm={3}>
+                    <Button
+                      onClick={onClose}
+                      className={clsx(classes.browseButton, classes.backButton)}
+                    >
+                      Cancel
+                    </Button>
+                  </Grid>
+                  <Grid  item xs={6} sm={3}>
+                    <Link
+                      className={clsx(classes.browseButton, classes.nextButton)}
+                      color="textSecondary"
+                      component={RouterLink}
+                      to="/book"
+                      underline="none"
+                      variant="body2"
+                    >
+                      Let&apos;s Get Started
+                    </Link>
+                  </Grid>
+              </Grid>
             </Grid>
           </Grid>
+
+
       </Container>
     </div>
   );

@@ -8,7 +8,8 @@ import {
   FormControl,
   Select,
   InputLabel,
-  FormHelperText
+  FormHelperText,
+  MenuItem,
 } from '@material-ui/core';
 import validate from 'validate.js';
 import { DatePicker } from "@material-ui/pickers";
@@ -42,7 +43,6 @@ const schema = {
 };
 
 const movingSizeOptions = [
-  { key: 'none', text: '', value: '' },
   { key: 'room', text: 'One Room or less (<1000 lbs)', value: 'Room or less (partial move)' },
   { key: 'studio', text: 'Studio Apt.', value: 'Studio apartment' },
   { key: 'onebed', text: '1 Bedroom Apt.', value: '1 Bedroom apartment' },
@@ -55,7 +55,6 @@ const movingSizeOptions = [
 ]
 
 const houseTypeOptions = [
-  { key: 'none', text: '', value: '' },
   { key: 'elv', text: 'Elevator Bldg.', value: 'elevator building' },
   { key: 'grfloor', text: 'No Stairs - Ground Floor', value: '1st/Ground floor' },
   { key: '2floor', text: 'Stairs - 2nd Floor', value: '2nd floor' },
@@ -77,13 +76,22 @@ const Calculator = ({ onClose }) => {
     errors: {},
   });
   const [submitted, setSubmitted] = useState(false)
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
   const onlyNumbers = (e) => { e.target.value = e.target.value.replace(/[^0-9]/g, '')};
 
   const movingSizeOptionsSelect = () => {
     let moveSize = movingSizeOptions.map((item, index) => {
         return (
-            <option key={index} value={item.value}>{item.text}</option>
+            <MenuItem key={index} value={item.value}>{item.text}</MenuItem>
         )
     })
     return moveSize
@@ -93,11 +101,11 @@ const Calculator = ({ onClose }) => {
     let houseType = houseTypeOptions.map((item, index) => {
         if(item.value === "Stairs 5th or Higher - N/A"){
           return (
-              <option key={index} value={item.value} disabled>{item.text}</option>
+              <MenuItem key={index} value={item.value} disabled>{item.text}</MenuItem>
           )
         } else {
           return (
-              <option key={index} value={item.value}>{item.text}</option>
+              <MenuItem key={index} value={item.value}>{item.text}</MenuItem>
           )
         }
     })
@@ -137,7 +145,6 @@ const Calculator = ({ onClose }) => {
 
   const hasError = field =>
     formState.touched[field] && formState.errors[field] ? true : false;
-
 
   if(submitted){
     return(
@@ -234,10 +241,14 @@ const Calculator = ({ onClose }) => {
                 style={{width: '100%'}}
                 error={hasError('movingSize')}
               >
-                <InputLabel htmlFor="movingSize">Size of Move *</InputLabel>
+                <InputLabel id="movingSize-label">Size of Move *</InputLabel>
                 <Select
-                  native
+                  labelId="movingSize-label"
                   id="movingSize"
+                  defaultValue=""
+                  open={open}
+                  onClose={handleClose}
+                  onOpen={handleOpen}
                   label="Size of Move *"
                   variant="outlined"
                   name="movingSize"
@@ -258,22 +269,17 @@ const Calculator = ({ onClose }) => {
                 style={{width: '100%'}}
                 error={hasError('typeFrom')}
               >
-                <InputLabel
-                  htmlFor="choose-from-native"
-                >
+                <InputLabel id="typeTo">
                   Choose From *
                 </InputLabel>
                   <Select
-                    native
+                    labelId="typeTo"
+                    defaultValue=""
                     variant="outlined"
                     label="Choose From *"
                     name="typeFrom"
-                    value={formState.values.typeFrom}
+                    value={formState.values.typeFrom || ''}
                     onChange={handleChange}
-                    inputProps={{
-                      name: 'typeFrom',
-                      id: 'choose-from-native',
-                    }}
                   >
                     {houseTypeOptionsSelect()}
                   </Select>
@@ -289,22 +295,17 @@ const Calculator = ({ onClose }) => {
                 style={{width: '100%'}}
                 error={hasError('typeTo')}
               >
-                <InputLabel
-                  htmlFor="choose-to-native"
-                >
+                <InputLabel id="typeTo">
                   Choose To *
                 </InputLabel>
                   <Select
-                    native
+                    labelId="typeTo"
+                    defaultValue=""
                     variant="outlined"
                     label="Choose To *"
                     name="typeTo"
-                    value={formState.values.typeTo}
+                    value={formState.values.typeTo || ''}
                     onChange={handleChange}
-                    inputProps={{
-                      name: 'typeTo',
-                      id: 'choose-to-native',
-                    }}
                   >
                     {houseTypeOptionsSelect()}
                   </Select>

@@ -18,7 +18,7 @@ import Packing from './Packing'
 import Storage from './Storage'
 import Header from './Header'
 import Local from './Local'
-
+import backgroundImage from 'src/assets/img/services-background.jpg'
 import { services } from './data';
 
 const useStyles = makeStyles(theme => ({
@@ -76,11 +76,10 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
   },
   bgImage: {
-    // height: '75vh !important',
     width: '100% !important',
-    // top: '20% !important',
-    minWidth: '1000px !important',
-    minHeight: '80vh !important',
+    maxHeight: '78vh !important',
+    objectFit: 'cover',
+    top: '8em',
   }
 }));
 
@@ -100,7 +99,7 @@ const ServicesView = () => {
   return (
     <Page title="Services" className={classes.root}>
       <Parallax
-            bgImage='https://2ffcv67huyt40o0a034skt9g-wpengine.netdna-ssl.com/wp-content/uploads/2015/07/JT_Moving-Day-2-1140x641.jpg'
+            bgImage={backgroundImage}
             bgImageAlt="bg"
             strength={300}
             bgClassName={classes.bgImage}

@@ -20,6 +20,7 @@ import {
   reviews,
   partners
 } from 'src/views/pages/HomeView/data';
+import backgroundImage from 'src/assets/img/work-background.jpg'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -76,13 +77,17 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
   },
   bgImage: {
-    // height: '75vh !important',
+    // // height: '75vh !important',
+    // width: '100% !important',
+    // // top: '20% !important',
+    // minWidth: '1000px !important',
+    // minHeight: '80vh !important',
     width: '100% !important',
-    // top: '20% !important',
-    minWidth: '1000px !important',
-    minHeight: '80vh !important',
+    maxHeight: '79vh !important',
+    objectFit: 'cover',
+    top: '10.7em',
     [theme.breakpoints.down('xs')]: {
-      left: '82% !important',
+      objectPosition: '7%',
     },
   }
 }));
@@ -93,7 +98,7 @@ const WorkView = props => {
   return (
     <Page title="Our Work" className={classes.root}>
       <Parallax
-            bgImage='https://lh3.googleusercontent.com/proxy/CXNTNtzgxCGljho7QTs0iG-hbQ23uwcyUr5Qj8c-OWqpVGAHWAmk0GnMTvExZ9rF17GDO5CbPPKyECQbZd9SqJ8ajz4g1eucEL1r5RmEp3_1xlI3ln6gxRCHYQEFnJEZ'
+            bgImage={backgroundImage}
             bgImageAlt="bg"
             strength={400}
             bgClassName={classes.bgImage}
