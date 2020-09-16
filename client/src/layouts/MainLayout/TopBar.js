@@ -156,7 +156,7 @@ const Topbar = props => {
           <List className={classes.navigationContainer}>
             <ListItem className={classes.listItem}>
               <Typography
-              variant="body1"
+              variant="body2"
               color="textSecondary"
               className={classes.listItemText}
               component={CustomRouterLink}
@@ -168,7 +168,7 @@ const Topbar = props => {
 
             <ListItem className={classes.listItem}>
               <Typography
-                variant="body1"
+                variant="body2"
                 color="textSecondary"
                 className={classes.listItemText}
                 component={CustomRouterLink}
@@ -179,7 +179,7 @@ const Topbar = props => {
             </ListItem>
             <ListItem className={classes.listItem}>
               <Typography
-                variant="body1"
+                variant="body2"
                 color="textSecondary"
                 className={classes.listItemText}
                 component={CustomRouterLink}
@@ -190,7 +190,7 @@ const Topbar = props => {
             </ListItem>
             <ListItem className={classes.listItem}>
               <Typography
-                variant="body1"
+                variant="body2"
                 color="textSecondary"
                 className={classes.listItemText}
                 component={CustomRouterLink}
@@ -201,7 +201,7 @@ const Topbar = props => {
             </ListItem>
             <ListItem className={classes.listItem}>
               <Typography
-                variant="body1"
+                variant="body2"
                 color="textSecondary"
                 className={clsx(classes.listItemText, classes.loginLink)}
                 component={CustomRouterLink}

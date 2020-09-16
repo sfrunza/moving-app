@@ -1,6 +1,31 @@
 import React from 'react';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import { SectionHeader, TypedText } from 'src/components/molecules';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  items: {
+    display: 'flex',
+  }
+}));
 
 const PricingTable = props => {
+  const classes = useStyles();
 
   return(
       <div className="pricing-container">
@@ -44,7 +69,52 @@ const PricingTable = props => {
                 </ul>
             </div>
         </div>
-        <p className="section-subtitle table-subtitle" style={{fontFamily: "'Maison Neue'"}}><span className="discount-span">Discounted Rate:</span> Monday - Thursday<br></br><span className="standard-span">Standard Rate:</span> Weekends, first & last week of the month<br></br><span className="peak-span">Peak Rate:</span> National holidays & peak moving days</p>
+        <SectionHeader
+          title={
+            <span>
+              <span className="discount-span">
+                Discounted Rate:{' '}
+              </span>
+              {' '}Monday - Thursday
+            </span>
+          }
+          titleProps={{
+            variant: 'body2',
+            color: 'textSecondary'
+          }}
+          disableGutter
+        />
+        <SectionHeader
+          title={
+            <span>
+              <span className="standard-span">
+                Standard Rate:{' '}
+              </span>
+              {' '}Weekends, first & last week of the month
+            </span>
+          }
+          titleProps={{
+            variant: 'body2',
+            color: 'textSecondary',
+          }}
+          disableGutter
+        />
+        <SectionHeader
+          title={
+            <span>
+              <span className="peak-span">
+                Peak Rate:{' '}
+              </span>
+              {' '}National holidays & peak moving days
+            </span>
+          }
+          titleProps={{
+            variant: 'body2',
+            color: 'textSecondary'
+          }}
+          disableGutter
+        />
+
     </div>
 
 

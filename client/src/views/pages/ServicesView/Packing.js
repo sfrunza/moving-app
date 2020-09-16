@@ -44,8 +44,10 @@ const Packing = props => {
             subtitle={paragraph}
             className={classes.subtitle}
             align="left"
-            subtitleColor="textSecondary"
-            subtitleVariant='body1'
+            subtitleProps={{
+              variant: 'body1',
+              color: 'textPrimary',
+            }}
             data-aos="fade-up"
             disableGutter
             ctaGroup={[<LearnMoreLink title="View Packing Rates" variant="h6" to="/pricing" />]}

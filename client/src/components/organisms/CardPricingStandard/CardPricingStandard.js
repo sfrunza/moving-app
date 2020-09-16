@@ -48,7 +48,7 @@ const CardPricingStandard = props => {
       <Grid container spacing={2} className="card-pricing-standard__wrapper">
         <Grid item xs={12} className="card-pricing-standard__headline">
           <Typography
-            variant="h5"
+            variant="h4"
             gutterBottom
             className="card-pricing-standard__title"
             {...titleProps}

@@ -15,13 +15,14 @@ import { Icon } from 'src/components/atoms';
 import { SectionHeader } from 'src/components/molecules';
 import { Section, CardBase } from 'src/components/organisms';
 import { Link as RouterLink } from 'react-router-dom';
+import PricingTable from './PricingTable';
 
 const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: '#f5f7ff',
-    borderRadius: theme.spacing(2),
     boxShadow: 'none',
-    padding: theme.spacing(12, 0),
+    padding: theme.spacing(4, 0),
+    borderRadius: '24px',
   },
   textPurple: {
     color: theme.palette.secondary.main,
@@ -32,10 +33,11 @@ const useStyles = makeStyles(theme => ({
   },
   button: {
     borderRadius: '24px',
+    marginTop: '2em',
   }
 }));
 
-const BookSection = props => {
+const PricingTableNew = props => {
   const { data, className, ...rest } = props;
   const classes = useStyles();
 
@@ -50,19 +52,21 @@ const BookSection = props => {
           <SectionHeader
             title={
               <span>
-                We make moving easy.
+                Pricing Table
               </span>
             }
             subtitle={
-              <span className={classes.textPurple}>
-                Our quick application process takes only 2 minutes. No credit card required.
+              <span>
+                See the table below for fixed hourly rates.
               </span>
             }
             subtitleProps={{
-              variant: 'h5'
+              variant: 'body1',
+              color: 'textSecondary',
             }}
             fadeUp
           />
+          <PricingTable />
           <div className={classes.inputContainer}>
             <Button
               variant="contained"
@@ -80,11 +84,11 @@ const BookSection = props => {
   );
 };
 
-BookSection.propTypes = {
+PricingTableNew.propTypes = {
   /**
    * External classes
    */
   className: PropTypes.string,
 };
 
-export default BookSection;
+export default PricingTableNew;

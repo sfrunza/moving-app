@@ -133,7 +133,7 @@ CardJobMinimal.propTypes = {
   /**
    * Job subtitle of the card
    */
-  subtitle: PropTypes.string.isRequired,
+  subtitle: PropTypes.object,
   /**
    * Should show arrow or not
    */

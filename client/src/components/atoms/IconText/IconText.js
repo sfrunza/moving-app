@@ -47,7 +47,7 @@ const IconText = props => {
       />
       <Typography
         noWrap
-        variant="subtitle1"
+        variant="h5"
         color="textPrimary"
         className={clsx('icon-text__typography', classes.title)}
         {...typographyProps}

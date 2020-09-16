@@ -4,7 +4,7 @@ export default {
   h1: {
     color: palette.text.primary,
     fontWeight: 500,
-    fontSize: '40px',
+    fontSize: '50px',
     lineHeight: 1.1,
   },
   h2: {
@@ -22,19 +22,19 @@ export default {
   h4: {
     color: palette.text.primary,
     fontWeight: 500,
-    fontSize: '24px',
+    fontSize: '22px',
     lineHeight: 1.35,
   },
   h5: {
     color: palette.text.primary,
     fontWeight: 500,
-    fontSize: '20px',
+    fontSize: '1.125rem',
     lineHeight: 1.4,
   },
   h6: {
     color: palette.text.primary,
     fontWeight: 500,
-    fontSize: '18px',
+    fontSize: '14px',
     lineHeight: 1.45,
   },
   subtitle1: {
@@ -50,10 +50,15 @@ export default {
   },
   body1: {
     color: palette.text.primary,
-    fontSize: '16px',
+    fontSize: '18px',
     lineHeight: 1.3,
   },
   body2: {
+    color: palette.text.secondary,
+    fontSize: '16px',
+    lineHeight: 1.3,
+  },
+  body3: {
     color: palette.text.secondary,
     fontSize: '14px',
     lineHeight: 1.3,

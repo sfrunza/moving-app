@@ -97,7 +97,7 @@ const Services = props => {
   const BlogContent = props => (
     <div>
       <Typography
-        variant="h5"
+        variant="h4"
         color="textPrimary"
         className={classes.blogTitle}
       >
@@ -115,7 +115,7 @@ const Services = props => {
       </div>
       <LearnMoreLink
         title="Learn more"
-        variant="body1"
+        variant="h6"
         className={classes.learnMoreLink}
         to='/services'
       />

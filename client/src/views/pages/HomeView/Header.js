@@ -22,8 +22,10 @@ const useStyles = makeStyles(theme => ({
   },
   calculator: {
     padding: theme.spacing(3, 2),
-    maxWidth: 800,
     margin: '0 auto',
+    [theme.breakpoints.up('md')]: {
+      width: 750,
+    },
   },
   drawer: {
     borderRadius: '16px 16px 0px 0px',

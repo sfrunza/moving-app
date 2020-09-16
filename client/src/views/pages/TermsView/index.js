@@ -1,13 +1,13 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import Page from 'src/components/Page';
-import PrivacyPolicy from './PrivacyPolicy'
+import Main from './Main'
 
 const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-function PrivacyView() {
+function TermsView() {
   const classes = useStyles();
 
   return (
@@ -15,9 +15,9 @@ function PrivacyView() {
       className={classes.root}
       title="Privacy"
     >
-      <PrivacyPolicy />
+      <Main />
     </Page>
   );
 }
 
-export default PrivacyView;
+export default TermsView;

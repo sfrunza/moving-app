@@ -11,15 +11,17 @@ import clsx from 'clsx';
 import PhoneRoundedIcon from '@material-ui/icons/PhoneRounded';
 import Page from 'src/components/Page';
 import { ContactForm } from 'src/common';
-import { Section } from 'src/components/organisms';
+import { Section, SectionAlternate } from 'src/components/organisms';
 import { Parallax } from 'react-parallax';
 import Interstate from './Interstate'
 import Packing from './Packing'
-import Storage from './Storage'
+import StorageNew from './StorageNew'
 import Header from './Header'
 import Local from './Local'
 import backgroundImage from 'src/assets/img/services-background.jpg'
 import { services } from './data';
+import IncludeSection from 'src/views/pages/HomeView/IncludeSection';
+import { properties } from 'src/views/pages/HomeView/data';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -132,7 +134,13 @@ const ServicesView = () => {
         <Divider />
 
         <Section>
-          <Storage />
+          <StorageNew />
+        </Section>
+
+        <Divider />
+
+        <Section>
+          <IncludeSection data={properties} />
         </Section>
 
       </Section>

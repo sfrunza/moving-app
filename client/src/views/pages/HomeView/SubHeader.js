@@ -7,7 +7,7 @@ import { Image } from 'src/components/atoms';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    backgroundColor: theme.palette.background.dark,
+    backgroundColor: '#f5f7ff',
     width: '100%',
   },
   noBg: {
@@ -44,7 +44,7 @@ const Partners = props => {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Typography
-              variant="h6"
+              variant="body1"
               color="textSecondary"
               align="center"
               className={classes.fontWeight700}

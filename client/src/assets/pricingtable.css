@@ -113,7 +113,6 @@ TABLE OF CONTENTS
 	border-bottom:1px solid #cccccc;
 	text-shadow: 1px 1px 1px #ffffff;
 	/* Gradient */
-	background-color:#efefef;
 	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(100%, #EBEBEB));
 	background-image: -webkit-linear-gradient(#F3F3F3 0%, #EBEBEB 100%);
 	background-image: -moz-linear-gradient(#F3F3F3 0%, #EBEBEB 100%);
@@ -137,7 +136,6 @@ TABLE OF CONTENTS
 	background:none;
 }
 .pricing_table .pricing_column_first li.pricing_header2 {
-	background-color:#efefef;
 	border-bottom:1px solid #cccccc;
 	/* Rounded Corners */
 	-webkit-border-radius:9px 9px 0 0;
@@ -349,8 +347,7 @@ TABLE OF CONTENTS
 	font-family: 'Maison Neue',sans-serif;
 }
 .pricing_table .even {
-	background-color: #efefef;
-	border-bottom:1px solid #cccccc;
+
 }
 
 /* 5. Table icons */
@@ -506,13 +503,13 @@ TABLE OF CONTENTS
 
 .pricing_table .gradient_blue a.pricing_button,
 .pricing_table .gradient_blue li.pricing_header1 {
-	border: 1px solid #39bcd0;
+
 	font-weight: 600;
 	color: #00a1b9;
 }
 .pricing_table .gradient_green a.pricing_button,
 .pricing_table .gradient_green li.pricing_header1 {
-	border: 1px solid #4fbb0e;
+
 	font-weight: 600;
 	color: #009420;
 }
@@ -520,7 +517,7 @@ TABLE OF CONTENTS
 .pricing_table .gradient_red a.pricing_button,
 .pricing_table .gradient_red li.pricing_header1 {
 	color: #DE0909;
-	border: 1px solid #ff0000;
+
 	font-weight: 600;
 }
 
@@ -589,17 +586,6 @@ TABLE OF CONTENTS
 }
 .peak-span {
 	color: #ff520f;
-}
-
-
-.pricing_header1.discount:hover {
-	background-color: #00d8fd08;
-}
-.pricing_header1.standard:hover {
-	background-color: #60ff000a;
-}
-.pricing_header1.pick:hover {
-	background-color: #ff00000a;
 }
 
 @media handheld, only screen and (max-width: 767px){

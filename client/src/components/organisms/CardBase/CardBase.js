@@ -6,9 +6,14 @@ import { Card, CardContent } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    height: '100%',
-    width: '100%',
+    height: '90%',
+    width: '90%',
     borderRadius: 16,
+    margin: 'auto',
+    [theme.breakpoints.down('sm')]: {
+      height: '100%',
+      width: '100%',
+    },
   },
   withShadow: {
     boxShadow: '0 2px 10px 0 rgba(23,70,161,.11)',
@@ -36,16 +41,16 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: theme.spacing(4, 2),
+    padding: theme.spacing(3),
     '&:last-child': {
-      padding: theme.spacing(4, 2),
+      padding: theme.spacing(3),
     },
-    [theme.breakpoints.up('md')]: {
-      padding: theme.spacing(6, 3),
-      '&:last-child': {
-        padding: theme.spacing(6, 3),
-      },
-    },
+    // [theme.breakpoints.up('md')]: {
+    //   padding: theme.spacing(4, 2),
+    //   '&:last-child': {
+    //     padding: theme.spacing(4, 2),
+    //   },
+    // },
   },
   left: {
     alignItems: 'flex-start',

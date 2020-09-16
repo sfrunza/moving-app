@@ -6,7 +6,7 @@ import 'react-quill/dist/quill.snow.css';
 import 'nprogress/nprogress.css';
 import 'src/assets/css/prism.css';
 import 'src/assets/fonts.css';
-import 'src/assets/css/pricingtable.css';
+import 'src/assets/pricingtable.css';
 import 'src/assets/css/customStyle.css';
 import 'src/mixins/chartjs';
 import 'src/mixins/prismjs';

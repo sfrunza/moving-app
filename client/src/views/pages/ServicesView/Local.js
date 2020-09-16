@@ -52,18 +52,32 @@ const Local = props => {
             subtitle="Hourly based full moving services in metro Boston and 150 miles around it."
             align="left"
             disableGutter
+            subtitleProps={{
+              variant: 'body1',
+              color: 'textSecondary',
+            }}
           />
           <List disablePadding>
             {data.map((item, index) => (
               <ListItem disableGutters key={index} data-aos="fade-up">
                 <ListItemAvatar className={classes.listItemAvatar}>
                   <IconAlternate
-                    size="small"
+                    size="medium"
                     fontIconClass={item.icon}
                     color={colors.indigo}
                   />
                 </ListItemAvatar>
-                <ListItemText primary={item.title} secondary={item.subtitle} />
+                <ListItemText
+                  primary={item.title}
+                  secondary={item.subtitle}
+                  primaryTypographyProps={{
+                    variant: 'h5',
+                  }}
+                  secondaryTypographyProps={{
+                    variant: 'body2',
+                    color: 'textPrimary',
+                  }}
+                />
               </ListItem>
             ))}
           </List>
