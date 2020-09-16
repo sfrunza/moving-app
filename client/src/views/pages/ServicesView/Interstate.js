@@ -53,6 +53,10 @@ const Interstate = props => {
           subtitle="Flat rate moving. Gas, mileage, tolls and insurance are included. No hidden fees. Same or next day delivery on distances up to 1,500 miles."
           align="center"
           disableGutter
+          subtitleProps={{
+            variant: 'body1',
+            color: 'textSecondary',
+          }}
         />
         <Grid
           item
@@ -73,8 +77,10 @@ const Interstate = props => {
               <span className="text-highlighted">Moving from / to Boston</span>
             }
             subtitle="We offer licensed, insured, full-service interstate moves from Boston, which means the best long distance movers will come to your place, package all of your items correctly, secured and safe, load them into one of our moving trucks, deliver them to your new home, unload them, unpack them and arrange them in places."
-            subtitleColor="textSecondary"
-            subtitleVariant='body1'
+            subtitleProps={{
+              variant: 'body1',
+              color: 'textPrimary',
+            }}
             data-aos="fade-up"
             align="left"
             ctaGroup={[<LearnMoreLink title="View Flat Rates" variant="h6" to="/pricing" />]}

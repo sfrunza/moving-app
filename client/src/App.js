@@ -5,6 +5,7 @@ import { create } from 'jss';
 import rtl from 'jss-rtl';
 import MomentUtils from '@date-io/moment';
 import { SnackbarProvider } from 'notistack';
+import DateFnsUtils from "@date-io/date-fns";
 import {
   createStyles,
   jssPreset,

@@ -39,7 +39,8 @@ import {
   PieChart as PieChartIcon,
   Share2 as ShareIcon,
   Users as UsersIcon,
-  Truck as TruckIcon
+  Truck as TruckIcon,
+  DollarSign as DollarIcon,
 } from 'react-feather';
 import Logo from 'src/components/Logo';
 import NavItem from './NavItem';
@@ -83,6 +84,11 @@ const navConfig = [
         title: 'Customers',
         icon: UsersIcon,
         href: '/app/management/customers',
+      },
+      {
+        title: 'Rates',
+        icon: DollarIcon,
+        href: '/app/rates',
       },
       {
         title: 'Images',

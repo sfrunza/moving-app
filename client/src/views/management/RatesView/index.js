@@ -29,7 +29,6 @@ import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import Page from 'src/components/Page';
 import Header from './Header';
 import Toolbar from './Toolbar';
-import AddEditEventModal from './AddEditEventModal';
 import green from '@material-ui/core/colors/green';
 import deepOrange from '@material-ui/core/colors/deepOrange';
 import MoveToInboxIcon from '@material-ui/icons/MoveToInbox';

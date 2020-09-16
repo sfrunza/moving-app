@@ -85,9 +85,6 @@ function Header({ className, ...rest }) {
         titleProps={{
           variant: 'h1',
         }}
-        subtitleProps={{
-          variant: 'h4',
-        }}
         data-aos="fade-up"
         disableGutter
       />

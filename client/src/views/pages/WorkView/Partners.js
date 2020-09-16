@@ -52,6 +52,10 @@ const Partners = props => {
         }
           subtitle="Professional and secure packing of furniture and valuable objects."
           data-aos="fade-up"
+          subtitleProps={{
+            variant: 'body1',
+            color: 'textSecondary',
+          }}
           align="center"
         />
         <Grid container justify="space-between" alignItems='center'>

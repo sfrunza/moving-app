@@ -63,6 +63,10 @@ const Team = props => {
       <SectionHeader
         title="Why Choose Us"
         subtitle="We are a small company of professional movers. Unlike movers from big companies, we will treat your belongings as ours. We will walk you through our smooth and simple process."
+        subtitleProps={{
+          variant: 'body1',
+          color: 'textSecondary',
+        }}
         ctaGroup={[
           <Button
             variant="outlined"

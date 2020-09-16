@@ -44,7 +44,7 @@ const Faq = props => {
                 primary={item.title}
                 secondary={item.text}
                 primaryTypographyProps={{
-                  variant: 'h6',
+                  variant: 'h4',
                   className: clsx(classes.fontWeightBold, classes.faqTitle),
                 }}
                 secondaryTypographyProps={{

@@ -106,7 +106,7 @@ const useStyles = makeStyles((theme) => ({
         color: 'inherit'
       },
       '& .fc-title': {
-        ...theme.typography.body1,
+        ...theme.typography.body3,
         color: green[700],
         display: 'flex',
         justifyContent: 'space-between',
@@ -145,17 +145,6 @@ function CalendarView({history, user, loggedInStatus, handleLogout}) {
     mode: null,
     open: false
   });
-
-  function zoomOutMobile() {
-      var viewport = document.querySelector('meta[name="viewport"]');
-
-      if ( viewport ) {
-        viewport.content = "initial-scale=1";
-        viewport.content = "width=800";
-      }
-    }
-
-
 
   const EventDetail = ({ event, el }) => {
     let moveType = event.extendedProps.description

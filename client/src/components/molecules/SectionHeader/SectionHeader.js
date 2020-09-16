@@ -218,6 +218,7 @@ SectionHeader.propTypes = {
     'subtitle2',
     'body1',
     'body2',
+    'body3'
   ]),
   /**
    * SubTitle color

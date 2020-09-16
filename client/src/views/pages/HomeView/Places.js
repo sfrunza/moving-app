@@ -53,6 +53,10 @@ const Places = props => {
           </span>
         }
         subtitle="Flat Rate Moving. Gas, mileage, tolls, insurance are included. No hidden fees. Miami, Chicago, Dallas, Atlanta... We move people everywhere!"
+        subtitleProps={{
+          variant: 'body1',
+          color: 'textSecondary',
+        }}
         ctaGroup={[
           <Button
             variant="outlined"
@@ -73,7 +77,6 @@ const Places = props => {
             key={index}
             cols={isMd ? item.cols : 4 || 1}
             className={classes.gridListTile}
-            data-aos="fade-up"
           >
             <Image
               {...item.image}

@@ -217,6 +217,11 @@ class Routes extends Component {
                     />
                     <Route
                       exact
+                      path="/app/rates"
+                      component={lazy(() => import('src/views/management/RatesView'))}
+                    />
+                    <Route
+                      exact
                       path="/app/kanban"
                       component={lazy(() => import('src/views/kanban/KanbanView'))}
                     />
@@ -332,6 +337,11 @@ class Routes extends Component {
                       exact
                       path="/privacy"
                       component={lazy(() => import('src/views/pages/PrivacyView'))}
+                    />
+                    <Route
+                      exact
+                      path="/terms"
+                      component={lazy(() => import('src/views/pages/TermsView'))}
                     />
                     <Redirect to="/404" />
                   </Switch>

@@ -69,9 +69,8 @@ function ImagesListVew() {
   function addImage() {
     setTimeout(() => {
       getImages()
-    }, 5000);
+    }, 4000);
   }
-console.log(images);
   return (
     <Page
       className={classes.root}

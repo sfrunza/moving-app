@@ -5,9 +5,11 @@ import {
   TableRow,
   TableCell,
   Box,
-  Divider
+  Divider,
+  Button
 } from '@material-ui/core';
 import deepPurple from '@material-ui/core/colors/deepPurple';
+import { Link as RouterLink } from 'react-router-dom';
 
 class MovingResult extends Component {
   constructor(props) {
@@ -616,6 +618,15 @@ class MovingResult extends Component {
   }
 
   returnFunction(movers, rate, time){
+
+    const showInMapClickedOrigin = () => {
+      window.open(`https://maps.google.com?q=${this.props.job.origin.address}`);
+    };
+
+    const showInMapClickedDestination = () => {
+      window.open(`https://maps.google.com?q=${this.props.job.destination.address}`);
+    };
+
     return(
 
       <TableBody>
@@ -640,7 +651,14 @@ class MovingResult extends Component {
         <TableRow>
           <TableCell>Moving From: </TableCell>
           <TableCell>
-            <Box>{this.props.job.origin.address}</Box>
+            <Box>
+              <Button
+                style={{padding: '3px'}}
+                onClick={showInMapClickedOrigin}
+              >
+                {this.props.job.origin.address}
+              </Button>
+            </Box>
             <Box component="div" display="inline" style={{fontWeight: 'bold'}}>*{this.props.job.origin.house_type}</Box>
             <Box component="div" display="inline" ml={2}>Apt#{(this.props.job.origin.apt_number === "") ? ' unknown' : " "+this.props.job.origin.apt_number}</Box>
           </TableCell>
@@ -648,7 +666,14 @@ class MovingResult extends Component {
         <TableRow >
           <TableCell>Moving To:</TableCell>
           <TableCell>
-            <Box>{this.props.job.destination.address}</Box>
+            <Box>
+              <Button
+                style={{padding: '3px'}}
+                onClick={showInMapClickedDestination}
+              >
+                {this.props.job.destination.address}
+              </Button>
+            </Box>
             <Box component="div" display="inline" style={{fontWeight: 'bold'}}>*{this.props.job.destination.house_type}</Box>
             <Box component="div" display="inline" ml={2}>Apt#{(this.props.job.destination.apt_number === "") ? ' unknown' : " "+this.props.job.destination.apt_number}</Box>
           </TableCell>
