@@ -22,7 +22,6 @@ import Routes from 'src/RoutesAlternative';
 import 'swiper/swiper-bundle.css';
 import 'aos/dist/aos.css';
 import './assets/scss/index.scss';
-import './assets/fonts.css';
 import AOS from 'aos';
 
 const history = createBrowserHistory();

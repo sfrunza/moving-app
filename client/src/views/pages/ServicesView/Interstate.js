@@ -81,6 +81,9 @@ const Interstate = props => {
               variant: 'body1',
               color: 'textPrimary',
             }}
+            titleProps={{
+              variant: 'h4',
+            }}
             data-aos="fade-up"
             align="left"
             ctaGroup={[<LearnMoreLink title="View Flat Rates" variant="h6" to="/pricing" />]}

@@ -29,42 +29,19 @@ import {
   Star as StarIcon,
   Truck as TruckIcon
 } from 'react-feather';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import Page from 'src/components/Page';
 import MovingDetails from './MovingDetails';
 import CustomerDetails from './CustomerDetails';
-import MovingType from './MovingType';
-import MovingDate from './MovingDate';
-import DeliveryDate from './DeliveryDate';
-import Origin from './Origin';
-import Destination from './Destination';
-
 
 const steps = [
   {
-    label: 'Moving Date',
-    icon: TruckIcon
-  },
-  {
-    label: 'Moving Type',
-    icon: TruckIcon
-  },
-  {
-    label: 'Delivery Date',
-    icon: TruckIcon
-  },
-  {
-    label: 'Origin Address',
-    icon: UserIcon
-  },
-  {
-    label: 'Destination Address',
+    label: 'Moving Details',
     icon: TruckIcon
   },
   {
     label: 'Contact Information',
     icon: UserIcon
-  },
+  }
 ];
 
 const CustomStepConnector = withStyles((theme) => ({
@@ -117,9 +94,12 @@ const useStyles = makeStyles((theme) => ({
   root: {
     backgroundImage: 'linear-gradient(to bottom, #663ab787, #663ab78c), url(https://images.unsplash.com/photo-1570129042283-dbebdfd894de?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80)',
     backgroundSize: 'cover',
-    minHeight: '100%',
+    minHeight: '100vh',
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1)
+  },
+  paddingMobile: {
+    padding: theme.spacing(0, 1)
   },
   avatar: {
     backgroundColor: colors.red[600]
@@ -139,10 +119,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '16px',
     fontFamily: "Maison Neue Normal"
   },
-  container: {
-    [theme.breakpoints.down('sm')]: {
-      padding: theme.spacing(0, 1),
-    },
+  borderRadius: {
+    borderRadius: '16px',
   }
 }));
 
@@ -151,13 +129,7 @@ function ProjectCreateView() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState(false);
-  const [checked, setChecked] = useState(false);
-  const [progress, setProgress] = useState(10)
   const [nextJobId, setNextJobId] = useState(null)
-  const [formState, setFormState] = useState({
-    values: {},
-    touched: {},
-  });
 
   const getNextJobId = useCallback(() => {
     axios
@@ -175,70 +147,36 @@ function ProjectCreateView() {
       });
   }, [isMountedRef]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     getNextJobId();
-    setFormState(formState => ({
-      ...formState,
-    }));
-  }, [formState.values]);
-
-  const handleChange = event => {
-    event.persist();
-    setFormState(formState => ({
-      ...formState,
-      values: {
-        ...formState.values,
-        [event.target.name]:
-          event.target.type === 'checkbox'
-            ? event.target.checked
-            : event.target.value,
-      },
-      touched: {
-        ...formState.touched,
-        [event.target.name]: true,
-      },
-    }));
-    setChecked(true)
-  };
-
-  const handleSubmit = () => {
-    setCompleted(true)
-  }
+  }, [getNextJobId]);
 
   if (!nextJobId) {
     return <LoadingScreen />
   }
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1)
-    setProgress(progress + 10)
-  }
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
 
   const handleBack = () => {
-    if(activeStep === 3 && formState.values.moving_date === formState.values.delivery_date ) {
-      setActiveStep((prevActiveStep) => prevActiveStep - 2)
-      setProgress(progress - 20)
-    } else {
-      setActiveStep((prevActiveStep) => prevActiveStep - 1)
-      setProgress(progress - 10)
-    }
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
   const handleComplete = () => {
     setCompleted(true);
   };
-  console.log(formState.values);
 
   return (
     <Page
       className={classes.root}
       title="Book"
     >
-      <Container maxWidth="md" className={classes.container}>
+      <Container maxWidth="md" className={classes.paddingMobile}>
         <Box mb={3}>
         </Box>
         {!completed ? (
-          <Paper>
+          <Paper className={classes.borderRadius}>
             <Grid container className={classes.itemsContainer}>
               <Grid
                 item
@@ -246,7 +184,21 @@ function ProjectCreateView() {
                 md={3}
                 className={classes.item}
               >
-                <LinearProgress variant="determinate" value={progress} />
+                <Stepper
+                  activeStep={activeStep}
+                  connector={<CustomStepConnector />}
+                  orientation="horizontal"
+                  component={Box}
+                  bgcolor="transparent"
+                >
+                  {steps.map((step) => (
+                    <Step key={step.label}>
+                      <StepLabel StepIconComponent={CustomStepIcon}>
+                        {step.label}
+                      </StepLabel>
+                    </Step>
+                  ))}
+                </Stepper>
               </Grid>
               <Grid
                 item
@@ -256,61 +208,15 @@ function ProjectCreateView() {
               >
                 <Box p={3}>
                   {activeStep === 0 && (
-                    <MovingDate
-                      onNext={handleNext}
-                      onChange={handleChange}
-                      state={formState}
-                      setFormState={setFormState}
-                    />
+                    <MovingDetails id={nextJobId} onNext={handleNext} />
                   )}
                   {activeStep === 1 && (
-                    <MovingType
-                      onNext={handleNext}
-                      onChange={handleChange}
-                      setFormState={setFormState}
-                      state={formState}
-                      onBack={handleBack}
-                    />
-                  )}
-
-                  {activeStep === 2 && (
-                    <DeliveryDate
-                      onNext={handleNext}
-                      onChange={handleChange}
-                      state={formState}
-                      setFormState={setFormState}
-                      onBack={handleBack}
-                      activeStep={activeStep}
-                    />
-                  )}
-
-                  {activeStep === 3 && (
-                    <Origin
-                      onNext={handleNext}
-                      onChange={handleChange}
-                      state={formState}
-                      setFormState={setFormState}
-                      onBack={handleBack}
-                    />
-                  )}
-                  {activeStep === 4 && (
-                    <Destination
-                      onNext={handleNext}
-                      onChange={handleChange}
-                      state={formState}
-                      setFormState={setFormState}
-                      onBack={handleBack}
-                    />
-                  )}
-
-                  {activeStep === 5 && (
                     <CustomerDetails
                       onBack={handleBack}
                       onComplete={handleComplete}
                       id={nextJobId}
                     />
                   )}
-
 
                 </Box>
               </Grid>

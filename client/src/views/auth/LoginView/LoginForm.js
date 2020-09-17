@@ -56,7 +56,7 @@ function LoginForm({ className, handleLogin, history, loggedInStatus, onSubmitSu
               console.log(response.data.status);
               handleLogin(response.data)
               if (response.data.admin === true) {
-                redirect('/app/calendar')
+                redirect('/app')
               } else redirect('/calendar')
             } else {
               setErrors(response.data.errors)

@@ -134,7 +134,7 @@ const SidebarNav = props => {
 
       <ListItem className={clsx(classes.listItem, classes.loginLink)}>
         <Typography
-          variant="h6"
+          variant="body1"
           color="primary"
           component={CustomRouterLink}
           to='sign_in'

@@ -21,6 +21,7 @@ import {
   partners
 } from 'src/views/pages/HomeView/data';
 import backgroundImage from 'src/assets/img/work-background.jpg'
+import Contact from 'src/views/pages/HomeView/Contact';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -124,6 +125,12 @@ const WorkView = props => {
 
         <Section>
           <BookSection />
+        </Section>
+
+        <Divider />
+
+        <Section>
+          <Contact />
         </Section>
 
       </Section>
