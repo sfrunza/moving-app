@@ -29,9 +29,6 @@ const useStyles = makeStyles(theme => ({
     maxWidth: 100,
     height: 'auto !important',
   },
-  fontWeight700: {
-    fontWeight: 700,
-  },
 }));
 
 const Partners = props => {
@@ -47,7 +44,6 @@ const Partners = props => {
               variant="body1"
               color="textSecondary"
               align="center"
-              className={classes.fontWeight700}
             >
               Our work has been featured in:
             </Typography>

@@ -43,7 +43,7 @@ handleSubmit(event) {
         console.log(response.data.status);
         this.props.handleLogin(response.data)
         if (response.data.admin === true) {
-          this.redirect('/app/calendar')
+          this.redirect('/app')
         } else this.redirect('/calendar')
       } else {
         this.setState({

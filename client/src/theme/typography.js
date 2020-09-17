@@ -1,6 +1,6 @@
 import palette from './palette';
 
-export default {
+const typography = {
   h1: {
     color: palette.text.primary,
     fontWeight: 500,
@@ -33,7 +33,6 @@ export default {
   },
   h6: {
     color: palette.text.primary,
-    fontWeight: 500,
     fontSize: '14px',
     lineHeight: 1.45,
   },
@@ -50,15 +49,10 @@ export default {
   },
   body1: {
     color: palette.text.primary,
-    fontSize: '18px',
-    lineHeight: 1.3,
-  },
-  body2: {
-    color: palette.text.secondary,
     fontSize: '16px',
     lineHeight: 1.3,
   },
-  body3: {
+  body2: {
     color: palette.text.secondary,
     fontSize: '14px',
     lineHeight: 1.3,
@@ -80,3 +74,5 @@ export default {
     fontWeight: 'bold',
   },
 };
+
+export default typography

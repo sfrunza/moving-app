@@ -137,7 +137,15 @@ export function createTheme(settings = {}) {
 
   let theme = createMuiTheme(
     _.merge(
-      {},
+      {
+        typography: {
+          fontFamily: [
+            '-apple-system',
+            'BlinkMacSystemFont',
+            'sans-serif',
+          ].join(', '),
+        },
+      },
       baseConfig,
       themeConfig,
       { direction: settings.direction }

@@ -22,6 +22,7 @@ import backgroundImage from 'src/assets/img/services-background.jpg'
 import { services } from './data';
 import IncludeSection from 'src/views/pages/HomeView/IncludeSection';
 import { properties } from 'src/views/pages/HomeView/data';
+import Contact from 'src/views/pages/HomeView/Contact';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,9 +31,9 @@ const useStyles = makeStyles(theme => ({
     overflow: 'hidden',
   },
   pagePaddingTop: {
-    paddingTop: theme.spacing(5),
+    paddingTop: theme.spacing(12),
     [theme.breakpoints.up('md')]: {
-      paddingTop: theme.spacing(5),
+      paddingTop: theme.spacing(12),
     },
   },
   appBarBottom: {
@@ -115,33 +116,40 @@ const ServicesView = () => {
 
       <Section className={classes.pagePaddingTop}>
 
-        <Section>
-          <Local data={services} />
-        </Section>
-
-        <Divider />
+        <Local data={services} />
 
         <Section>
-          <Interstate />
+          <Divider />
         </Section>
 
-        <Divider />
+        <Interstate />
 
         <Section>
-          <Packing />
+          <Divider />
         </Section>
 
-        <Divider />
+        <Packing />
 
         <Section>
-          <StorageNew />
+          <Divider />
         </Section>
 
-        <Divider />
+        <StorageNew />
 
         <Section>
-          <IncludeSection data={properties} />
+          <Divider />
         </Section>
+
+        <IncludeSection data={properties} />
+
+        <Section>
+          <Divider />
+        </Section>
+
+        <SectionAlternate>
+          <Contact />
+        </SectionAlternate>
+
 
       </Section>
 

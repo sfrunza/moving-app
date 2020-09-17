@@ -38,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     padding: '0px 15px',
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif'
   },
   addInfoTitle: {
     fontSize: '14px',
