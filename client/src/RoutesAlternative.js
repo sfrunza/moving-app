@@ -14,6 +14,7 @@ import MainLayout from 'src/layouts/MainLayout';
 import CalendarLayout from 'src/layouts/CalendarLayout'
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoginView from 'src/views/auth/LoginView'
+import SignInPage from 'src/registrations/SignInPage'
 import WorkView from 'src/views/pages/WorkView'
 import Signup from 'src/registrations/Signup'
 import PrivateRoute from 'src/registrations/PrivateRoute';
@@ -68,7 +69,6 @@ class Routes extends Component {
       }
 
   render() {
-
     if (this.state.isLoggedIn === null) {
         return (
           <Suspense fallback={<LoadingScreen />} />
@@ -79,9 +79,8 @@ class Routes extends Component {
       <Route
         exact path='/login'
         render={(props) => (
-        <LoginView history={props.history} handleLogin={this.handleLogin} loggedInStatus={this.state.isLoggedIn}/>
+        <SignInPage history={props.history} handleLogin={this.handleLogin} loggedInStatus={this.state.isLoggedIn}/>
         )}
-        loggedInStatus={this.state.isLoggedIn}
       />
     );
 
@@ -93,12 +92,7 @@ class Routes extends Component {
             path="/404"
             component={lazy(() => import('src/views/pages/Error404View'))}
           />
-          <Route
-            exact path='/login'
-            render={props => (
-              <LoginRoute loggedInStatus={this.state.isLoggedIn}/>
-            )}
-          />
+
 
           <PrivateRoute
             path="/calendar"
@@ -300,7 +294,7 @@ class Routes extends Component {
           <Route
             path="/"
             render={(props) => (
-              <MainLayout {...props} images={this.state.images}>
+              <MainLayout {...props} images={this.state.images} handleLogout={this.handleLogout} loggedInStatus={this.state.isLoggedIn} user={this.state.user}>
                   <Switch>
 
                     <Route
@@ -343,6 +337,16 @@ class Routes extends Component {
                       path="/terms"
                       component={lazy(() => import('src/views/pages/TermsView'))}
                     />
+                    {
+                      !this.state.isLoggedIn ?
+                      <Route
+                        exact path='/login'
+                        render={props => (
+                          <LoginRoute loggedInStatus={this.state.isLoggedIn}/>
+                        )}
+                      />
+                      : (<Redirect to="/" />)
+                    }
                     <Redirect to="/404" />
                   </Switch>
               </MainLayout>

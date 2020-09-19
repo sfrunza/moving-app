@@ -108,14 +108,13 @@ const Origin = ({ className, onNext, onChange, setFormState, state, onBack, ...r
                         variant="outlined"
                         placeholder="Type Full Address"
                         className={classes.textField}
-                      
+
                       />
                       <div className={classes.autocompleteContainer}>
                         {suggestions.map((suggestion, i) => {
                            const style = {
                             backgroundColor: suggestion.active ? '#e0e0e0' : '#fff',
                             cursor: 'pointer',
-                            fontFamily: 'Maison Neue Normal',
                             padding: '10px',
                             fontSize: '14px',
                             borderBottom: '1px solid #b7b7b7',
@@ -123,7 +122,7 @@ const Origin = ({ className, onNext, onChange, setFormState, state, onBack, ...r
                           }
                           return (
                               <div {...getSuggestionItemProps(suggestion, { style })} key={i} >
-                                <LocationOnIcon className={classes.icon}/><span style={{fontFamily: 'Maison Neue Demi'}}>{suggestion.formattedSuggestion.mainText}</span>,{" "}{suggestion.formattedSuggestion.secondaryText}
+                                <LocationOnIcon className={classes.icon}/><span>{suggestion.formattedSuggestion.mainText}</span>,{" "}{suggestion.formattedSuggestion.secondaryText}
                               </div>
                           )
                         })}

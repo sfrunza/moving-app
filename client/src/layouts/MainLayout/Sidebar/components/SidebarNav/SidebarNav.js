@@ -15,6 +15,7 @@ import {
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import PersonIcon from '@material-ui/icons/Person';
+import axios from 'axios'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -58,6 +59,12 @@ const useStyles = makeStyles(theme => ({
   },
   loginLink: {
     padding: theme.spacing(3, 1)
+  },
+  logOut: {
+    display: 'flex',
+    cursor: 'pointer',
+    alignItems: 'center',
+    paddingLeft: '5px',
   }
 }));
 
@@ -67,9 +74,19 @@ const CustomRouterLink = forwardRef((props, ref) => (
   </div>
 ));
 
-const SidebarNav = props => {
-  const { pages, onClose, className, ...rest } = props;
+function SidebarNav({ pages, onClose, className, loggedInStatus, handleLogout, user, ...rest }){
+
   const classes = useStyles();
+
+  const handleClick = () => {
+    axios.delete('/users/sign_out', {withCredentials: true})
+    .then(response => {
+      handleLogout()
+    })
+    .catch(error => console.log(error))
+
+    onClose()
+  }
 
   const landings = pages.landings;
 
@@ -77,7 +94,6 @@ const SidebarNav = props => {
     const { item } = props;
     const pages = item.pages
     pages.pop()
-
     return (
       <List disablePadding>
         {pages.map((page, i) => {
@@ -133,17 +149,68 @@ const SidebarNav = props => {
       </ListItem>
 
       <ListItem className={clsx(classes.listItem, classes.loginLink)}>
+      {
+        !loggedInStatus
+        ?
         <Typography
           variant="body1"
-          color="primary"
           component={CustomRouterLink}
-          to='sign_in'
+          to='/login'
+          className={clsx(classes.menuGroupTitle, 'submenu-item', classes.logOut)}
+          color="primary"
+          onClick={onClose}
           style={{display: 'flex'}}
         >
           <PersonIcon style={{height: '0.9em'}}/>
-          Client Login
+          Login
         </Typography>
+        :
+        <Typography
+          variant="body1"
+          color="primary"
+          onClick={handleClick}
+          className={clsx(classes.menuGroupTitle, 'submenu-item', classes.logOut)}
+          className={classes.logOut}
+        >
+          <PersonIcon style={{height: '0.9em'}}/>
+          LOG OUT
+        </Typography>
+      }
       </ListItem>
+      {
+        loggedInStatus && user.admin
+        ?
+        <ListItem className={classes.listItem}>
+          <Button
+            component={CustomRouterLink}
+            className={classes.button}
+            onClick={onClose}
+            variant="outlined"
+            color="secondary"
+            to="/app"
+          >
+            Admin Page
+          </Button>
+        </ListItem>
+        : null
+      }
+      {
+        loggedInStatus && !user.admin
+        ?
+        <ListItem className={classes.listItem}>
+          <Button
+            component={CustomRouterLink}
+            className={classes.button}
+            onClick={onClose}
+            variant="outlined"
+            color="secondary"
+            to="/calendar"
+          >
+            Calendar
+          </Button>
+        </ListItem>
+        : null
+      }
       <ListItem className={classes.listItem}>
         <Button
           component={CustomRouterLink}

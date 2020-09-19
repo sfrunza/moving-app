@@ -1,7 +1,5 @@
 module Api::V1
   class ImagesController < ApplicationController
-    protect_from_forgery with: :null_session
-
 
   def index
     @images = Image.all.order('id DESC')
@@ -28,7 +26,6 @@ module Api::V1
     def image_params
       params.permit( :photo, :id, :image)
     end
-
-
+    
   end
 end

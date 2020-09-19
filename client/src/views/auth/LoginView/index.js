@@ -104,7 +104,7 @@ function LoginView({handleLogin, loggedInStatus, user, history}) {
               Sign in on the internal platform
             </Typography>
             <Box mt={3}>
-              <LoginForm handleLogin={handleLogin} loggedInStatus={loggedInStatus} user={user} history={history}/>
+              <LoginForm handleLogin={handleLogin} history={history}/>
             </Box>
           </CardContent>
 
