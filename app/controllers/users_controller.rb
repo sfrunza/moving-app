@@ -1,34 +1,49 @@
-module Api::V1
-  class UsersController < ApplicationController
-
-    def index
-      if current_user
-        @users = User.all
-        @current_user = current_user
-        render json: {users: @users, current_user: @current_user, logged_in: true,}
-      else
-        render json: {current_user: nil, message: "Please sign in.", status: 401, logged_in: false,}
-      end
-
+class UsersController < ApplicationController
+def index
+    @users = User.all
+    if @users
+      render json: {
+        users: @users
+      }
+    else
+      render json: {
+        status: 500,
+        errors: ['no users found']
+      }
     end
-
-    def is_logged_in?
-      if current_user
-        render json: {
-          logged_in: true,
-          user: current_user
-        }
-      else
-        render json: {
-          logged_in: false,
-          message: 'no such user'
-        }
-      end
+end
+def show
+    @user = User.find(params[:id])
+   if @user
+      render json: {
+        user: @user
+      }
+    else
+      render json: {
+        status: 500,
+        errors: ['user not found']
+      }
     end
+  end
 
-    protected
-    def user_params
-      params.require(:user).permit(:email, :admin)
+  def create
+    @user = User.new(user_params)
+    if @user.save
+      login!
+      render json: {
+        status: :created,
+        user: @user
+      }
+    else
+      render json: {
+        status: 500,
+        errors: @user.errors.full_messages
+      }
     end
+  end
+private
+
+  def user_params
+    params.require(:user).permit(:email, :admin)
   end
 end

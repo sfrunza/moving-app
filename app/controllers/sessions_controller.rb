@@ -11,7 +11,7 @@ class SessionsController < Devise::SessionsController
     else
       render json: {
         status: 401,
-        errors: ['no such user', 'verify credentials and try again or signup']
+        errors: ['No such user!', ' Verify credentials and try again']
       }
     end
   end
@@ -26,7 +26,7 @@ class SessionsController < Devise::SessionsController
 
     def invalid_login_attempt
       warden.custom_failure!
-      render json: {error: 'invalid login attempt'}, status: :unprocessable_entity
+      render json: {error: ['No such user!', ' Verify credentials and try again']}, status: :unprocessable_entity
     end
 
     def user_params

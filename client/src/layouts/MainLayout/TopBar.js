@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { NavLink as RouterLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios'
 import {
   AppBar,
   Toolbar,
@@ -129,10 +130,19 @@ const CustomRouterLink = forwardRef((props, ref) => (
   </div>
 ));
 
-const Topbar = props => {
-  const { className, onSidebarOpen, pages, ...rest } = props;
+function Topbar({ className, onSidebarOpen, pages, loggedInStatus, handleLogout, user, ...rest }) {
+
 
   const classes = useStyles();
+
+  const handleClick = () => {
+    axios.delete('/users/sign_out', {withCredentials: true})
+    .then(response => {
+      handleLogout()
+    })
+    .catch(error => console.log(error))
+
+  }
 
   return (
     <AppBar
@@ -200,20 +210,68 @@ const Topbar = props => {
               </Typography>
             </ListItem>
             <ListItem className={classes.listItem}>
-              <Typography
-                variant="body2"
-                color="textSecondary"
-                className={clsx(classes.listItemText, classes.loginLink)}
-                component={CustomRouterLink}
-                to="/sign_in"
-              >
-                <PersonIcon style={{height: '0.9em'}}/>
-                Client Login
-              </Typography>
+              {
+                !loggedInStatus
+                ?
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  className={clsx(classes.listItemText, classes.loginLink)}
+                  component={CustomRouterLink}
+                  to="/login"
+                >
+                  <PersonIcon style={{height: '0.9em'}}/>
+                  Login
+                </Typography>
+                :
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  className={clsx(classes.listItemText, classes.loginLink)}
+                  onClick={handleClick}
+                >
+                  <PersonIcon style={{height: '0.9em'}}/>
+                  Log Out
+                </Typography>
+              }
             </ListItem>
+            {
+              loggedInStatus && user.admin
+              ?
+              <ListItem className={classes.listItem}>
+                <Button
+                  size="medium"
+                  variant="outlined"
+                  color="secondary"
+                  component={CustomRouterLink}
+                  to="/app"
+                  className={classes.button}
+                >
+                  Admin Page
+                </Button>
+              </ListItem>
+              : null
+            }
+            {
+              loggedInStatus && !user.admin
+              ?
+              <ListItem className={classes.listItem}>
+                <Button
+                  size="medium"
+                  variant="outlined"
+                  color="secondary"
+                  component={CustomRouterLink}
+                  to="/calendar"
+                  className={classes.button}
+                >
+                  Calendar
+                </Button>
+              </ListItem>
+              : null
+            }
             <ListItem className={classes.listItem}>
               <Button
-                size="large"
+                size="medium"
                 variant="contained"
                 color="secondary"
                 component={CustomRouterLink}

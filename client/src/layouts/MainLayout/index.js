@@ -31,8 +31,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const MainLayout = props => {
-  const { children } = props;
+function MainLayout({ children, user, loggedInStatus, handleLogout }){
   const classes = useStyles();
 
   const theme = useTheme();
@@ -86,18 +85,28 @@ const MainLayout = props => {
 
   const open = isMd ? false : openSidebar;
 
+
   return (
     <div
       className={clsx({
         [classes.root]: true,
       })}
     >
-      <TopBar onSidebarOpen={handleSidebarOpen} pages={pages} />
+      <TopBar
+        onSidebarOpen={handleSidebarOpen}
+        pages={pages}
+        loggedInStatus={loggedInStatus}
+        handleLogout={handleLogout}
+        user={user}
+      />
       <Sidebar
         onClose={handleSidebarClose}
         open={open}
         variant="temporary"
         pages={pages}
+        loggedInStatus={loggedInStatus}
+        handleLogout={handleLogout}
+        user={user}
       />
       <main>{children}</main>
       <Footer pages={pages} />

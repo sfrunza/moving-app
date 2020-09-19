@@ -22,8 +22,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Sidebar = props => {
-  const { pages, open, variant, onClose, className, ...rest } = props;
+function Sidebar({ open, pages, variant, onClose, className, loggedInStatus, handleLogout, user, ...rest }) {
 
   const classes = useStyles();
 
@@ -36,7 +35,14 @@ const Sidebar = props => {
       variant={variant}
     >
       <div {...rest} className={clsx(classes.root, className)}>
-        <SidebarNav className={classes.nav} pages={pages} onClose={onClose} />
+        <SidebarNav
+          className={classes.nav}
+          pages={pages}
+          onClose={onClose}
+          loggedInStatus={loggedInStatus}
+          handleLogout={handleLogout}
+          user={user}
+        />
       </div>
     </Drawer>
   );
