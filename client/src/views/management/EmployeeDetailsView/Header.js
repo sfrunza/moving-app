@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-function Header({ className, ...rest }) {
+function Header({ className, user, ...rest }) {
   const classes = useStyles();
 
   return (
@@ -33,7 +33,7 @@ function Header({ className, ...rest }) {
           All Employees
         </Link>
         <Typography color="textPrimary">
-          User Account
+          {user.first_name + " " + user.last_name}
         </Typography>
       </Breadcrumbs>
       <Typography
