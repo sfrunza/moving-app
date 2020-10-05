@@ -46,8 +46,8 @@ const useStyles = makeStyles((theme) => ({
 function CustomerActivity({ className, users, ...rest }) {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
-  const [total, setTotal] = useState(null);
-  const [online, setOnline] = useState(null);
+  const [total, setTotal] = useState(0);
+  const [online, setOnline] = useState(0);
 
 
   useEffect(() => {
@@ -64,10 +64,6 @@ function CustomerActivity({ className, users, ...rest }) {
     setTotal(total);
     setOnline(active)
   }, [total, online]);
-
-  if (!online || !total) {
-    return null;
-  }
 
   return (
     <Card

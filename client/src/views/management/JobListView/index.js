@@ -54,7 +54,7 @@ function JobListView() {
     getUsers();
   }, [getJobs, getUsers]);
 
-  if (!jobs && !users) {
+  if (!jobs || !users) {
     return null;
   }
   return (

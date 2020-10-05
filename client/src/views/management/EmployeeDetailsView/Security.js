@@ -78,7 +78,6 @@ function Security({ className, user, handlePasswordChange, ...rest }) {
         touched,
         values
       }) => {
-        console.log(values);
       return (
         <form onSubmit={handleSubmit}>
           <Card

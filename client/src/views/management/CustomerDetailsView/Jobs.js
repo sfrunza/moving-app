@@ -68,20 +68,20 @@ function getInventoryLabel(status) {
 function Jobs({ className, customer, ...rest }) {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
-  const [jobs, setJobs] = useState(null)
+  const [jobs, setJobs] = useState()
 
   const getJobs = useCallback(() => {
       axios.get(`/api/v1/users/${customer.id}`)
       .then((response) => {
         if (isMountedRef.current) {
-          setJobs(response.data.jobs[0]);
+          setJobs(response.data.jobs);
         }
       });
   }, [isMountedRef]);
 
   useEffect(() => {
     getJobs();
-  }, [getJobs]);
+  }, [customer.id]);
 
   if (!jobs) {
     return null;

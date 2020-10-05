@@ -142,13 +142,12 @@ function CustomerDetails({ job, className, ...rest }) {
   const handleChange = (event) => {
     event.persist();
     setStatus(event.target.value);
-    console.log(event.target.value);
     handleStatusUpdate(event.target.value)
   };
 
 
   const handleStatusUpdate = (status) => {
-    fetch(`http://localhost:3001/api/v1/jobs/${job.id}`,
+    fetch(`/api/v1/jobs/${job.id}`,
     {
       method: 'PUT',
       body: JSON.stringify({job_status: status}),

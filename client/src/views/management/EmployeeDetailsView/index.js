@@ -83,14 +83,14 @@ function AccountView({ match, history }) {
           setUser(response.data.user);
         }
       });
-  }, [isMountedRef]);
+  }, [userPath]);
 
   useEffect(() => {
     getUser();
   }, [getUser]);
 
   if (!user) {
-    return <Suspense fallback={<LoadingScreen />} />;
+    return null;
   }
 
   return (
@@ -99,7 +99,7 @@ function AccountView({ match, history }) {
       title="Settings"
     >
       <Container maxWidth="lg">
-        <Header />
+        <Header user={user}/>
         <Box mt={3}>
           <Tabs
             onChange={handleTabsChange}
