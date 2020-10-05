@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useCallback} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   AppBar,
@@ -7,6 +7,7 @@ import {
   Divider,
 } from '@material-ui/core';
 import clsx from 'clsx';
+import axios from 'axios';
 import PhoneRoundedIcon from '@material-ui/icons/PhoneRounded';
 import Page from 'src/components/Page';
 import { Section } from 'src/components/organisms';
@@ -22,6 +23,7 @@ import {
 } from 'src/views/pages/HomeView/data';
 import backgroundImage from 'src/assets/img/work-background.jpg'
 import Contact from 'src/views/pages/HomeView/Contact';
+import useIsMountedRef from 'src/hooks/useIsMountedRef';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -78,11 +80,6 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
   },
   bgImage: {
-    // // height: '75vh !important',
-    // width: '100% !important',
-    // // top: '20% !important',
-    // minWidth: '1000px !important',
-    // minHeight: '80vh !important',
     width: '100% !important',
     maxHeight: '79vh !important',
     objectFit: 'cover',
@@ -95,6 +92,34 @@ const useStyles = makeStyles(theme => ({
 
 const WorkView = props => {
   const classes = useStyles();
+  const [images, setImages] = useState();
+  const isMountedRef = useIsMountedRef();
+
+
+  useEffect(() => {
+    getImages();
+  }, [getImages]);
+
+
+  const getImages = useCallback(() => {
+    var arr = []
+    axios
+      .get('/api/v1/images.json')
+      .then((response) => {
+        let data = response.data;
+        data.map((image) => {
+          arr.push({ "src" : image.photo.url })
+        })
+        if (isMountedRef.current) {
+          setImages(arr);
+        }
+      });
+  }, [isMountedRef]);
+
+
+  if (!images) {
+    return null;
+  }
 
   return (
     <Page title="Our Work" className={classes.root}>
@@ -115,7 +140,7 @@ const WorkView = props => {
 
         <Partners data={partners} />
 
-        <Gallery images={props.images} />
+        <Gallery images={images}/>
 
         <Section>
           <Reviews data={reviews}/>

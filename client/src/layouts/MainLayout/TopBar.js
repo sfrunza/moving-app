@@ -230,7 +230,7 @@ function Topbar({ className, onSidebarOpen, pages, loggedInStatus, handleLogout,
                   className={clsx(classes.listItemText, classes.loginLink)}
                   onClick={handleClick}
                 >
-                  <PersonIcon style={{height: '0.9em'}}/>
+                  <PersonIcon style={{height: '0.8em'}}/>
                   Log Out
                 </Typography>
               }
@@ -253,7 +253,7 @@ function Topbar({ className, onSidebarOpen, pages, loggedInStatus, handleLogout,
               : null
             }
             {
-              loggedInStatus && !user.admin
+              loggedInStatus && !user.admin && !user.customer
               ?
               <ListItem className={classes.listItem}>
                 <Button
@@ -265,6 +265,23 @@ function Topbar({ className, onSidebarOpen, pages, loggedInStatus, handleLogout,
                   className={classes.button}
                 >
                   Calendar
+                </Button>
+              </ListItem>
+              : null
+            }
+            {
+              loggedInStatus && user.customer
+              ?
+              <ListItem className={classes.listItem}>
+                <Button
+                  size="medium"
+                  variant="outlined"
+                  color="secondary"
+                  component={CustomRouterLink}
+                  to="/dashboard"
+                  className={classes.button}
+                >
+                  Dashboard
                 </Button>
               </ListItem>
               : null

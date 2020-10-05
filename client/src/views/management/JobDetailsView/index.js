@@ -23,15 +23,21 @@ const useStyles = makeStyles((theme) => ({
 
 function JobDetails({ match, history }) {
   const classes = useStyles();
-  const [job, setJob] = useState(null);
-  const jobPath = match.params.jobId;
+  const [job, setJob] = useState();
+  const [user, setUser] = useState();
+  const [origins, setOrigins] = useState();
+  const [destinations, setDestinations] = useState();
+  const [data, setData] = useState();
+  const path = match.params.id;
+
+  console.log(path);
 
   useEffect(() => {
     let mounted = true;
 
 
     const fetchJob = () => {
-      axios.get(`/api/v1/jobs/${jobPath}`).then((response) => {
+      axios.get(`/api/v1/jobs/${path}`).then((response) => {
         if (mounted) {
           setJob(response.data);
         }
@@ -43,32 +49,32 @@ function JobDetails({ match, history }) {
     return () => {
       mounted = false;
     };
-  }, [jobPath]);
+  }, [path]);
 
   if (!job) {
     return null;
   }
 
   const handleDelete = (job) => {
-    fetch(`/api/v1/jobs/${jobPath}`,
-    {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then((response) => {
-        setJob(job)
-        history.push('/app/management/jobs')
-      })
+    // fetch(`/api/v1/jobs/${path}`,
+    // {
+    //   method: 'DELETE',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   }
+    // }).then((response) => {
+    //     setJobs(jobs)
+    //     history.push('/app/management/jobs')
+    //   })
   }
-
+  
   return (
     <Page
       className={classes.root}
       title="Job Details"
     >
       <Container maxWidth={false}>
-        <Header job={job} handleDelete={handleDelete}/>
+        <Header job={job.job} handleDelete={handleDelete}/>
         <Grid
           className={classes.grid}
           container
@@ -81,8 +87,7 @@ function JobDetails({ match, history }) {
             xs={12}
           >
             <Grid item>
-              <CustomerDetails job={job} />
-              <OtherActions job={job} className={classes.otherActions}/>
+              <CustomerDetails job={job.job} />
             </Grid>
           </Grid>
           <Grid

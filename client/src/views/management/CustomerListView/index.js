@@ -27,22 +27,39 @@ function CustomerListView() {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
   const [customers, setCustomers] = useState(null);
+  const [jobs, setJobs] = useState(null);
 
   const getCustomers = useCallback(() => {
     axios
-      .get('/api/v1/customers.json')
+      .get('/api/v1/users.json')
       .then((response) => {
         if (isMountedRef.current) {
-          setCustomers(response.data);
+          let obj = response.data.users
+          Object.keys(obj).forEach(key => {
+            if (!obj[key].customer) delete obj[key];
+          });
+          setCustomers(obj);
         }
       });
   }, [isMountedRef]);
 
+  const getJobs = useCallback(() => {
+    axios
+      .get('/api/v1/jobs.json')
+      .then((response) => {
+        if (isMountedRef.current) {
+          let obj = response.data
+          setJobs(obj);
+        }
+      })
+  }, [isMountedRef]);
+
   useEffect(() => {
     getCustomers();
+    getJobs()
   }, [getCustomers]);
 
-  if (!customers) {
+  if (!customers || !jobs) {
     return null;
   }
 
@@ -55,7 +72,7 @@ function CustomerListView() {
         <Header />
         {customers && (
           <Box mt={3}>
-            <Results customers={customers} />
+            <Results customers={customers} jobs={jobs}/>
           </Box>
         )}
       </Container>

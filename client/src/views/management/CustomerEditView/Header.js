@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-function Header({ className, ...rest }) {
+function Header({ className, user, ...rest }) {
   const classes = useStyles();
 
   return (
@@ -37,16 +37,24 @@ function Header({ className, ...rest }) {
         <Link
           variant="body1"
           color="inherit"
-          to="/app/management"
+          to="/app/customers"
           component={RouterLink}
         >
-          Management
+          Customers
+        </Link>
+        <Link
+          variant="body1"
+          color="inherit"
+          to={`/app/customers/${user.id}`}
+          component={RouterLink}
+        >
+          {user.first_name + " " + user.last_name}
         </Link>
         <Typography
           variant="body1"
           color="textPrimary"
         >
-          Customers
+          Edit
         </Typography>
       </Breadcrumbs>
       <Typography

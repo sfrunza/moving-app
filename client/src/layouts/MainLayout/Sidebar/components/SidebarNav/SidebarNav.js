@@ -65,6 +65,9 @@ const useStyles = makeStyles(theme => ({
     cursor: 'pointer',
     alignItems: 'center',
     paddingLeft: '5px',
+  },
+  button: {
+    borderRadius: '24px',
   }
 }));
 
@@ -104,7 +107,7 @@ function SidebarNav({ pages, onClose, className, loggedInStatus, handleLogout, u
                 component={CustomRouterLink}
                 to={page.href}
                 className={clsx(classes.menuGroupTitle, 'submenu-item')}
-                color="primary"
+                color="textSecondary"
                 onClick={onClose}
               >
                 {page.title}
@@ -157,7 +160,7 @@ function SidebarNav({ pages, onClose, className, loggedInStatus, handleLogout, u
           component={CustomRouterLink}
           to='/login'
           className={clsx(classes.menuGroupTitle, 'submenu-item', classes.logOut)}
-          color="primary"
+          color="textSecondary"
           onClick={onClose}
           style={{display: 'flex'}}
         >
@@ -167,7 +170,7 @@ function SidebarNav({ pages, onClose, className, loggedInStatus, handleLogout, u
         :
         <Typography
           variant="body1"
-          color="primary"
+          color="textSecondary"
           onClick={handleClick}
           className={clsx(classes.menuGroupTitle, 'submenu-item', classes.logOut)}
           className={classes.logOut}
@@ -195,7 +198,7 @@ function SidebarNav({ pages, onClose, className, loggedInStatus, handleLogout, u
         : null
       }
       {
-        loggedInStatus && !user.admin
+        loggedInStatus && !user.admin && !user.customer
         ?
         <ListItem className={classes.listItem}>
           <Button
@@ -211,6 +214,23 @@ function SidebarNav({ pages, onClose, className, loggedInStatus, handleLogout, u
         </ListItem>
         : null
       }
+      {
+        loggedInStatus && user.customer
+        ?
+        <ListItem className={classes.listItem}>
+          <Button
+            component={CustomRouterLink}
+            className={classes.button}
+            onClick={onClose}
+            variant="outlined"
+            color="secondary"
+            to="/dashboard"
+          >
+            Dashboard
+          </Button>
+        </ListItem>
+        : null
+      }
       <ListItem className={classes.listItem}>
         <Button
           component={CustomRouterLink}
@@ -218,7 +238,7 @@ function SidebarNav({ pages, onClose, className, loggedInStatus, handleLogout, u
           className={classes.button}
           onClick={onClose}
           variant="contained"
-          color="primary"
+          color="secondary"
         >
           Get Started
         </Button>

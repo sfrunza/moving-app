@@ -33,7 +33,7 @@ const schema = {
   },
 };
 
-const Login = ({ history, handleLogin, ...rest }) => {
+const Login = ({ history, handleLogin, loginStatus, ...rest }) => {
 
   const classes = useStyles();
   const [apiErrors, setApiErrors] = React.useState()
@@ -59,9 +59,7 @@ const Login = ({ history, handleLogin, ...rest }) => {
 
   const handleChange = event => {
     event.persist();
-
     setApiErrors('');
-
     setFormState(formState => ({
       ...formState,
       values: {
@@ -89,11 +87,14 @@ const Login = ({ history, handleLogin, ...rest }) => {
 
       axios.post('/users/sign_in', {user}, {withCredentials: true})
       .then(response => {
-        if (!response.data.status) {
-          handleLogin(response.data)
-          if (response.data.admin === true) {
+        if (response.data.status === undefined) {
+          handleLogin(response.data.current_user)
+          if (response.data.current_user.admin === true) {
             redirect('/app')
-          } else redirect('/calendar')
+          } else if (response.data.current_user.customer === true) {
+            redirect('/dashboard')
+          }
+          else redirect('/calendar')
         } else {
           setApiErrors( response.data.errors );
         }
@@ -166,7 +167,7 @@ const Login = ({ history, handleLogin, ...rest }) => {
               size="large"
               variant="contained"
               type="submit"
-              color="primary"
+              color="secondary"
               fullWidth
             >
               Login

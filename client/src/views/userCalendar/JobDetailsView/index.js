@@ -26,6 +26,7 @@ function JobDetails({ match, history }) {
   const classes = useStyles();
   const [job, setJob] = useState(null);
   const jobPath = match.params.jobId;
+  const [jobDetails, setJobDetails] = useState();
 
   useEffect(() => {
     let mounted = true;
@@ -34,7 +35,8 @@ function JobDetails({ match, history }) {
     const fetchJob = () => {
       axios.get(`/api/v1/jobs/${jobPath}`).then((response) => {
         if (mounted) {
-          setJob(response.data);
+          setJob(response.data.job);
+          setJobDetails(response.data.job);
         }
       });
     };
@@ -46,7 +48,7 @@ function JobDetails({ match, history }) {
     };
   }, [jobPath]);
 
-  if (!job) {
+  if (!job || !jobDetails) {
     return null;
   }
 
@@ -56,7 +58,7 @@ function JobDetails({ match, history }) {
       title="Job Details"
     >
       <Container maxWidth={false}>
-        <Header job={job}/>
+        <Header job={jobDetails}/>
         <Grid
           className={classes.grid}
           container
@@ -69,8 +71,16 @@ function JobDetails({ match, history }) {
             xs={12}
           >
             <Grid item>
-              <CustomerDetails job={job} />
-              <OtherActions job={job} className={classes.otherActions}/>
+              <CustomerDetails
+                userId={job.user_id}
+                job={jobDetails}
+              />
+              <OtherActions
+                job={job}
+                userId={job.user_id}
+                className={classes.otherActions}
+                setJobDetails={setJobDetails}
+              />
             </Grid>
           </Grid>
           <Grid
@@ -79,7 +89,7 @@ function JobDetails({ match, history }) {
             xl={9}
             xs={12}
           >
-            <MovingDetails job={job} />
+            <MovingDetails job={jobDetails} />
           </Grid>
         </Grid>
       </Container>

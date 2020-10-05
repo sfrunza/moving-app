@@ -62,7 +62,7 @@ function Account({ user, handleLogout }) {
           variant="h6"
           color="inherit"
         >
-          {user.email}
+          {user.first_name + " " + user.last_name}
         </Typography>
       </Box>
       <Menu

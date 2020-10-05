@@ -24,7 +24,9 @@ import {
   TableRow,
   Tabs,
   TextField,
-  makeStyles
+  makeStyles,
+  Typography,
+  Badge,
 } from '@material-ui/core';
 import {
   Edit as EditIcon,
@@ -33,43 +35,6 @@ import {
 } from 'react-feather';
 import getInitials from 'src/utils/getInitials';
 
-const tabs = [
-  {
-    value: 'all',
-    label: 'All'
-  },
-  {
-    value: 'acceptsMarketing',
-    label: 'Accepts Marketing'
-  },
-  {
-    value: 'isProspect',
-    label: 'Prospect'
-  },
-  {
-    value: 'isReturning',
-    label: 'Returning'
-  }
-];
-
-const sortOptions = [
-  {
-    value: 'updatedAt|desc',
-    label: 'Last update (newest first)'
-  },
-  {
-    value: 'updatedAt|asc',
-    label: 'Last update (oldest first)'
-  },
-  {
-    value: 'orders|desc',
-    label: 'Total orders (high to low)'
-  },
-  {
-    value: 'orders|asc',
-    label: 'Total orders (low to high)'
-  }
-];
 
 function applyFilters(customers, query, filters) {
   return customers.filter((customer) => {
@@ -80,7 +45,7 @@ function applyFilters(customers, query, filters) {
       let containsQuery = false;
 
       properties.forEach((property) => {
-        if (customer[property].toLowerCase().includes(query.toLowerCase())) {
+        if (customer[property] != null && customer[property].toLowerCase().includes(query.toLowerCase())) {
           containsQuery = true;
         }
       });
@@ -165,59 +130,36 @@ const useStyles = makeStyles((theme) => ({
     height: 42,
     width: 42,
     marginRight: theme.spacing(1)
+  },
+  badge: {
+    '& span': {
+      right: '-12px'
+    }
   }
 }));
 
-function Results({ className, customers, ...rest }) {
+function Results({ className, customers, jobs, ...rest }) {
   const classes = useStyles();
   const [currentTab, setCurrentTab] = useState('all');
   const [selectedCustomers, setSelectedCustomers] = useState([]);
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
   const [query, setQuery] = useState('');
-  const [sort, setSort] = useState(sortOptions[0].value);
   const [filters, setFilters] = useState({
     isProspect: null,
     isReturning: null,
     acceptsMarketing: null
   });
 
-  const handleTabsChange = (event, value) => {
-    const updatedFilters = {
-      ...filters,
-      isProspect: null,
-      isReturning: null,
-      acceptsMarketing: null
-    };
-
-    if (value !== 'all') {
-      updatedFilters[value] = true;
-    }
-
-    setFilters(updatedFilters);
-    setSelectedCustomers([]);
-    setCurrentTab(value);
-  };
 
   const handleQueryChange = (event) => {
     event.persist();
     setQuery(event.target.value);
   };
 
-  const handleSortChange = (event) => {
-    event.persist();
-    setSort(event.target.value);
-  };
-
-  const handleSelectAllCustomers = (event) => {
-    setSelectedCustomers(event.target.checked
-      ? customers.map((customer) => customer.id)
-      : []);
-  };
-
   const handleSelectOneCustomer = (event, customerId) => {
     if (!selectedCustomers.includes(customerId)) {
-      setSelectedCustomers((prevSelected) => [...prevSelected, customerId]);
+      setSelectedCustomers([customerId]);
     } else {
       setSelectedCustomers((prevSelected) => prevSelected.filter((id) => id !== customerId));
     }
@@ -242,8 +184,7 @@ function Results({ className, customers, ...rest }) {
 
   // Usually query is done on backend with indexing solutions
   const filteredCustomers = applyFilters(customers, query, filters);
-  const sortedCustomers = applySort(filteredCustomers, sort);
-  const paginatedCustomers = applyPagination(sortedCustomers, page, limit);
+  const paginatedCustomers = applyPagination(filteredCustomers, page, limit);
   const enableBulkOperations = selectedCustomers.length > 0;
   const selectedSomeCustomers = selectedCustomers.length > 0 && selectedCustomers.length < customers.length;
   const selectedAllCustomers = selectedCustomers.length === customers.length;
@@ -253,22 +194,6 @@ function Results({ className, customers, ...rest }) {
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <Tabs
-        onChange={handleTabsChange}
-        scrollButtons="auto"
-        textColor="secondary"
-        value={currentTab}
-        variant="scrollable"
-      >
-        {tabs.map((tab) => (
-          <Tab
-            key={tab.value}
-            value={tab.value}
-            label={tab.label}
-          />
-        ))}
-      </Tabs>
-      <Divider />
       <Box
         p={2}
         minHeight={56}
@@ -290,47 +215,20 @@ function Results({ className, customers, ...rest }) {
             )
           }}
           onChange={handleQueryChange}
-          placeholder="Search customers"
+          placeholder="Search by Name or Email"
           value={query}
           variant="outlined"
         />
         <Box flexGrow={1} />
-        <TextField
-          label="Sort By"
-          name="sort"
-          onChange={handleSortChange}
-          select
-          SelectProps={{ native: true }}
-          value={sort}
-          variant="outlined"
-        >
-          {sortOptions.map((option) => (
-            <option
-              key={option.value}
-              value={option.value}
-            >
-              {option.label}
-            </option>
-          ))}
-        </TextField>
       </Box>
       {enableBulkOperations && (
         <div className={classes.bulkOperations}>
           <div className={classes.bulkActions}>
-            <Checkbox
-              checked={selectedAllCustomers}
-              indeterminate={selectedSomeCustomers}
-              onChange={handleSelectAllCustomers}
-            />
             <Button
               variant="outlined"
               className={classes.bulkAction}
-            >
-              Delete
-            </Button>
-            <Button
-              variant="outlined"
-              className={classes.bulkAction}
+              component={RouterLink}
+              to={`/app/customers/${selectedCustomers[0]}/edit`}
             >
               Edit
             </Button>
@@ -343,20 +241,15 @@ function Results({ className, customers, ...rest }) {
             <TableHead>
               <TableRow>
                 <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedAllCustomers}
-                    indeterminate={selectedSomeCustomers}
-                    onChange={handleSelectAllCustomers}
-                  />
                 </TableCell>
                 <TableCell>
                   Name
                 </TableCell>
                 <TableCell>
-                  Email
+                  Phone
                 </TableCell>
                 <TableCell>
-                  Phone
+                  Last Move
                 </TableCell>
                 <TableCell align="right">
                   Actions
@@ -365,6 +258,14 @@ function Results({ className, customers, ...rest }) {
             </TableHead>
             <TableBody>
               {paginatedCustomers.map((customer) => {
+                let number = 0
+                let color = ""
+                jobs.map(job => {
+                  if (job.user_id === customer.id) {
+                    number = number + 1
+                  }
+                })
+
                 const isCustomerSelected = selectedCustomers.includes(customer.id);
 
                 return (
@@ -395,24 +296,36 @@ function Results({ className, customers, ...rest }) {
                           <Link
                             color="inherit"
                             component={RouterLink}
-                            to="/app/management/customers/1"
+                            to={`/app/customers/${customer.id}`}
                             variant="h6"
                           >
-                            {customer.first_name} {customer.last_name}
+                          {
+                            number === 1 ?
+                            (customer.first_name + " " + customer.last_name) :
+                            <Badge badgeContent={number} color='secondary' className={classes.badge}>
+                              {customer.first_name + " " + customer.last_name}
+                            </Badge>
+                          }
                           </Link>
+                          <Typography
+                            variant="body2"
+                            color="textSecondary"
+                          >
+                            {customer.email}
+                          </Typography>
                         </div>
                       </Box>
                     </TableCell>
                     <TableCell>
-                      {customer.email}
+                      {formatPhoneNumber(customer.phone)}
                     </TableCell>
                     <TableCell>
-                      {formatPhoneNumber(customer.phone)}
+
                     </TableCell>
                     <TableCell align="right">
                       <IconButton
                         component={RouterLink}
-                        to="/app/management/customers/1/edit"
+                        to={`/app/customers/${customer.id}/edit`}
                       >
                         <SvgIcon fontSize="small">
                           <EditIcon />
@@ -420,7 +333,7 @@ function Results({ className, customers, ...rest }) {
                       </IconButton>
                       <IconButton
                         component={RouterLink}
-                        to="/app/management/customers/1"
+                        to={`/app/customers/${customer.id}`}
                       >
                         <SvgIcon fontSize="small">
                           <ArrowRightIcon />

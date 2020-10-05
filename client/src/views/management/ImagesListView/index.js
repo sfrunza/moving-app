@@ -39,7 +39,6 @@ function ImagesListVew() {
         'Content-Type': 'application/json'
       }
     }).then((response) => {
-
         const newList = images.filter((item) => item.id !== id);
         setImages(newList)
         enqueueSnackbar('Image Deleted', {

@@ -23,7 +23,9 @@ const useStyles = makeStyles(() => ({
 
 function CustomerEditForm({
   className,
-  customer,
+  user,
+  handleUpdate,
+  history,
   ...rest
 }) {
   const classes = useStyles();
@@ -32,26 +34,18 @@ function CustomerEditForm({
   return (
     <Formik
       initialValues={{
-        address1: customer.address1 || '',
-        address2: customer.address2 || '',
-        country: customer.country || '',
-        discountedPrices: customer.discountedPrices || false,
-        email: customer.email || '',
-        fullName: customer.fullName || '',
-        phone: customer.phone || '',
-        state: customer.state || '',
-        verified: customer.verified || false
+        email: user.email || '',
+        first_name: user.first_name || '',
+        last_name: user.last_name || '',
+        phone: user.phone || '',
+        add_phone: user.add_phone || '',
       }}
       validationSchema={Yup.object().shape({
-        address1: Yup.string().max(255),
-        address2: Yup.string().max(255),
-        country: Yup.string().max(255),
-        discountedPrices: Yup.bool(),
         email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-        fullName: Yup.string().max(255).required('Name is required'),
-        phone: Yup.string().max(15),
-        state: Yup.string().max(255),
-        verified: Yup.bool()
+        first_name: Yup.string().max(255).required('Name is required'),
+        last_name: Yup.string().max(255).required('Name is required'),
+        phone: Yup.string().max(10),
+        add_phone: Yup.string().max(10),
       })}
       onSubmit={async (values, {
         resetForm,
@@ -61,14 +55,14 @@ function CustomerEditForm({
       }) => {
         try {
           // Make API request
-          await wait(500);
+          await handleUpdate(values, user.id);
           resetForm();
           setStatus({ success: true });
           setSubmitting(false);
           enqueueSnackbar('Customer updated', {
-            variant: 'success',
-            action: <Button>See all</Button>
+            variant: 'success'
           });
+          history.push(`/app/customers/${user.id}`)
         } catch (error) {
           setStatus({ success: false });
           setErrors({ submit: error.message });
@@ -84,7 +78,8 @@ function CustomerEditForm({
         isSubmitting,
         touched,
         values
-      }) => (
+      }) => {
+        return (
         <form
           className={clsx(classes.root, className)}
           onSubmit={handleSubmit}
@@ -104,15 +99,15 @@ function CustomerEditForm({
                   xs={12}
                 >
                   <TextField
-                    error={Boolean(touched.email && errors.email)}
+                    error={Boolean(touched.first_name && errors.first_name)}
                     fullWidth
-                    helperText={touched.email && errors.email}
-                    label="Email address"
-                    name="email"
+                    helperText={touched.first_name && errors.first_name}
+                    label="Full name"
+                    name="first_name"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     required
-                    value={values.email}
+                    value={values.first_name}
                     variant="outlined"
                   />
                 </Grid>
@@ -122,15 +117,15 @@ function CustomerEditForm({
                   xs={12}
                 >
                   <TextField
-                    error={Boolean(touched.fullName && errors.fullName)}
+                    error={Boolean(touched.last_name && errors.last_name)}
                     fullWidth
-                    helperText={touched.fullName && errors.fullName}
+                    helperText={touched.last_name && errors.last_name}
                     label="Full name"
-                    name="fullName"
+                    name="last_name"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     required
-                    value={values.fullName}
+                    value={values.last_name}
                     variant="outlined"
                   />
                 </Grid>
@@ -143,7 +138,7 @@ function CustomerEditForm({
                     error={Boolean(touched.phone && errors.phone)}
                     fullWidth
                     helperText={touched.phone && errors.phone}
-                    label="Phone number"
+                    label="Primary Phone number"
                     name="phone"
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -157,14 +152,14 @@ function CustomerEditForm({
                   xs={12}
                 >
                   <TextField
-                    error={Boolean(touched.state && errors.state)}
+                    error={Boolean(touched.add_phone && errors.add_phone)}
                     fullWidth
-                    helperText={touched.state && errors.state}
-                    label="State/Region"
-                    name="state"
+                    helperText={touched.add_phone && errors.add_phone}
+                    label="Secondary Phone number"
+                    name="add_phone"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.state}
+                    value={values.add_phone}
                     variant="outlined"
                   />
                 </Grid>
@@ -174,107 +169,20 @@ function CustomerEditForm({
                   xs={12}
                 >
                   <TextField
-                    error={Boolean(touched.country && errors.country)}
+                    error={Boolean(touched.email && errors.email)}
                     fullWidth
-                    helperText={touched.country && errors.country}
-                    label="Country"
-                    name="country"
+                    helperText={touched.email && errors.email}
+                    label="Email address"
+                    name="email"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.country}
+                    required
+                    value={values.email}
                     variant="outlined"
-                  />
-                </Grid>
-                <Grid
-                  item
-                  md={6}
-                  xs={12}
-                >
-                  <TextField
-                    error={Boolean(touched.address1 && errors.address1)}
-                    fullWidth
-                    helperText={touched.address1 && errors.address1}
-                    label="Address 1"
-                    name="address1"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.address1}
-                    variant="outlined"
-                  />
-                </Grid>
-                <Grid
-                  item
-                  md={6}
-                  xs={12}
-                >
-                  <TextField
-                    error={Boolean(touched.address2 && errors.address2)}
-                    fullWidth
-                    helperText={touched.address2 && errors.address2}
-                    label="Address 2"
-                    name="address2"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.address2}
-                    variant="outlined"
-                  />
-                </Grid>
-                <Grid item />
-                <Grid
-                  item
-                  md={6}
-                  xs={12}
-                >
-                  <Typography
-                    variant="h5"
-                    color="textPrimary"
-                  >
-                    Email Verified
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                  >
-                    Disabling this will automatically send the user a verification
-                    email
-                  </Typography>
-                  <Switch
-                    checked={values.verified}
-                    color="secondary"
-                    edge="start"
-                    name="verified"
-                    onChange={handleChange}
-                    value={values.verified}
-                  />
-                </Grid>
-                <Grid
-                  item
-                  md={6}
-                  xs={12}
-                >
-                  <Typography
-                    variant="h5"
-                    color="textPrimary"
-                  >
-                    Discounted Prices
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                  >
-                    This will give the user discountedprices for all products
-                  </Typography>
-                  <Switch
-                    checked={values.discountedPrices}
-                    color="secondary"
-                    edge="start"
-                    name="discountedPrices"
-                    onChange={handleChange}
-                    value={values.discountedPrices}
                   />
                 </Grid>
               </Grid>
-              <Box mt={2}>
+              <Box mt={5}>
                 <Button
                   variant="contained"
                   color="secondary"
@@ -287,14 +195,16 @@ function CustomerEditForm({
             </CardContent>
           </Card>
         </form>
-      )}
+      )
+      }
+      }
     </Formik>
   );
 }
 
 CustomerEditForm.propTypes = {
   className: PropTypes.string,
-  customer: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired
 };
 
 export default CustomerEditForm;

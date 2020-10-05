@@ -12,6 +12,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import timelinePlugin from '@fullcalendar/timeline';
+import LoadingScreen from 'src/components/LoadingScreen';
 import {
   Box,
   Container,
@@ -134,21 +135,15 @@ function CalendarView({history}) {
   const mobileDevice = useMediaQuery(theme.breakpoints.down('sm'));
   const [view, setView] = useState(mobileDevice ? 'listWeek' : 'dayGridMonth');
   const [date, setDate] = useState(moment().toDate());
-  const [events, setEvents] = useState(null);
-  const [job, setJob] = useState()
-
-  function zoomOutMobile() {
-      var viewport = document.querySelector('meta[name="viewport"]');
-
-      if ( viewport ) {
-        viewport.content = "initial-scale=1";
-        viewport.content = "width=500";
-      }
-    }
+  const [events, setEvents] = useState();
+  const [job, setJob] = useState();
+  const [users, setUsers] = useState();
+  const [count, setCount] = useState();
 
   const EventDetail = ({ event, el }) => {
     let moveType = event.extendedProps.description
     let status = event.extendedProps.status
+    let jobs = event.extendedProps.jobs
     let symbol = "";
     let completedColor = '';
     if (status === "Completed") {
@@ -160,7 +155,7 @@ function CalendarView({history}) {
     }
     function image(){
       return (
-        <img  src="https://freeiconshop.com/wp-content/uploads/edd/box-outline-filled.png" style={{width: '13px'}}/>
+        <img  src="https://freeiconshop.com/wp-content/uploads/edd/box-outline-filled.png" style={{width: '13px', position: 'relative', top: '2px'}}/>
       )
     }
     if (moveType === "Unloading Help") {
@@ -176,11 +171,24 @@ function CalendarView({history}) {
     }
       // extendedProps is used to access additional event properties.
       const content = (
-        <div className="fc-title" style={{ color: `${completedColor}` }}>
-          <div>{event.title}</div>
-          <div style={{display: 'flex', alignItems: 'center'}}>{(symbol === "P") ? image() : symbol}</div>
-          <div>4/2</div>
-        </div>
+        <Box
+          display="flex"
+          alignItems='center'
+          className="fc-title"
+          style={{ color: `${completedColor}`}}
+        >
+          {event.title}
+          {
+            jobs > 1 ? <span style={{fontSize: '10px', padding: '0px 4px', position: 'relative', bottom: '8px', color: 'darkblue'}}>{jobs}</span> : null
+          }
+          <Box flexGrow={1} />
+          <Box style={{marginRight: '5px'}}>
+            {(symbol === "P") ? image() : symbol}
+          </Box>
+          <Box>
+            4/2
+          </Box>
+        </Box>
       );
       ReactDOM.render(content, el);
       return el;
@@ -220,40 +228,60 @@ function CalendarView({history}) {
   };
 
   const handleEventSelect = (arg) => {
-    history.push(`/app/management/jobs/${arg.event.id}`);
+    history.push(`/app/jobs/${arg.event.id}`);
   };
 
+
+  useEffect(() => {
+    getEvents();
+    getUsers();
+  }, [getEvents]);
+
+
   const getEvents = useCallback(() => {
+    var arr = []
     axios
       .get('/api/v1/jobs.json')
       .then((response) => {
         let data = response.data;
-        let arr = []
-        let title = "";
-        let description = "";
-        let date = [];
+        let count = {};
         data.map((info) => {
-          setJob(info)
-          title = info.customer.first_name + " " + info.customer.last_name
-          description = info.status
-          date = moment(info.pick_up_date).format('YYYY-MM-DD')
-          return arr.push({ "id":info.id, "title": title, "date": date, "description": info.move_type, "status": info.status, 'customRender': true})
+          count[info.user_id] = (count[info.user_id]||0) + 1;
+          arr.push({ "id":info.id, 'title': info.user_id, "date": moment(info.pick_up_date).format('YYYY-MM-DD'), "jobs": 0, "description": info.job_type, "status": info.job_status, 'customRender': true})
         })
-
         if (isMountedRef.current) {
           setEvents(arr);
-        }
+          setCount(count);
 
+        }
       });
   }, [isMountedRef]);
 
-  useEffect(() => {
-    getEvents();
-  }, [getEvents]);
+  const getUsers = useCallback(() => {
+    axios
+      .get('/api/v1/users.json')
+      .then((response) => {
+        let data = response.data.users;
+        if (isMountedRef.current) {
+          setUsers(data);
+        }
+      });
+  }, [isMountedRef]);
 
-  if (!events) {
+  if (!events || !users || !count) {
     return null;
   }
+
+
+  users.map(user => {
+    let name = user.first_name + " " + user.last_name
+    events.map(event => {
+      if (event.title === user.id) {
+        event.title = name
+        event.jobs = count[user.id]
+      }
+    })
+  })
 
   return (
     <Page

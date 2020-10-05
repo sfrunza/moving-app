@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const SignInPage = ({loggedInStatus, handleLogin, history}) => {
+const SignInPage = ({loginStatus, handleLogin, history}) => {
   const classes = useStyles();
 
   return (
@@ -36,7 +36,7 @@ const SignInPage = ({loggedInStatus, handleLogin, history}) => {
               variant: 'h3',
             }}
           />
-          <NewLogin handleLogin={handleLogin} history={history} loggedInStatus={loggedInStatus}/>
+          <NewLogin handleLogin={handleLogin} history={history} loginStatus={loginStatus}/>
         </div>
       </Section>
     </div>

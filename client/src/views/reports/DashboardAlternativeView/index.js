@@ -1,4 +1,8 @@
-import React from 'react';
+import React, {
+  useCallback,
+  useState,
+  useEffect
+} from 'react';
 import {
   Container,
   Grid,
@@ -13,6 +17,8 @@ import LatestOrders from './LatestOrders';
 import MostProfitableProducts from './MostProfitableProducts';
 import Overview from './Overview';
 import TopReferrals from './TopReferrals';
+import axios from 'axios';
+import useIsMountedRef from 'src/hooks/useIsMountedRef';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +37,38 @@ const useStyles = makeStyles((theme) => ({
 
 function DashboardAlternativeView() {
   const classes = useStyles();
+  const isMountedRef = useIsMountedRef();
+  const [jobs, setJob] = useState(null);
+  const [users, setUsers] = useState(null);
+
+  const getJobs = useCallback(() => {
+    axios
+      .get('/api/v1/jobs.json')
+      .then((response) => {
+        if (isMountedRef.current) {
+          setJob(response.data.slice(0, 6));
+        }
+      });
+  }, [isMountedRef]);
+
+  const getUsers = useCallback(() => {
+    axios
+      .get('/api/v1/users.json')
+      .then((response) => {
+        if (isMountedRef.current) {
+          setUsers(response.data.users);
+        }
+      });
+  }, [isMountedRef]);
+
+  useEffect(() => {
+    getJobs();
+    getUsers();
+  }, [getJobs, getUsers]);
+
+  if (!jobs || !users) {
+    return null;
+  }
 
   return (
     <Page
@@ -55,46 +93,16 @@ function DashboardAlternativeView() {
           <Grid
             item
             lg={8}
-            xl={9}
             xs={12}
           >
-            <FinancialStats />
-          </Grid>
-          <Grid
-            item
-            lg={4}
-            xl={3}
-            xs={12}
-          >
-            <EarningsSegmentation />
-          </Grid>
-          <Grid
-            item
-            lg={8}
-            xs={12}
-          >
-            <LatestOrders />
+            <LatestOrders users={users} jobs={jobs}/>
           </Grid>
           <Grid
             item
             lg={4}
             xs={12}
           >
-            <CustomerActivity />
-          </Grid>
-          <Grid
-            item
-            lg={8}
-            xs={12}
-          >
-            <MostProfitableProducts />
-          </Grid>
-          <Grid
-            item
-            lg={4}
-            xs={12}
-          >
-            <TopReferrals />
+            <CustomerActivity users={users}/>
           </Grid>
         </Grid>
       </Container>

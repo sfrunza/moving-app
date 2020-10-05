@@ -31,6 +31,15 @@ const useStyles = makeStyles((theme) => ({
 function CustomerInfo({ customer, className, ...rest }) {
   const classes = useStyles();
 
+  const formatPhoneNumber = (phoneNumberString) => {
+    let cleaned = ('' + phoneNumberString).replace(/\D/g, '')
+    let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
+    if (match) {
+      return '(' + match[1] + ') ' + match[2] + '-' + match[3]
+    }
+    return null
+  }
+
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -51,8 +60,8 @@ function CustomerInfo({ customer, className, ...rest }) {
               >
                 {customer.email}
               </Typography>
-              <Label color={customer.verified ? 'success' : 'error'}>
-                {customer.verified
+              <Label color={customer.customer ? 'success' : 'error'}>
+                {customer.customer
                   ? 'Email verified'
                   : 'Email not verified'}
               </Label>
@@ -67,62 +76,29 @@ function CustomerInfo({ customer, className, ...rest }) {
                 variant="body2"
                 color="textSecondary"
               >
-                {customer.phone}
+                {formatPhoneNumber(customer.phone)}
               </Typography>
             </TableCell>
           </TableRow>
-          <TableRow>
-            <TableCell className={classes.fontWeightMedium}>
-              State/Region
-            </TableCell>
-            <TableCell>
-              <Typography
-                variant="body2"
-                color="textSecondary"
-              >
-                {customer.state}
-              </Typography>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className={classes.fontWeightMedium}>
-              Country
-            </TableCell>
-            <TableCell>
-              <Typography
-                variant="body2"
-                color="textSecondary"
-              >
-                {customer.country}
-              </Typography>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className={classes.fontWeightMedium}>
-              Address 1
-            </TableCell>
-            <TableCell>
-              <Typography
-                variant="body2"
-                color="textSecondary"
-              >
-                {customer.address1}
-              </Typography>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className={classes.fontWeightMedium}>
-              Address 2
-            </TableCell>
-            <TableCell>
-              <Typography
-                variant="body2"
-                color="textSecondary"
-              >
-                {customer.address2}
-              </Typography>
-            </TableCell>
-          </TableRow>
+
+          {
+            customer.add_phone ?
+            <TableRow>
+              <TableCell className={classes.fontWeightMedium}>
+                Secondary Phone
+              </TableCell>
+              <TableCell>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                >
+                  {formatPhoneNumber(customer.add_phone)}
+                </Typography>
+              </TableCell>
+            </TableRow>
+            : null
+
+          }
         </TableBody>
       </Table>
       <Box

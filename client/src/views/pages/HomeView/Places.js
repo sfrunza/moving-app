@@ -61,7 +61,7 @@ const Places = props => {
           <Button
             variant="outlined"
             size={isMd ? 'large' : 'medium'}
-            color="primary"
+            color="secondary"
             component={RouterLink}
             to='/pricing'
             className={classes.button}

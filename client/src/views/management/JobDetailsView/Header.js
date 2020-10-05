@@ -90,7 +90,7 @@ function Header({ handleDelete, job, className, ...rest }) {
           <Link
             variant="body1"
             color="inherit"
-            to="/app/management/jobs"
+            to="/app/jobs"
             component={RouterLink}
           >
             Jobs
@@ -99,14 +99,14 @@ function Header({ handleDelete, job, className, ...rest }) {
             variant="body1"
             color="textPrimary"
           >
-            {job.job.id}
+            {job.id}
           </Typography>
         </Breadcrumbs>
         <Typography
           variant="h3"
           color="textPrimary"
         >
-          Job ID # {job.job.id}
+          Job ID # {job.id}
         </Typography>
       </Grid>
         <Grid item>
@@ -134,7 +134,7 @@ function Header({ handleDelete, job, className, ...rest }) {
               <Button
                 className={classes.deleteButton}
                 variant="contained"
-                onClick={() => {handleDelete(job)}}
+                onClick={handleDelete()}
               >
                 <DeleteIcon className={classes.deleteIcon} />
                 Delete
@@ -149,7 +149,6 @@ function Header({ handleDelete, job, className, ...rest }) {
 
 Header.propTypes = {
   className: PropTypes.string,
-  job: PropTypes.object.isRequired
 };
 
 export default Header;

@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import MovingResult from './MovingResult'
+import axios from 'axios';
 import { makeStyles } from '@material-ui/styles';
+import moment from 'moment';
 import {
   Card,
   CardHeader,
   CardContent,
   Divider,
-  Box
+  Box,
+  Link,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+  Button,
 } from '@material-ui/core';
 import {
   withGoogleMap,
@@ -17,6 +24,7 @@ import {
 } from "react-google-maps";
 import { compose, withProps, lifecycle } from "recompose";
 import deepPurple from '@material-ui/core/colors/deepPurple';
+import LoadingScreen from 'src/components/LoadingScreen';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,14 +38,12 @@ const useStyles = makeStyles((theme) => ({
   },
   headerDistance: {
     textAlign: 'center',
-    fontFamily: 'Maison Neue Demi',
     padding: '10px 0em',
   },
   addInfoContainer: {
     display: 'flex',
     flexDirection: 'column',
     padding: '0px 15px',
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif'
   },
   addInfoTitle: {
     fontSize: '14px',
@@ -46,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold'
   },
   addInfoSubTitle: {
-    backgroundColor: theme.palette.background.dark,
+    backgroundColor: '#f7f7f7',
     padding: '15px',
     wordWrap: 'break-word'
   }
@@ -58,7 +64,6 @@ function MovingDetails({ job, className, ...rest }) {
   const apiKey = 'AIzaSyADEDKabHN5FBcOroOU1W7BzUam0Az8gGQ'
   const google = window.google = window.google ? window.google : {}
   const [distance, setDistance] = useState()
-  const [travelTime, setTravelTime] = useState()
 
   const initMap = () => {
       let origin = job.origin.address
@@ -73,40 +78,7 @@ function MovingDetails({ job, className, ...rest }) {
         withGoogleMap,
         lifecycle({
           componentDidMount() {
-            const officeHome = "2 Saint Paul St, Brookline, MA";
-
-            //find travel time
-            const findTravelTime = new google.maps.DistanceMatrixService();
-            findTravelTime.getDistanceMatrix({
-              origins: [officeHome],
-              destinations: [origin, destination],
-              travelMode: 'DRIVING',
-              unitSystem: google.maps.UnitSystem.IMPERIAL,
-              avoidHighways: false,
-              avoidTolls: false
-            }, function(response, status) {
-              if (status !== 'OK') {
-                alert('Error was: ' + status);
-              } else {
-                let timeTo = ''
-                let timeFrom = ''
-                let results = response.rows[0].elements;
-
-                if(response.rows[0].elements[0].status !== "ZERO_RESULTS" && response.rows[0].elements[1].status !== "ZERO_RESULTS"){
-                  if(results[0].distance.value < 20000 ){
-                    timeTo = '20 min'
-                  } else {
-                    timeTo = Math.round((results[0].duration.value / 60) / 10) * 10 + ' min'
-                  }
-                  if(results[1].distance.value < 20000 ){
-                    timeFrom = '20 min'
-                  } else {
-                      timeFrom = Math.round((results[1].duration.value / 60) / 10) * 10 + ' min'
-                  }
-                  setTravelTime(`${timeTo} / ${timeFrom}`)
-                }
-              }
-            });
+            const officeHome = "Boston, MA";
 
             //map with direction from pickup to delivery
             const DirectionsService = new google.maps.DirectionsService();
@@ -122,8 +94,6 @@ function MovingDetails({ job, className, ...rest }) {
                 setDistance(result.routes[0].legs[0].distance.text)
               }
             });
-
-
           }
         })
       )(props =>
@@ -144,29 +114,122 @@ function MovingDetails({ job, className, ...rest }) {
       {...rest}
       className={clsx(classes.root, className)}
     >
-      <CardHeader title="Moving Details" />
+      <CardHeader title="Move Overview" />
       {initMap()}
 
       <CardContent className={classes.content}>
         <Box className={classes.headerDistance}>{distance}</Box>
         <Divider />
-        <MovingResult
-            submitted={submitted}
-            movingSize={job.job.move_size}
-            typeFrom={job.origin.house_type}
-            typeTo={job.destination.house_type}
-            job={job}
-            travelTime={travelTime}
-        />
-        <Box mt={2} className={classes.addInfoContainer}>
-          <Box className={classes.addInfoTitle}>
-            Additional Information:
-          </Box>
-          <Box mt={2} className={classes.addInfoSubTitle}>
-            {job.customer.additional_info}
-          </Box>
-        </Box>
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableCell>Moving Date: </TableCell>
+              <TableCell style={{fontWeight: 'bold'}}>
+                {job.job.delivery_date ? <Box>{moment(job.job.pick_up_date, 'MM/DD/YYYY').format("MMM DD, YYYY")} <span style={{fontSize: '12px', marginLeft: '10px', fontWeight: 300}}>to storage</span></Box> : moment(job.job.pick_up_date, 'MM/DD/YYYY').format("MMM DD, YYYY") }
+              </TableCell>
+            </TableRow>
+            {
+              (job.job.delivery_date === null )
+              ?
+              null
+              :
+                <TableRow>
+                  <TableCell>Delivery Date: </TableCell>
+                  <TableCell style={{fontWeight: 'bold'}}>
+                    {moment(job.job.delivery_date, 'MM/DD/YYYY').format("MMM DD, YYYY")}
+                  </TableCell>
+                </TableRow>
+            }
+            <TableRow>
+              <TableCell>Moving From: </TableCell>
+              <TableCell>
+                <Box>
+                  <Button
+                    style={{padding: '0px'}}
+                    onClick={()=> console.log('clicked')}
+                  >
+                    {job.origin.address}
+                  </Button>
+                </Box>
+                <Box component="div" display="inline" style={{fontWeight: 'bold'}}>*{job.origin.floor}</Box>
+                <Box component="div" display="inline" ml={2}>Apt# {job.origin.apt_number}</Box>
+              </TableCell>
+            </TableRow>
+            <TableRow >
+              <TableCell>Moving To:</TableCell>
+              <TableCell>
+                <Box>
+                  <Button
+                    style={{padding: '0px'}}
+                    onClick={()=> console.log('clicked')}
+                  >
+                    {job.destination.address}
+                  </Button>
+                </Box>
+                <Box component="div" display="inline" style={{fontWeight: 'bold'}}>*{job.destination.floor}</Box>
+                <Box component="div" display="inline" ml={2}>Apt# {job.destination.apt_number}</Box>
+              </TableCell>
+            </TableRow>
 
+            <TableRow>
+              <TableCell style={{padding: '0px'}}><Divider /></TableCell>
+              <TableCell style={{padding: '0px'}}><Divider /></TableCell>
+            </TableRow>
+
+            <TableRow >
+              <TableCell>Moving Type:</TableCell>
+              <TableCell>
+                {job.job.job_type}
+              </TableCell>
+            </TableRow>
+            <TableRow >
+              <TableCell>Moving Size:</TableCell>
+              <TableCell style={{fontWeight: 600}}>
+                {job.job.job_size}
+              </TableCell>
+            </TableRow>
+
+            <TableRow>
+              <TableCell style={{padding: '0px'}}><Divider /></TableCell>
+              <TableCell style={{padding: '0px'}}><Divider /></TableCell>
+            </TableRow>
+
+            <TableRow>
+              <TableCell >Crew:</TableCell>
+              <TableCell style={{fontWeight: 600}}>
+                {job.job.crew_size} Movers
+              </TableCell>
+            </TableRow>
+
+            <TableRow >
+              <TableCell >Rate:</TableCell>
+              <TableCell style={{color: deepPurple['A200'], fontSize: '18px', fontWeight: 'bold'}}>
+                <label >$ {job.job.job_rate}</label> / hr <label style={{color: 'grey', fontSize: '12px', fontStyle: 'italic', fontWeight: 'normal'}}> - billed in 15 minutes increment</label>
+              </TableCell>
+            </TableRow>
+
+            <TableRow>
+              <TableCell >Estimated Time:</TableCell>
+              <TableCell style={{color: '#FD7013', fontSize: '18px', fontWeight: 'bold'}}>
+                <label>{job.job.estimated_time}</label> hours*
+              </TableCell>
+            </TableRow>
+
+            <TableRow>
+              <TableCell >Travel Time:</TableCell>
+              <TableCell>
+                <label>{job.job.travel_time} (from/to HQ)</label>
+              </TableCell>
+            </TableRow>
+
+            <TableRow >
+              <TableCell >Estimated Quote:</TableCell>
+              <TableCell style={{fontWeight: 600, fontSize: '18px'}}>
+                <label>{job.job.estimated_quote}</label>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
       </CardContent>
     </Card>
   );
@@ -174,7 +237,6 @@ function MovingDetails({ job, className, ...rest }) {
 
 MovingDetails.propTypes = {
   className: PropTypes.string,
-  job: PropTypes.object.isRequired
 };
 
 export default MovingDetails;
