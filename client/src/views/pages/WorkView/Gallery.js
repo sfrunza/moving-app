@@ -1,4 +1,9 @@
-import React from 'react';
+import React, {
+  useCallback,
+  useState,
+  useRef,
+  useEffect
+} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
@@ -7,6 +12,7 @@ import {
 } from '@material-ui/core';
 import ResponsiveGallery from 'react-responsive-gallery';
 import withWidth from '@material-ui/core/withWidth';
+import useIsMountedRef from 'src/hooks/useIsMountedRef';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,20 +43,14 @@ function Gallery({ className, images, ...rest }) {
     return number
   };
 
-  const newImages = []
-  images.map(image => {
-      newImages.push({ "src" : image.photo.url })
-      return null
-    })
-
-    const numOfImagesPerRow = {
-      xs: 1,
-      s: 2,
-      m: 2,
-      l: 3,
-      xl: 3,
-      xxl: 3,
-    };
+  const numOfImagesPerRow = {
+    xs: 1,
+    s: 2,
+    m: 2,
+    l: 3,
+    xl: 3,
+    xxl: 3,
+  };
 
   return (
     <div
@@ -58,7 +58,7 @@ function Gallery({ className, images, ...rest }) {
       {...rest}
     >
       <Box mt={2}>
-        <ResponsiveGallery images={newImages} useLightBox={handleScreen()} numOfImagesPerRow={numOfImagesPerRow} imagesStyle={classes.imageStyle}
+        <ResponsiveGallery images={images} useLightBox={handleScreen()} numOfImagesPerRow={numOfImagesPerRow} imagesStyle={classes.imageStyle}
         />
       </Box>
     </div>

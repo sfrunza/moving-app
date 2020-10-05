@@ -21,7 +21,10 @@ module Api::V1
       @origin = Origin.new(origin_params)
 
       if @origin.save
-        render json: @origin, status: :created
+        render json: {
+          status: :created,
+          origin: @origin
+        }
       else
         render json: @origin.errors, status: :unprocessable_entity
       end
@@ -49,7 +52,7 @@ module Api::V1
 
       # Only allow a trusted parameter "white list" through.
       def origin_params
-        params.require(:origin).permit(:address, :job_id, :house_type, :apt_number)
+        params.require(:origin).permit(:address, :add_address, :job_id, :floor, :apt_number)
       end
   end
 end

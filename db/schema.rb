@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_03_042807) do
+ActiveRecord::Schema.define(version: 2020_09_19_211925) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,9 +29,10 @@ ActiveRecord::Schema.define(version: 2020_08_03_042807) do
 
   create_table "destinations", force: :cascade do |t|
     t.string "address"
-    t.bigint "job_id"
-    t.string "house_type"
+    t.string "add_address"
+    t.string "floor"
     t.string "apt_number"
+    t.bigint "job_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["job_id"], name: "index_destinations_on_job_id"
@@ -55,19 +56,30 @@ ActiveRecord::Schema.define(version: 2020_08_03_042807) do
   create_table "jobs", force: :cascade do |t|
     t.string "pick_up_date"
     t.string "delivery_date"
-    t.string "status"
-    t.integer "job_time"
-    t.string "move_size"
-    t.string "move_type"
+    t.string "job_type"
+    t.string "start_time"
+    t.string "job_status"
+    t.string "job_size"
+    t.integer "crew_size"
+    t.integer "job_rate"
+    t.string "estimated_time"
+    t.string "travel_time"
+    t.string "estimated_quote"
+    t.text "additional_info"
+    t.float "job_duration"
+    t.float "total_amount"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_jobs_on_user_id"
   end
 
   create_table "origins", force: :cascade do |t|
     t.string "address"
-    t.bigint "job_id"
-    t.string "house_type"
+    t.string "add_address"
+    t.string "floor"
     t.string "apt_number"
+    t.bigint "job_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["job_id"], name: "index_origins_on_job_id"
@@ -82,6 +94,13 @@ ActiveRecord::Schema.define(version: 2020_08_03_042807) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "admin", default: false, null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "role"
+    t.string "phone"
+    t.string "add_phone"
+    t.boolean "customer", default: false, null: false
+    t.boolean "active", default: false, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

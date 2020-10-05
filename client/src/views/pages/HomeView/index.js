@@ -25,6 +25,7 @@ import SubHeader from './SubHeader';
 import FAQS from './FAQS';
 import Contact from './Contact';
 import IncludeSection from './IncludeSection';
+import Sticky from 'react-stickynode';
 import backgroundImage from 'src/assets/img/home-background.jpg'
 import {
   services,
@@ -110,6 +111,12 @@ const HomeView = () => {
   const handleBottombarClose = () => {
     setOpenBottombar(false);
   };
+  const sides = {
+          top: 0, // Sticks when it scrolls past the top edge
+          bottom: 0, // Sticks when it scrolls past the bottom edge
+          left: 10, // Sticks 10px from the left edge
+          right: -20, // Sticks 20px past the right edge (useful for content that should stick only when it's fully out of the frame)
+        };
 
   return (
     <Page title="Insigh Moving | Boston Movers" className={classes.root}>
@@ -130,51 +137,51 @@ const HomeView = () => {
 
       <Section className={classes.pagePaddingTop}>
 
-      <Services data={services} />
+        <Services data={services} />
 
-      <Section>
-        <Divider />
-      </Section>
+        <Section>
+          <Divider />
+        </Section>
 
-      <Rates />
+        <Rates />
 
-      <Section>
-        <Divider />
-      </Section>
+        <Section>
+          <Divider />
+        </Section>
 
-      <Places data={places} />
+        <Places data={places} />
 
-      <Section>
-        <Divider />
-      </Section>
+        <Section>
+          <Divider />
+        </Section>
 
-      <SectionAlternate>
-        <IncludeSection data={properties} />
-      </SectionAlternate>
+        <SectionAlternate>
+          <IncludeSection data={properties} />
+        </SectionAlternate>
 
-      <Section>
-        <Divider />
-      </Section>
+        <Section>
+          <Divider />
+        </Section>
 
-      <Testimonials data={reviews} />
+        <Testimonials data={reviews} />
 
-      <Section>
-        <Divider />
-      </Section>
+        <Section>
+          <Divider />
+        </Section>
 
-      <BookSection />
+        <BookSection />
 
-      <Section>
-        <Divider />
-      </Section>
+        <Section>
+          <Divider />
+        </Section>
 
-      <FAQS data={faq} />
+        <FAQS data={faq} />
 
-      <Section>
-        <Divider />
-      </Section>
+        <Section>
+          <Divider />
+        </Section>
 
-      <Contact />
+        <Contact />
 
 
       </Section>

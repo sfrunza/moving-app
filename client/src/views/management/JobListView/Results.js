@@ -21,7 +21,8 @@ import {
   TablePagination,
   TableRow,
   TextField,
-  makeStyles
+  makeStyles,
+  colors,
 } from '@material-ui/core';
 import {
   Edit as EditIcon,
@@ -29,6 +30,9 @@ import {
   Search as SearchIcon
 } from 'react-feather';
 import Label from 'src/components/Label';
+import {
+  Package as PackageIcon,
+} from 'react-feather';
 
 const avalabilityOptions = [
   {
@@ -83,12 +87,21 @@ function getInventoryLabel(status) {
   );
 }
 
-function applyFilters(jobs, query, filters) {
+function applyFilters(jobs, users, query, filters) {
 
   return jobs.filter((job) => {
     let matches = true;
+    let lol = job.user_id
+    let firstName = '';
+    let lastName = '';
+    users.map(user => {
+      if (lol === user.id){
+        firstName = user.first_name;
+        lastName = user.last_name;
+      }
+    })
 
-    if (query && !job.customer.last_name.toLowerCase().includes(query.toLowerCase()) && !job.customer.first_name.toLowerCase().includes(query.toLowerCase()) && !job.id.toString().includes(query.toLowerCase())) {
+    if (query && !firstName.toLowerCase().includes(query.toLowerCase()) && !lastName.toLowerCase().includes(query.toLowerCase()) && !job.id.toString().includes(query.toLowerCase())) {
       matches = false;
     }
 
@@ -97,24 +110,24 @@ function applyFilters(jobs, query, filters) {
     }
 
     if (filters.availability) {
-      if (filters.availability === 'confirmed' && !['Confirmed'].includes(job.status)) {
+      if (filters.availability === 'confirmed' && !['Confirmed'].includes(job.job_status)) {
         matches = false;
       }
 
-      if (filters.availability === 'completed' && !['Completed'].includes(job.status)) {
+      if (filters.availability === 'completed' && !['Completed'].includes(job.job_status)) {
         matches = false;
       }
 
-      if (filters.availability === 'needsAttention' && !['Needs Attention'].includes(job.status)) {
+      if (filters.availability === 'needsAttention' && !['Needs Attention'].includes(job.job_status)) {
         matches = false;
       }
 
-      if (filters.availability === 'canceled' && !['Canceled'].includes(job.status)) {
+      if (filters.availability === 'canceled' && !['Canceled'].includes(job.job_status)) {
         matches = false;
       }
     }
 
-    if (filters.inStock && !['Needs Attention'].includes(job.status)) {
+    if (filters.inStock && !['Needs Attention'].includes(job.job_status)) {
       matches = false;
     }
 
@@ -126,12 +139,13 @@ function applyFilters(jobs, query, filters) {
   });
 }
 
-function applyPagination(customers, page, limit) {
-  return customers.slice(page * limit, page * limit + limit);
+function applyPagination(jobs, page, limit) {
+  return jobs.slice(page * limit, page * limit + limit);
 }
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+  },
   bulkOperations: {
     position: 'relative'
   },
@@ -173,11 +187,15 @@ const useStyles = makeStyles((theme) => ({
   image: {
     height: 68,
     width: 68
+  },
+  pastDate: {
+    color: colors.deepOrange[500],
   }
 }));
 
-function Results({ className, jobs, ...rest }) {
+function Results({ className, jobs, users, ...rest }) {
   const classes = useStyles();
+  const today = moment().toJSON().slice(0, 10)
   const [selectedJobs, setSelectedJobs] = useState([]);
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
@@ -231,7 +249,7 @@ function Results({ className, jobs, ...rest }) {
   };
 
   // Usually query is done on backend with indexing solutions
-  const filteredJobs = applyFilters(jobs, query, filters);
+  const filteredJobs = applyFilters(jobs, users, query, filters);
   const paginatedJobs = applyPagination(filteredJobs, page, limit);
   const enableBulkOperations = selectedJobs.length > 0;
   const selectedSomeJobs = selectedJobs.length > 0 && selectedJobs.length < jobs.length;
@@ -262,7 +280,7 @@ function Results({ className, jobs, ...rest }) {
               )
             }}
             onChange={handleQueryChange}
-            placeholder="Search Job"
+            placeholder="Search by ID or Name"
             value={query}
             variant="outlined"
           />
@@ -330,7 +348,7 @@ function Results({ className, jobs, ...rest }) {
                   Customer
                 </TableCell>
                 <TableCell>
-                  Pickup Date
+                  Moving Date
                 </TableCell>
                 <TableCell>
                   Type of Service
@@ -345,9 +363,15 @@ function Results({ className, jobs, ...rest }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {paginatedJobs.map((job) => {
-                const isJobSelected = selectedJobs.includes(job.id);
-
+            {paginatedJobs.map((job) => {
+              const isJobSelected = selectedJobs.includes(job.id);
+              let lol = job.user_id
+              let customer = ''
+              users.map(user => {
+                if (lol === user.id){
+                  customer = user.first_name + " " +user.last_name
+                }
+              })
                 return (
                   <TableRow
                     hover
@@ -367,22 +391,29 @@ function Results({ className, jobs, ...rest }) {
                       color="textPrimary"
                       component={RouterLink}
                       underline="none"
-                      to={`/app/management/jobs/${job.id}`}
+                      to={`/app/jobs/${job.id}`}
                     >
-                      {job.id}
+                      #{job.id}
                     </Link>
                     </TableCell>
                     <TableCell>
-                        {(job.customer === null  || job.customer === null) ? " " : job.customer.first_name + " " + job.customer.last_name}
+                        {customer}
+                    </TableCell>
+                    {
+                      today > moment(job.pick_up_date).format('YYYY-MM-DD') ?
+                      <TableCell className={classes.pastDate}>
+                      {moment(job.pick_up_date).format('MMM DD YYYY')}
+                      </TableCell>
+                       :
+                       <TableCell>
+                       {moment(job.pick_up_date).format('MMM DD YYYY')}
+                       </TableCell>
+                    }
+                    <TableCell>
+                      {job.job_type}
                     </TableCell>
                     <TableCell>
-                      {moment(job.pick_up_date).format('MMMM DD YYYY')}
-                    </TableCell>
-                    <TableCell>
-                      {job.move_type}
-                    </TableCell>
-                    <TableCell>
-                      {getInventoryLabel(job.status)}
+                      {getInventoryLabel(job.job_status)}
                     </TableCell>
 
                     <TableCell align="right">
@@ -397,7 +428,7 @@ function Results({ className, jobs, ...rest }) {
                         color="textPrimary"
                         component={RouterLink}
                         underline="none"
-                        to={`/app/management/jobs/${job.id}`}
+                        to={`/app/jobs/${job.id}`}
                       >
                         <SvgIcon fontSize="small">
                           <ArrowRightIcon />

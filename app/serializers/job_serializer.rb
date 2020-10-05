@@ -1,3 +1,20 @@
 class JobSerializer < ActiveModel::Serializer
-  attributes :id, :pick_up_date, :delivery_date, :job_time, :status, :customer, :origin, :destination, :move_size, :move_type
+  attributes :id,
+            :user_id,
+            :pick_up_date,
+            :delivery_date,
+            :start_time,
+            :job_status,
+            :job_size,
+            :job_type,
+            :crew_size,
+            :job_rate,
+            :estimated_time,
+            :travel_time,
+            :estimated_quote,
+            :additional_info,
+            :job_duration,
+            :total_amount,
+            :origin,
+            :destination
 end

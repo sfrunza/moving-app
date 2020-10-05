@@ -19,9 +19,10 @@ import {
   ListItemAvatar,
   ListItemText,
   Typography,
-  makeStyles
+  makeStyles,
+  Badge,
 } from '@material-ui/core';
-import axios from 'src/utils/axios';
+import axios from 'axios';
 import getInitials from 'src/utils/getInitials';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import GenericMoreButton from 'src/components/GenericMoreButton';
@@ -34,29 +35,37 @@ const useStyles = makeStyles((theme) => ({
     '&:first-of-type': {
       borderRight: `1px solid ${theme.palette.divider}`
     }
+  },
+  badge: {
+    '& span': {
+      backgroundColor: 'green'
+    }
   }
 }));
 
-function CustomerActivity({ className, ...rest }) {
+function CustomerActivity({ className, users, ...rest }) {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
-  const [activities, setActivities] = useState(null);
+  const [total, setTotal] = useState(null);
+  const [online, setOnline] = useState(null);
 
-  const getActivities = useCallback(() => {
-    axios
-      .get('/api/reports/customer-activity')
-      .then((response) => {
-        if (isMountedRef.current) {
-          setActivities(response.data.activities);
-        }
-      });
-  }, [isMountedRef]);
 
   useEffect(() => {
-    getActivities();
-  }, [getActivities]);
+    let total = 0
+    let active = 0
+    users.map(user => {
+      if (user.customer){
+        total += 1
+      }
+      if (user.active){
+        active += 1
+      }
+    })
+    setTotal(total);
+    setOnline(active)
+  }, [total, online]);
 
-  if (!activities) {
+  if (!online || !total) {
     return null;
   }
 
@@ -77,7 +86,7 @@ function CustomerActivity({ className, ...rest }) {
             variant="h3"
             color="textPrimary"
           >
-            15,245
+            {total}
           </Typography>
           <Typography
             align="center"
@@ -96,7 +105,7 @@ function CustomerActivity({ className, ...rest }) {
             variant="h3"
             color="textPrimary"
           >
-            357
+            {online}
           </Typography>
           <Typography
             align="center"
@@ -111,52 +120,45 @@ function CustomerActivity({ className, ...rest }) {
       </Box>
       <Divider />
       <List disablePadding>
-        {activities.map((activity, i) => (
-          <ListItem
-            divider={i < activities.length - 1}
-            key={activity.id}
-          >
-            <ListItemAvatar>
-              <Avatar
-                alt="Customer"
-                component={RouterLink}
-                src={activity.customer.avatar}
-                to="#"
+        {users.map((user, i) => {
+          if(user.active){
+            return (
+              <ListItem
+                divider={i < users.length - 1}
+                key={user.id}
               >
-                {getInitials(activity.customer.name)}
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText
-              disableTypography
-              primary={(
-                <Link
-                  color="textPrimary"
-                  component={RouterLink}
-                  to="#"
-                  underline="none"
-                  variant="h6"
-                >
-                  {activity.customer.name}
-                </Link>
-              )}
-              secondary={(
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                >
-                  {activity.description}
-                </Typography>
-              )}
-            />
-            <Typography
-              color="textSecondary"
-              noWrap
-              variant="caption"
-            >
-              {moment(activity.createdAt).fromNow()}
-            </Typography>
-          </ListItem>
-        ))}
+                <ListItemAvatar>
+                  <Avatar
+                    alt="Customer"
+                    component={RouterLink}
+                    src={user.customer.avatar}
+                    to="#"
+                  >
+                    {getInitials(user.first_name + " " + user.last_name)}
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                  disableTypography
+                  primary={(
+                    <Link
+                      color="textPrimary"
+                      component={RouterLink}
+                      to={`/app/customers/${user.id}`}
+                      underline="none"
+                      variant="h6"
+                    >
+                      {user.first_name + " " +user.last_name}
+                    </Link>
+                  )}
+                />
+                <Badge variant="dot" className={classes.badge}>
+
+                </Badge>
+              </ListItem>
+            )
+          }
+        }
+      )}
       </List>
     </Card>
   );

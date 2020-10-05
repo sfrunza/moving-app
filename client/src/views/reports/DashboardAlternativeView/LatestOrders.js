@@ -1,8 +1,4 @@
-import React, {
-  useCallback,
-  useState,
-  useEffect
-} from 'react';
+import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import moment from 'moment';
@@ -26,14 +22,36 @@ import {
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import Label from 'src/components/Label';
 import GenericMoreButton from 'src/components/GenericMoreButton';
-import axios from 'src/utils/axios';
-import useIsMountedRef from 'src/hooks/useIsMountedRef';
 
-const labelColors = {
-  complete: 'success',
-  pending: 'warning',
-  rejected: 'error'
-};
+
+function getInventoryLabel(status) {
+  const map = {
+    "Completed": {
+      text: 'Completed',
+      color: 'secondary'
+    },
+    "Canceled": {
+      text: 'Canceled',
+      color: 'error'
+    },
+    "Needs Attention" : {
+      text: 'Needs Attention',
+      color: 'warning'
+    },
+    "Confirmed" : {
+      text: 'Confirmed',
+      color: 'success'
+    }
+  };
+
+  const { text, color } = map[status];
+
+  return (
+    <Label color={color}>
+      {text}
+    </Label>
+  );
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -42,28 +60,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function LatestOrders({ className, ...rest }) {
+function LatestOrders({ className, users, jobs, ...rest }) {
   const classes = useStyles();
-  const isMountedRef = useIsMountedRef();
-  const [orders, setOrders] = useState(null);
-
-  const getOrders = useCallback(() => {
-    axios
-      .get('/api/reports/latest-orders')
-      .then((response) => {
-        if (isMountedRef.current) {
-          setOrders(response.data.orders);
-        }
-      });
-  }, [isMountedRef]);
-
-  useEffect(() => {
-    getOrders();
-  }, [getOrders]);
-
-  if (!orders) {
-    return null;
-  }
 
   return (
     <Card
@@ -72,7 +70,7 @@ function LatestOrders({ className, ...rest }) {
     >
       <CardHeader
         action={<GenericMoreButton />}
-        title="Latest Orders"
+        title="Latest Jobs"
       />
       <Divider />
       <PerfectScrollbar>
@@ -89,7 +87,7 @@ function LatestOrders({ className, ...rest }) {
                       active
                       direction="desc"
                     >
-                      Order ID
+                      Job ID
                     </TableSortLabel>
                   </Tooltip>
                 </TableCell>
@@ -97,11 +95,9 @@ function LatestOrders({ className, ...rest }) {
                   Customer
                 </TableCell>
                 <TableCell>
-                  Items
+                  Size
                 </TableCell>
-                <TableCell>
-                  Total
-                </TableCell>
+
                 <TableCell>
                   Status
                 </TableCell>
@@ -111,28 +107,34 @@ function LatestOrders({ className, ...rest }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {orders.map((order) => (
-                <TableRow
-                  hover
-                  key={order.id}
-                >
-                  <TableCell>{order.ref}</TableCell>
-                  <TableCell>{order.customer.name}</TableCell>
-                  <TableCell>{order.items}</TableCell>
-                  <TableCell>
-                    {order.currency}
-                    {order.value}
-                  </TableCell>
-                  <TableCell>
-                    <Label color={labelColors[order.status]}>
-                      {order.status}
-                    </Label>
-                  </TableCell>
-                  <TableCell align="right">
-                    {moment(order.createdAt).format('DD MMM, YYYY hh:mm:ss')}
-                  </TableCell>
-                </TableRow>
-              ))}
+              {jobs.map((job) => {
+                let lol = job.user_id
+                let customer = ''
+                users.map(user => {
+                  if (lol === user.id){
+                    customer = user.first_name + " " +user.last_name
+                  }
+                })
+
+                return (
+                  <TableRow
+                    hover
+                    key={job.id}
+                  >
+                    <TableCell># {job.id}</TableCell>
+                    <TableCell>{customer}</TableCell>
+                    <TableCell>{job.job_size}</TableCell>
+
+                    <TableCell>
+                      {getInventoryLabel(job.job_status)}
+                    </TableCell>
+                    <TableCell align="right">
+                      {moment(job.pick_up_date).format('MMM DD, YYYY')}
+                    </TableCell>
+                  </TableRow>
+                )
+              }
+            )}
             </TableBody>
           </Table>
         </Box>
@@ -145,7 +147,7 @@ function LatestOrders({ className, ...rest }) {
         <Button
           component={RouterLink}
           size="small"
-          to="/app/management/orders"
+          to="/app/jobs"
         >
           See all
           <NavigateNextIcon className={classes.navigateNextIcon} />

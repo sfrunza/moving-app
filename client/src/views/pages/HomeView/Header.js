@@ -23,8 +23,8 @@ const useStyles = makeStyles(theme => ({
   calculator: {
     padding: theme.spacing(3, 2),
     margin: '0 auto',
-    [theme.breakpoints.up('md')]: {
-      width: 750,
+    [theme.breakpoints.up('sm')]: {
+      width: 650,
     },
   },
   drawer: {
@@ -32,13 +32,11 @@ const useStyles = makeStyles(theme => ({
   },
   button: {
     borderRadius: '24px',
-    border: '1px solid #673ab7',
-    color: '#673ab7',
-    padding: '10px 20px',
+
     backgroundColor: '#fff',
     '&:hover': {
       color: '#fff',
-      backgroundColor: '#673ab7',
+      backgroundColor: deepPurple['A200'],
       border: 'none',
     },
   },
@@ -107,7 +105,7 @@ function Header({ className, ...rest }) {
             <Button
               variant="outlined"
               size={isMd ? 'large' : 'medium'}
-              color="primary"
+              color="secondary"
               onClick={handleBottombarOpen}
               className={classes.button}
             >

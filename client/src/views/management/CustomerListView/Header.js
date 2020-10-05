@@ -69,26 +69,6 @@ function Header({ className, ...rest }) {
         >
           All Customers
         </Typography>
-        <Box mt={2}>
-          <Button className={classes.action}>
-            <SvgIcon
-              fontSize="small"
-              className={classes.actionIcon}
-            >
-              <UploadIcon />
-            </SvgIcon>
-            Import
-          </Button>
-          <Button className={classes.action}>
-            <SvgIcon
-              fontSize="small"
-              className={classes.actionIcon}
-            >
-              <DownloadIcon />
-            </SvgIcon>
-            Export
-          </Button>
-        </Box>
       </Grid>
       <Grid item>
         <Button

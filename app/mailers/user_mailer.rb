@@ -2,9 +2,9 @@ class UserMailer < ApplicationMailer
   default from: 'Insight Moving'
 
   def welcome_email
-    @customer = params[:customer]
-    @login_url  = 'http://www.insightmoving.com'
-    @url = 'http://www.insightmoving.com'
-    mail(to: @customer.email, subject: 'Moving Details')
+    @user = params[:user]
+    @login_url  = 'https://www.insightmoving.com/login'
+    @url = 'https://www.insightmoving.com'
+    mail(to: @user.email, subject: 'Moving Details')
   end
 end

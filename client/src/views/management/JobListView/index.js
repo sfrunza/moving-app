@@ -27,6 +27,7 @@ function JobListView() {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
   const [jobs, setJobs] = useState(null);
+  const [users, setUsers] = useState(null);
 
   const getJobs = useCallback(() => {
     axios
@@ -38,11 +39,22 @@ function JobListView() {
       });
   }, [isMountedRef]);
 
+  const getUsers = useCallback(() => {
+    axios
+      .get('/api/v1/users.json')
+      .then((response) => {
+        if (isMountedRef.current) {
+          setUsers(response.data.users);
+        }
+      });
+  }, [isMountedRef]);
+
   useEffect(() => {
     getJobs();
-  }, [getJobs]);
+    getUsers();
+  }, [getJobs, getUsers]);
 
-  if (!jobs) {
+  if (!jobs && !users) {
     return null;
   }
   return (
@@ -54,7 +66,7 @@ function JobListView() {
         <Header />
         {jobs && (
           <Box mt={5}>
-            <Results jobs={jobs} />
+            <Results jobs={jobs} users={users}/>
           </Box>
         )}
       </Container>

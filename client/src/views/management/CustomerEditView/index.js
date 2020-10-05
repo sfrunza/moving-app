@@ -8,7 +8,7 @@ import {
   Container,
   makeStyles
 } from '@material-ui/core';
-import axios from 'src/utils/axios';
+import axios from 'axios';
 import Page from 'src/components/Page';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import CustomerEditForm from './CustomerEditForm';
@@ -23,26 +23,43 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function CustomerEditView() {
+function CustomerEditView({ match, history }) {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
-  const [customer, setCustomer] = useState();
-
-  const getCustomer = useCallback(() => {
-    axios
-      .get('/api/management/customers/1')
-      .then((response) => {
-        if (isMountedRef.current) {
-          setCustomer(response.data.customer);
-        }
-      });
-  }, [isMountedRef]);
+  const [user, setUser] = useState();
+  const path = match.params.id;
 
   useEffect(() => {
-    getCustomer();
-  }, [getCustomer]);
+    let mounted = true;
 
-  if (!customer) {
+
+    const fetchUser = () => {
+      axios.get(`/api/v1/users/${path}`).then((response) => {
+        if (mounted) {
+          setUser(response.data.user);
+        }
+      });
+    };
+
+    fetchUser();
+
+    return () => {
+      mounted = false;
+    };
+  }, [path]);
+
+  const handleUpdate = (user, id) => {
+    fetch(`/api/v1/users/${id}`,
+    {
+      method: 'PUT',
+      body: JSON.stringify({user: user}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+  }
+
+  if (!user) {
     return null;
   }
 
@@ -52,9 +69,9 @@ function CustomerEditView() {
       title="Customer Edit"
     >
       <Container maxWidth="lg">
-        <Header />
+        <Header user={user}/>
         <Box mt={3}>
-          <CustomerEditForm customer={customer} />
+          <CustomerEditForm user={user} handleUpdate={handleUpdate} history={history}/>
         </Box>
       </Container>
     </Page>

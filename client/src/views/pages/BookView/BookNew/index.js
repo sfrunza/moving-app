@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 import LoadingScreen from 'src/components/LoadingScreen';
 import axios from 'axios';
+import validate from 'validate.js';
 import {
   Avatar,
   Box,
@@ -26,12 +27,14 @@ import Alert from '@material-ui/lab/Alert';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import {
   User as UserIcon,
+  Clipboard as ClipboardIcon,
   Star as StarIcon,
   Truck as TruckIcon
 } from 'react-feather';
 import Page from 'src/components/Page';
-import MovingDetails from './MovingDetails';
-import CustomerDetails from './CustomerDetails';
+import ReviewMove from './ReviewMove'
+import MovingForm from './MovingForm'
+import CustomerForm from './CustomerForm'
 
 const steps = [
   {
@@ -41,6 +44,10 @@ const steps = [
   {
     label: 'Contact Information',
     icon: UserIcon
+  },
+  {
+    label: 'Review Details',
+    icon: ClipboardIcon
   }
 ];
 
@@ -66,6 +73,8 @@ const useCustomStepIconStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   }
 }));
+
+
 
 function CustomStepIcon({ active, completed, icon }) {
   const classes = useCustomStepIconStyles();
@@ -117,55 +126,79 @@ const useStyles = makeStyles((theme) => ({
   },
   alert: {
     fontSize: '16px',
-    fontFamily: "Maison Neue Normal"
   },
   borderRadius: {
     borderRadius: '16px',
+  },
+  stepper: {
+    [theme.breakpoints.down('sm')]: {
+      padding: "24px 0px",
+    },
   }
 }));
+
 
 function ProjectCreateView() {
   const isMountedRef = useIsMountedRef();
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState(false);
-  const [nextJobId, setNextJobId] = useState(null)
+  const [progress, setProgress] = useState(10)
+  const [formState, setFormState] = useState({
+    values: {},
+    touched: {},
+    isMovingDetailsValid: false,
+    isCustomerDetailsValid: false,
+    errors: {},
+  });
 
-  const getNextJobId = useCallback(() => {
-    axios
-      .get('/api/v1/jobs.json')
-      .then((response) => {
-        let newId;
-        if (response.data.length === 0 ) {
-          newId = 1
-        } else {
-          newId = response.data[0].id +1
-        }
-        if (isMountedRef.current) {
-          setNextJobId(newId);
-        }
-      });
-  }, [isMountedRef]);
 
-  useEffect(() => {
-    getNextJobId();
-  }, [getNextJobId]);
+  React.useEffect(() => {
 
-  if (!nextJobId) {
-    return <LoadingScreen />
+    setFormState(formState => ({
+      ...formState,
+    }));
+  }, [formState.values]);
+
+  const handleSubmit = () => {
+    setCompleted(true)
+    //User POST
+    var user = formState.values.user
+    axios.post('api/v1/users', {user}, {withCredentials: true})
+      .then(response => {
+        let userId = response.data.user.id;
+        var job = formState.values.job
+        job.user_id = userId;
+        axios.post('api/v1/jobs', {job} )
+          .then(response => {
+            let jobId = response.data.job.id;
+            var origin = formState.values.origin;
+            var destination = formState.values.destination;
+            origin.job_id = jobId;
+            destination.job_id = jobId;
+            axios.post(`api/v1/jobs/${jobId}/origins`, {origin} )
+            axios.post(`api/v1/jobs/${jobId}/destinations`, {destination} )
+        })
+        .catch(error => console.log('api errors:', error))
+    })
+    .catch(error => console.log('api errors:', error))
+
   }
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
+    setActiveStep((prevActiveStep) => prevActiveStep + 1)
+  }
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    setActiveStep((prevActiveStep) => prevActiveStep - 1)
   };
 
   const handleComplete = () => {
     setCompleted(true);
   };
+
+  const hasError = field =>
+    { return formState.touched[field] && formState.errors[field] ? true : false }
 
   return (
     <Page
@@ -186,14 +219,14 @@ function ProjectCreateView() {
               >
                 <Stepper
                   activeStep={activeStep}
-                  connector={<CustomStepConnector />}
                   orientation="horizontal"
                   component={Box}
                   bgcolor="transparent"
+                  className={classes.stepper}
                 >
                   {steps.map((step) => (
                     <Step key={step.label}>
-                      <StepLabel StepIconComponent={CustomStepIcon}>
+                      <StepLabel StepIconComponent={CustomStepIcon} >
                         {step.label}
                       </StepLabel>
                     </Step>
@@ -208,13 +241,31 @@ function ProjectCreateView() {
               >
                 <Box p={3}>
                   {activeStep === 0 && (
-                    <MovingDetails id={nextJobId} onNext={handleNext} />
+                    <MovingForm
+                      onNext={handleNext}
+                      setFormState={setFormState}
+                      formState={formState}
+                    />
                   )}
                   {activeStep === 1 && (
-                    <CustomerDetails
+                    <CustomerForm
                       onBack={handleBack}
-                      onComplete={handleComplete}
-                      id={nextJobId}
+                      onNext={handleNext}
+                      setFormState={setFormState}
+                      formState={formState}
+                    />
+                  )}
+                  {activeStep === 2 && (
+                    <ReviewMove
+                      origin={formState.values.origin.address}
+                      destination={formState.values.destination.address}
+                      movingsize={formState.values.job.job_size}
+                      typefrom={formState.values.origin.floor}
+                      typeto={formState.values.destination.floor}
+                      onBack={handleBack}
+                      onSubmit={handleSubmit}
+                      setFormState={setFormState}
+                      formState={formState}
                     />
                   )}
 
@@ -264,7 +315,7 @@ function ProjectCreateView() {
                     variant="contained"
                     color="secondary"
                     component={RouterLink}
-                    to={`/app/management/jobs/${nextJobId}`}
+                    to="/login"
                   >
                     View your Moving Details
                   </Button>

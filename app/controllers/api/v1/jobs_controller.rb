@@ -4,19 +4,35 @@ module Api::V1
 
     # GET /jobs
     def index
-      @jobs = Job.all.order('id DESC')
+      if current_user && current_user.customer == false
+        @jobs = Job.all.order('created_at DESC')
+        render json: @jobs
+      elsif current_user && current_user.customer == true
+        @current_user = current_user
+        @user_jobs = @current_user.jobs.as_json
+        render json: @user_jobs
+      else
+        render json: {message: "Please sign in."}
+      end
 
-      render json: @jobs
     end
 
     # GET /jobs/1
     def show
-      @job = Job.find(params[:id])
-
-      @customer = @job.customer
-      @origin = @job.origin
-      @destination = @job.destination
-      render json: {job: @job, customer: @customer, origin: @origin, destination: @destination}
+      if current_user && current_user.customer == false
+        @job = Job.find(params[:id])
+        @origin = @job.origin
+        @destination = @job.destination
+        render json: {job: @job, origin: @origin, destination: @destination}
+      elsif current_user && current_user.customer == true
+        @current_user = current_user
+        @user_jobs = @current_user.jobs.find(params[:id])
+        @origin = @user_jobs.origin
+        @destination = @user_jobs.destination
+        render json: {job: @user_jobs, origin: @origin, destination: @destination}
+      else
+        render json: {message: "Please sign in."}
+      end
 
     end
 
@@ -25,7 +41,10 @@ module Api::V1
       @job = Job.new(job_params)
 
       if @job.save
-        render json: @job, status: :created
+        render json: {
+          status: :created,
+          job: @job
+        }
       else
         render json: @job.errors, status: :unprocessable_entity
       end
@@ -53,7 +72,7 @@ module Api::V1
 
       # Only allow a trusted parameter "white list" through.
       def job_params
-        params.require(:job).permit(:pick_up_date, :delivery_date, :status, :job_time, :customer_id, :move_size, :move_type)
+        params.require(:job).permit(:pick_up_date, :delivery_date,  :job_duration, :user_id, :job_size, :job_status, :start_time, :crew_size, :job_rate, :estimated_time, :travel_time, :estimated_quote, :additional_info, :total_amount, :job_type)
       end
   end
 end

@@ -19,6 +19,15 @@ const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
   },
+  inputRoot: {
+    '& input': {
+      [theme.breakpoints.down('xs')]: {
+        paddingLeft: '6px',
+        paddingRight: '2px',
+      },
+
+    }
+  }
 }));
 
 const schema = {
@@ -183,8 +192,15 @@ const Calculator = ({ onClose }) => {
                 format="MM/DD/YYYY"
                 autoOk
                 disablePast
+                className={classes.datePick}
                 style={{width: '100%'}}
                 label="Move Date *"
+                InputLabelProps={{
+                  classes: {
+                    root: classes.labelRoot,
+                  }
+                }}
+                InputProps={{ classes: { root: classes.inputRoot } }}
                 value={formState.values.startDate || null}
                 onChange={date =>
                   setFormState(formState => ({

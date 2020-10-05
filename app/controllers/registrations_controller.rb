@@ -2,7 +2,11 @@ class RegistrationsController < Devise::RegistrationsController
 
   def create
     @user = User.new(user_params)
-    if @user.save
+    if defined?((user_params[:email]))
+      @old_user= User.find_by_email!(user_params[:email])
+      sign_in :user, @old_user
+      redirect_to api_v1_users_path
+    elsif @user.save
       render json: @user
     else
       warden.custom_failure!
@@ -33,6 +37,6 @@ class RegistrationsController < Devise::RegistrationsController
   private
 
   def user_params
-     params.require(:user).permit(:email, :password, :password_confirmation)
+     params.require(:user).permit(:email, :password, :password_confirmation, :current_password)
   end
 end

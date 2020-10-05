@@ -12,12 +12,11 @@ import {
   makeStyles
 } from '@material-ui/core';
 import Page from 'src/components/Page';
-import axios from 'src/utils/axios';
+import axios from 'axios';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import Header from './Header';
 import Details from './Details';
-import Invoices from './Invoices';
-import Logs from './Logs';
+import Jobs from './Jobs';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,15 +27,15 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function CustomerDetailsView() {
+function CustomerDetailsView({ match, history }) {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
   const [customer, setCustomer] = useState(null);
   const [currentTab, setCurrentTab] = useState('details');
+  const path = match.params.id;
   const tabs = [
     { value: 'details', label: 'Details' },
-    { value: 'invoices', label: 'Invoices' },
-    { value: 'logs', label: 'Logs' }
+    { value: 'invoices', label: 'Jobs' },
   ];
 
   const handleTabsChange = (event, value) => {
@@ -44,11 +43,10 @@ function CustomerDetailsView() {
   };
 
   const getCustomer = useCallback(() => {
-    axios
-      .get('/api/management/customers/1')
+      axios.get(`/api/v1/users/${path}`)
       .then((response) => {
         if (isMountedRef.current) {
-          setCustomer(response.data.customer);
+          setCustomer(response.data.user);
         }
       });
   }, [isMountedRef]);
@@ -89,8 +87,7 @@ function CustomerDetailsView() {
         <Divider />
         <Box mt={3}>
           {currentTab === 'details' && <Details customer={customer} />}
-          {currentTab === 'invoices' && <Invoices />}
-          {currentTab === 'logs' && <Logs />}
+          {currentTab === 'invoices' && <Jobs customer={customer}/>}
         </Box>
       </Container>
     </Page>

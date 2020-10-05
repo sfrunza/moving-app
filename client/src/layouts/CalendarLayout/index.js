@@ -1,20 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core';
+import clsx from 'clsx';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useMediaQuery } from '@material-ui/core';
 import TopBar from './TopBar';
+import Sidebar from './Sidebar';
+import LoadingScreen from 'src/components/LoadingScreen';
+import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.default,
-    display: 'flex',
     height: '100%',
-    overflow: 'hidden',
     width: '100%'
   },
   wrapper: {
     display: 'flex',
     flex: '1 1 auto',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    paddingTop: 64
   },
   contentContainer: {
     display: 'flex',
@@ -28,26 +32,96 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function CalendarLayout({ children, user, loggedInStatus, handleLogout, history }) {
+function MainLayout({ children, user, loggedInStatus, handleLogout, history }){
   const classes = useStyles();
 
-      return (
-        <div className={classes.root}>
-          <TopBar user={user} loggedInStatus={loggedInStatus} handleLogout={handleLogout} history={history}/>
-          <div className={classes.wrapper}>
-            <div className={classes.contentContainer}>
-              <div className={classes.content}>
-                {children}
-              </div>
-            </div>
-          </div>
-        </div>
-        );
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up('md'), {
+    defaultMatches: true,
+  });
 
-}
+  const pages = {
+    landings: {
+      title: 'Landings',
+      id: 'landing-pages',
+      children: {
+        services: {
+          groupTitle: 'Services',
+          pages: [
+            {
+              title: 'Home',
+              href: '/',
+            },
+            {
+              title: 'Services',
+              href: '/services',
+            },
+            {
+              title: 'Pricing',
+              href: '/pricing',
+            },
+            {
+              title: 'Our Work',
+              href: '/work',
+            },
+            {
+              title: 'Client Login',
+              href: '/sign_in',
+            },
+          ],
+        },
+      },
+    },
+  };
 
-CalendarLayout.propTypes = {
-  children: PropTypes.any
+  const [openSidebar, setOpenSidebar] = useState(false);
+
+  const handleSidebarOpen = () => {
+    setOpenSidebar(true);
+  };
+
+  const handleSidebarClose = () => {
+    setOpenSidebar(false);
+  };
+
+  const open = isMd ? false : openSidebar;
+
+  if (user.email === undefined) {
+    return <LoadingScreen />
+  }
+  else if (user.customer) {
+    return <Redirect to="/404" />
+  } else {
+    return (
+      <div
+        className={clsx({
+          [classes.root]: true,
+        })}
+      >
+        <TopBar
+          onSidebarOpen={handleSidebarOpen}
+          loggedInStatus={loggedInStatus}
+          handleLogout={handleLogout}
+          user={user}
+          history={history}
+        />
+        <Sidebar
+          onClose={handleSidebarClose}
+          open={open}
+          variant="temporary"
+          pages={pages}
+          loggedInStatus={loggedInStatus}
+          handleLogout={handleLogout}
+          user={user}
+        />
+        <main>{children}</main>
+      </div>
+    );
+  }
 };
 
-export default CalendarLayout;
+MainLayout.propTypes = {
+  children: PropTypes.node,
+};
+
+export default MainLayout;

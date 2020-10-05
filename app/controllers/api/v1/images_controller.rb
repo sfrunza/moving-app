@@ -1,5 +1,6 @@
 module Api::V1
   class ImagesController < ApplicationController
+    before_action :set_image, only: [:show]
 
   def index
     @images = Image.all.order('id DESC')
@@ -26,6 +27,6 @@ module Api::V1
     def image_params
       params.permit( :photo, :id, :image)
     end
-    
+
   end
 end

@@ -5,21 +5,15 @@ devise_for :users, controllers: { registrations: 'registrations', sessions: 'ses
   namespace :api do
     namespace :v1 do
 
-      resources :employees do
-        resources :jobs
-      end
-
       resources :jobs do
-        resources :customers
         resources :origins
         resources :destinations
       end
 
-      resources :customers
-      resources :origins
-      resources :destinations
-      resources :users, only: [:index]
+      resources :users, only: [:index, :show, :create, :edit, :update, :destroy]
       resources :images, only: [:index, :show, :create, :destroy]
+      resources :origins, only: [:index, :show, :create, :edit, :update, :destroy]
+      resources :destinations, only: [:index, :show, :create, :edit, :update, :destroy]
 
     end
   end

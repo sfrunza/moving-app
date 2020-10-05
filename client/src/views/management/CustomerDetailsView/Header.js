@@ -48,7 +48,7 @@ function Header({ className, customer, ...rest }) {
           <Link
             variant="body1"
             color="inherit"
-            to="/app/management/customers"
+            to="/app/customers"
             component={RouterLink}
           >
             Customers
@@ -57,14 +57,14 @@ function Header({ className, customer, ...rest }) {
             variant="body1"
             color="textPrimary"
           >
-            {customer.fullName}
+            {customer.first_name + " " + customer.last_name}
           </Typography>
         </Breadcrumbs>
         <Typography
           variant="h3"
           color="textPrimary"
         >
-          {customer.fullName}
+          {customer.first_name + " " + customer.last_name}
         </Typography>
       </Grid>
       <Grid item>
@@ -72,7 +72,7 @@ function Header({ className, customer, ...rest }) {
           color="secondary"
           variant="contained"
           component={RouterLink}
-          to="/app/management/customers/1/edit"
+          to={`/app/customers/${customer.id}/edit`}
         >
           <SvgIcon
             fontSize="small"

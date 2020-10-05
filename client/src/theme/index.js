@@ -56,7 +56,7 @@ const themeConfigs = [
         main: colors.indigo[600]
       },
       secondary: {
-        main: '#5850EC'
+        main: colors.deepPurple['A200']
       },
       text: {
         primary: colors.blueGrey[900],

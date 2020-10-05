@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
+import axios from 'axios';
 import {
   Card,
   CardActions,
@@ -23,15 +24,18 @@ import {
 import EditIcon from '@material-ui/icons/Edit';
 import ReceiptIcon from '@material-ui/icons/ReceiptOutlined';
 import purple from '@material-ui/core/colors/deepPurple';
-import PhoneIcon from '@material-ui/icons/Phone';
-import EmailIcon from '@material-ui/icons/Email';
 import green from '@material-ui/core/colors/green';
 import { useSnackbar } from 'notistack';
+import {
+  Phone as PhoneIcon,
+  Mail as EmailIcon,
+} from 'react-feather';
 
 
 function CustomerDetails({ job, className, ...rest }) {
 
-  const [status, setStatus] = useState(job.job.status);
+  const [user, setUser] = useState();
+  const [status, setStatus] = useState(job.job_status);
   const { enqueueSnackbar } = useSnackbar();
 
   const formatPhoneNumber = (phoneNumberString) => {
@@ -68,28 +72,29 @@ function CustomerDetails({ job, className, ...rest }) {
       }
     },
     name: {
+      color: colors.grey[900],
       fontSize: '16px',
-      color: purple[700],
       fontWeight: 'bold',
+      textDecoration: 'none',
+      '&:hover': {
+        textDecoration: 'none'
+      }
     },
     emailButton: {
-      color: purple[500],
+      color: colors.grey[700],
+      display: 'flex',
+      alignItems: 'center',
+      textDecoration: 'none',
+    },
+    phoneButton: {
+      fontSize: '16px',
+      color: colors.grey[700],
       display: 'flex',
       alignItems: 'center',
       textDecoration: 'none',
       '&:hover': {
         color: purple[500],
-        textDecoration: 'underline'
-      }
-    },
-    phoneButton: {
-      color: theme.palette.grey[700],
-      display: 'flex',
-      alignItems: 'center',
-      textDecoration: 'none',
-      '&:hover': {
-        color: green[700],
-        textDecoration: 'underline'
+        textDecoration: 'none'
       }
     },
     buttonIcon: {
@@ -110,19 +115,43 @@ function CustomerDetails({ job, className, ...rest }) {
   };
   const classes = useStyles();
 
+  useEffect(() => {
+    let mounted = true;
+
+
+    const fetchUser = () => {
+      axios.get(`/api/v1/users/${job.user_id}`).then((response) => {
+        if (mounted) {
+          setUser(response.data.user);
+        }
+      });
+    };
+
+    fetchUser();
+
+    return () => {
+      mounted = false;
+    };
+  }, [job.id]);
+
+  if (!user) {
+    return null;
+  }
+
 
   const handleChange = (event) => {
     event.persist();
     setStatus(event.target.value);
+    console.log(event.target.value);
     handleStatusUpdate(event.target.value)
   };
 
 
   const handleStatusUpdate = (status) => {
-    fetch(`/api/v1/jobs/${job.job.id}`,
+    fetch(`http://localhost:3001/api/v1/jobs/${job.id}`,
     {
       method: 'PUT',
-      body: JSON.stringify({status: status}),
+      body: JSON.stringify({job_status: status}),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -151,16 +180,20 @@ function CustomerDetails({ job, className, ...rest }) {
                 <Avatar src="https://toppng.com/uploads/preview/roger-berry-avatar-placeholder-11562991561rbrfzlng6h.png" style={{height: '70px', width: '70px', marginBottom: '1em'}}/>
                 <Link
                   component={RouterLink}
-                  to={`/app/management/customers/${job.customer.id}`}
+                  to={`/app/customers/${user.id}`}
                   className={classes.name}
                 >
-                  {job.customer.first_name} {job.customer.last_name}
+                  {user.first_name} {user.last_name}
                 </Link>
                 <Box mt={1}>
-                  <a className={classes.phoneButton} href={`tel:${job.customer.phone}`}><PhoneIcon style={{height: '15px'}}/>{formatPhoneNumber(job.customer.phone)}</a>
+                  <a className={classes.phoneButton} href={`tel:${user.phone}`}><PhoneIcon style={{height: '15px'}}/>{user.phone.length === 10 ? formatPhoneNumber(user.phone) : user.phone}</a>
                 </Box>
+                {user.add_phone ?
+                  <Box mt={1}>
+                    <a className={classes.phoneButton} href={`tel:${user.add_phone}`}><PhoneIcon style={{height: '15px'}}/>{user.add_phone.length === 10 ? formatPhoneNumber(user.add_phone) : user.add_phone}</a>
+                  </Box> : null}
                 <Box mt={1}>
-                  <a className={classes.emailButton} href={`mailto:${job.customer.email}`}><EmailIcon style={{height: '15px'}}/>{job.customer.email}</a>
+                  <a className={classes.emailButton} href={`mailto:${user.email}`}><EmailIcon style={{height: '15px'}}/>{user.email}</a>
                 </Box>
 
               </TableCell>

@@ -6,19 +6,24 @@ class SessionsController < Devise::SessionsController
     return invalid_login_attempt unless @user
 
     if @user.valid_password?(user_params[:password])
+      @user.update(active: true)
       sign_in :user, @user
-      render json: @user
+      redirect_to api_v1_users_path
     else
       render json: {
         status: 401,
-        errors: ['No such user!', ' Verify credentials and try again']
+        errors: ['Invalid password']
       }
     end
+
   end
 
   def destroy
+    @user = User.find(current_user.id)
+    @user.update(active: false)
     sign_out(@user)
     render :json=> {:success=>true}
+
   end
 
 
@@ -30,7 +35,7 @@ class SessionsController < Devise::SessionsController
     end
 
     def user_params
-       params.require(:user).permit(:email, :password)
+       params.require(:user).permit(:email, :password, :active)
     end
 
 end
