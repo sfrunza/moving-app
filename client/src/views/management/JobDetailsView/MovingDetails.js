@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/styles';
 import moment from 'moment';
+import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import {
   Card,
   CardHeader,
@@ -25,6 +26,8 @@ import {
 import { compose, withProps, lifecycle } from "recompose";
 import deepPurple from '@material-ui/core/colors/deepPurple';
 import LoadingScreen from 'src/components/LoadingScreen';
+import Uploader from './Uploader'
+import Gallery from './Gallery'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,16 +57,21 @@ const useStyles = makeStyles((theme) => ({
   addInfoSubTitle: {
     backgroundColor: '#f7f7f7',
     padding: '15px',
-    wordWrap: 'break-word'
+    wordWrap: 'break-word',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  image: {
+    width: '80px'
   }
 }));
 
-function MovingDetails({ job, className, ...rest }) {
+function MovingDetails({ job, className, images, setImages, handleDeleteImage, ...rest }) {
   const submitted = true
   const classes = useStyles();
   const apiKey = 'AIzaSyADEDKabHN5FBcOroOU1W7BzUam0Az8gGQ'
   const google = window.google = window.google ? window.google : {}
-  const [distance, setDistance] = useState()
+  const [distance, setDistance] = useState();
 
   const initMap = () => {
       let origin = job.origin.address
@@ -230,6 +238,16 @@ function MovingDetails({ job, className, ...rest }) {
             </TableRow>
           </TableBody>
         </Table>
+        <Box mt={2} className={classes.addInfoContainer}>
+          <Box className={classes.addInfoTitle}>
+            Additional Information:
+          </Box>
+          <Box mt={2} className={classes.addInfoSubTitle}>
+            {job.job.additional_info}
+            <Gallery images={images} handleDeleteImage={handleDeleteImage}/>
+            <Uploader jobId={job.job.id} images={images} setImages={setImages}/>
+          </Box>
+        </Box>
       </CardContent>
     </Card>
   );

@@ -23,13 +23,15 @@ module Api::V1
         @job = Job.find(params[:id])
         @origin = @job.origin
         @destination = @job.destination
-        render json: {job: @job, origin: @origin, destination: @destination}
+        @images = @job.images
+        render json: {job: @job, origin: @origin, destination: @destination, images: @images}
       elsif current_user && current_user.customer == true
         @current_user = current_user
         @user_jobs = @current_user.jobs.find(params[:id])
         @origin = @user_jobs.origin
         @destination = @user_jobs.destination
-        render json: {job: @user_jobs, origin: @origin, destination: @destination}
+        @images = @user_jobs.images
+        render json: {job: @user_jobs, origin: @origin, destination: @destination, images: @images}
       else
         render json: {message: "Please sign in."}
       end

@@ -1,6 +1,6 @@
 module Api::V1
   class ImagesController < ApplicationController
-    before_action :set_image, only: [:show]
+    # before_action :set_image, only: [:show, :update, :destroy]
 
   def index
     @images = Image.all.order('id DESC')
@@ -15,6 +15,7 @@ module Api::V1
   def create
     @image = Image.create(image_params)
     @image.save
+    render json: @image
   end
 
   def destroy
@@ -25,7 +26,7 @@ module Api::V1
   protected
     # Never trust parameters from the scary internet, only allow the white list through.
     def image_params
-      params.permit( :photo, :id, :image)
+      params.permit( :photo, :id, :image, :job_id)
     end
 
   end

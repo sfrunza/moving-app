@@ -41,22 +41,26 @@ module Api::V1
        @jobs = @user.jobs.as_json
        @origins = @user.origins.as_json
        @destinations = @user.destinations.as_json
+       @images = @user.images.as_json
         render json: {
           user: @user,
           jobs: @jobs,
           origins: @origins,
-          destinations: @destinations
+          destinations: @destinations,
+          images: @images
         }
       elsif current_user && current_user.customer == true
         @current_user = current_user
         @user_jobs = @current_user.jobs
         @origins = @current_user.origins.as_json
         @destinations = @current_user.destinations.as_json
+        @images = @current_user.images.as_json
         render json: {
           user: @current_user,
           jobs: @user_jobs,
           origins: @origins,
-          destinations: @destinations
+          destinations: @destinations,
+          images: @images,
         }
       else
         render json: {

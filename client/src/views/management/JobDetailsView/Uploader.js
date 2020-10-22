@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import axios from 'axios';
 import { useSnackbar } from 'notistack';
 import {
   Box,
@@ -24,7 +25,6 @@ import {
 import QuillEditor from 'src/components/QuillEditor';
 import FilesDropzone from 'src/components/FilesDropzone';
 
-
 const useStyles = makeStyles(() => ({
   root: {
 
@@ -32,10 +32,13 @@ const useStyles = makeStyles(() => ({
   card: {
     backgroundColor: 'transparent',
     boxShadow: 'none',
+  },
+  buttonCamera: {
+    width: '100%',
   }
 }));
 
-function Uploader({ className, setImages, images, ...rest }) {
+function Uploader({ className, jobId, setImages, images, ...rest }) {
   const classes = useStyles();
   const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
@@ -46,7 +49,8 @@ function Uploader({ className, setImages, images, ...rest }) {
     <Formik
       initialValues={{
         photo: null,
-        image: ''
+        image: '',
+        job_id: jobId
       }}
       validationSchema={Yup.object().shape({
       })}
@@ -59,8 +63,10 @@ function Uploader({ className, setImages, images, ...rest }) {
         try {
           const formData = new FormData();
           formData.append('image', values.image);
+          formData.append('job_id', values.job_id);
           formData.append('photo', values.photo[0]);
-          fetch('/api/v1/images', {
+
+          fetch('/api/v1/images.json', {
             method: 'POST',
             body: formData
           })
@@ -68,9 +74,7 @@ function Uploader({ className, setImages, images, ...rest }) {
             return response.json();
           })
           .then(data => {
-            setImages(images.concat(data).sort(function(a, b) {
-                return b.id - a.id;
-              }))
+            setImages(images.concat(data))
           })
           .catch(error=>console.log(error));
 
@@ -106,22 +110,13 @@ function Uploader({ className, setImages, images, ...rest }) {
           {...rest}
         >
           <Grid
-            container
-            spacing={3}
+            className={classes.buttonCamera}
           >
-            <Grid
-              item
-              xs={12}
-              sm={3}
-            >
-              <Box mt={3}>
-                <Card className={classes.card}>
-                  <CardContent>
-                    <FilesDropzone setFieldValue={setFieldValue}  handleSubmit={handleSubmit} text="Add Image"/>
-                  </CardContent>
-                </Card>
-              </Box>
-            </Grid>
+            <Card className={classes.card}>
+              <CardContent>
+                <FilesDropzone setFieldValue={setFieldValue}  handleSubmit={handleSubmit} text="Add Photo to Inventory"/>
+              </CardContent>
+            </Card>
           </Grid>
           {errors.submit && (
             <Box mt={3}>

@@ -108,7 +108,11 @@ const WorkView = props => {
       .then((response) => {
         let data = response.data;
         data.map((image) => {
-          arr.push({ "src" : image.photo.url })
+          if(image.job_id === null ){
+            arr.push({ "src" : image.photo.url })
+          }
+          else return null
+
         })
         if (isMountedRef.current) {
           setImages(arr);

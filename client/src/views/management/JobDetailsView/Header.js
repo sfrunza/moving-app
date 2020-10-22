@@ -51,7 +51,7 @@ function PaperComponent(props) {
   );
 }
 
-function Header({ handleDelete, job, className, ...rest }) {
+function Header({ job, className, handleDeleteJob, ...rest }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 
@@ -134,7 +134,7 @@ function Header({ handleDelete, job, className, ...rest }) {
               <Button
                 className={classes.deleteButton}
                 variant="contained"
-                onClick={handleDelete()}
+                onClick={() => handleDeleteJob(job)}
               >
                 <DeleteIcon className={classes.deleteIcon} />
                 Delete

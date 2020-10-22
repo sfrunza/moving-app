@@ -64,12 +64,7 @@ function ImagesListVew() {
   if (!images) {
     return null;
   }
-
-  function addImage() {
-    setTimeout(() => {
-      getImages()
-    }, 4000);
-  }
+  
   return (
     <Page
       className={classes.root}
@@ -77,12 +72,10 @@ function ImagesListVew() {
     >
       <Container maxWidth={false}>
         <Header />
-        <Uploader addImage={addImage}/>
-        {images && (
-          <Box mt={5}>
-            <Results images={images} handleDelete={handleDelete} />
-          </Box>
-        )}
+        <Uploader setImages={setImages} images={images}/>
+        <Box mt={5}>
+          <Results images={images} handleDelete={handleDelete} />
+        </Box>
       </Container>
     </Page>
   );

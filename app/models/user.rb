@@ -4,5 +4,7 @@ class User < ApplicationRecord
   has_many :jobs
   has_many :origins, through: :jobs
   has_many :destinations, through: :jobs
+  has_many :destinations, through: :jobs
+  has_many :images, through: :jobs
   validates :email, uniqueness: true
 end

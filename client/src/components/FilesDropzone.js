@@ -20,6 +20,7 @@ import {
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import bytesToSize from 'src/utils/bytesToSize';
+import { Camera as CameraIcon }  from 'react-feather';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -58,10 +59,16 @@ const useStyles = makeStyles((theme) => ({
     '& > * + *': {
       marginLeft: theme.spacing(2)
     }
+  },
+  button: {
+    width: '100%',
+  },
+  buttonBox: {
+    width: '100%',
   }
 }));
 
-function FilesDropzone({ className, setFieldValue, handleSubmit, ...rest }) {
+function FilesDropzone({ className, setFieldValue, handleSubmit, text, ...rest }) {
   const classes = useStyles();
   const [files, setFiles] = useState([]);
 
@@ -100,7 +107,21 @@ function FilesDropzone({ className, setFieldValue, handleSubmit, ...rest }) {
         {...getRootProps()}
       >
         <input {...getInputProps()} />
-        Upload Image
+        <Box
+          display="flex"
+          alignItems='center'
+          className={classes.buttonBox}
+        >
+
+          <Box>
+            <CameraIcon />
+          </Box>
+
+          <Box flexGrow={1}>
+            {text}
+          </Box>
+        </Box>
+
       </Button>
       {files.length > 0 && (
         <>

@@ -33,6 +33,7 @@ const useStyles = makeStyles(() => ({
   root: {},
   idButton: {
     fontSize: '16px',
+    color: '#000',
   }
 }));
 
@@ -86,7 +87,6 @@ function Jobs({ className, customer, ...rest }) {
   if (!jobs) {
     return null;
   }
-  console.log(jobs);
 
   return (
     <div

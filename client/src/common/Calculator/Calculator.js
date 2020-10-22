@@ -25,9 +25,8 @@ const useStyles = makeStyles(theme => ({
         paddingLeft: '6px',
         paddingRight: '2px',
       },
-
     }
-  }
+  },
 }));
 
 const schema = {

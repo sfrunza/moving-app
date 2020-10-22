@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 function AccountView({ match, history }) {
   const classes = useStyles();
-  const [currentTab, setCurrentTab] = useState(() => localStorage.getItem('tab'));
+  const [currentTab, setCurrentTab] = useState('general');
   const isMountedRef = useIsMountedRef();
   const [user, setUser] = useState(null);
   const userPath = match.params.id;
@@ -46,8 +46,6 @@ function AccountView({ match, history }) {
 
   const handleTabsChange = (event, value) => {
     setCurrentTab(value);
-    localStorage.setItem('tab', value)
-
   };
 
 

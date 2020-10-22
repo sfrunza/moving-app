@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
   cardProduct: {
     display: 'flex',
     flexDirection: 'column',
-    borderRadius: theme.spacing(1),
+    borderRadius: theme.spacing(2),
     boxShadow: 'none',
     background: 'transparent',
     paddingBottom: theme.spacing(2),
@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
       width: '90%',
       margin: '0 auto',
       marginTop: theme.spacing(-6),
-      borderRadius: theme.spacing(1),
+      borderRadius: theme.spacing(2),
       boxShadow: '0 3px 10px 2px rgba(0, 0, 0, 0.1)',
     },
     '& .card-product__media': {
