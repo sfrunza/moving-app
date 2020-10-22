@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Container, Grid } from '@material-ui/core';
 import axios from 'axios';
@@ -7,6 +7,8 @@ import Header from './Header';
 import CustomerDetails from './CustomerDetails';
 import OtherActions from './OtherActions'
 import MovingDetails from './MovingDetails';
+import useIsMountedRef from 'src/hooks/useIsMountedRef';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,60 +23,68 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function JobDetails({ match, history }) {
+function JobDetailsView({ match, history }) {
   const classes = useStyles();
   const [job, setJob] = useState();
-  const [user, setUser] = useState();
-  const [origins, setOrigins] = useState();
-  const [destinations, setDestinations] = useState();
-  const [data, setData] = useState();
   const path = match.params.id;
+  const isMountedRef = useIsMountedRef();
+  const [images, setImages] = useState();
+  const { enqueueSnackbar } = useSnackbar();
 
-  console.log(path);
+  const handleDeleteImage = (id) => {
+    fetch(`/api/v1/images/${id}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+        const newList = images.filter((item) => item.id !== id);
+        setImages(newList)
+        enqueueSnackbar('Image Deleted', {
+          variant: 'error'
+        });
+      })
+  }
 
-  useEffect(() => {
-    let mounted = true;
+  const handleDeleteJob = (job) => {
+    fetch(`/api/v1/jobs/${path}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+        history.push('/app/jobs')
+      })
+  }
 
-
-    const fetchJob = () => {
-      axios.get(`/api/v1/jobs/${path}`).then((response) => {
-        if (mounted) {
+  const getJob = useCallback(() => {
+    axios
+      .get(`/api/v1/jobs/${path}`)
+      .then((response) => {
+        if (isMountedRef.current) {
           setJob(response.data);
+          setImages(response.data.images)
         }
       });
-    };
+  }, [isMountedRef]);
 
-    fetchJob();
+  useEffect(() => {
+    getJob()
+  }, [path, setImages, setJob]);
 
-    return () => {
-      mounted = false;
-    };
-  }, [path]);
-
-  if (!job) {
+  if (!job || !images) {
     return null;
   }
 
-  const handleDelete = (job) => {
-    // fetch(`/api/v1/jobs/${path}`,
-    // {
-    //   method: 'DELETE',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   }
-    // }).then((response) => {
-    //     setJobs(jobs)
-    //     history.push('/app/management/jobs')
-    //   })
-  }
-  
   return (
     <Page
       className={classes.root}
       title="Job Details"
     >
       <Container maxWidth={false}>
-        <Header job={job.job} handleDelete={handleDelete}/>
+        <Header job={job.job} handleDeleteJob={handleDeleteJob}/>
         <Grid
           className={classes.grid}
           container
@@ -88,6 +98,12 @@ function JobDetails({ match, history }) {
           >
             <Grid item>
               <CustomerDetails job={job.job} />
+              <OtherActions
+                job={job.job}
+                userId={job.job.user_id}
+                className={classes.otherActions}
+                history={history}
+              />
             </Grid>
           </Grid>
           <Grid
@@ -96,7 +112,7 @@ function JobDetails({ match, history }) {
             xl={9}
             xs={12}
           >
-            <MovingDetails job={job} />
+            <MovingDetails job={job} images={images} setImages={setImages} handleDeleteImage={handleDeleteImage}/>
           </Grid>
         </Grid>
       </Container>
@@ -104,4 +120,4 @@ function JobDetails({ match, history }) {
   );
 }
 
-export default JobDetails;
+export default JobDetailsView;

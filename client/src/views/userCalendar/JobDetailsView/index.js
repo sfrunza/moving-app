@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
 
 function JobDetails({ match, history }) {
   const classes = useStyles();
-  const [job, setJob] = useState(null);
   const jobPath = match.params.jobId;
   const [jobDetails, setJobDetails] = useState();
 
@@ -35,7 +34,6 @@ function JobDetails({ match, history }) {
     const fetchJob = () => {
       axios.get(`/api/v1/jobs/${jobPath}`).then((response) => {
         if (mounted) {
-          setJob(response.data.job);
           setJobDetails(response.data.job);
         }
       });
@@ -48,7 +46,7 @@ function JobDetails({ match, history }) {
     };
   }, [jobPath]);
 
-  if (!job || !jobDetails) {
+  if (!jobDetails) {
     return null;
   }
 
@@ -72,12 +70,12 @@ function JobDetails({ match, history }) {
           >
             <Grid item>
               <CustomerDetails
-                userId={job.user_id}
+                userId={jobDetails.user_id}
                 job={jobDetails}
               />
               <OtherActions
-                job={job}
-                userId={job.user_id}
+                job={jobDetails}
+                userId={jobDetails.user_id}
                 className={classes.otherActions}
                 setJobDetails={setJobDetails}
               />

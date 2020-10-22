@@ -30,7 +30,7 @@ function Header({ className, user, ...rest }) {
           Dashboard
         </Link>
         <Link color="inherit" to="/app/employees" component={RouterLink}>
-          All Employees
+          Employees
         </Link>
         <Typography color="textPrimary">
           {user.first_name + " " + user.last_name}

@@ -16,5 +16,6 @@ class JobSerializer < ActiveModel::Serializer
             :job_duration,
             :total_amount,
             :origin,
-            :destination
+            :destination,
+            :images
 end

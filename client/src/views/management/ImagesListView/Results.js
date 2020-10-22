@@ -95,30 +95,32 @@ function Results({ className, images, handleDelete, ...rest }) {
             </TableHead>
             <TableBody>
               {images.map((image, index) => {
-                return (
-                  <TableRow
-                    hover
-                    key={index}
-                  >
-                    <TableCell className={classes.idCell}>
-                      {image.id}
-                    </TableCell>
-                    <TableCell>
-                      <img
-                        className={classes.media}
-                        src={image.photo.url}
-                        alt={image.image}
-                      />
-                    </TableCell>
-                    <TableCell align="right">
-                      <IconButton onClick={() => handleDelete(image.id)}>
-                        <SvgIcon fontSize="large">
-                          <DeleteIcon fontSize="large" className={classes.deleteAction}/>
-                        </SvgIcon>
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
+                if (image.job_id === null) {
+                  return (
+                    <TableRow
+                      hover
+                      key={index}
+                    >
+                      <TableCell className={classes.idCell}>
+                        {image.id}
+                      </TableCell>
+                      <TableCell>
+                        <img
+                          className={classes.media}
+                          src={image.photo.url}
+                          alt={image.image}
+                        />
+                      </TableCell>
+                      <TableCell align="right">
+                        <IconButton onClick={() => handleDelete(image.id)}>
+                          <SvgIcon fontSize="large">
+                            <DeleteIcon fontSize="large" className={classes.deleteAction}/>
+                          </SvgIcon>
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  );
+                }
               })}
             </TableBody>
           </Table>

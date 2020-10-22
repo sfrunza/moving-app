@@ -39,7 +39,7 @@ const typography = {
   subtitle1: {
     color: palette.text.primary,
     fontSize: '16px',
-    lineHeight: 1.4,
+    lineHeight: 1.6,
   },
   subtitle2: {
     color: palette.text.secondary,
@@ -50,12 +50,12 @@ const typography = {
   body1: {
     color: palette.text.primary,
     fontSize: '16px',
-    lineHeight: 1.3,
+    lineHeight: 1.6,
   },
   body2: {
     color: palette.text.secondary,
     fontSize: '14px',
-    lineHeight: 1.3,
+    lineHeight: 1.6,
   },
   button: {
     color: palette.text.primary,
