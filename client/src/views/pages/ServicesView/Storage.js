@@ -1,120 +1,121 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { Link as RouterLink } from 'react-router-dom';
-import {
-  Box,
-  Container,
-  Grid,
-  Typography,
-  makeStyles,
-  CardMedia,
-  Link
-} from '@material-ui/core';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useMediaQuery, Grid, Typography, Button, Box } from '@material-ui/core';
+import { Image } from 'src/components/atoms';
+import { SectionHeader } from 'src/components/molecules';
 import clock from 'src/assets/img/clock-copy.png'
 import calendar from 'src/assets/img/calendar.png'
 import { deepPurple } from '@material-ui/core/colors'
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.dark,
+const useStyles = makeStyles(theme => ({
+  root: {},
+  title: {
+    fontWeight: 'bold',
   },
-  avatar: {
-    backgroundColor: theme.palette.secondary.main,
-    color: theme.palette.secondary.contrastText
+  image: {
+    maxWidth: 190,
+  },
+  gridCard: {
+    padding: theme.spacing(2),
+    background: '#f5f7ff',
+    // boxShadow: '1px 2px 10px 1px rgba(2, 0, 113, 0.1)',
+    height: '100%',
+    borderRadius: theme.spacing(2),
+    [theme.breakpoints.up('md')]: {
+      padding: theme.spacing(4),
+    },
+  },
+  subtitle: {
+    margin: theme.spacing(2, 0),
   },
   rates: {
     display: 'flex',
     justifyContent: 'space-around',
-    margin: '2em 0px',
+    marginTop: '1em',
     color: deepPurple['A200']
   },
-  overnightRate: {
-    color: deepPurple['A200'],
-    margin: '2em auto',
-    textAlign: 'center'
-  },
-  media: {
-    width: '65%',
-    height: '300px',
-    margin: '3em auto'
-  },
-  button: {
-    display: 'flex',
-    textTransform: 'uppercase',
-    margin: '3em auto',
-    width: '15em',
-    justifyContent: 'center',
-    padding: '0.7em',
-    borderRadius: '4px',
-    fontSize: '0.875rem',
-    fontFamily: "Maison Neue Demi",
-    [theme.breakpoints.down('sm')]: {
-      display: 'flex'
-    },
-    color: deepPurple[600],
-    backgroundColor: theme.palette.background.dark,
-    border: '1.4px solid',
-    borderColor: deepPurple[500],
-    '&:hover': {
-      backgroundColor: deepPurple[50],
-    }
-  },
-  subHeader: {
-    color: deepPurple['A200']
+  overnight: {
+    marginTop: '1.8em',
   }
 }));
 
-function Storage({ className, ...rest }) {
+const Storage = props => {
+  const { className, ...rest } = props;
   const classes = useStyles();
 
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up('md'), {
+    defaultMatches: true,
+  });
+
   return (
-    <div
-      className={clsx(classes.root, className)}
-      {...rest}
-    >
-      <Container maxWidth="lg">
-        <Typography
-          variant="h1"
-          align="center"
-          color="textPrimary"
-        >
-          Storage
-        </Typography>
-        <Typography
-          component="p"
-          variant="overline"
-          align="center"
-          className={classes.subHeader}
-        >
-          Storage pricing varies based on size of inventoryn duration and season.
-        </Typography>
-        <Box mt={8}>
+    <div className={clsx(classes.root, className)} {...rest}>
+      <SectionHeader
+        title={
+          <span>
+            <span className="text-highlighted">Storage{' '}</span>
+              Service
+            <br />
+          </span>
+        }
+        subtitle="Storage pricing varies based on size of inventory, duration and season."
+        subtitleProps={{
+          variant: 'body1',
+          color: 'textSecondary',
+        }}
+        data-aos="fade-up"
+      />
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={6}>
           <Grid
             container
-            spacing={3}
+            className={classes.gridCard}
+            data-aos="fade-up"
+            spacing={2}
           >
             <Grid
               item
+              container
+              justify={isMd ? 'flex-start' : 'center'}
+              alignItems="center"
               xs={12}
               md={6}
             >
-              <Box display="flex">
-                <Box ml={2}>
-                  <Typography
-                    variant="h4"
-                    gutterBottom
-                    color="textPrimary"
-                    align="center"
-                  >
-                    Up to 6 months storage
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    color="textPrimary"
-                  >
-                    <span>Insight Moving</span> provides clean, dry, climate and temperature controlled storage for up to 6 months.
-                  </Typography>
+              <Image
+                src={calendar}
+                className={classes.image}
+              />
+            </Grid>
+            <Grid
+              item
+              container
+              justify="space-between"
+              alignItems={isMd ? 'flex-start' : 'center'}
+              xs={12}
+              md={6}
+              direction="column"
+            >
+              <Typography
+                variant="h4"
+                className={classes.title}
+                color="textPrimary"
+                align={isMd ? 'left' : 'center'}
+              >
+                Up to 6 months storage
+              </Typography>
+              <Typography
+                variant="body1"
+                color="textPrimary"
+                align={isMd ? 'left' : 'center'}
+                className={classes.subtitle}
+              >
+                Insight Moving provides clean, dry, climate and temperature controlled storage for up to 6 months.
+              </Typography>
+            </Grid>
+              <SectionHeader
+                title={
                   <Box className={classes.rates}>
                     <Typography
                       variant="h5"
@@ -141,82 +142,81 @@ function Storage({ className, ...rest }) {
                       <span>$250/mo</span>
                     </Typography>
                   </Box>
-                  <CardMedia
-                    className={classes.media}
-                    image={calendar}
-                    title="Residential"
-                  />
-                </Box>
-              </Box>
-            </Grid>
+                }
+              />
+          </Grid>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Grid
+            container
+            className={classes.gridCard}
+            data-aos="fade-up"
+            spacing={2}
+          >
             <Grid
               item
+              container
+              justify={isMd ? 'flex-start' : 'center'}
+              alignItems="center"
               xs={12}
               md={6}
             >
-              <Box display="flex">
-                <Box ml={2}>
-                  <Typography
-                    variant="h4"
-                    gutterBottom
-                    color="textPrimary"
-                    align="center"
-                  >
-                    Overnight Storage
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    color="textPrimary"
-                    gutterBottom
-                  >
-                    In case you have to move out in one day, but are not able to move into your new residence until the next day, we offer low cost Overnight On-Truck Storage.
-                  </Typography>
-                  <Typography
-                    variant="h5"
-                    gutterBottom
-                    className={classes.overnightRate}
-                  >
-                  WE COLLECT $100 FOR KEEPING YOUR ITEMS OVERNIGHT.
-                  </Typography>
-                  <Typography
-                    variant="h5"
-                    color="textPrimary"
-                    gutterBottom
-                    style={{marginTop: '1em'}}
-                  >
-                  The truck remains locked and stationary in our digitally monitored parking lot.
-                  </Typography>
-                  <CardMedia
-                    className={classes.media}
-                    image={clock}
-                  />
-                </Box>
-              </Box>
+              <Image
+                src={clock}
+                className={classes.image}
+              />
             </Grid>
+            <Grid
+              item
+              container
+              justify="space-between"
+              alignItems={isMd ? 'flex-start' : 'center'}
+              xs={12}
+              md={6}
+              direction="column"
+            >
+              <Typography
+                variant="h4"
+                className={classes.title}
+                color="textPrimary"
+                align={isMd ? 'left' : 'center'}
+              >
+                Overnight Storage
+              </Typography>
+              <Typography
+                variant="body1"
+                color="textPrimary"
+                align={isMd ? 'left' : 'center'}
+                className={classes.subtitle}
+              >
+                We offer low cost Overnight On-Truck Storage. The truck remains locked and stationary in our digitally monitored parking lot.
+              </Typography>
+            </Grid>
+            <SectionHeader
+              title={
+                <Box className={clsx(classes.rates, classes.overnight)}>
+                  <Typography
+                    variant="h5"
+                    gutterBottom
+                  >
+                    We collect $100 for keeping your items overnight.
+                  </Typography>
+                </Box>
+              }
+              titleVariant='h6'
+            />
           </Grid>
-        </Box>
-        <Typography
-          variant="h1"
-          align="center"
-        >
-          <Link
-            className={classes.button}
-            color="textSecondary"
-            component={RouterLink}
-            to="/book"
-            underline="none"
-            variant="body2"
-          >
-            Book Us Now
-          </Link>
-        </Typography>
-      </Container>
+        </Grid>
+      </Grid>
     </div>
   );
-}
+};
 
 Storage.propTypes = {
-  className: PropTypes.string
+  /**
+   * External classes
+   */
+  className: PropTypes.string,
 };
 
 export default Storage;

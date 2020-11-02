@@ -28,6 +28,7 @@ Devise.setup do |config|
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
+  config.sign_in_after_reset_password = true
 
   config.timeout_in = 30.minutes
   # Configure the parent class responsible to send e-mails.

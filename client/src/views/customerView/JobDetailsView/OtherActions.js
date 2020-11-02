@@ -90,7 +90,7 @@ function getInventoryLabel(status) {
   );
 }
 
-function OtherActions({ className, jobs, setJobDetails, ...rest }) {
+function OtherActions({ className, jobs, setJobDetails, theJob, ...rest }) {
   const classes = useStyles();
   const ref = useRef(null);
   const [isOpen, setOpen] = useState(false);
@@ -153,6 +153,7 @@ function OtherActions({ className, jobs, setJobDetails, ...rest }) {
                       setJobDetails={setJobDetails}
                       job={job}
                       isOpen={isOpen}
+                      theJob={theJob}
                     />
                   )
                 })

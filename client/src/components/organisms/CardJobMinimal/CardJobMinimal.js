@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
       padding: theme.spacing(3),
     },
     '&:hover': {
-      background: theme.palette.primary.main,
+      background: colors.deepPurple['A200'],
       boxShadow:
         '0 11px 55px 10px rgba(0, 0, 0, 0.07), 0 13px 18px -8px rgba(0, 0, 0, 0.15)',
       '& .card-job-minimal__title, & .card-job-minimal__location, & .card-job-minimal__arrow': {

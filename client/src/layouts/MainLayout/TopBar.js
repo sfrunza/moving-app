@@ -28,6 +28,11 @@ const useStyles = makeStyles(theme => ({
     background: theme.palette.white,
     borderBottom: `1px solid ${colors.grey[200]}`,
     backgroundColor: '#fff',
+    position: 'fixed',
+    height: '54px',
+    justifyContent: 'center',
+    top: 0,
+    zIndex: 1000,
   },
   flexGrow: {
     flexGrow: 1,
@@ -91,8 +96,8 @@ const useStyles = makeStyles(theme => ({
     height: 40,
     display: 'flex',
     [theme.breakpoints.up('md')]: {
-      width: 95,
-      height: 50,
+      width: 80,
+      height: 40,
     },
   },
   logoImage: {
@@ -134,6 +139,7 @@ function Topbar({ className, onSidebarOpen, pages, loggedInStatus, handleLogout,
 
 
   const classes = useStyles();
+  const fullName = user.first_name + "_" + user.last_name
 
   const handleClick = () => {
     axios.delete('/users/sign_out', {withCredentials: true})
@@ -240,7 +246,7 @@ function Topbar({ className, onSidebarOpen, pages, loggedInStatus, handleLogout,
               ?
               <ListItem className={classes.listItem}>
                 <Button
-                  size="medium"
+                  size="small"
                   variant="outlined"
                   color="secondary"
                   component={CustomRouterLink}
@@ -257,7 +263,7 @@ function Topbar({ className, onSidebarOpen, pages, loggedInStatus, handleLogout,
               ?
               <ListItem className={classes.listItem}>
                 <Button
-                  size="medium"
+                  size="small"
                   variant="outlined"
                   color="secondary"
                   component={CustomRouterLink}
@@ -274,11 +280,11 @@ function Topbar({ className, onSidebarOpen, pages, loggedInStatus, handleLogout,
               ?
               <ListItem className={classes.listItem}>
                 <Button
-                  size="medium"
+                  size="small"
                   variant="outlined"
                   color="secondary"
                   component={CustomRouterLink}
-                  to="/dashboard"
+                  to="/account"
                   className={classes.button}
                 >
                   Dashboard
@@ -288,7 +294,7 @@ function Topbar({ className, onSidebarOpen, pages, loggedInStatus, handleLogout,
             }
             <ListItem className={classes.listItem}>
               <Button
-                size="medium"
+                size="small"
                 variant="contained"
                 color="secondary"
                 component={CustomRouterLink}

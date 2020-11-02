@@ -16,7 +16,6 @@ const useStyles = makeStyles(theme => ({
     borderRadius: '24px',
     '& span': {
       fontSize: '16px',
-      // fontFamily: 'Maison Neue Demi',
     },
     '&:hover': {
       backgroundColor: '#e2e2e2',

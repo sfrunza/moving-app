@@ -104,11 +104,12 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage: 'linear-gradient(to bottom, #663ab787, #663ab78c), url(https://images.unsplash.com/photo-1570129042283-dbebdfd894de?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80)',
     backgroundSize: 'cover',
     minHeight: '100vh',
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1)
   },
   paddingMobile: {
-    padding: theme.spacing(0, 1)
+    [theme.breakpoints.up('sm')]: {
+      padding: theme.spacing(8, 8, 0),
+    },
+    padding: theme.spacing(8, 1, 6),
   },
   avatar: {
     backgroundColor: colors.red[600]

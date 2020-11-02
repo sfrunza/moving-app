@@ -11,16 +11,16 @@ import {
 } from 'react-router-dom';
 import DashboardLayout from 'src/layouts/DashboardLayout';
 import CustomerLayout from 'src/layouts/CustomerLayout';
-import JobDetailsView from 'src/views/customerView/JobDetailsView';
+import General from 'src/views/customerView/General';
+import Security from 'src/views/customerView/Security';
 import MainLayout from 'src/layouts/MainLayout';
 import CalendarLayout from 'src/layouts/CalendarLayout'
 import LoadingScreen from 'src/components/LoadingScreen';
-import LoginView from 'src/views/auth/LoginView'
 import SignInPage from 'src/registrations/SignInPage'
 import WorkView from 'src/views/pages/WorkView'
-import Signup from 'src/registrations/Signup'
 import PrivateRoute from 'src/registrations/PrivateRoute';
 import RouteWithLayout from './common/RouteWithLayout';
+import JobDetailsView from 'src/views/customerView/JobDetailsView'
 
 class Routes extends Component {
   constructor(props) {
@@ -50,7 +50,6 @@ class Routes extends Component {
         this.setState({
           user: data,
           isLoggedIn: true
-
         })
       }
     handleLogout = () => {
@@ -60,8 +59,35 @@ class Routes extends Component {
         })
       }
 
+    handleUserUpdate = (user, id) => {
+      fetch(`/api/v1/users/${id}`,
+      {
+        method: 'PUT',
+        body: JSON.stringify({user: user}),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then((response) => {
+        this.setState(formState => ({
+          ...formState,
+            user: user
+        }))
+        })
+    }
+
+    handlePasswordChange = (user, id) => {
+      fetch(`/users/password/${id}`,
+      {
+        method: 'PUT',
+        body: JSON.stringify({user: user}),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+    }
+
   render() {
-    if (this.state.isLoggedIn === null) {
+    if (this.state.isLoggedIn === null || !this.state.user) {
         return (
           <Suspense fallback={<LoadingScreen />} />
         );
@@ -192,11 +218,6 @@ class Routes extends Component {
                       path="/app/calendar"
                       component={lazy(() => import('src/views/calendar/CalendarView'))}
                     />
-                    <Route
-                      exact
-                      path="/app/rates"
-                      component={lazy(() => import('src/views/management/RatesView'))}
-                    />
                     <Redirect to="/404" />
                   </Switch>
                 </Suspense>
@@ -207,19 +228,40 @@ class Routes extends Component {
 
 
           <PrivateRoute
-            path="/dashboard"
+            path="/account"
             component={(props) => (
-              <CustomerLayout {...props} handleLogout={this.handleLogout} loggedInStatus={this.state.isLoggedIn} user={this.state.user} history={props.history}>
+              <CustomerLayout {...props} handleLogout={this.handleLogout} user={this.state.user} history={props.history}>
                 <Suspense fallback={<LoadingScreen />}>
                   <Switch>
                     <Route
                       exact
-                      path="/dashboard"
-                      component={(props) => (
-                        <JobDetailsView {...props} handleLogout={this.handleLogout} loggedInStatus={this.state.isLoggedIn} user={this.state.user} />
+                      path="/account/jobs/:id"
+                      render={props => (
+                        <JobDetailsView user={this.state.user} history={props.history} match={props.match}/>
                       )}
                     />
-                    <Redirect to="/404" />
+                    <Route
+                      exact
+                      path="/account/edit"
+                      render={props => (
+                        <General user={this.state.user} handleUserUpdate={this.handleUserUpdate}/>
+                      )}
+                    />
+                    <Route
+                      exact
+                      path="/account/password/change"
+                      render={props => (
+                        <Security user={this.state.user} handlePasswordChange={this.handlePasswordChange} />
+                      )}
+                    />
+                    <Route
+                      exact
+                      path="/account/bill"
+                      component={lazy(() => import('src/views/customerView/BillOfLading'))}
+                    />
+
+
+
                   </Switch>
                 </Suspense>
               </CustomerLayout>
@@ -258,11 +300,6 @@ class Routes extends Component {
                       exact
                       path='/work'
                       component={lazy(() => import('src/views/pages/WorkView'))}
-                    />
-                    <Route
-                      exact
-                      path="/client-login"
-                      component={lazy(() => import('src/views/pages/ClientLogin'))}
                     />
                     <Route
                       exact

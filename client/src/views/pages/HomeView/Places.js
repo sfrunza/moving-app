@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
   root: {},
   image: {
     objectFit: 'cover',
-    borderRadius: theme.spacing(1),
+    borderRadius: theme.spacing(2),
   },
   textWhite: {
     color: 'white',

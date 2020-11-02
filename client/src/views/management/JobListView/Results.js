@@ -190,7 +190,7 @@ const useStyles = makeStyles((theme) => ({
   },
   pastDate: {
     color: colors.deepOrange[500],
-  }
+  },
 }));
 
 function Results({ className, jobs, users, ...rest }) {
@@ -206,6 +206,7 @@ function Results({ className, jobs, users, ...rest }) {
     inStock: null,
     isShippable: null
   });
+
   const handleQueryChange = (event) => {
     event.persist();
     setQuery(event.target.value);
@@ -226,15 +227,10 @@ function Results({ className, jobs, users, ...rest }) {
     }));
   };
 
-  const handleSelectAllJobs = (event) => {
-    setSelectedJobs(event.target.checked
-      ? jobs.map((job) => job.id)
-      : []);
-  };
 
   const handleSelectOneJob = (event, jobId) => {
     if (!selectedJobs.includes(jobId)) {
-      setSelectedJobs((prevSelected) => [...prevSelected, jobId]);
+      setSelectedJobs([jobId]);
     } else {
       setSelectedJobs((prevSelected) => prevSelected.filter((id) => id !== jobId));
     }
@@ -309,11 +305,6 @@ function Results({ className, jobs, users, ...rest }) {
       {enableBulkOperations && (
         <div className={classes.bulkOperations}>
           <div className={classes.bulkActions}>
-            <Checkbox
-              checked={selectedAllJobs}
-              indeterminate={selectedSomeJobs}
-              onChange={handleSelectAllJobs}
-            />
             <Button
               variant="outlined"
               className={classes.bulkAction}
@@ -335,11 +326,7 @@ function Results({ className, jobs, users, ...rest }) {
             <TableHead>
               <TableRow>
                 <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedAllJobs}
-                    indeterminate={selectedSomeJobs}
-                    onChange={handleSelectAllJobs}
-                  />
+
                 </TableCell>
                 <TableCell>
                   Job ID
@@ -355,6 +342,9 @@ function Results({ className, jobs, users, ...rest }) {
                 </TableCell>
                 <TableCell>
                   Status
+                </TableCell>
+                <TableCell>
+                  Submitted
                 </TableCell>
 
                 <TableCell align="right">
@@ -414,6 +404,9 @@ function Results({ className, jobs, users, ...rest }) {
                     </TableCell>
                     <TableCell>
                       {getInventoryLabel(job.job_status)}
+                    </TableCell>
+                    <TableCell>
+                      {moment(job.created_at).format('MMM DD YYYY')}
                     </TableCell>
 
                     <TableCell align="right">

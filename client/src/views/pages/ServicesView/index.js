@@ -15,10 +15,10 @@ import { Section, SectionAlternate } from 'src/components/organisms';
 import { Parallax } from 'react-parallax';
 import Interstate from './Interstate'
 import Packing from './Packing'
-import StorageNew from './StorageNew'
+import Storage from './Storage'
 import Header from './Header'
 import Local from './Local'
-import backgroundImage from 'src/assets/img/services-background.jpg'
+import backgroundImage from 'src/assets/img/services-background-min.jpg'
 import { services } from './data';
 import IncludeSection from 'src/views/pages/HomeView/IncludeSection';
 import { properties } from 'src/views/pages/HomeView/data';
@@ -134,7 +134,7 @@ const ServicesView = () => {
           <Divider />
         </Section>
 
-        <StorageNew />
+        <Storage />
 
         <Section>
           <Divider />

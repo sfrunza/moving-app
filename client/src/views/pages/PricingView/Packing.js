@@ -11,7 +11,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import box from 'src/assets/img/box.png';
-import packing from 'src/assets/img/PikPng.com_moving-png_2431322.png'
+// import packing from 'src/assets/img/PikPng.com_moving-png_2431322.png'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -111,7 +111,7 @@ function Packing({ className, ...rest }) {
         <Card className={classes.card}>
           <CardMedia
             className={classes.media}
-            image={packing}
+            
             title="Cover"
           >
           </CardMedia>

@@ -64,7 +64,7 @@ function Uploader({ className, jobId, setImages, images, ...rest }) {
           const formData = new FormData();
           formData.append('image', values.image);
           formData.append('job_id', values.job_id);
-          formData.append('photo', values.photo[0]);
+          formData.append('photo', values.photo);
 
           fetch('/api/v1/images.json', {
             method: 'POST',

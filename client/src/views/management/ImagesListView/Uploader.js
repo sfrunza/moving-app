@@ -59,7 +59,7 @@ function Uploader({ className, setImages, images, ...rest }) {
         try {
           const formData = new FormData();
           formData.append('image', values.image);
-          formData.append('photo', values.photo[0]);
+          formData.append('photo', values.photo);
           fetch('/api/v1/images', {
             method: 'POST',
             body: formData

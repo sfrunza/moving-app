@@ -22,7 +22,7 @@ import Settings from './Settings';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    zIndex: theme.zIndex.drawer + 100,
+    zIndex: '1',
     ...theme.name === THEMES.LIGHT ? {
       boxShadow: 'none',
       backgroundColor: theme.palette.primary.main
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     } : {}
   },
   toolbar: {
-    minHeight: 64
+    minHeight: 54
   }
 }));
 

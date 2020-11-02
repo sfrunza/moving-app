@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import * as Yup from 'yup';
 import { Formik, getIn } from 'formik';
-import { Persist } from 'formik-persist'
 import BrushRoundedIcon from '@material-ui/icons/BrushRounded';
 import {
   Box,
@@ -82,16 +81,16 @@ function CustomerForm({
   return (
     <Formik
       initialValues={{
-        user: {
+        user: !formState.values.user ? {
           first_name: '',
           last_name: '',
           email: '',
           phone: '',
           customer: true,
-        },
-        job: {
+        } : formState.values.user,
+        job: !formState.values.job.additional_info ? {
           additional_info: '',
-        }
+        } : !formState.values.job.additional_info
       }}
       validationSchema={Yup.object().shape({
         user: Yup.object().shape({
@@ -268,7 +267,6 @@ function CustomerForm({
               </Button>
             </Box>
           </Box>
-          <Persist name="user-form" />
         </form>
       )}
     </Formik>

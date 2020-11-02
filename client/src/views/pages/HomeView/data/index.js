@@ -212,8 +212,7 @@ export const services = [
   },
   {
     cover: {
-      src: 'https://sisafestorage.com/wp-content/uploads/2017/10/Good-lock-1100x550.jpg',
-      srcSet: 'https://sisafestorage.com/wp-content/uploads/2017/10/Good-lock-1100x550.jpg',
+      src: 'https://www.ezselfstoragenj.com/images/EZ-Self-Storage-NJ-Main5.jpg',
     },
     title: 'Storage Solutions',
     subtitle:

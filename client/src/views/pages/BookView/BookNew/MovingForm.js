@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 import { Formik, Field, getIn } from 'formik';
 import moment from 'moment';
 import wait from 'src/utils/wait';
-import { Persist } from 'formik-persist'
 import {
   Box,
   Button,
@@ -374,27 +373,26 @@ function MovingForm({
   return (
     <Formik
       initialValues={{
-        job: {
+        job: !formState.values.job ? {
           job_size: '',
           pick_up_date: null,
           delivery_date: null,
           job_type: 'Moving',
           job_status: 'Needs Attention',
           user_id: null,
-        },
-        origin: {
+        } : formState.values.job,
+        origin: !formState.values.origin ? {
           address: '',
           floor: '',
           apt_number: '',
           job_id: null,
-        },
-        destination: {
+        } : formState.values.origin,
+        destination: !formState.values.destination ? {
           address: '',
           floor: '',
           apt_number: '',
           job_id: null,
-
-        }
+        } : formState.values.destination,
       }}
       validationSchema={Yup.object().shape({
 
@@ -678,7 +676,6 @@ function MovingForm({
           </Box>
           <div>
           </div>
-          <Persist name="moving-form" />
         </form>
       )}
     }

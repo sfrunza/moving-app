@@ -64,7 +64,7 @@ const IncludeSection = props => {
         <Grid item xs={12} md={8} data-aos="fade-up">
           <Grid container spacing={8}>
             {data.map((item, index) => (
-              <Grid key={index} item xs={6} data-aos={'fade-up'}>
+              <Grid key={index} item xs={12} sm={6} data-aos={'fade-up'}>
                 <Grid item container alignItems="center" xs={12} wrap="wrap">
                   <IconText
                     fontIconClass={item.icon}

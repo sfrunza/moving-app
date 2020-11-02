@@ -25,9 +25,12 @@ import {
 import { compose, withProps, lifecycle } from "recompose";
 import deepPurple from '@material-ui/core/colors/deepPurple';
 import LoadingScreen from 'src/components/LoadingScreen';
+import Gallery from './Gallery'
+import Uploader from './Uploader'
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    boxShadow: 'none',
 
   },
   content: {
@@ -54,47 +57,30 @@ const useStyles = makeStyles((theme) => ({
   addInfoSubTitle: {
     backgroundColor: '#f7f7f7',
     padding: '15px',
-    wordWrap: 'break-word'
+    wordWrap: 'break-word',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  button: {
+    color: 'rgba(var(--d69,0,149,246),1)'
   }
 }));
 
-function MovingDetails({ job, className, ...rest }) {
+function MovingDetails({ job, className, images, setImages, ...rest }) {
   const submitted = true
   const classes = useStyles();
   const apiKey = 'AIzaSyADEDKabHN5FBcOroOU1W7BzUam0Az8gGQ'
   const google = window.google = window.google ? window.google : {}
-  const [distance, setDistance] = useState()
-  const [fullJob, setFullJob] = useState()
-
-  useEffect(() => {
-    let mounted = true;
-
-    const fetchJobs = () => {
-      axios.get(`/api/v1/jobs/${job.id}`).then((response) => {
-        if (mounted) {
-          setFullJob(response.data);
-        }
-      });
-    }
-    fetchJobs();
-
-    return () => {
-      mounted = false;
-    };
-  }, [job.id]);
-
-  if (!fullJob) {
-    return null;
-  }
+  const [distance, setDistance] = useState();
 
   const initMap = () => {
-      let origin = fullJob.origin.address
-      let destination = fullJob.destination.address
+      let origin = job.origin.address
+      let destination = job.destination.address
       const MapWithADirectionsRenderer = compose(
         withProps({
           googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=3.exp&libraries=geometry,drawing,places`,
           loadingElement: <div style={{ height: `100%` }} />,
-          containerElement: <div style={{ height: `200px`, width: `95%`, margin: `auto` }} />,
+          containerElement: <div style={{ height: `200px`, width: `100%`, margin: `auto` }} />,
           mapElement: <div style={{ height: `100%` }} />,
         }),
         withGoogleMap,
@@ -131,17 +117,27 @@ function MovingDetails({ job, className, ...rest }) {
       )
   }
 
-  if(job === undefined){
+  if(!job){
     return null
   }
+
+  console.log(job.job.id);
 
   return (
     <Card
       {...rest}
       className={clsx(classes.root, className)}
     >
-      <CardHeader title="Move Overview" />
-      {!fullJob ? null : initMap()}
+      <CardHeader
+        title="Move Overview"
+        action={
+          <Button className={classes.button}>
+            View Receipt
+          </Button>
+        }
+        subheader={job.job.job_status}
+      />
+      {!job ? null : initMap()}
 
       <CardContent className={classes.content}>
         <Box className={classes.headerDistance}>{distance}</Box>
@@ -151,18 +147,18 @@ function MovingDetails({ job, className, ...rest }) {
             <TableRow>
               <TableCell>Moving Date: </TableCell>
               <TableCell style={{fontWeight: 'bold'}}>
-                {fullJob.job.delivery_date ? <Box>{moment(fullJob.job.pick_up_date, 'MM/DD/YYYY').format("MMM DD, YYYY")} <span style={{fontSize: '12px', marginLeft: '10px', fontWeight: 300}}>to storage</span></Box> : moment(fullJob.job.pick_up_date, 'MM/DD/YYYY').format("MMM DD, YYYY") }
+                {job.job.delivery_date ? <Box>{moment(job.job.pick_up_date, 'MM/DD/YYYY').format("MMM DD, YYYY")} <span style={{fontSize: '12px', marginLeft: '10px', fontWeight: 300}}>to storage</span></Box> : moment(job.job.pick_up_date, 'MM/DD/YYYY').format("MMM DD, YYYY") }
               </TableCell>
             </TableRow>
             {
-              (fullJob.job.delivery_date === null )
+              (job.job.delivery_date === null )
               ?
               null
               :
                 <TableRow>
                   <TableCell>Delivery Date: </TableCell>
                   <TableCell style={{fontWeight: 'bold'}}>
-                    {moment(fullJob.job.delivery_date, 'MM/DD/YYYY').format("MMM DD, YYYY")}
+                    {moment(job.job.delivery_date, 'MM/DD/YYYY').format("MMM DD, YYYY")}
                   </TableCell>
                 </TableRow>
             }
@@ -174,11 +170,11 @@ function MovingDetails({ job, className, ...rest }) {
                     style={{padding: '0px'}}
                     onClick={()=> console.log('clicked')}
                   >
-                    {fullJob.origin.address}
+                    {job.origin.address}
                   </Button>
                 </Box>
-                <Box component="div" display="inline" style={{fontWeight: 'bold'}}>*{fullJob.origin.floor}</Box>
-                <Box component="div" display="inline" ml={2}>Apt# {fullJob.origin.apt_number}</Box>
+                <Box component="div" display="inline" style={{fontWeight: 'bold'}}>*{job.origin.floor}</Box>
+                <Box component="div" display="inline" ml={2}>Apt# {job.origin.apt_number}</Box>
               </TableCell>
             </TableRow>
             <TableRow >
@@ -189,11 +185,11 @@ function MovingDetails({ job, className, ...rest }) {
                     style={{padding: '0px'}}
                     onClick={()=> console.log('clicked')}
                   >
-                    {fullJob.destination.address}
+                    {job.destination.address}
                   </Button>
                 </Box>
-                <Box component="div" display="inline" style={{fontWeight: 'bold'}}>*{fullJob.destination.floor}</Box>
-                <Box component="div" display="inline" ml={2}>Apt# {fullJob.destination.apt_number}</Box>
+                <Box component="div" display="inline" style={{fontWeight: 'bold'}}>*{job.destination.floor}</Box>
+                <Box component="div" display="inline" ml={2}>Apt# {job.destination.apt_number}</Box>
               </TableCell>
             </TableRow>
 
@@ -205,13 +201,13 @@ function MovingDetails({ job, className, ...rest }) {
             <TableRow >
               <TableCell>Moving Type:</TableCell>
               <TableCell>
-                {fullJob.job.job_type}
+                {job.job.job_type}
               </TableCell>
             </TableRow>
             <TableRow >
               <TableCell>Moving Size:</TableCell>
               <TableCell style={{fontWeight: 600}}>
-                {fullJob.job.job_size}
+                {job.job.job_size}
               </TableCell>
             </TableRow>
 
@@ -223,35 +219,35 @@ function MovingDetails({ job, className, ...rest }) {
             <TableRow>
               <TableCell >Crew:</TableCell>
               <TableCell style={{fontWeight: 600}}>
-                {fullJob.job.crew_size} Movers
+                {job.job.crew_size} Movers
               </TableCell>
             </TableRow>
 
             <TableRow >
               <TableCell >Rate:</TableCell>
               <TableCell style={{color: deepPurple['A200'], fontSize: '18px', fontWeight: 'bold'}}>
-                <label >$ {fullJob.job.job_rate}</label> / hr <label style={{color: 'grey', fontSize: '12px', fontStyle: 'italic', fontWeight: 'normal'}}> - billed in 15 minutes increment</label>
+                <label >$ {job.job.job_rate}</label> / hr <label style={{color: 'grey', fontSize: '12px', fontStyle: 'italic', fontWeight: 'normal'}}> - billed in 15 minutes increment</label>
               </TableCell>
             </TableRow>
 
             <TableRow>
               <TableCell >Estimated Time:</TableCell>
               <TableCell style={{color: '#FD7013', fontSize: '18px', fontWeight: 'bold'}}>
-                <label>{fullJob.job.estimated_time}</label> hours*
+                <label>{job.job.estimated_time}</label> hours*
               </TableCell>
             </TableRow>
 
             <TableRow>
               <TableCell >Travel Time:</TableCell>
               <TableCell>
-                <label>{fullJob.job.travel_time} (from/to HQ)</label>
+                <label>{job.job.travel_time} (from/to HQ)</label>
               </TableCell>
             </TableRow>
 
             <TableRow >
               <TableCell >Estimated Quote:</TableCell>
               <TableCell style={{fontWeight: 600, fontSize: '18px'}}>
-                <label>{fullJob.job.estimated_quote}</label>
+                <label>{job.job.estimated_quote}</label>
               </TableCell>
             </TableRow>
           </TableBody>
@@ -261,7 +257,9 @@ function MovingDetails({ job, className, ...rest }) {
             Additional Information:
           </Box>
           <Box mt={2} className={classes.addInfoSubTitle}>
-            {fullJob.job.additional_info}
+            {job.job.additional_info}
+            <Gallery images={images}/>
+            <Uploader jobId={job.job.id} images={images} setImages={setImages}/>
           </Box>
         </Box>
       </CardContent>
