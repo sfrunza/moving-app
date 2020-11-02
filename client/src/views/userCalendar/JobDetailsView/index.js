@@ -26,6 +26,7 @@ function JobDetails({ match, history }) {
   const classes = useStyles();
   const jobPath = match.params.jobId;
   const [jobDetails, setJobDetails] = useState();
+  const [images, setImages] = useState();
 
   useEffect(() => {
     let mounted = true;
@@ -35,8 +36,10 @@ function JobDetails({ match, history }) {
       axios.get(`/api/v1/jobs/${jobPath}`).then((response) => {
         if (mounted) {
           setJobDetails(response.data.job);
+          setImages(response.data.images)
         }
-      });
+      })
+      .catch(error => {history.push('/calendar')})
     };
 
     fetchJob();
@@ -77,7 +80,7 @@ function JobDetails({ match, history }) {
                 job={jobDetails}
                 userId={jobDetails.user_id}
                 className={classes.otherActions}
-                setJobDetails={setJobDetails}
+                history={history}
               />
             </Grid>
           </Grid>
@@ -87,7 +90,7 @@ function JobDetails({ match, history }) {
             xl={9}
             xs={12}
           >
-            <MovingDetails job={jobDetails} />
+            <MovingDetails job={jobDetails} images={images} setImages={setImages}/>
           </Grid>
         </Grid>
       </Container>

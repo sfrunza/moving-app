@@ -27,7 +27,7 @@ import { compose, withProps, lifecycle } from "recompose";
 import deepPurple from '@material-ui/core/colors/deepPurple';
 import LoadingScreen from 'src/components/LoadingScreen';
 import Uploader from './Uploader'
-import Gallery from './Gallery'
+import GridGallery from './GridGallery'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -244,7 +244,7 @@ function MovingDetails({ job, className, images, setImages, handleDeleteImage, .
           </Box>
           <Box mt={2} className={classes.addInfoSubTitle}>
             {job.job.additional_info}
-            <Gallery images={images} handleDeleteImage={handleDeleteImage}/>
+            <GridGallery images={images} handleDeleteImage={handleDeleteImage}/>
             <Uploader jobId={job.job.id} images={images} setImages={setImages}/>
           </Box>
         </Box>

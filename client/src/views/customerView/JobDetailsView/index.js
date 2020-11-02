@@ -11,82 +11,55 @@ import LoadingScreen from 'src/components/LoadingScreen';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.dark,
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(3)
   },
   grid: {
     marginTop: theme.spacing(2)
   },
   otherActions: {
     marginTop: '2em'
+  },
+  container: {
+    padding: theme.spacing(3),
   }
 }));
 
 function JobDetails({ match, history, user, ...rest }) {
   const classes = useStyles();
-  const [jobs, setJobs] = useState();
-  const path = user.id
-  const [jobDetails, setJobDetails] = useState(() => JSON.parse(localStorage.getItem('jobDetails')));
+  const [job, setJob] = useState();
+  const [images, setImages] = useState();
+  const path = match.params.id
 
   useEffect(() => {
     let mounted = true;
 
-
-    const fetchJobs = () => {
-
-      axios.get(`/api/v1/users/${path}`).then((response) => {
+    const fetchJob = () => {
+      axios.get(`/api/v1/jobs/${path}`).then((response) => {
         if (mounted) {
-          setJobs(response.data.jobs);
-          setJobDetails(response.data.jobs[0]);
-          localStorage.setItem('jobDetails', JSON.stringify(response.data.jobs[0]))
+          setJob(response.data);
+          setImages(response.data.images)
         }
       });
     };
-    fetchJobs();
+    fetchJob();
 
     return () => {
       mounted = false;
+      setJob(null);
+      setImages(null)
     };
   }, [path]);
 
-  if (!jobs || !jobDetails) {
-    return <LoadingScreen />;
+  if (!job || !images) {
+    return null;
   }
-console.log(jobDetails);
 
   return (
     <Page
       className={classes.root}
-      title="Job Details"
+      title="Job Details &#8226; InsightMoving"
     >
-      <Container maxWidth={false}>
-        <Header job={jobDetails}/>
-        <Grid
-          className={classes.grid}
-          container
-          spacing={3}
-        >
-          <Grid
-            item
-            md={4}
-            xl={3}
-            xs={12}
-          >
-            <Grid item>
-              <CustomerDetails user={user} job={jobDetails} />
-              <OtherActions jobs={jobs} className={classes.otherActions} setJobDetails={setJobDetails}/>
-            </Grid>
-          </Grid>
-          <Grid
-            item
-            md={8}
-            xl={9}
-            xs={12}
-          >
-            <MovingDetails job={jobDetails}/>
-          </Grid>
-        </Grid>
+      <Container maxWidth={false} className={classes.container}>
+        <MovingDetails job={job} images={images} setImages={setImages}/>
       </Container>
     </Page>
   );

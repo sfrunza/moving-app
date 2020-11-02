@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
   button: {
     borderRadius: '24px',
     border: 'none',
-    padding: '12px 16px',
+    padding: '12px 20px',
     backgroundColor: '#fff',
     '&:hover': {
       color: '#fff',

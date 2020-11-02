@@ -56,6 +56,9 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     width: '100%',
   },
+  menuBoxActive: {
+    backgroundColor: '#0000000a',
+  },
   statusBox: {
     marginTop: '-10px',
     '& span ': {
@@ -99,9 +102,10 @@ function getInventoryLabel(status) {
   );
 }
 
-function JobsMenu({ className, job, setJobDetails, handleClose, isOpen, ...rest }) {
+function JobsMenu({ className, job, setJobDetails, handleClose, isOpen, theJob, ...rest }) {
   const classes = useStyles();
   const [fullJob, setFullJob] = useState()
+  const currentJob = theJob.id
 
   useEffect(() => {
     let mounted = true;
@@ -139,6 +143,8 @@ function JobsMenu({ className, job, setJobDetails, handleClose, isOpen, ...rest 
         localStorage.setItem('jobDetails', JSON.stringify(job))
         handleClose();
       }}
+      className={currentJob === job.id ? classes.menuBoxActive : null
+      }
     >
       <Box
         display="flex"

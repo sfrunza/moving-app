@@ -70,6 +70,9 @@ module Api::V1
       # Use callbacks to share common setup or constraints between actions.
       def set_job
         @job = Job.find(params[:id])
+      rescue => e
+        logger.info e
+        render json: { message: 'job id not found' }, status: :not_found
       end
 
       # Only allow a trusted parameter "white list" through.

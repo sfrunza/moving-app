@@ -21,7 +21,7 @@ import {
   reviews,
   partners
 } from 'src/views/pages/HomeView/data';
-import backgroundImage from 'src/assets/img/work-background.jpg'
+import backgroundImage from 'src/assets/img/work-background-min.jpg'
 import Contact from 'src/views/pages/HomeView/Contact';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 
@@ -109,7 +109,7 @@ const WorkView = props => {
         let data = response.data;
         data.map((image) => {
           if(image.job_id === null ){
-            arr.push({ "src" : image.photo.url })
+            arr.push({ "src" : image.photo.url, lightboxCaption: '' })
           }
           else return null
 
@@ -141,11 +141,12 @@ const WorkView = props => {
       </Parallax>
 
       <Section className={classes.pagePaddingTop}>
-
         <Partners data={partners} />
+      </Section>
 
-        <Gallery images={images}/>
+      <Gallery images={images}/>
 
+      <Section className={classes.pagePaddingTop}>
         <Section>
           <Reviews data={reviews}/>
         </Section>

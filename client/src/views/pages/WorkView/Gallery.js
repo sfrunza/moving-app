@@ -16,17 +16,22 @@ import useIsMountedRef from 'src/hooks/useIsMountedRef';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: theme.spacing(5, 0),
     // maxWidth: '900px',
-    margin: 'auto'
+    maxWidth: 1100,
+    width: '100%',
+    margin: '0 auto',
+    padding: theme.spacing(0),
+    [theme.breakpoints.up('md')]: {
+      padding: theme.spacing(0, 2),
+    },
   },
   imageStyle: {
-    borderRadius: '16px',
-    padding: '8px',
+    borderRadius: '4px',
+    // padding: '8px',
     transition: 'transform .2s',
-    [theme.breakpoints.down('sm')]: {
-      padding: '2px'
-    },
+    // [theme.breakpoints.down('sm')]: {
+    //   padding: '2px'
+    // },
 
   }
 
@@ -44,13 +49,29 @@ function Gallery({ className, images, ...rest }) {
   };
 
   const numOfImagesPerRow = {
-    xs: 1,
-    s: 2,
-    m: 2,
+    xs: 2,
+    s: 3,
+    m: 3,
     l: 3,
-    xl: 3,
-    xxl: 3,
+    xl: 4,
+    xxl: 4,
   };
+  const imagesPaddingBottom = {
+    xs: 0.5,
+    s: 1,
+    m: 16,
+    l: 16,
+    xl: 24,
+    xxl:24
+  }
+  const colsPadding = {
+    xs: 2,
+    s: 2,
+    m: 8,
+    l: 8,
+    xl: 12,
+    xxl:12
+  }
 
   return (
     <div
@@ -58,7 +79,13 @@ function Gallery({ className, images, ...rest }) {
       {...rest}
     >
       <Box mt={2}>
-        <ResponsiveGallery images={images} useLightBox={handleScreen()} numOfImagesPerRow={numOfImagesPerRow} imagesStyle={classes.imageStyle}
+        <ResponsiveGallery
+          images={images}
+          useLightBox
+          numOfImagesPerRow={numOfImagesPerRow}
+          colsPadding={colsPadding}
+          imagesStyle={classes.imageStyle}
+          imagesPaddingBottom	={imagesPaddingBottom}
         />
       </Box>
     </div>

@@ -167,8 +167,9 @@ const useStyles = makeStyles(() => ({
   },
   desktopDrawer: {
     width: 256,
-    top: 64,
-    height: 'calc(100% - 64px)'
+    top: 54,
+    height: 'calc(100% - 64px)',
+    zIndex: '1',
   },
   avatar: {
     cursor: 'pointer',

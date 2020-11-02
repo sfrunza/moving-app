@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
       margin: '0 auto',
       marginTop: theme.spacing(-6),
       borderRadius: theme.spacing(2),
-      boxShadow: '0 3px 10px 2px rgba(0, 0, 0, 0.1)',
+      boxShadow: '0 2px 10px 0 rgba(23,70,161,.11)'
     },
     '& .card-product__media': {
       minHeight: 300,
@@ -106,13 +106,7 @@ const Services = props => {
       <Typography variant="body1" color="textPrimary">
         {props.subtitle}
       </Typography>
-      <div className={classes.tags}>
-        {props.tags.map((item, index) => (
-          <Typography variant="body1" className={classes.tag} key={index}>
-            {item}
-          </Typography>
-        ))}
-      </div>
+    
       <LearnMoreLink
         title="Learn more"
         variant="h6"

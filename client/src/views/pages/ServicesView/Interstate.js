@@ -6,7 +6,7 @@ import { useMediaQuery, Grid, Box, } from '@material-ui/core';
 import { Image, LearnMoreLink } from 'src/components/atoms';
 import { SectionHeader } from 'src/components/molecules';
 import { Alert } from '@material-ui/lab';
-import img from 'src/assets/img/inter-img.png'
+import img from 'src/assets/img/inter-img-min.png'
 
 const useStyles = makeStyles(theme => ({
   root: {

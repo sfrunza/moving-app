@@ -55,6 +55,9 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     width: '100%',
   },
+  menuBoxActive: {
+    backgroundColor: '#0000000a',
+  },
   statusBox: {
     marginTop: '-10px',
     '& span ': {
@@ -67,9 +70,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  // popover: {
-  //   minWidth: 400,
-  // }
 }));
 
 function getInventoryLabel(status) {
@@ -101,7 +101,7 @@ function getInventoryLabel(status) {
   );
 }
 
-function OtherActions({ className, userId, history, ...rest }) {
+function OtherActions({ className, userId, history, job, ...rest }) {
   const classes = useStyles();
   const ref = useRef(null);
   const [isOpen, setOpen] = useState(false);
@@ -109,6 +109,7 @@ function OtherActions({ className, userId, history, ...rest }) {
   const [origins, setOrigins] = useState();
   const [destinations, setDestinations] = useState();
   const ITEM_HEIGHT = 48;
+  const currentJob = job.id
 
   useEffect(() => {
     let mounted = true;
@@ -207,6 +208,8 @@ function OtherActions({ className, userId, history, ...rest }) {
                     <MenuItem
                       key={i}
                       open={isOpen}
+                      className={job.id === currentJob ? classes.menuBoxActive : null
+                      }
                       onClick={() => {
                         history.push(`/app/jobs/${job.id}`)
                       }}

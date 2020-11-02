@@ -25,6 +25,8 @@ import {
 import { compose, withProps, lifecycle } from "recompose";
 import deepPurple from '@material-ui/core/colors/deepPurple';
 import LoadingScreen from 'src/components/LoadingScreen';
+import Gallery from './Gallery'
+import Uploader from './Uploader'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,11 +56,13 @@ const useStyles = makeStyles((theme) => ({
   addInfoSubTitle: {
     backgroundColor: '#f7f7f7',
     padding: '15px',
-    wordWrap: 'break-word'
+    wordWrap: 'break-word',
+    display: 'flex',
+    flexDirection: 'column',
   }
 }));
 
-function MovingDetails({ job, className, ...rest }) {
+function MovingDetails({ job, className, images, setImages, ...rest }) {
   const submitted = true
   const classes = useStyles();
   const apiKey = 'AIzaSyADEDKabHN5FBcOroOU1W7BzUam0Az8gGQ'
@@ -265,6 +269,8 @@ function MovingDetails({ job, className, ...rest }) {
           </Box>
           <Box mt={2} className={classes.addInfoSubTitle}>
             {fullJob.job.additional_info}
+            <Gallery images={images}/>
+            <Uploader jobId={fullJob.job.id} images={images} setImages={setImages}/>
           </Box>
         </Box>
       </CardContent>

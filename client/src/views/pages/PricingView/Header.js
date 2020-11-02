@@ -14,7 +14,7 @@ import { Image, Icon } from 'src/components/atoms';
 import { SectionHeader, TypedText } from 'src/components/molecules';
 import { Section, CardPricingStandard } from 'src/components/organisms';
 import { Parallax, Background } from 'react-parallax';
-import backgroundImage from 'src/assets/img/pricing-background.jpg'
+import backgroundImage from 'src/assets/img/pricing-background-min.jpg'
 import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({

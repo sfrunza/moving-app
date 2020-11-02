@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -6,6 +6,7 @@ import { Typography, Grid, Button, TextField } from '@material-ui/core';
 import validate from 'validate.js';
 import { LearnMoreLink } from 'src/components/atoms';
 import axios from 'axios'
+import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles(theme => ({
@@ -33,10 +34,12 @@ const schema = {
   },
 };
 
-const Login = ({ history, handleLogin, loginStatus, ...rest }) => {
+const NewLogin = ({ history, handleLogin, loginStatus, ...rest }) => {
 
   const classes = useStyles();
+  const [currentUser, setCurrentUser] = React.useState()
   const [apiErrors, setApiErrors] = React.useState()
+  const isMountedRef = useIsMountedRef();
   const redirect = (path) => {
     history.push(path)
   }
@@ -92,7 +95,9 @@ const Login = ({ history, handleLogin, loginStatus, ...rest }) => {
           if (response.data.current_user.admin === true) {
             redirect('/app')
           } else if (response.data.current_user.customer === true) {
-            redirect('/dashboard')
+            let name = response.data.current_user.first_name+"_"+response.data.current_user.last_name
+
+            getJob(response.data.current_user.id)
           }
           else redirect('/calendar')
         } else {
@@ -111,6 +116,15 @@ const Login = ({ history, handleLogin, loginStatus, ...rest }) => {
       },
     }));
   };
+
+  const getJob = (userId) => {
+    axios
+      .get(`/api/v1/users/${userId}`)
+      .then((response) => {
+        let currentJob = response.data.jobs[0].id
+        redirect(`/account/jobs/${currentJob}`)
+      });
+  }
 
   const hasError = field =>
     formState.touched[field] && formState.errors[field] ? true : false;
@@ -179,8 +193,8 @@ const Login = ({ history, handleLogin, loginStatus, ...rest }) => {
   );
 };
 
-Login.propTypes = {
+NewLogin.propTypes = {
   history: PropTypes.object,
 };
 
-export default withRouter(Login);
+export default withRouter(NewLogin);

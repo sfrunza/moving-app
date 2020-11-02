@@ -172,9 +172,9 @@ pre[class*="language-"] {
 .token.italic {
   font-style: italic;
 }
-.ReactModal__Overlay--after-open {
-  margin-top: 0px !important;
-}
+/* .ReactModal__Overlay--after-open {
+  margin-top: 54px !important;
+} */
 body { font-size: 16px; }
 input, select { font-size: 100%; }
 

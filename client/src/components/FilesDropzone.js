@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { useDropzone } from 'react-dropzone';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import imageCompression from 'browser-image-compression';
 import {
   Box,
   Button,
@@ -15,7 +16,8 @@ import {
   ListItemText,
   Tooltip,
   Typography,
-  makeStyles
+  makeStyles,
+  colors,
 } from '@material-ui/core';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -62,9 +64,14 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     width: '100%',
+    borderColor: colors.deepPurple['A200'],
+    '&:hover': {
+      borderColor: colors.deepPurple['A200']
+    }
   },
   buttonBox: {
     width: '100%',
+    color: colors.deepPurple['A200']
   }
 }));
 
@@ -72,15 +79,33 @@ function FilesDropzone({ className, setFieldValue, handleSubmit, text, ...rest }
   const classes = useStyles();
   const [files, setFiles] = useState([]);
 
-
-
   const handleDrop = useCallback((acceptedFiles) => {
-
-    setFiles(acceptedFiles);
-    setFieldValue("photo", acceptedFiles)
-    setFieldValue("image", acceptedFiles[0].name)
+    handleImageUpload(acceptedFiles)
 
   }, []);
+
+  async function handleImageUpload(acceptedFiles) {
+
+    const imageFile = acceptedFiles[0]
+
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true
+    }
+    try {
+      const compressedFile = await imageCompression(imageFile, options);
+      Object.assign(compressedFile, {path: imageFile.path});
+      setFiles(compressedFile);
+      setFieldValue("photo", compressedFile)
+      setFieldValue("image", compressedFile.name)
+
+      await console.log("await"); // write your own logic
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
 
 
   const handleRemoveAll = () => {
@@ -123,26 +148,22 @@ function FilesDropzone({ className, setFieldValue, handleSubmit, text, ...rest }
         </Box>
 
       </Button>
-      {files.length > 0 && (
+      {files.name != undefined && (
         <>
           <PerfectScrollbar options={{ suppressScrollX: true }}>
             <List className={classes.list}>
-              {files.map((file, i) => (
                 <ListItem
-                  divider={i < files.length - 1}
-                  key={i}
                 >
                   <ListItemIcon>
                     <FileCopyIcon />
                   </ListItemIcon>
                   <ListItemText
-                    primary={file.name}
+                    primary={files.name}
                     primaryTypographyProps={{ variant: 'h5' }}
-                    secondary={bytesToSize(file.size)}
+                    secondary={bytesToSize(files.size)}
                   />
 
                 </ListItem>
-              ))}
               <ListItem>
                 <div className={classes.actions}>
                   <Button

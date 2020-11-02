@@ -224,7 +224,7 @@ function SidebarNav({ pages, onClose, className, loggedInStatus, handleLogout, u
             onClick={onClose}
             variant="outlined"
             color="secondary"
-            to="/dashboard"
+            to="/account"
           >
             Dashboard
           </Button>

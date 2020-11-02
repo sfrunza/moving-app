@@ -57,7 +57,7 @@
   text-align: center;
 }
 .two-h-min {
-  font-family: 'Maison Neue Bold';
+  font-weight: 500;
   font-size: 19px;
 }
 
@@ -115,7 +115,7 @@
 .card-description{
   width: 90%;
   margin: 0px auto;
-  font-family: 'Maison Neue Bold';
+  font-weight: 500;
   letter-spacing: 1px;
   text-transform: uppercase;
   color: #7e46ea;
@@ -151,7 +151,6 @@
   overflow-y: scroll;
   margin-top: 20px;
   text-transform: uppercase;
-  font-family: 'Maison Neue',sans-serif;
 }
 
 .card-wrapper img {
@@ -293,7 +292,7 @@
 }
 .service-header-title-storage {
 
-  font-family: 'Maison Neue Bold';
+  font-weight: 500;
   font-size: 45px;
   color: #fff;
   margin: 0;
@@ -302,7 +301,6 @@
 .service-header-subtitle-storage {
   font-size: 18px;
   line-height: 27px;
-  font-family: 'Maison Neue',sans-serif;
   -webkit-font-smoothing: antialiased;
   color: #fff;
   margin: 0px auto;
@@ -313,16 +311,16 @@
   width: 49%;
   padding: 8% 5%;
   background-color: #fafafa;
-  font-family: 'Maison Neue Bold';
+  font-weight: 500;
 }
 
 .storage-service p{
   font-size: 16px;
-    font-family: 'Maison Neue',sans-serif;
+
     -webkit-font-smoothing: antialiased;
 }
 .storage-service p span{
-  font-family: 'Maison Neue Bold';
+  font-weight: 500;
   -webkit-font-smoothing: antialiased;
 }
 .storage-service h3{
@@ -338,7 +336,7 @@
   color: #7e46ea;;
   font-size: 18px;
   line-height: 27px;
-  font-family: 'Maison Neue Bold' !important;
+  font-weight: 500 !important;
   -webkit-font-smoothing: antialiased;
 }
 .storage-rates{
@@ -353,13 +351,12 @@
   margin-bottom: 0px;
   color: #7e46ea;
   font-size: 18px;
-  font-family: 'Maison Neue',sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 .rate-mo{
   color: #7e46ea;;
   font-size: 18px;
-  font-family: 'Maison Neue Bold' !important;
+  font-weight: 500 !important;
   -webkit-font-smoothing: antialiased;
 
 }
