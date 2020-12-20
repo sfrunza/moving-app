@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
   root: {},
   gridItemBorder: {
     backgroundColor: '#f5f7ff',
-    borderRadius: '16px',
+    borderRadius: theme.spacing(1),
     [theme.breakpoints.up('md')]: {
       borderRight: `1px solid ${colors.grey[200]}`,
     },
@@ -39,7 +39,11 @@ const useStyles = makeStyles(theme => ({
   },
   ratesSpan: {
     color: deepPurple['A200'],
-    fontSize: '60px'
+    fontSize: '60px',
+    fontWeight: 500,
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '50px',
+    }
   },
   icon: {
     position: 'relative',
@@ -47,17 +51,18 @@ const useStyles = makeStyles(theme => ({
     margin: '0px 1em'
   },
   gridCard: {
-    padding: theme.spacing(2),
+    padding: '3em 0px',
     background: '#f5f7ff',
     height: '100%',
     display: 'block',
-    borderRadius: theme.spacing(2),
+    boxShadow: '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)',
+    borderRadius: theme.spacing(1),
     [theme.breakpoints.up('md')]: {
       padding: theme.spacing(4),
     },
   },
-  link: {
-    backgroundColor: '#fff'
+  title: {
+    fontWeight: 700,
   }
 }));
 
@@ -73,18 +78,7 @@ const Rates = props => {
   return (
     <div className={clsx(classes.root, className)} {...rest} data-aos="fade-up">
       <SectionHeader
-        title={
-          <span>
-            <span className="text-highlighted">
-              Clear{' '}
-            </span>
-            pricing.{' '}
-            <span className="text-highlighted">
-              Affordable{' '}
-            </span>
-              rates.
-          </span>
-        }
+        title='Clear pricing. Affordable rates.'
         fadeUp
       />
       <Grid container spacing={isMd ? 4 : 2}>
@@ -96,11 +90,14 @@ const Rates = props => {
           >
             <SectionHeader
               title="Local Hourly Rates"
-              titleVariant="h5"
+              titleVariant="h4"
+              titleProps={{
+                className: classes.title
+              }}
               subtitle="Within Boston & surrounding 125 miles."
               subtitleVariant="body1"
               subtitleColor="textPrimary"
-              ctaGroup={[<LearnMoreLink className={classes.link} title="View all Pricing Plans" to='/pricing' />]}
+              ctaGroup={[<LearnMoreLink title="View all Pricing Plans" to='/pricing' />]}
               disableGutter
             />
             <Box className={classes.rates}>
@@ -137,11 +134,14 @@ const Rates = props => {
           >
             <SectionHeader
               title="Flat Rate Moving"
-              titleVariant="h5"
+              titleVariant="h4"
+              titleProps={{
+                className: classes.title
+              }}
               subtitle="House Flat Rate Moving is available upon request."
               subtitleVariant="body1"
               subtitleColor="textPrimary"
-              ctaGroup={[<LearnMoreLink className={classes.link} title="View Flat Rates" to='/pricing' />]}
+              ctaGroup={[<LearnMoreLink title="View Flat Rates" to='/pricing' />]}
               disableGutter
             />
             <Box className={classes.flatRates}>

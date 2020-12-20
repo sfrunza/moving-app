@@ -48,6 +48,10 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('xs')]: {
       marginTop: '32px'
     },
+  },
+  clearBrush: {
+    width: 16,
+    height: 16,
   }
 }));
 
@@ -241,18 +245,19 @@ function CustomerForm({
               <Button
                 onClick={onBack}
                 size="large"
+                variant="outlined"
               >
                 Previous
               </Button>
             )}
             <Box flexGrow={1} />
-            <Box style={{marginRight: '25px'}}>
+            <Box style={{marginRight: '2%'}}>
               <Button
                 size="small"
                 onClick={()=> resetForm()}
                 style={{textTransform: 'none'}}
               >
-                <BrushRoundedIcon/>
+                <BrushRoundedIcon className={classes.clearBrush}/>
                 Clear Form
               </Button>
             </Box>

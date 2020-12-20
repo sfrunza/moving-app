@@ -17,37 +17,6 @@ export const partners = [
   },
 ];
 
-export const advantages = [
-  {
-    title: 'Local Moving',
-    description:
-      'Hourly based full moving services in Metro Boston and 125 miles around it.',
-    icon: 'fas fa-truck',
-    url: 'https://kiwimove.co.nz/wp-content/uploads/2019/06/moving-3671446_1280-1.png'
-  },
-  {
-    title: 'Interstate Moving',
-    description:
-      'Flat Rate Moving. Same or Next Day moving services on distance up to 1,500 miles.',
-    icon: 'fas fa-road',
-    url: 'https://moveinterstate.com/wp-content/uploads/2020/02/Header-1.svg'
-  },
-  {
-    title: 'Packing Sevices',
-    description:
-      'Our experienced movers will have all necessary packing materials to pack up everything.',
-    icon: 'fas fa-box-open',
-    url: 'https://alltimemoving.ca/wp-content/uploads/2019/06/moving-services@2x.png'
-  },
-  {
-    title: 'Storage Solutions',
-    description:
-      'Insight Moving provides climate controlled storage for up to 6 months.',
-    icon: 'fas fa-warehouse',
-    url: 'https://lakesidestoragefl.com/wp-content/uploads/2020/01/self-storage.svg'
-  },
-];
-
 export const reviews = [
   {
     authorPhoto: {

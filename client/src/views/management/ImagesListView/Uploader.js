@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React from 'react';
 import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -7,21 +7,12 @@ import { Formik } from 'formik';
 import { useSnackbar } from 'notistack';
 import {
   Box,
-  Button,
   Card,
   CardContent,
-  CardHeader,
-  Checkbox,
-  Divider,
-  FormControlLabel,
   FormHelperText,
   Grid,
-  Paper,
-  TextField,
-  Typography,
   makeStyles
 } from '@material-ui/core';
-import QuillEditor from 'src/components/QuillEditor';
 import FilesDropzone from 'src/components/FilesDropzone';
 
 
@@ -37,11 +28,7 @@ const useStyles = makeStyles(() => ({
 
 function Uploader({ className, setImages, images, ...rest }) {
   const classes = useStyles();
-  const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
-
-
-
   return (
     <Formik
       initialValues={{

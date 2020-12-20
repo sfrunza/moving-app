@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
   button: {
     width: 'fit-content',
     margin: 'auto',
-    color: colors.lightBlue[500],
     textTransform: 'none',
   }
 }));
@@ -59,6 +58,7 @@ function ProfileDetails({ user, className, ...rest }) {
         >
           <Avatar
             className={classes.avatar}
+            src="https://toppng.com/uploads/preview/roger-berry-avatar-placeholder-11562991561rbrfzlng6h.png"
           />
         </Box>
 
@@ -67,6 +67,7 @@ function ProfileDetails({ user, className, ...rest }) {
             fullWidth
             variant="text"
             className={classes.button}
+            color='secondary'
           >
             Change Profile Photo
           </Button>

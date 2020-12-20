@@ -8,19 +8,14 @@ import imageCompression from 'browser-image-compression';
 import {
   Box,
   Button,
-  IconButton,
-  Link,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
-  Tooltip,
-  Typography,
   makeStyles,
   colors,
 } from '@material-ui/core';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
-import MoreIcon from '@material-ui/icons/MoreVert';
 import bytesToSize from 'src/utils/bytesToSize';
 import { Camera as CameraIcon }  from 'react-feather';
 
@@ -116,7 +111,7 @@ function FilesDropzone({ className, setFieldValue, handleSubmit, text, ...rest }
     handleRemoveAll();
   }
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     onDrop: handleDrop,
   });
 
@@ -148,7 +143,7 @@ function FilesDropzone({ className, setFieldValue, handleSubmit, text, ...rest }
         </Box>
 
       </Button>
-      {files.name != undefined && (
+      {files.name !== undefined && (
         <>
           <PerfectScrollbar options={{ suppressScrollX: true }}>
             <List className={classes.list}>

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 
 import 'leaflet/dist/leaflet.css';
-import './index.scss';
+// import './index.scss';
 
 import L from 'leaflet';
 

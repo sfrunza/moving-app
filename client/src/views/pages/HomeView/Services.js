@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useMediaQuery, Typography, Grid } from '@material-ui/core';
 import { Image, LearnMoreLink } from 'src/components/atoms';
-import { CardProduct } from 'src/components/organisms';
+import { CardProduct, HeroSideImage } from 'src/components/organisms';
 import { SectionHeader } from 'src/components/molecules';
 
 const useStyles = makeStyles(theme => ({
@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
   cardProduct: {
     display: 'flex',
     flexDirection: 'column',
-    borderRadius: theme.spacing(2),
+    borderRadius: theme.spacing(1),
     boxShadow: 'none',
     background: 'transparent',
     paddingBottom: theme.spacing(2),
@@ -25,8 +25,8 @@ const useStyles = makeStyles(theme => ({
       width: '90%',
       margin: '0 auto',
       marginTop: theme.spacing(-6),
-      borderRadius: theme.spacing(2),
-      boxShadow: '0 2px 10px 0 rgba(23,70,161,.11)'
+      borderRadius: theme.spacing(1),
+      boxShadow: '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);'
     },
     '& .card-product__media': {
       minHeight: 300,
@@ -106,12 +106,12 @@ const Services = props => {
       <Typography variant="body1" color="textPrimary">
         {props.subtitle}
       </Typography>
-    
+
       <LearnMoreLink
         title="Learn more"
-        variant="h6"
+        variant="subtitle2"
         className={classes.learnMoreLink}
-        to='/services'
+        href='/services'
       />
     </div>
   );
@@ -120,14 +120,7 @@ const Services = props => {
     <div className={clsx(classes.root, className)} {...rest}>
       <Grid container spacing={isMd ? 10 : 6}>
         <SectionHeader
-          title={
-            <span>
-              Service that{' '}
-              <span className="text-highlighted">
-                Works for You
-              </span>
-            </span>
-          }
+          title='Service that Works for You'
           data-aos="fade-up"
         />
         {data.map((item, index) => (

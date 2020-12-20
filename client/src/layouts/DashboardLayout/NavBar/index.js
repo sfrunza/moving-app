@@ -44,6 +44,7 @@ import {
 } from 'react-feather';
 import Logo from 'src/components/Logo';
 import NavItem from './NavItem';
+import logo from 'src/assets/img/looool.png'
 
 const navConfig = [
   {
@@ -203,7 +204,7 @@ function NavBar({ user, openMobile, onMobileClose, }) {
             justifyContent="center"
           >
             <RouterLink to="/">
-              <Logo />
+              <Logo src={logo}/>
             </RouterLink>
           </Box>
         </Hidden>

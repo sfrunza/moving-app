@@ -46,7 +46,7 @@ const IconText = props => {
         {...iconProps}
       />
       <Typography
-        variant="h5"
+        variant="body1"
         color="textPrimary"
         className={clsx('icon-text__typography', classes.title)}
         {...typographyProps}

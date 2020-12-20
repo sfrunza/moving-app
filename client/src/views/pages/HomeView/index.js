@@ -1,21 +1,22 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {
   AppBar,
   Toolbar,
   IconButton,
   Divider,
   Drawer,
-  colors
+  colors,
+  Button,
+  useMediaQuery
 } from '@material-ui/core';
 import clsx from 'clsx';
 import PhoneRoundedIcon from '@material-ui/icons/PhoneRounded';
 import Page from 'src/components/Page';
 import { ContactForm } from 'src/common';
-import { IconAlternate } from 'src/components/molecules';
+import { IconAlternate, TypedText } from 'src/components/molecules';
 import { Section, SectionAlternate } from 'src/components/organisms';
-import { Parallax, Background } from 'react-parallax';
-import Header from './Header';
+import { Parallax } from 'src/components/organisms'; //COSTUM MADE BY ME
 import Services from './Services';
 import Rates from './Rates';
 import Places from './Places';
@@ -26,7 +27,7 @@ import FAQS from './FAQS';
 import Contact from './Contact';
 import IncludeSection from './IncludeSection';
 import Sticky from 'react-stickynode';
-import backgroundImage from 'src/assets/img/home-background.jpg'
+import backgroundImage from 'src/assets/img/home-background.webp'
 import {
   services,
   places,
@@ -35,6 +36,7 @@ import {
   faq,
   properties
 } from './data';
+import { Calculator } from 'src/common';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -48,59 +50,37 @@ const useStyles = makeStyles(theme => ({
       paddingTop: theme.spacing(5),
     },
   },
-  appBarBottom: {
-    top: 'auto',
-    bottom: 0,
-    background: 'transparent',
-    boxShadow: 'none',
-  },
-  toolbarBottom: {
-    width: '100%',
+  calculator: {
+    padding: theme.spacing(3, 2),
     margin: '0 auto',
-    padding: theme.spacing(0, 2),
-  },
-  phoneIconButton: {
-    position: 'absolute',
-    right: theme.spacing(3),
-    left: 'auto',
-    top: theme.spacing(-3),
-    background: theme.palette.success.main,
-    width: 55,
-    height: 55,
-    boxShadow: '0 2px 10px 0 rgba(23,70,161,.11)',
-    '&:hover': {
-      background: theme.palette.success.main,
+    [theme.breakpoints.up('sm')]: {
+      width: 650,
     },
   },
-  phoneIcon: {
-    color: 'white',
-    width: 30,
-    height: 30,
+  drawer: {
+    borderRadius: '16px 16px 0px 0px',
   },
-  headerSection: {
-    backgroundColor: '#00000080',
+  button: {
+    // borderRadius: '24px',
+    borderColor: '#fff',
+    fontWeight: 600,
+    backgroundColor: '#00000066',
+    // padding: '12px 20px',
+    color: '#fff',
+    '&:hover': {
+      // color: '#fff',
+      backgroundColor: '#00000066',
+      // border: 'none',
+    },
   },
-  fullHeight: {
-    width: '100%',
-    height: 'auto',
-    minHeight: '73vh',
-    padding: '1rem 0px',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  bgImage: {
-    // height: '75vh !important',
-    width: '100% !important',
-    // top: '20% !important',
-    minWidth: '1000px !important',
-    minHeight: '80vh !important',
-  }
 }));
 
 const HomeView = () => {
   const classes = useStyles();
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up('md'), {
+    defaultMatches: true,
+  });
 
   const [openBottombar, setOpenBottombar] = React.useState(false);
 
@@ -111,27 +91,41 @@ const HomeView = () => {
   const handleBottombarClose = () => {
     setOpenBottombar(false);
   };
-  const sides = {
-          top: 0, // Sticks when it scrolls past the top edge
-          bottom: 0, // Sticks when it scrolls past the bottom edge
-          left: 10, // Sticks 10px from the left edge
-          right: -20, // Sticks 20px past the right edge (useful for content that should stick only when it's fully out of the frame)
-        };
 
   return (
     <Page title="Insigh Moving | Boston Movers" className={classes.root}>
       <Parallax
-            bgImage={backgroundImage}
-            bgImageAlt="bg"
-            strength={300}
-            bgClassName={classes.bgImage}
-        >
-        <div className={clsx(classes.fullHeight, classes.headerSection)}>
-          <Section>
-            <Header />
-          </Section>
-        </div>
-      </Parallax>
+        backgroundImage={backgroundImage}
+        title="Insight Moving"
+        typedText={['A Badass','Moving Company', 'In Boston']}
+        subtitle="InsighMoving is your friendly and trustworthy moving, storage, and delivery company."
+        buttons={[
+          <Toolbar disableGutters className={classes.toolbarBottom}>
+            <Button
+              variant="outlined"
+              size={isMd ? 'large' : 'medium'}
+              onClick={handleBottombarOpen}
+              className={classes.button}
+            >
+              Get a free Quote
+            </Button>
+            <Drawer
+              anchor="bottom"
+              open={openBottombar}
+              onClose={handleBottombarClose}
+              className={classes.drawer}
+              transitionDuration={300}
+              classes={{
+                paper: classes.drawer,
+              }}
+              >
+                <div className={classes.calculator}>
+                  <Calculator onClose={handleBottombarClose}/>
+                </div>
+              </Drawer>
+            </Toolbar>
+          ]}
+      />
 
       <SubHeader data={partners} />
 
@@ -186,16 +180,7 @@ const HomeView = () => {
 
       </Section>
       <Divider />
-      <AppBar position="fixed" className={classes.appBarBottom}>
-        <Toolbar disableGutters className={classes.toolbarBottom}>
-          <IconButton
-            className={classes.phoneIconButton}
-            href="tel:6172060968"
-          >
-            <PhoneRoundedIcon className={classes.phoneIcon} />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+
     </Page>
   );
 };

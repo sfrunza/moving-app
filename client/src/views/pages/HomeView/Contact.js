@@ -15,6 +15,7 @@ import PhoneRoundedIcon from '@material-ui/icons/PhoneRounded';
 import EmailIcon from '@material-ui/icons/Email';
 import RoomIcon from '@material-ui/icons/Room';
 import { Link as RouterLink } from 'react-router-dom';
+import MyButton from 'src/components/MyButton'
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -68,16 +69,13 @@ const Team = props => {
           color: 'textSecondary',
         }}
         ctaGroup={[
-          <Button
+          <MyButton
             variant="outlined"
             size={isMd ? 'large' : 'medium'}
             color="secondary"
-            className={classes.button}
-            component={RouterLink}
             to='/book'
-          >
-            Book Us Now
-          </Button>,
+            text="Book us now"
+          />
         ]}
         fadeUp
       />

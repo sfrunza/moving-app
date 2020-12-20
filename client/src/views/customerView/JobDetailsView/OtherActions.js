@@ -15,7 +15,6 @@ import {
   makeStyles,
   ButtonBase,
   Menu,
-  MenuItem,
 } from '@material-ui/core';
 import Label from 'src/components/Label';
 import BeachAccessIcon from '@material-ui/icons/BeachAccess';
@@ -24,18 +23,10 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import HistoryIcon from '@material-ui/icons/History';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import PhoneInTalkRoundedIcon from '@material-ui/icons/PhoneInTalkRounded';
-import moment from 'moment';
 import JobsMenu from './JobsMenu'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
-  deleteAction: {
-    color: theme.palette.common.white,
-    backgroundColor: theme.palette.error.main,
-    '&:hover': {
-      backgroundColor: theme.palette.error.dark
-    }
-  },
   actionIcon: {
     marginRight: theme.spacing(1)
   },
@@ -50,45 +41,7 @@ const useStyles = makeStyles((theme) => ({
   arrow: {
     marginLeft: 'auto'
   },
-  menuBox: {
-    flexDirection: 'column'
-  },
-  statusBox: {
-    '& span ': {
-      fontSize: '10px',
-      backgroundColor: 'transparent',
-    },
-  },
 }));
-
-function getInventoryLabel(status) {
-  const map = {
-    "Completed": {
-      text: 'Completed',
-      color: 'secondary'
-    },
-    "Canceled": {
-      text: 'Canceled',
-      color: 'error'
-    },
-    "Needs Attention" : {
-      text: 'Needs Attention',
-      color: 'warning'
-    },
-    "Confirmed" : {
-      text: 'Confirmed',
-      color: 'success'
-    }
-  };
-
-  const { text, color } = map[status];
-
-  return (
-    <Label color={color}>
-      {text}
-    </Label>
-  );
-}
 
 function OtherActions({ className, jobs, setJobDetails, theJob, ...rest }) {
   const classes = useStyles();

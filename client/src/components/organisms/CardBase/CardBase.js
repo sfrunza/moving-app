@@ -8,7 +8,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     height: '90%',
     width: '90%',
-    borderRadius: 16,
+    borderRadius: theme.spacing(1),
     margin: 'auto',
     [theme.breakpoints.down('sm')]: {
       height: '100%',

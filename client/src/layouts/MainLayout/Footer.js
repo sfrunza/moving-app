@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import { NavLink as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -10,19 +10,20 @@ import {
   List,
   ListItem,
   Link,
+  colors
 } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import PinterestIcon from '@material-ui/icons/Pinterest';
-import logo from 'src/assets/img/looool.png'
+import logoWhite from 'src/assets/img/logowhite.png'
 
 import { Image } from 'src/components/atoms';
 
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(4, 0),
-    background: '#1b1642',
+    background: colors.deepPurple[800],
     overflow: 'hidden',
     width: '100%',
     display: 'flex',
@@ -56,8 +57,8 @@ const useStyles = makeStyles(theme => ({
   logoContainer: {
     width: 120,
     height: 60,
-    backgroundColor: '#ffffffd1',
-    borderRadius: '10px',
+    // backgroundColor: '#ffffffd1',
+    // borderRadius: '10px',
     padding: '3px 3px',
   },
   socialContainer: {
@@ -98,8 +99,8 @@ const Footer = props => {
                 <Link to="/" component={RouterLink}>
                   <Image
                     className={classes.logoImage}
-                    src={logo}
-                    alt="thefront"
+                    src={logoWhite}
+                    alt="insightlogo"
                     lazy={false}
                   />
                 </Link>

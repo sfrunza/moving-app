@@ -131,7 +131,7 @@ DescriptionCta.propTypes = {
   /**
    * Primary CTA of the list
    */
-  primaryCta: PropTypes.node.isRequired,
+  primaryCta: PropTypes.node,
   /**
    * Secondary CTA of the list
    */

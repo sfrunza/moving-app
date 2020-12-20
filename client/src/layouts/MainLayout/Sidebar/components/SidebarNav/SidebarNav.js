@@ -16,6 +16,7 @@ import {
 import CloseIcon from '@material-ui/icons/Close';
 import PersonIcon from '@material-ui/icons/Person';
 import axios from 'axios'
+import MyButton from 'src/components/MyButton'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -52,7 +53,8 @@ const useStyles = makeStyles(theme => ({
     paddingTop: 15,
   },
   menuGroupTitle: {
-    textTransform: 'uppercase',
+    color: 'rgb(5, 15, 25)',
+    fontWeight: 500,
   },
   divider: {
     width: '100%',
@@ -106,7 +108,7 @@ function SidebarNav({ pages, onClose, className, loggedInStatus, handleLogout, u
                 variant="body2"
                 component={CustomRouterLink}
                 to={page.href}
-                className={clsx(classes.menuGroupTitle, 'submenu-item')}
+                className={classes.menuGroupTitle}
                 color="textSecondary"
                 onClick={onClose}
               >
@@ -142,9 +144,6 @@ function SidebarNav({ pages, onClose, className, loggedInStatus, handleLogout, u
         </ListItemIcon>
       </ListItem>
       <ListItem className={classes.listItem}>
-        <Typography variant="h6" color="textPrimary" gutterBottom>
-          Menu
-        </Typography>
         <LandingPages />
       </ListItem>
       <ListItem className={classes.listItem}>
@@ -156,7 +155,7 @@ function SidebarNav({ pages, onClose, className, loggedInStatus, handleLogout, u
         !loggedInStatus
         ?
         <Typography
-          variant="body1"
+          variant="body2"
           component={CustomRouterLink}
           to='/login'
           className={clsx(classes.menuGroupTitle, 'submenu-item', classes.logOut)}
@@ -167,16 +166,16 @@ function SidebarNav({ pages, onClose, className, loggedInStatus, handleLogout, u
           <PersonIcon style={{height: '0.9em'}}/>
           Login
         </Typography>
+
         :
         <Typography
-          variant="body1"
+          variant="body2"
           color="textSecondary"
           onClick={handleClick}
           className={clsx(classes.menuGroupTitle, 'submenu-item', classes.logOut)}
-          className={classes.logOut}
         >
           <PersonIcon style={{height: '0.9em'}}/>
-          LOG OUT
+          Log Out
         </Typography>
       }
       </ListItem>
@@ -184,16 +183,14 @@ function SidebarNav({ pages, onClose, className, loggedInStatus, handleLogout, u
         loggedInStatus && user.admin
         ?
         <ListItem className={classes.listItem}>
-          <Button
-            component={CustomRouterLink}
-            className={classes.button}
-            onClick={onClose}
+          <MyButton
+            size="small"
             variant="outlined"
             color="secondary"
             to="/app"
-          >
-            Admin Page
-          </Button>
+            text="Admin Page"
+            onClick={onClose}
+          />
         </ListItem>
         : null
       }
@@ -201,16 +198,14 @@ function SidebarNav({ pages, onClose, className, loggedInStatus, handleLogout, u
         loggedInStatus && !user.admin && !user.customer
         ?
         <ListItem className={classes.listItem}>
-          <Button
-            component={CustomRouterLink}
-            className={classes.button}
-            onClick={onClose}
+          <MyButton
+            size="small"
             variant="outlined"
             color="secondary"
             to="/calendar"
-          >
-            Calendar
-          </Button>
+            text="Calendar"
+            onClick={onClose}
+          />
         </ListItem>
         : null
       }
@@ -218,30 +213,26 @@ function SidebarNav({ pages, onClose, className, loggedInStatus, handleLogout, u
         loggedInStatus && user.customer
         ?
         <ListItem className={classes.listItem}>
-          <Button
-            component={CustomRouterLink}
-            className={classes.button}
-            onClick={onClose}
+          <MyButton
+            size="small"
             variant="outlined"
             color="secondary"
             to="/account"
-          >
-            Dashboard
-          </Button>
+            text="Dashboard"
+            onClick={onClose}
+          />
         </ListItem>
         : null
       }
       <ListItem className={classes.listItem}>
-        <Button
-          component={CustomRouterLink}
-          to='/book'
-          className={classes.button}
-          onClick={onClose}
+        <MyButton
+          size="small"
           variant="contained"
           color="secondary"
-        >
-          Get Started
-        </Button>
+          to="/book"
+          text="Get Started"
+          onClick={onClose}
+        />
       </ListItem>
     </List>
   );

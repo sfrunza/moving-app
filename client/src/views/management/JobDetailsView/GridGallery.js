@@ -71,7 +71,6 @@ function GridGallery({ className, images, handleDeleteImage, ...rest }) {
       id = image.id
     }
   })
-  console.log(id);
 
   return (
     <div

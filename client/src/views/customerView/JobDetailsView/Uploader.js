@@ -1,33 +1,21 @@
-import React, {useState, useCallback, useEffect} from 'react';
-import { useHistory } from 'react-router';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import axios from 'axios';
 import { useSnackbar } from 'notistack';
 import {
   Box,
-  Button,
   Card,
   CardContent,
-  CardHeader,
-  Checkbox,
-  Divider,
-  FormControlLabel,
   FormHelperText,
   Grid,
-  Paper,
-  TextField,
-  Typography,
   makeStyles
 } from '@material-ui/core';
-import QuillEditor from 'src/components/QuillEditor';
 import FilesDropzone from 'src/components/FilesDropzone';
 
 const useStyles = makeStyles(() => ({
   root: {
-
   },
   card: {
     backgroundColor: 'transparent',
@@ -40,7 +28,6 @@ const useStyles = makeStyles(() => ({
 
 function Uploader({ className, jobId, setImages, images, ...rest }) {
   const classes = useStyles();
-  const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
 
   const getJobId = () => {

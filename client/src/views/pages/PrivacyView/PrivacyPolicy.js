@@ -7,17 +7,10 @@ import {
   Typography,
   Divider,
   Button,
-  List,
-  ListItem,
-  ListItemAvatar,
-  Avatar,
   Box,
 } from '@material-ui/core';
 import { SectionHeader, DescriptionCta } from 'src/components/molecules';
 import { Section, CardBase } from 'src/components/organisms';
-import checkIcon from 'src/assets/img/check-icon-yellow.svg'
-import { Link as RouterLink } from 'react-router-dom';
-
 import { posts } from './data'
 
 const useStyles = makeStyles(theme => ({
@@ -29,10 +22,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   pagePaddingTop: {
-    paddingTop: theme.spacing(3),
-    [theme.breakpoints.up('md')]: {
-      paddingTop: theme.spacing(5),
-    },
+    paddingTop: theme.spacing(10),
   },
   fontWeightBold: {
     fontWeight: 'bold',
@@ -47,7 +37,7 @@ const useStyles = makeStyles(theme => ({
     color: 'white',
   },
   cardHighlighted: {
-    background: theme.palette.primary.main,
+    background: theme.palette.secondary.main,
   },
   checkBox: {
     background: 'transparent',
@@ -75,7 +65,7 @@ const useStyles = makeStyles(theme => ({
   infoEmail: {
     marginTop: '15px',
 
-  }
+  },
 }));
 
 const PrivacyPolicy = () => {
@@ -93,18 +83,6 @@ const PrivacyPolicy = () => {
         <DescriptionCta
           title="Privacy Policy"
           subtitle="Updated on 09.15.2020"
-          primaryCta={
-            <Button
-              variant="outlined"
-              color="secondary"
-              className={classes.button}
-              size={isMd ? 'large' : 'medium'}
-              component={RouterLink}
-              to='/'
-            >
-              Got to home page
-            </Button>
-          }
           align={'left'}
           titleProps={{
             className: classes.fontWeightBold,
@@ -127,7 +105,7 @@ const PrivacyPolicy = () => {
                 titleProps={{
                   className: classes.fontWeightBold,
                   color: 'textPrimary',
-                  variant: 'h4'
+                  variant: 'h5'
                 }}
                 subtitleProps={{
                   variant: 'body2',

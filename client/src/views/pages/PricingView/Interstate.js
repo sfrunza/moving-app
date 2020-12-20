@@ -6,6 +6,7 @@ import { Grid, Button, useMediaQuery } from '@material-ui/core';
 import { IconAlternate, SectionHeader } from 'src/components/molecules';
 import { DescriptionListIcon, CardJobMinimal } from 'src/components/organisms';
 import { Link as RouterLink } from 'react-router-dom';
+import MyButton from 'src/components/MyButton'
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -103,16 +104,13 @@ const Interstate = props => {
           </Grid>
         </Grid>
         <Grid container spacing={2} className={classes.bookContainer}>
-          <Button
+          <MyButton
             variant="contained"
             color="secondary"
-            className={classes.button}
             size={isMd ? 'large' : 'medium'}
-            component={RouterLink}
             to='/book'
-            >
-            Book us now
-          </Button>
+            text='Book us now'
+          />
         </Grid>
       </Grid>
     </div>

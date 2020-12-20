@@ -15,7 +15,12 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 0,
   },
   title: {
-    fontWeight: 'bold',
+    fontWeight: 500,
+    lineHeight: 1.3,
+  },
+  subtitle: {
+    maxWidth: 700,
+    margin: 'auto',
   },
   cta: {
     marginLeft: theme.spacing(1),
@@ -117,7 +122,10 @@ const SectionHeader = props => {
             variant={subtitleVariant || 'h6'}
             align={align || 'center'}
             color={subtitleColor || 'textSecondary'}
-            className="section-header__subtitle"
+            className={clsx(
+              'section-header__subtitle',
+              classes.subtitle,
+            )}
             {...subtitleProps}
           >
             {subtitle}

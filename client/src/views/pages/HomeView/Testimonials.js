@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useMediaQuery } from '@material-ui/core';
-import { Grid, Button, colors, Box, Typography } from '@material-ui/core';
+import { Grid, colors, Box, Typography } from '@material-ui/core';
 import { Image } from 'src/components/atoms';
 import { SectionHeader, IconAlternate } from 'src/components/molecules';
 import { CardReview } from 'src/components/organisms';
 import stars from 'src/assets/img/rated-by-our-customer.png'
+import MyButton from 'src/components/MyButton'
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -87,14 +88,13 @@ const Testimonials = props => {
           </Grid>
         ))}
         <Grid item container xs={12} justify="center">
-          <Button
+          <MyButton
             variant="outlined"
             size={isMd ? 'large' : 'medium'}
             color="secondary"
-            className={classes.button}
-          >
-            See all reviews
-          </Button>
+            to='#'
+            text="See all reviews"
+          />
         </Grid>
       </Grid>
     </div>

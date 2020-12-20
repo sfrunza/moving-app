@@ -28,7 +28,11 @@ const useStyles = makeStyles(theme => ({
     background: theme.palette.white,
     borderBottom: `1px solid ${colors.grey[200]}`,
     backgroundColor: '#fff',
-    position: 'fixed'
+    position: 'fixed',
+    height: '54px',
+    justifyContent: 'center',
+    top: 0,
+    zIndex: 1000,
   },
   flexGrow: {
     flexGrow: 1,
@@ -92,8 +96,8 @@ const useStyles = makeStyles(theme => ({
     height: 40,
     display: 'flex',
     [theme.breakpoints.up('md')]: {
-      width: 95,
-      height: 50,
+      width: 80,
+      height: 40,
     },
   },
   logoImage: {
@@ -117,7 +121,7 @@ const useStyles = makeStyles(theme => ({
     textTransform: 'uppercase',
   },
   button: {
-    borderRadius: '24px',
+    borderRadius: '8px',
   },
   loginLink: {
     display: 'flex',
@@ -178,7 +182,7 @@ function Topbar({ className, onSidebarOpen, loggedInStatus, handleLogout, user, 
             </ListItem>
             <ListItem className={classes.listItem}>
               <Button
-                size="medium"
+                size="small"
                 variant="contained"
                 color="secondary"
                 onClick={handleClick}

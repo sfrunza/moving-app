@@ -1,8 +1,8 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { NavLink as RouterLink } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import axios from 'axios'
 import {
   AppBar,
@@ -17,22 +17,48 @@ import {
   Link
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+import MyButton from 'src/components/MyButton'
 
 import { Image } from 'src/components/atoms';
 import logo from 'src/assets/img/looool.png'
+import logoWhite from 'src/assets/img/logowhite.png'
 import PersonIcon from '@material-ui/icons/Person';
+import Account from './Account'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme, props) => ({
   root: {
     boxShadow: 'none',
     background: theme.palette.white,
-    borderBottom: `1px solid ${colors.grey[200]}`,
-    backgroundColor: '#fff',
-    position: 'fixed',
-    height: '54px',
+    borderBottom: 'none',
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    height: props => props,
     justifyContent: 'center',
-    top: 0,
-    zIndex: 1000,
+    // top: 0,
+    // zIndex: 1000,
+  },
+  root2: {
+    // boxShadow: 'none',
+    // backgroundColor: '#fff',
+    // position: 'fixed',
+    // borderBottom: `1px solid ${colors.grey[200]}`,
+    // transition: 'position 3s',
+    // transition: 'top 0.6s',
+    // height: '54px',
+    justifyContent: 'center',
+    // top: 0,
+    // zIndex: 1000,
+    // transitionProperty: 'background-color, border-bottom',
+    // transitionDuration: '0.5s',
+    // transitionAnimation: '0.15s ease',
+    background: '#fff',
+    overflow: 'hidden',
+    color: '#000',
+    position: 'fixed',
+    // lineHeight: 54,
+    transition: 'all .2s ease-in-out',
+    height: 54,
+
   },
   flexGrow: {
     flexGrow: 1,
@@ -56,6 +82,11 @@ const useStyles = makeStyles(theme => ({
   },
   listItem: {
     width: 'auto',
+    padding: theme.spacing(2)
+  },
+  listItemLast: {
+    width: 'auto',
+    padding: theme.spacing(0)
   },
   listItemActive: {
     '&> .menu-item': {
@@ -66,8 +97,21 @@ const useStyles = makeStyles(theme => ({
     flex: '0 0 auto',
     marginRight: theme.spacing(2),
     whiteSpace: 'nowrap',
+    color: 'rgb(5, 15, 25)',
+    fontWeight: 500,
     '&:hover': {
       color: theme.palette.primary.dark,
+      cursor: 'pointer',
+    },
+  },
+  listItemText2: {
+    flex: '0 0 auto',
+    marginRight: theme.spacing(2),
+    whiteSpace: 'nowrap',
+    color: '#fff',
+    fontWeight: 500,
+    '&:hover': {
+      color: '#fff',
       cursor: 'pointer',
     },
   },
@@ -87,16 +131,23 @@ const useStyles = makeStyles(theme => ({
       background: 'transparent',
     },
   },
+  loginIconButton: {
+    padding: 0,
+    color: '#fff',
+    '&:hover': {
+      background: 'transparent',
+    },
+  },
   expandOpen: {
     transform: 'rotate(180deg)',
     color: theme.palette.primary.dark,
   },
   logoContainer: {
-    width: 70,
-    height: 40,
+    width: 60,
+    height: 35,
     display: 'flex',
     [theme.breakpoints.up('md')]: {
-      width: 80,
+      width: 70,
       height: 40,
     },
   },
@@ -120,12 +171,12 @@ const useStyles = makeStyles(theme => ({
   menuGroupTitle: {
     textTransform: 'uppercase',
   },
-  button: {
-    borderRadius: '24px',
-  },
   loginLink: {
     display: 'flex',
     alignItems: 'center',
+  },
+  bookLogin: {
+    border: '1px solid #fff',
   }
 }));
 
@@ -135,11 +186,38 @@ const CustomRouterLink = forwardRef((props, ref) => (
   </div>
 ));
 
+const ColorButton = withStyles((theme) => ({
+  root: {
+    color: '#fff',
+  },
+}))(Button);
+
 function Topbar({ className, onSidebarOpen, pages, loggedInStatus, handleLogout, user, ...rest }) {
 
 
-  const classes = useStyles();
+
+  const history = rest.history
   const fullName = user.first_name + "_" + user.last_name
+  const [currentJob, setCurrentJob] = useState(null)
+  const [path, setPath] = useState('')
+  const [navbar, setNavbar] = useState(false);
+  const [height, setHeight] = useState(54)
+  const classes = useStyles(height);
+
+  const checkBackgroundColor = () => {
+    if(window.scrollY > 65) {
+      setHeight(0)
+    } else {
+      setHeight(54)
+    }
+    if(window.scrollY >= 200) {
+      setNavbar(true)
+      // setHeight(54)
+    } else {
+      setNavbar(false)
+    }
+  }
+  window.addEventListener('scroll', checkBackgroundColor)
 
   const handleClick = () => {
     axios.delete('/users/sign_out', {withCredentials: true})
@@ -150,18 +228,42 @@ function Topbar({ className, onSidebarOpen, pages, loggedInStatus, handleLogout,
 
   }
 
+  const getJob = (userId) => {
+    axios
+      .get(`/api/v1/users/${userId}`)
+      .then((response) => {
+        if (response.data.user.admin === true) {
+          setPath('/app')
+        } else if (response.data.user.customer === true) {
+          let currentJob = response.data.jobs[0].id
+          setCurrentJob(currentJob)
+          setPath(`/account/jobs/${currentJob}`)
+        }
+        else setPath('/calendar')
+      });
+  }
+  useEffect(() =>{
+    if(loggedInStatus){
+        getJob(user.id);
+    }
+  },[getJob])
+
   return (
     <AppBar
       {...rest}
       position="relative"
-      className={clsx(classes.root, className)}
+      data-tap-toggle="false"
+      className={
+        !navbar ? clsx(classes.root, className) : clsx(classes.root2, className)
+      }
+
     >
       <Toolbar disableGutters className={classes.toolbar}>
         <div className={classes.logoContainer}>
           <Link to="/" component={CustomRouterLink}>
             <Image
               className={classes.logoImage}
-              src={logo}
+              src={navbar ? logo : logoWhite}
               alt="insightmoving"
               lazy={false}
             />
@@ -174,7 +276,9 @@ function Topbar({ className, onSidebarOpen, pages, loggedInStatus, handleLogout,
               <Typography
               variant="body2"
               color="textSecondary"
-              className={classes.listItemText}
+              className={
+                navbar ? classes.listItemText : classes.listItemText2
+              }
               component={CustomRouterLink}
               to="/"
               >
@@ -186,7 +290,9 @@ function Topbar({ className, onSidebarOpen, pages, loggedInStatus, handleLogout,
               <Typography
                 variant="body2"
                 color="textSecondary"
-                className={classes.listItemText}
+                className={
+                  navbar ? classes.listItemText : classes.listItemText2
+                }
                 component={CustomRouterLink}
                 to="/services"
               >
@@ -197,7 +303,9 @@ function Topbar({ className, onSidebarOpen, pages, loggedInStatus, handleLogout,
               <Typography
                 variant="body2"
                 color="textSecondary"
-                className={classes.listItemText}
+                className={
+                  navbar ? classes.listItemText : classes.listItemText2
+                }
                 component={CustomRouterLink}
                 to="/pricing"
               >
@@ -208,13 +316,18 @@ function Topbar({ className, onSidebarOpen, pages, loggedInStatus, handleLogout,
               <Typography
                 variant="body2"
                 color="textSecondary"
-                className={classes.listItemText}
+                className={
+                  navbar ? classes.listItemText : classes.listItemText2
+                }
                 component={CustomRouterLink}
                 to="/work"
               >
                 Our Work
               </Typography>
             </ListItem>
+          </List>
+          <div className={classes.flexGrow} />
+          <List className={classes.navigationContainer}>
             <ListItem className={classes.listItem}>
               {
                 !loggedInStatus
@@ -222,7 +335,9 @@ function Topbar({ className, onSidebarOpen, pages, loggedInStatus, handleLogout,
                 <Typography
                   variant="body2"
                   color="textSecondary"
-                  className={clsx(classes.listItemText, classes.loginLink)}
+                  className={
+                    navbar ? clsx(classes.listItemText, classes.loginLink) : clsx(classes.listItemText2, classes.loginLink)
+                  }
                   component={CustomRouterLink}
                   to="/login"
                 >
@@ -230,85 +345,37 @@ function Topbar({ className, onSidebarOpen, pages, loggedInStatus, handleLogout,
                   Login
                 </Typography>
                 :
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  className={clsx(classes.listItemText, classes.loginLink)}
-                  onClick={handleClick}
-                >
-                  <PersonIcon style={{height: '0.8em'}}/>
-                  Log Out
-                </Typography>
+                <Account user={user} handleLogout={handleLogout} currentJob={currentJob} path={path} navbar={navbar}/>
               }
             </ListItem>
+            <ListItem className={classes.listItemLast}>
             {
-              loggedInStatus && user.admin
-              ?
-              <ListItem className={classes.listItem}>
-                <Button
-                  size="small"
-                  variant="outlined"
-                  color="secondary"
-                  component={CustomRouterLink}
-                  to="/app"
-                  className={classes.button}
-                >
-                  Admin Page
-                </Button>
-              </ListItem>
-              : null
-            }
-            {
-              loggedInStatus && !user.admin && !user.customer
-              ?
-              <ListItem className={classes.listItem}>
-                <Button
-                  size="small"
-                  variant="outlined"
-                  color="secondary"
-                  component={CustomRouterLink}
-                  to="/calendar"
-                  className={classes.button}
-                >
-                  Calendar
-                </Button>
-              </ListItem>
-              : null
-            }
-            {
-              loggedInStatus && user.customer
-              ?
-              <ListItem className={classes.listItem}>
-                <Button
-                  size="small"
-                  variant="outlined"
-                  color="secondary"
-                  component={CustomRouterLink}
-                  to="/account"
-                  className={classes.button}
-                >
-                  Dashboard
-                </Button>
-              </ListItem>
-              : null
-            }
-            <ListItem className={classes.listItem}>
-              <Button
+              navbar ?
+              <MyButton
                 size="small"
                 variant="contained"
                 color="secondary"
-                component={CustomRouterLink}
                 to="/book"
-                className={classes.button}
+                text="Get Started"
+              /> :
+              <ColorButton
+                size="small"
+                variant="outlined"
+                className={classes.bookLogin}
+                component={RouterLink}
+                to="/book"
               >
-                Get Started
-              </Button>
+              Get Started
+              </ColorButton>
+            }
             </ListItem>
           </List>
         </Hidden>
         <Hidden mdUp>
           <IconButton
-            className={classes.iconButton}
+          className={
+            navbar ? classes.iconButton : classes.loginIconButton
+          }
             onClick={onSidebarOpen}
             aria-label="Menu"
           >

@@ -842,7 +842,6 @@ function ReviewMove({ className, onBack, onSubmit, formState, setFormState, ...r
             <Button
               size="large"
               variant="outlined"
-              size="large"
               onClick={() => {
                 window.scrollTo(0, 0);
                 onBack()
