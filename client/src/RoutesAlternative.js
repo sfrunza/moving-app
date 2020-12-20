@@ -76,7 +76,7 @@ class Routes extends Component {
     }
 
     handlePasswordChange = (user, id) => {
-      fetch(`/users/password/${id}`,
+      fetch(`/api/v1/users/${id}`,
       {
         method: 'PUT',
         body: JSON.stringify({user: user}),
@@ -103,7 +103,7 @@ class Routes extends Component {
     );
 
     return (
-      <Suspense fallback={<LoadingScreen />}>
+      <Suspense fallback=''>
         <Switch>
           <Route
             exact

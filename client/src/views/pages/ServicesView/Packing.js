@@ -50,7 +50,7 @@ const Packing = props => {
             }}
             data-aos="fade-up"
             disableGutter
-            ctaGroup={[<LearnMoreLink title="View Packing Rates" variant="h6" to="/pricing" />]}
+            ctaGroup={[<LearnMoreLink title="View Packing Rates" to="/pricing" />]}
           />
         </Grid>
         <Grid item xs={12} sm={6} data-aos="fade-up">

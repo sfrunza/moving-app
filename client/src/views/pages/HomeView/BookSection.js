@@ -15,13 +15,15 @@ import { Icon } from 'src/components/atoms';
 import { SectionHeader } from 'src/components/molecules';
 import { Section, CardBase } from 'src/components/organisms';
 import { Link as RouterLink } from 'react-router-dom';
+import MyButton from 'src/components/MyButton'
 
 const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: '#f5f7ff',
-    borderRadius: theme.spacing(2),
+    borderRadius: theme.spacing(1),
     boxShadow: 'none',
     padding: theme.spacing(12, 0),
+    boxShadow: '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)'
   },
   textPurple: {
     color: theme.palette.secondary.main,
@@ -59,21 +61,18 @@ const BookSection = props => {
               </span>
             }
             subtitleProps={{
-              variant: 'h5'
+              variant: 'body1'
             }}
             fadeUp
           />
           <div className={classes.inputContainer}>
-            <Button
+            <MyButton
               variant="contained"
-              color="secondary"
-              className={classes.button}
               size={isMd ? 'large' : 'medium'}
-              component={RouterLink}
+              color="secondary"
               to='/book'
-              >
-              Get your quote online
-            </Button>
+              text="Get your quote online"
+            />
           </div>
         </Grid>
     </div>

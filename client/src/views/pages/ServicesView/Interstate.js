@@ -86,7 +86,7 @@ const Interstate = props => {
             }}
             data-aos="fade-up"
             align="left"
-            ctaGroup={[<LearnMoreLink title="View Flat Rates" variant="h6" to="/pricing" />]}
+            ctaGroup={[<LearnMoreLink title="View Flat Rates" to="/pricing" />]}
           />
           <Box className={classes.benefit}>
             <Alert

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, Avatar, Box } from '@material-ui/core';
+import { makeStyles, Avatar, Box, colors } from '@material-ui/core';
 import NavBar from './NavBar';
 import TopBar from './TopBar';
 import LoadingScreen from 'src/components/LoadingScreen';
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     // overflow: 'auto'
   },
   backgroundBlue: {
-    background: theme.palette.primary.main,
+    background: theme.palette.secondary.main,
   },
   section: {
     width: '100%',
@@ -158,7 +158,7 @@ function CustomerLayout({ children, user, handleLogout, history }) {
                   justifyContent="space-evenly"
                 >
                   <Box>
-                    <span className={classes.jobs}>{total}</span>jobs
+                    <span className={classes.jobs}>{total}</span>{total > 1 ? 'jobs' : 'job'}
                   </Box>
                   <Box>
                     <span className={classes.jobs}>{confirmed}</span>confirmed

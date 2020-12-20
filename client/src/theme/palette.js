@@ -11,7 +11,7 @@ export default {
     main: '#7c4dff'
   },
   secondary: {
-    main: '#673ab7',
+    main: colors.deepPurple['A200'],
   },
   success: {
     contrastText: white,

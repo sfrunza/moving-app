@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {
   Typography,
   Grid,
@@ -10,10 +10,13 @@ import {
   InputLabel,
   FormHelperText,
   MenuItem,
+  useMediaQuery,
 } from '@material-ui/core';
 import validate from 'validate.js';
 import { DatePicker } from "@material-ui/pickers";
-import Result from './Result'
+// import Result from './Result'
+import ResultNew from './ResultNew'
+// import {SingleDatePicker} from 'react-dates';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -27,6 +30,10 @@ const useStyles = makeStyles(theme => ({
       },
     }
   },
+  selectedDateCSS: {
+    colo: 'red',
+    backgroundColor: 'pink',
+  }
 }));
 
 const schema = {
@@ -73,18 +80,51 @@ const houseTypeOptions = [
   { key: 'storage', text: 'Storage Unit', value: 'storage unit' },
 ]
 
+function getRandomNumber(min, max) {
+  return Math.round(Math.random() * (max - min) + min);
+}
+
+const movingSizeOptionsSelect = () => {
+  let moveSize = movingSizeOptions.map((item, index) => {
+      return (
+          <MenuItem key={index} value={item.value}>{item.text}</MenuItem>
+      )
+  })
+  return moveSize
+}
+
+const houseTypeOptionsSelect = () => {
+  let houseType = houseTypeOptions.map((item, index) => {
+      if(item.value === "Stairs 5th or Higher - N/A"){
+        return (
+            <MenuItem key={index} value={item.value} disabled>{item.text}</MenuItem>
+        )
+      } else {
+        return (
+            <MenuItem key={index} value={item.value}>{item.text}</MenuItem>
+        )
+      }
+  })
+  return houseType
+}
+
 
 const Calculator = ({ onClose }) => {
   const classes = useStyles();
-
+  const [focused, setFocused] = useState(null)
+  const [submitted, setSubmitted] = useState(false)
+  const [open, setOpen] = React.useState(false);
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up('sm'), {
+    defaultMatches: true,
+  });
   const [formState, setFormState] = useState({
     isValid: false,
     values: {},
     touched: {},
     errors: {},
   });
-  const [submitted, setSubmitted] = useState(false)
-  const [open, setOpen] = React.useState(false);
+
 
   const handleClose = () => {
     setOpen(false);
@@ -96,29 +136,7 @@ const Calculator = ({ onClose }) => {
 
   const onlyNumbers = (e) => { e.target.value = e.target.value.replace(/[^0-9]/g, '')};
 
-  const movingSizeOptionsSelect = () => {
-    let moveSize = movingSizeOptions.map((item, index) => {
-        return (
-            <MenuItem key={index} value={item.value}>{item.text}</MenuItem>
-        )
-    })
-    return moveSize
-  }
 
-  const houseTypeOptionsSelect = () => {
-    let houseType = houseTypeOptions.map((item, index) => {
-        if(item.value === "Stairs 5th or Higher - N/A"){
-          return (
-              <MenuItem key={index} value={item.value} disabled>{item.text}</MenuItem>
-          )
-        } else {
-          return (
-              <MenuItem key={index} value={item.value}>{item.text}</MenuItem>
-          )
-        }
-    })
-    return houseType
-  }
 
   React.useEffect(() => {
     const errors = validate(formState.values, schema);
@@ -128,6 +146,16 @@ const Calculator = ({ onClose }) => {
       errors: errors || {},
     }));
   }, [formState.values]);
+
+  const renderDay = (day) => {
+    let busy = ['Saturday', 'Sunday']
+    let exists = busy.includes(day.format('dddd'))
+    return (
+        <div style={{ backgroundColor: exists ? '#ff000047' : '#00af2e47', height: '100%', display: 'flex', }}>
+        <span>{day.format('D')}</span>
+    </div>
+    );
+}
 
   const handleChange = event => {
     event.persist();
@@ -154,14 +182,42 @@ const Calculator = ({ onClose }) => {
   const hasError = field =>
     formState.touched[field] && formState.errors[field] ? true : false;
 
+  // <Result
+  //   origin='96 Bussey st, Dedham, MA'
+  //   destination='2 Saint Paul st, Brookline, MA'
+  //   movingsize='1 Bedroom apartment'
+  //   typefrom='2nd floor'
+  //   typeto='elevator building'
+  //   onClose={onClose}
+  // />
+
+  // <SingleDatePicker
+  //   date={formState.values.startDate}
+  //   placeholder="Move Date *"
+  //   onDateChange={date =>
+  //     setFormState(formState => ({
+  //       ...formState,
+  //       values: {
+  //         ...formState.values,
+  //         startDate: date !== null ? moment(date) : ''
+  //       }
+  //     }))}
+  //   onFocusChange={({focused}) => setFocused(focused)}
+  //   focused={focused}
+  //   id="your_unique_id"
+  //   renderDayContents={renderDay}
+  //   orientation={isMd ? 'horizontal' : 'vertical'}
+  //   transitionDuration={0}
+  // />
+
   if(submitted){
     return(
-      <Result
+      <ResultNew
+        movingSize={formState.values.movingSize}
+        typeFrom={formState.values.typeFrom}
+        typeTo={formState.values.typeTo}
         origin={formState.values.origin}
         destination={formState.values.destination}
-        movingsize={formState.values.movingSize}
-        typefrom={formState.values.typeFrom}
-        typeto={formState.values.typeTo}
         onClose={onClose}
       />
     )
@@ -185,31 +241,35 @@ const Calculator = ({ onClose }) => {
             </Grid>
 
             <Grid item xs>
-              <DatePicker
-                variant="inline"
-                inputVariant="outlined"
-                format="MM/DD/YYYY"
-                autoOk
-                disablePast
-                className={classes.datePick}
-                style={{width: '100%'}}
-                label="Move Date *"
-                InputLabelProps={{
-                  classes: {
-                    root: classes.labelRoot,
+            <DatePicker
+              variant="inline"
+              inputVariant="outlined"
+              format="MM/DD/YYYY"
+              disableToolbar
+              autoOk
+              maxDate={new Date().setMonth(new Date().getMonth()+3)}
+              disablePast
+              className={classes.datePick}
+              style={{width: '100%'}}
+              label="Move Date *"
+              InputLabelProps={{
+                classes: {
+                  root: classes.labelRoot,
+                }
+              }}
+              InputProps={{ classes: { root: classes.inputRoot } }}
+              value={formState.values.startDate || null}
+              onChange={date =>
+                setFormState(formState => ({
+                  ...formState,
+                  values: {
+                    ...formState.values,
+                    startDate: date !== null ? date.format() : ''
                   }
-                }}
-                InputProps={{ classes: { root: classes.inputRoot } }}
-                value={formState.values.startDate || null}
-                onChange={date =>
-                  setFormState(formState => ({
-                    ...formState,
-                    values: {
-                      ...formState.values,
-                      startDate: date !== null ? date.format() : ''
-                    }
-                  }))}
-              />
+                }))}
+
+            />
+
             </Grid>
 
             <Grid item xs>
@@ -225,8 +285,8 @@ const Calculator = ({ onClose }) => {
                 label="From Zip *"
                 variant="outlined"
                 name="origin"
-                helperText={hasError('origin') ? formState.errors.origin[0] : null}
-                error={hasError('origin')}
+                // helperText={hasError('origin') ? formState.errors.origin[0] : null}
+                // error={hasError('origin')}
                 onChange={handleChange}
               />
             </Grid>
@@ -244,8 +304,8 @@ const Calculator = ({ onClose }) => {
                 label="To Zip *"
                 variant="outlined"
                 name="destination"
-                helperText={hasError('destination') ? formState.errors.destination[0] : null}
-                error={hasError('destination')}
+                // helperText={hasError('destination') ? formState.errors.destination[0] : null}
+                // error={hasError('destination')}
                 onChange={handleChange}
               />
             </Grid>

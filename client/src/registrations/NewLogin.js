@@ -1,17 +1,22 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, Grid, Button, TextField } from '@material-ui/core';
+import { Grid, Button, TextField, Box, Container } from '@material-ui/core';
 import validate from 'validate.js';
-import { LearnMoreLink } from 'src/components/atoms';
 import axios from 'axios'
-import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '100%',
+    // width: '100%',
+    backgroundColor: theme.palette.background.default,
+    padding: theme.spacing(4),
+    [theme.breakpoints.down('xs')]: {
+      padding: theme.spacing(2),
+    },
+    borderRadius: theme.spacing(1),
+    boxShadow: '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);'
   },
   alert: {
     marginBottom: '1em',
@@ -37,9 +42,7 @@ const schema = {
 const NewLogin = ({ history, handleLogin, loginStatus, ...rest }) => {
 
   const classes = useStyles();
-  const [currentUser, setCurrentUser] = React.useState()
   const [apiErrors, setApiErrors] = React.useState()
-  const isMountedRef = useIsMountedRef();
   const redirect = (path) => {
     history.push(path)
   }
@@ -83,7 +86,7 @@ const NewLogin = ({ history, handleLogin, loginStatus, ...rest }) => {
     event.preventDefault();
     const user = {
           email: formState.values.email,
-          password: formState.values.password
+          password: formState.values.password,
         }
 
     if (formState.isValid) {
@@ -95,9 +98,8 @@ const NewLogin = ({ history, handleLogin, loginStatus, ...rest }) => {
           if (response.data.current_user.admin === true) {
             redirect('/app')
           } else if (response.data.current_user.customer === true) {
-            let name = response.data.current_user.first_name+"_"+response.data.current_user.last_name
-
-            getJob(response.data.current_user.id)
+            // getJob(response.data.current_user.id)
+            redirect('/account')
           }
           else redirect('/calendar')
         } else {
@@ -129,7 +131,7 @@ const NewLogin = ({ history, handleLogin, loginStatus, ...rest }) => {
   const hasError = field =>
     formState.touched[field] && formState.errors[field] ? true : false;
   return (
-    <div className={classes.root}>
+    <Container maxWidth="sm" className={classes.root}>
       {
         !apiErrors ? null
          :
@@ -170,13 +172,13 @@ const NewLogin = ({ history, handleLogin, loginStatus, ...rest }) => {
             />
           </Grid>
           <Grid item xs={12}>
-            <i>
-              <Typography variant="subtitle2">
-                Fields that are marked with * sign are required.
-              </Typography>
-            </i>
-          </Grid>
-          <Grid item xs={12}>
+          <Box
+            display="flex"
+            alignItems='center'
+          >
+
+            <Box flexGrow={1} />
+            <Box>
             <Button
               size="large"
               variant="contained"
@@ -186,10 +188,12 @@ const NewLogin = ({ history, handleLogin, loginStatus, ...rest }) => {
             >
               Login
             </Button>
+            </Box>
+          </Box>
           </Grid>
         </Grid>
       </form>
-    </div>
+    </Container>
   );
 };
 

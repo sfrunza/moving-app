@@ -126,7 +126,12 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     position: 'relative',
-    top: '3px'
+    width: 16,
+    height: 16,
+  },
+  clearBrush: {
+    width: 16,
+    height: 16,
   }
 }));
 
@@ -204,7 +209,7 @@ function MovingForm({
               className: 'form-input__field',
             };
             const text = () => { return(<span>powered by </span>)}
-            const icon = () => { return(<img src="https://cdn.worldvectorlogo.com/logos/google-2015.svg" style={{width: '17%', marginLeft: '5px'}}/>)}
+            const icon = () => { return(<img src="https://cdn.worldvectorlogo.com/logos/google-2015.svg" style={{width: '15%', marginLeft: '5px'}}/>)}
 
             const autocompleteInputProps = getInputProps(additionalProps);
             return (
@@ -212,7 +217,7 @@ function MovingForm({
               <div className="autocomplete-root">
                   <TextField
                     {...autocompleteInputProps}
-                    label="Origin Address*"
+                    label="Origin Address *"
                     variant="outlined"
                     placeholder="Type Full Address"
                     style={{width: '100%', backgroundColor: bgColor}}
@@ -227,7 +232,7 @@ function MovingForm({
                         backgroundColor: suggestion.active ? '#e0e0e0' : '#fff',
                         cursor: 'pointer',
                         padding: '10px',
-                        fontSize: '14px',
+                        fontSize: '12px',
                         borderBottom: '1px solid #b7b7b7',
                         alignItems: 'center',
                         display: 'flex'
@@ -241,7 +246,7 @@ function MovingForm({
                     })}
                   </div>
                   {
-                    suggestions.length != 0 ?<div style={{display: 'flex', alignItems: 'center', float: 'right', justifyContent: 'flex-end', marginTop: '5px'}}>{text()} {icon()}</div> : null
+                    suggestions.length != 0 ?<div style={{display: 'flex', alignItems: 'center', float: 'right', justifyContent: 'flex-end', marginTop: '5px', fontSize: '10px'}}>{text()} {icon()}</div> : null
                   }
               </div>
             );
@@ -279,7 +284,7 @@ function MovingForm({
             };
 
             const text = () => { return(<span>powered by </span>)}
-            const icon = () => { return(<img src="https://cdn.worldvectorlogo.com/logos/google-2015.svg" style={{width: '17%', marginLeft: '5px'}}/>)}
+            const icon = () => { return(<img src="https://cdn.worldvectorlogo.com/logos/google-2015.svg" style={{width: '15%', marginLeft: '5px'}}/>)}
 
             const autocompleteInputProps = getInputProps(additionalProps);
             return (
@@ -287,7 +292,7 @@ function MovingForm({
               <div className="autocomplete-root">
                   <TextField
                     {...autocompleteInputProps}
-                    label="Destination Address*"
+                    label="Destination Address *"
                     variant="outlined"
                     placeholder="Type Full Address"
                     style={{width: '100%', backgroundColor: bgColor}}
@@ -302,7 +307,7 @@ function MovingForm({
                         backgroundColor: suggestion.active ? '#e0e0e0' : '#fff',
                         cursor: 'pointer',
                         padding: '10px',
-                        fontSize: '14px',
+                        fontSize: '12px',
                         borderBottom: '1px solid #b7b7b7',
                         alignItems: 'center',
                         display: 'flex',
@@ -315,7 +320,7 @@ function MovingForm({
                     })}
                   </div>
                   {
-                    suggestions.length != 0 ?<div style={{display: 'flex', alignItems: 'center', float: 'right', justifyContent: 'flex-end', marginTop: '5px'}}>{text()} {icon()}</div> : null
+                    suggestions.length != 0 ?<div style={{display: 'flex', alignItems: 'center', float: 'right', justifyContent: 'flex-end', marginTop: '5px', fontSize: '10px'}}>{text()} {icon()}</div> : null
                   }
               </div>
             );
@@ -331,19 +336,20 @@ function MovingForm({
     let name = field.name
     let label = '';
     if (name === "job.pick_up_date") {
-      label = 'Move Date*'
+      label = 'Move Date'
     } else {
-      label = 'Delivery Date*'
+      label = 'Delivery Date'
     }
 
     return (
       <DatePicker
         autoOk
         disableToolbar
+        required
         variant="inline"
         inputVariant="outlined"
         label={label}
-        format="MM/DD/YYYY"
+        format="MMM DD YYYY"
         error={getIn(error, name) && getIn(touch, name)}
         onChange={date => form.setFieldValue(field.name, moment(date).format('MM/DD/YYYY'), true)}
         {...other}
@@ -482,7 +488,7 @@ function MovingForm({
             variant="h3"
             color="textPrimary"
           >
-            Lets get started. Step 1 of 2.
+            Lets get started. Step 1 of 3.
           </Typography>
           <Box mt={2}>
             <Typography
@@ -560,7 +566,7 @@ function MovingForm({
                 <Box className={classes.itemsContainerApt}>
                   <TextField
                     id="origin.apt_number"
-                    label="Apt#"
+                    label="Apt #"
                     defaultValue=""
                     variant="outlined"
                     name='origin.apt_number'
@@ -606,7 +612,7 @@ function MovingForm({
                 <Box className={classes.itemsContainerApt}>
                   <TextField
                     id="destination.apt_number"
-                    label="Apt#"
+                    label="Apt #"
                     defaultValue=""
                     variant="outlined"
                     name='destination.apt_number'
@@ -659,7 +665,7 @@ function MovingForm({
                 onClick={()=> resetForm()}
                 style={{textTransform: 'none'}}
               >
-                <BrushRoundedIcon/>
+                <BrushRoundedIcon className={classes.clearBrush}/>
                 Clear Form
               </Button>
             </Box>

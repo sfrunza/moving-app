@@ -5,31 +5,18 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, IconButton } from '@material-ui/core';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import ChevronRightRoundedIcon from '@material-ui/icons/ChevronRightRounded';
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'inline-flex',
-    alignItems: 'center',
     textDecoration: 'none',
-    backgroundColor: '#efefef',
-    padding: '12px 16px',
-    borderRadius: '24px',
-    '& span': {
-      fontSize: '16px',
-    },
-    '&:hover': {
-      backgroundColor: '#e2e2e2',
-    }
-
   },
   title: {
-    fontWeight: 'bold',
-    color: '#121037',
+    fontWeight: 600,
   },
   icon: {
-    color: '#121037',
     padding: 0,
-    marginLeft: theme.spacing(1),
     '&:hover': {
       background: 'transparent',
     },
@@ -62,17 +49,17 @@ const LearnMoreLink = props => {
         component="span"
         className={clsx('learn-more-link__typography', classes.title)}
         variant={variant}
-
+        color={color || 'secondary'}
         {...typographyProps}
       >
         {title}
       </Typography>
       <IconButton
         className={clsx('learn-more-link__icon-button', classes.icon)}
-
+        color={color || 'secondary'}
         {...iconProps}
       >
-
+        <ChevronRightRoundedIcon className="learn-more-link__arrow" />
       </IconButton>
     </>
   );

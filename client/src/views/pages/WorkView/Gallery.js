@@ -26,13 +26,19 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   imageStyle: {
-    borderRadius: '4px',
+    borderRadius: theme.spacing(1),
     // padding: '8px',
     transition: 'transform .2s',
+    boxShadow: '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);'
     // [theme.breakpoints.down('sm')]: {
     //   padding: '2px'
     // },
 
+  },
+  box: {
+    '& div': {
+      // padding: 0,
+    }
   }
 
 }));
@@ -50,11 +56,11 @@ function Gallery({ className, images, ...rest }) {
 
   const numOfImagesPerRow = {
     xs: 2,
-    s: 3,
+    s: 2,
     m: 3,
     l: 3,
-    xl: 4,
-    xxl: 4,
+    xl: 3,
+    xxl: 3,
   };
   const imagesPaddingBottom = {
     xs: 0.5,
@@ -78,7 +84,7 @@ function Gallery({ className, images, ...rest }) {
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <Box mt={2}>
+      <Box className={classes.box}>
         <ResponsiveGallery
           images={images}
           useLightBox

@@ -16,6 +16,7 @@ import { SectionHeader } from 'src/components/molecules';
 import { Section, CardBase } from 'src/components/organisms';
 import { Link as RouterLink } from 'react-router-dom';
 import PricingTable from './PricingTable';
+import MyButton from 'src/components/MyButton'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -68,16 +69,13 @@ const PricingTableNew = props => {
           />
           <PricingTable />
           <div className={classes.inputContainer}>
-            <Button
+            <MyButton
               variant="contained"
               color="secondary"
-              className={classes.button}
               size={isMd ? 'large' : 'medium'}
-              component={RouterLink}
               to='/book'
-              >
-              Get your quote online
-            </Button>
+              text='Get your quote online'
+            />
           </div>
         </Grid>
     </div>

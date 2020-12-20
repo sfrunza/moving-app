@@ -9,13 +9,13 @@ import {
   Typography,
   Button,
 } from '@material-ui/core';
-import { ToggleButtonGroup, ToggleButton } from '@material-ui/lab';
-import { Image, Icon } from 'src/components/atoms';
+import { Icon } from 'src/components/atoms';
 import { SectionHeader, TypedText } from 'src/components/molecules';
 import { Section, CardPricingStandard } from 'src/components/organisms';
-import { Parallax, Background } from 'react-parallax';
+import { Parallax } from 'src/components/organisms';
 import backgroundImage from 'src/assets/img/pricing-background-min.jpg'
 import { Link as RouterLink } from 'react-router-dom';
+import MyButton from 'src/components/MyButton'
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -107,8 +107,8 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 'bold',
     color: 'orange'
   },
-  button: {
-    borderRadius: '24px',
+  buttonBook: {
+    width: '100%',
   }
 }));
 
@@ -130,49 +130,10 @@ const Header = props => {
   return (
     <div className={clsx(classes.root, className)} {...rest}>
       <Parallax
-            bgImage={backgroundImage}
-            bgImageAlt="bg"
-            strength={300}
-            bgClassName={classes.bgImage}
-        >
-        <div className={clsx(classes.fullHeight, classes.headerSection)}>
-          <Section>
-          <div className={classes.sectionContainer}>
-            <Section narrow className={classes.pagePaddingTop}>
-              <SectionHeader
-                title={
-                  <>
-                    <span className={classes.textWhite}>
-                      Pricing
-                    </span>
-                    <br />
-                    <TypedText
-                      component="span"
-                      variant="h1"
-                      className={classes.typed}
-                      typedProps={{
-                        strings: [
-                          'No Hidden Fees',
-                          'No Extra Charges',
-                        ],
-                        typeSpeed: 100,
-                        loop: true,
-                      }}
-
-                    />
-                  </>
-                }
-                titleProps={{
-                  variant: 'h1',
-                }}
-                data-aos="fade-up"
-              />
-            </Section>
-          </div>
-          </Section>
-        </div>
-      </Parallax>
-
+        backgroundImage={backgroundImage}
+        title="Pricing"
+        typedText={['No Hidden Fees', 'No Extra Charges']}
+      />
       <div className={classes.pricingContainer}>
         <div className={classes.pricingWrapper}>
           <Section className={classes.sectionNoPaddingTop}>
@@ -201,17 +162,14 @@ const Header = props => {
                       />
                     }
                     cta={
-                      <Button
+                      <MyButton
                         variant={item.isHighlighted ? 'contained' : 'outlined'}
-                        fullWidth
                         color="secondary"
-                        className={classes.button}
                         size={isMd ? 'large' : 'medium'}
-                        component={RouterLink}
                         to='/book'
-                      >
-                        Book Now
-                      </Button>
+                        text='Book Now'
+                        className={classes.buttonBook}
+                      />
                     }
                     disclaimer={item.disclaimer}
                     className={classes.cardPricing}

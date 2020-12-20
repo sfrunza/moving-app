@@ -6,12 +6,13 @@ import { useMediaQuery, GridList, GridListTile, Button } from '@material-ui/core
 import { Image } from 'src/components/atoms';
 import { SectionHeader } from 'src/components/molecules';
 import { Link as RouterLink } from 'react-router-dom';
+import MyButton from 'src/components/MyButton';
 
 const useStyles = makeStyles(theme => ({
   root: {},
   image: {
     objectFit: 'cover',
-    borderRadius: theme.spacing(2),
+    borderRadius: theme.spacing(1),
   },
   textWhite: {
     color: 'white',
@@ -44,30 +45,20 @@ const Places = props => {
   return (
     <div className={clsx(classes.root, className)} {...rest}>
       <SectionHeader
-        title={
-          <span>
-          <span className="text-highlighted">
-            Long Distance{' '}
-          </span>
-            Movers in Boston
-          </span>
-        }
+        title='Long Distance Movers in Boston'
         subtitle="Flat Rate Moving. Gas, mileage, tolls, insurance are included. No hidden fees. Miami, Chicago, Dallas, Atlanta... We move people everywhere!"
         subtitleProps={{
           variant: 'body1',
           color: 'textSecondary',
         }}
         ctaGroup={[
-          <Button
+          <MyButton
             variant="outlined"
             size={isMd ? 'large' : 'medium'}
             color="secondary"
-            component={RouterLink}
             to='/pricing'
-            className={classes.button}
-          >
-            See more destinations
-          </Button>
+            text="See more destinations"
+          />
         ]}
         data-aos="fade-up"
       />

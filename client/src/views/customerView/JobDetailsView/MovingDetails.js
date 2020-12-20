@@ -61,9 +61,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
   },
-  button: {
-    color: 'rgba(var(--d69,0,149,246),1)'
-  }
 }));
 
 function MovingDetails({ job, className, images, setImages, ...rest }) {
@@ -107,6 +104,7 @@ function MovingDetails({ job, className, images, setImages, ...rest }) {
       )(props =>
         <GoogleMap
           defaultZoom={7}
+          defaultOptions={{mapTypeControl: false, streetViewControl: false}}
           defaultCenter={new google.maps.LatLng(42.5659907, -72.2317007)}
         >
           {props.directions && <DirectionsRenderer directions={props.directions} />}
@@ -121,8 +119,6 @@ function MovingDetails({ job, className, images, setImages, ...rest }) {
     return null
   }
 
-  console.log(job.job.id);
-
   return (
     <Card
       {...rest}
@@ -131,7 +127,7 @@ function MovingDetails({ job, className, images, setImages, ...rest }) {
       <CardHeader
         title="Move Overview"
         action={
-          <Button className={classes.button}>
+          <Button variant='text' color='secondary' >
             View Receipt
           </Button>
         }

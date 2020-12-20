@@ -16,6 +16,7 @@ import { Menu as MenuIcon } from 'react-feather';
 import Logo from 'src/components/Logo';
 import { THEMES } from 'src/constants';
 import Account from './Account';
+import logo from 'src/assets/img/looool.png'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,7 +66,7 @@ function TopBar({
         </Hidden>
         <Hidden mdDown>
           <RouterLink to="/">
-            <Logo />
+            <Logo src={logo}/>
           </RouterLink>
         </Hidden>
         <Box

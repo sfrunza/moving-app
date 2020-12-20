@@ -7,6 +7,7 @@ import { useMediaQuery, Grid, Button, colors } from '@material-ui/core';
 import { IconText } from 'src/components/atoms';
 import { SectionHeader } from 'src/components/molecules';
 import { Link as RouterLink } from 'react-router-dom';
+import MyButton from 'src/components/MyButton'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,16 +46,13 @@ const IncludeSection = props => {
             title="What's included"
             className={classes.header}
             ctaGroup={[
-              <Button
-                variant="contained"
+              <MyButton
+                variant="outlined"
                 size={isMd ? 'large' : 'medium'}
                 color="secondary"
-                component={RouterLink}
                 to='/book'
-                className={classes.button}
-              >
-                Book Now
-              </Button>,
+                text="Book Now"
+              />
             ]}
             fadeUp
             align={isMd ? 'left' : 'center'}
@@ -62,13 +60,13 @@ const IncludeSection = props => {
           />
         </Grid>
         <Grid item xs={12} md={8} data-aos="fade-up">
-          <Grid container spacing={8}>
+          <Grid container spacing={4}>
             {data.map((item, index) => (
               <Grid key={index} item xs={12} sm={6} data-aos={'fade-up'}>
                 <Grid item container alignItems="center" xs={12} wrap="wrap">
                   <IconText
                     fontIconClass={item.icon}
-                    color={colors.indigo[500]}
+                    color={colors.green[500]}
                     title={item.title}
                   />
                 </Grid>

@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
-import LoadingScreen from 'src/components/LoadingScreen';
 import axios from 'axios';
-import validate from 'validate.js';
 import {
   Avatar,
   Box,
@@ -24,7 +22,6 @@ import {
   colors
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
-import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import {
   User as UserIcon,
   Clipboard as ClipboardIcon,
@@ -32,7 +29,7 @@ import {
   Truck as TruckIcon
 } from 'react-feather';
 import Page from 'src/components/Page';
-import ReviewMove from './ReviewMove'
+import ReviewMove2 from './ReviewMove2'
 import MovingForm from './MovingForm'
 import CustomerForm from './CustomerForm'
 
@@ -51,17 +48,6 @@ const steps = [
   }
 ];
 
-const CustomStepConnector = withStyles((theme) => ({
-  horizontal: {
-    margin: '0px 2em',
-    padding: 0,
-  },
-  line: {
-    borderColor: theme.palette.divider,
-    borderBottomStyle: 'solid',
-    borderBottomWidth: '1px'
-  }
-}))(StepConnector);
 
 const useCustomStepIconStyles = makeStyles((theme) => ({
   root: {},
@@ -101,15 +87,20 @@ CustomStepIcon.propTypes = {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundImage: 'linear-gradient(to bottom, #663ab787, #663ab78c), url(https://images.unsplash.com/photo-1570129042283-dbebdfd894de?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80)',
+    backgroundImage: 'linear-gradient(to bottom, #7c4dff, #7c4dff96), url(https://images.unsplash.com/photo-1570129042283-dbebdfd894de?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80)',
     backgroundSize: 'cover',
     minHeight: '100vh',
+    display: 'flex',
+    alignItems: 'center'
   },
   paddingMobile: {
-    [theme.breakpoints.up('sm')]: {
-      padding: theme.spacing(8, 8, 0),
+    marginTop: '3em',
+    marginBottom: '2em',
+    [theme.breakpoints.down('xs')]: {
+      padding: '0 5px',
+      marginTop: '2em',
+      marginBottom: '3em',
     },
-    padding: theme.spacing(8, 1, 6),
   },
   avatar: {
     backgroundColor: colors.red[600]
@@ -129,7 +120,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '16px',
   },
   borderRadius: {
-    borderRadius: '16px',
+    borderRadius: theme.spacing(1),
   },
   stepper: {
     [theme.breakpoints.down('sm')]: {
@@ -140,11 +131,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 function ProjectCreateView() {
-  const isMountedRef = useIsMountedRef();
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState(false);
-  const [progress, setProgress] = useState(10)
   const [formState, setFormState] = useState({
     values: {},
     touched: {},
@@ -154,7 +143,7 @@ function ProjectCreateView() {
   });
 
 
-  React.useEffect(() => {
+  useEffect(() => {
 
     setFormState(formState => ({
       ...formState,
@@ -193,21 +182,14 @@ function ProjectCreateView() {
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1)
   };
-
-  const handleComplete = () => {
-    setCompleted(true);
-  };
-
-  const hasError = field =>
-    { return formState.touched[field] && formState.errors[field] ? true : false }
-
+  
   return (
     <Page
       className={classes.root}
       title="Book"
     >
       <Container maxWidth="md" className={classes.paddingMobile}>
-        <Box mb={3}>
+        <Box mb={5}>
         </Box>
         {!completed ? (
           <Paper className={classes.borderRadius}>
@@ -257,12 +239,13 @@ function ProjectCreateView() {
                     />
                   )}
                   {activeStep === 2 && (
-                    <ReviewMove
+                    <ReviewMove2
                       origin={formState.values.origin.address}
                       destination={formState.values.destination.address}
-                      movingsize={formState.values.job.job_size}
-                      typefrom={formState.values.origin.floor}
-                      typeto={formState.values.destination.floor}
+                      movingSize={formState.values.job.job_size}
+                      typeFrom={formState.values.origin.floor}
+                      typeTo={formState.values.destination.floor}
+                      jobType={formState.values.job.job_type}
                       onBack={handleBack}
                       onSubmit={handleSubmit}
                       setFormState={setFormState}

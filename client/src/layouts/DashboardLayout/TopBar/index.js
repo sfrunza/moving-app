@@ -19,6 +19,7 @@ import Contacts from './Contacts';
 import Notifications from './Notifications';
 import Search from './Search';
 import Settings from './Settings';
+import logo from 'src/assets/img/logowhite.png'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,7 +65,7 @@ function TopBar({
         </Hidden>
         <Hidden mdDown>
           <RouterLink to="/">
-            <Logo />
+            <Logo logo={logo}/>
           </RouterLink>
         </Hidden>
         <Box

@@ -14,10 +14,10 @@ const typography = {
     lineHeight: 1.5,
   },
   h3: {
-    color: palette.text.primary,
+    color: '#0a0519',
     fontWeight: 500,
     fontSize: '32px',
-    lineHeight: 1.25,
+    lineHeight: 1.3,
   },
   h4: {
     color: palette.text.primary,
