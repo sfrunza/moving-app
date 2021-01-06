@@ -47,7 +47,7 @@
     "@react-pdf/renderer": "^1.6.8",
     "aos": "^2.3.4",
     "apexcharts": "^3.18.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "axios-mock-adapter": "^1.17.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "bootstrap": "^4.4.1",
