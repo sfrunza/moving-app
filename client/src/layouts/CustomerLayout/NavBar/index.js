@@ -195,7 +195,15 @@ function NavBar({ user, openMobile, onMobileClose, }) {
       .get(`/api/v1/users/${user.id}`)
       .then((response) => {
         if (isMountedRef.current) {
-          setJobs(response.data.jobs);
+          let jobs = response.data.jobs
+          jobs.map(job => {
+            let date = moment(job.pick_up_date, 'MM/DD/YYYY').format("MMM DD, YYYY")
+            let name = date+",  " + job.job_status
+            if (navConfig[0].items[0].items.length !== jobs.length) {
+              navConfig[0].items[0].items.push({title: name, href: `/account/jobs/${job.id}`})
+            }
+          })
+          setJobs(jobs);
         }
       });
   }, [isMountedRef]);
@@ -210,14 +218,6 @@ function NavBar({ user, openMobile, onMobileClose, }) {
   if (!jobs) {
     return null;
   }
-  if (navConfig[0].items[0].items.length === 0 || jobs.length > navConfig[0].items[0].items.length) {
-    jobs.map(job => {
-      let date = moment(job.pick_up_date, 'MM/DD/YYYY').format("MMM DD, YYYY")
-      let name = date+",  " + job.job_status
-      navConfig[0].items[0].items.push({title: name, href: `/account/jobs/${job.id}`})
-    })
-  }
-
 
   const content = (
     <Box

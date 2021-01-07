@@ -9,18 +9,27 @@ import ChevronRightRoundedIcon from '@material-ui/icons/ChevronRightRounded';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'inline-flex',
-    textDecoration: 'none',
+    // display: 'inline-flex',
+    // textDecoration: 'none',
   },
   title: {
-    fontWeight: 600,
+    fontWeight: 500,
+    color: '#2997ff',
+    '&:hover': {
+      textDecoration: 'underline',
+    }
   },
   icon: {
     padding: 0,
+    color: '#2997ff',
     '&:hover': {
       background: 'transparent',
     },
   },
+  arrowIcon: {
+    width: 18,
+    height: 18,
+  }
 }));
 
 /**
@@ -49,17 +58,17 @@ const LearnMoreLink = props => {
         component="span"
         className={clsx('learn-more-link__typography', classes.title)}
         variant={variant}
-        color={color || 'secondary'}
+        color={color || 'primary'}
         {...typographyProps}
       >
         {title}
       </Typography>
       <IconButton
         className={clsx('learn-more-link__icon-button', classes.icon)}
-        color={color || 'secondary'}
+        color={color || 'primary'}
         {...iconProps}
       >
-        <ChevronRightRoundedIcon className="learn-more-link__arrow" />
+        <ChevronRightRoundedIcon className={classes.arrowIcon} />
       </IconButton>
     </>
   );

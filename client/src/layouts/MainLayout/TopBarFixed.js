@@ -1,8 +1,18 @@
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, {
+  forwardRef,
+  useEffect,
+  useState,
+  useRef
+} from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { NavLink as RouterLink } from 'react-router-dom';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import {
+  NavLink as RouterLink
+} from 'react-router-dom';
+import {
+  makeStyles,
+  withStyles
+} from '@material-ui/core/styles';
 import axios from 'axios'
 import {
   AppBar,
@@ -19,7 +29,9 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import MyButton from 'src/components/MyButton'
 
-import { Image } from 'src/components/atoms';
+import {
+  Image
+} from 'src/components/atoms';
 import logo from 'src/assets/img/looool.png'
 import logoWhite from 'src/assets/img/logowhite.png'
 import PersonIcon from '@material-ui/icons/Person';
@@ -32,10 +44,10 @@ const useStyles = makeStyles((theme, props) => ({
     borderBottom: 'none',
     backgroundColor: 'transparent',
     position: 'absolute',
-    height: props => props,
+    height: 54,
     justifyContent: 'center',
-    // top: 0,
-    // zIndex: 1000,
+    top: 0,
+    zIndex: 1,
   },
   root2: {
     // boxShadow: 'none',
@@ -55,13 +67,10 @@ const useStyles = makeStyles((theme, props) => ({
     overflow: 'hidden',
     color: '#000',
     position: 'fixed',
-    height: 54,
     // lineHeight: 54,
-    transition: 'height .3s ease-in-out',
-    webkitTransition: 'height .3s ease-in-out',
-    msTransition: 'height .3s ease-in-out',
-    mozTransition: 'height .3s ease-in-out',
-
+    height: 54,
+    boxShadow: '0px 1px 0px 0px rgb(238 238 238)',
+    zIndex: 1,
 
   },
   flexGrow: {
@@ -186,144 +195,119 @@ const useStyles = makeStyles((theme, props) => ({
 
 const CustomRouterLink = forwardRef((props, ref) => (
   <div ref={ref}>
-    <RouterLink {...props} />
+    <RouterLink {...props}/>
   </div>
 ));
 
 const ColorButton = withStyles((theme) => ({
   root: {
-    color: '#fff',
-  },
+  color: '#fff',
+},
 }))(Button);
 
-function Topbar({ className, onSidebarOpen, pages, loggedInStatus, handleLogout, user, ...rest }) {
-
-
+function TopBarFixed({
+  className,
+  onSidebarOpen,
+  pages,loggedInStatus,
+  handleLogout,
+  user,
+  ...rest
+}) {
 
   const history = rest.history
   const fullName = user.first_name + "_" + user.last_name
   const [currentJob, setCurrentJob] = useState(null)
-  const [path, setPath] = useState('')
-  const [navbar, setNavbar] = useState(false);
-  const [height, setHeight] = useState(54)
-  const classes = useStyles(height);
+  const [path, setPath] = useState('false')
+  const classes = useStyles();
 
   const handleClick = () => {
-    axios.delete('/users/sign_out', {withCredentials: true})
+    axios.delete('/users/sign_out', { withCredentials: true})
     .then(response => {
       handleLogout()
     })
     .catch(error => console.log(error))
-
   }
 
   const getJob = (userId) => {
-    axios
-      .get(`/api/v1/users/${userId}`)
-      .then((response) => {
-        if (response.data.user.admin === true) {
-          setPath('/app')
-        } else if (response.data.user.customer === true) {
-          let currentJob = response.data.jobs[0].id
-          setCurrentJob(currentJob)
-          setPath(`/account/jobs/${currentJob}`)
-        }
-        else setPath('/calendar')
-      });
+    axios.get(`/api/v1/users/${userId}`)
+    .then((response) => {
+      if (response.data.user.admin === true) {
+        setPath('/app')
+      } else if (response.data.user.customer === true) {
+        let currentJob = response.data.jobs[0].id
+        setCurrentJob(currentJob)
+        setPath(`/account/jobs/${currentJob}`)
+      } else setPath('/calendar')
+    });
   }
-  useEffect(() =>{
 
-    const checkBackgroundColor = () => {
-      if(window.scrollY > 65) {
-        setHeight(0)
-      } else {
-        setHeight(54)
-      }
-      if(window.scrollY >= 200) {
-        setNavbar(true)
-        // setHeight(54)
-      } else {
-        setNavbar(false)
-      }
+  useEffect(() => {
+    if (loggedInStatus) {
+      getJob(user.id);
     }
-    window.addEventListener('scroll', checkBackgroundColor)
+  }, [getJob])
 
-    if(loggedInStatus){
-        getJob(user.id);
-    }
-  },[getJob])
+
+  let colored = false
+  if (history.location.pathname === '/login' || history.location.pathname === '/book'){
+    colored = true
+  }
 
   return (
     <AppBar
       {...rest}
       position="relative"
       data-tap-toggle="false"
-      className={
-        !navbar ? clsx(classes.root, className) : clsx(classes.root2, className)
-      }
-
+      className={colored ? clsx(classes.root, className) : clsx(classes.root2, className)}
     >
-      <Toolbar disableGutters className={classes.toolbar}>
-        <div className={classes.logoContainer}>
-          <Link to="/" component={CustomRouterLink}>
-            <Image
-              className={classes.logoImage}
-              src={navbar ? logo : logoWhite}
-              alt="insightmoving"
-              lazy={false}
-            />
-          </Link>
-        </div>
-        <div className={classes.flexGrow} />
-        <Hidden smDown>
+    <Toolbar disableGutters className={classes.toolbar}>
+      <div className={classes.logoContainer}>
+        <Link to="/" component={CustomRouterLink}>
+          <Image
+            className={classes.logoImage}
+            src={colored ? logoWhite : logo}
+            alt="insightmoving"
+            lazy={false}
+          />
+        </Link>
+      </div>
+      <div className={classes.flexGrow}/>
+        <Hidden smDown >
           <List className={classes.navigationContainer}>
-            <ListItem className={classes.listItem}>
-              <Typography
-              variant="body2"
-              color="textSecondary"
-              className={
-                navbar ? classes.listItemText : classes.listItemText2
-              }
-              component={CustomRouterLink}
-              to="/"
+            <ListItem className={classes.listItem} >
+              <Typography variant="body2"
+                color="textSecondary"
+                className={colored ? classes.listItemText2 : classes.listItemText}
+                component={CustomRouterLink}
+                to="/"
               >
                 Home
               </Typography>
             </ListItem>
-
-            <ListItem className={classes.listItem}>
-              <Typography
-                variant="body2"
+            <ListItem className={classes.listItem} >
+              <Typography variant="body2"
                 color="textSecondary"
-                className={
-                  navbar ? classes.listItemText : classes.listItemText2
-                }
+                className={colored ? classes.listItemText2 : classes.listItemText}
                 component={CustomRouterLink}
                 to="/services"
               >
                 Services
               </Typography>
             </ListItem>
-            <ListItem className={classes.listItem}>
-              <Typography
-                variant="body2"
+            <ListItem className={classes.listItem} >
+              <Typography variant="body2"
                 color="textSecondary"
-                className={
-                  navbar ? classes.listItemText : classes.listItemText2
-                }
+                className={colored ? classes.listItemText2 : classes.listItemText}
                 component={CustomRouterLink}
                 to="/pricing"
               >
                 Pricing
               </Typography>
             </ListItem>
-            <ListItem className={classes.listItem}>
-              <Typography
-                variant="body2"
+            <ListItem className={classes.listItem} >
+              <Typography variant="body2"
                 color="textSecondary"
-                className={
-                  navbar ? classes.listItemText : classes.listItemText2
-                }
+                className={colored ? classes.listItemText2 : classes.listItemText}
                 component={CustomRouterLink}
                 to="/work"
               >
@@ -331,56 +315,54 @@ function Topbar({ className, onSidebarOpen, pages, loggedInStatus, handleLogout,
               </Typography>
             </ListItem>
           </List>
-          <div className={classes.flexGrow} />
-          <List className={classes.navigationContainer}>
+          <div className={classes.flexGrow}/>
+          <List className={classes.navigationContainer} >
             <ListItem className={classes.listItem}>
-              {
-                !loggedInStatus
-                ?
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  className={
-                    navbar ? clsx(classes.listItemText, classes.loginLink) : clsx(classes.listItemText2, classes.loginLink)
-                  }
-                  component={CustomRouterLink}
-                  to="/login"
-                >
-                  <PersonIcon style={{height: '0.9em'}}/>
-                  Login
-                </Typography>
-                :
-                <Account user={user} handleLogout={handleLogout} currentJob={currentJob} path={path} navbar={navbar}/>
-              }
+            {
+              !loggedInStatus ?
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                className={colored ? clsx(classes.listItemText2, classes.loginLink) : clsx(classes.listItemText, classes.loginLink)}
+                component={CustomRouterLink}
+                to="/login"
+              >
+                <PersonIcon style={{height: '0.9em'}}/>
+                Login
+              </Typography> :
+              <Account
+                user={user}
+                handleLogout={handleLogout}
+                currentJob={currentJob}
+                path={path}
+              />
+            }
             </ListItem>
             <ListItem className={classes.listItemLast}>
-            {
-              navbar ?
-              <MyButton
-                size="small"
-                variant="contained"
-                color="secondary"
-                to="/book"
-                text="Get Started"
-              /> :
-              <ColorButton
-                size="small"
-                variant="outlined"
-                className={classes.bookLogin}
-                component={RouterLink}
-                to="/book"
-              >
-              Get Started
-              </ColorButton>
-            }
+              {
+                colored ?
+                <MyButton
+                  size="small"
+                  variant="outlined"
+                  className={classes.bookLogin}
+                  color="inherit"
+                  to="/book"
+                  text="Get Started"
+                /> :
+                <MyButton
+                  size="small"
+                  variant="contained"
+                  color="secondary"
+                  to="/book"
+                  text="Get Started"
+                />
+              }
             </ListItem>
           </List>
         </Hidden>
-        <Hidden mdUp>
+        <Hidden mdUp >
           <IconButton
-          className={
-            navbar ? classes.iconButton : classes.loginIconButton
-          }
+            className={colored ? classes.loginIconButton : classes.iconButton}
             onClick={onSidebarOpen}
             aria-label="Menu"
           >
@@ -392,10 +374,10 @@ function Topbar({ className, onSidebarOpen, pages, loggedInStatus, handleLogout,
   );
 };
 
-Topbar.propTypes = {
-  className: PropTypes.string,
+TopBarFixed.propTypes = {
+  className:PropTypes.string,
   onSidebarOpen: PropTypes.func,
-  pages: PropTypes.object.isRequired,
+  pages:PropTypes.object.isRequired,
 };
 
-export default Topbar;
+export default TopBarFixed;

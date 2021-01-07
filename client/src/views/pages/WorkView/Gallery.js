@@ -21,27 +21,13 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     margin: '0 auto',
     padding: theme.spacing(0),
-    [theme.breakpoints.up('md')]: {
-      padding: theme.spacing(0, 2),
-    },
+    marginTop: 96,
   },
   imageStyle: {
     borderRadius: theme.spacing(1),
-    // padding: '8px',
-    transition: 'transform .2s',
-    boxShadow: '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);'
-    // [theme.breakpoints.down('sm')]: {
-    //   padding: '2px'
-    // },
-
-  },
-  box: {
-    '& div': {
-      // padding: 0,
-    }
+    transition: 'transform .2s'
   }
-
-}));
+}))
 
 function Gallery({ className, images, ...rest }) {
   const classes = useStyles();
@@ -55,28 +41,28 @@ function Gallery({ className, images, ...rest }) {
   };
 
   const numOfImagesPerRow = {
-    xs: 2,
+    xs: 1,
     s: 2,
-    m: 3,
+    m: 2,
     l: 3,
     xl: 3,
     xxl: 3,
   };
   const imagesPaddingBottom = {
-    xs: 0.5,
-    s: 1,
+    xs: 16,
+    s: 16,
     m: 16,
     l: 16,
-    xl: 24,
-    xxl:24
+    xl: 28,
+    xxl:28
   }
   const colsPadding = {
-    xs: 2,
-    s: 2,
-    m: 8,
-    l: 8,
-    xl: 12,
-    xxl:12
+    xs: 12,
+    s: 12,
+    m: 12,
+    l: 12,
+    xl: 14,
+    xxl:14
   }
 
   return (
@@ -84,7 +70,7 @@ function Gallery({ className, images, ...rest }) {
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <Box className={classes.box}>
+      <Box>
         <ResponsiveGallery
           images={images}
           useLightBox

@@ -22,8 +22,12 @@ const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: '#f5f7ff',
     boxShadow: 'none',
-    padding: theme.spacing(4, 0),
-    borderRadius: '24px',
+    padding: theme.spacing(10, 0),
+    borderRadius: theme.spacing(1),
+    margin: theme.spacing(10, 0),
+    [theme.breakpoints.up('sm')]: {
+      margin: theme.spacing(12, 0),
+    },
   },
   textPurple: {
     color: theme.palette.secondary.main,
@@ -32,13 +36,9 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'center',
   },
-  button: {
-    borderRadius: '24px',
-    marginTop: '2em',
-  }
 }));
 
-const PricingTableNew = props => {
+const PricingTableMain = props => {
   const { data, className, ...rest } = props;
   const classes = useStyles();
 
@@ -48,26 +48,18 @@ const PricingTableNew = props => {
   });
 
   return (
-    <div className={clsx(className)} {...rest} data-aos="fade-up">
+    <div className={clsx(className)} {...rest} >
         <Grid className={classes.root}>
           <SectionHeader
-            title={
-              <span>
-                Pricing Table
-              </span>
-            }
-            subtitle={
-              <span>
-                See the table below for fixed hourly rates.
-              </span>
-            }
+            title="Pricing table"
+            subtitle="See the table below for fixed hourly rates."
             subtitleProps={{
               variant: 'body1',
               color: 'textSecondary',
             }}
             fadeUp
           />
-          <PricingTable />
+        <PricingTable />
           <div className={classes.inputContainer}>
             <MyButton
               variant="contained"
@@ -82,11 +74,11 @@ const PricingTableNew = props => {
   );
 };
 
-PricingTableNew.propTypes = {
+PricingTableMain.propTypes = {
   /**
    * External classes
    */
   className: PropTypes.string,
 };
 
-export default PricingTableNew;
+export default PricingTableMain;

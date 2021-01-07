@@ -45,9 +45,6 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: 'orange',
     margin: theme.spacing(0, 2),
   },
-  button: {
-    borderRadius: '24px',
-  }
 }));
 
 const Team = props => {
@@ -60,9 +57,9 @@ const Team = props => {
   });
 
   return (
-    <div className={clsx(classes.root, className)} data-aos="fade-up" {...rest}>
+    <div className={clsx(classes.root, className)} {...rest}>
       <SectionHeader
-        title="Why Choose Us"
+        title="Why choose us"
         subtitle="We are a small company of professional movers. Unlike movers from big companies, we will treat your belongings as ours. We will walk you through our smooth and simple process."
         subtitleProps={{
           variant: 'body1',
@@ -82,7 +79,6 @@ const Team = props => {
       <List disablePadding className={classes.list}>
         <ListItem
           disableGutters
-          data-aos="fade-up"
           className={classes.listItem}
         >
           <Avatar className={classes.listItemAvatar}>
@@ -106,7 +102,6 @@ const Team = props => {
         </ListItem>
         <ListItem
           disableGutters
-          data-aos="fade-up"
           className={classes.listItem}
         >
           <Avatar className={classes.listItemAvatar}>
@@ -129,7 +124,6 @@ const Team = props => {
         </ListItem>
         <ListItem
           disableGutters
-          data-aos="fade-up"
           className={classes.listItem}
         >
 

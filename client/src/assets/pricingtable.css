@@ -48,7 +48,7 @@ TABLE OF CONTENTS
 	transition: font-size 0.2s;
 	display: flex;
 	margin: 30px auto;
-	font-family: 'Maison Neue Bold';
+
 }
 .pricing_table ul {
 	margin: 0px;
@@ -298,9 +298,8 @@ TABLE OF CONTENTS
             display:block;
             margin-bottom:10px;
             font-size:12px;
-            font-weight:bold;
-						color: #454646;
-						font-family: 'Maison Neue Bold';
+            font-weight:500;
+						color: #546e7a;
         }
 	.pricing_table .pricing_hover_area .pricing_column:hover {
 		-webkit-transform:scaleY(1);
@@ -344,7 +343,7 @@ TABLE OF CONTENTS
 	border-bottom:1px solid #cccccc;
 	padding-top: 15px;
 	font-size: 20px;
-	font-family: 'Maison Neue',sans-serif;
+
 }
 .pricing_table .even {
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -12,7 +12,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.default,
     height: 'fit-content',
-    width: '100%'
+    width: '100%',
+    margin: 'auto'
   },
   wrapper: {
     display: 'flex',
@@ -117,11 +118,7 @@ function MainLayout({ children, user, loggedInStatus, handleLogout, history }){
 
 
   return (
-    <div
-      className={clsx({
-        [classes.root]: true,
-      })}
-    >
+    <div className={clsx({[classes.root]: true})}>
       <TopBar
         onSidebarOpen={handleSidebarOpen}
         pages={pages}

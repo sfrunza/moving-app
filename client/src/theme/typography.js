@@ -1,10 +1,15 @@
 import palette from './palette';
 
 const typography = {
+  fontFamily: [
+    '-apple-system',
+    'BlinkMacSystemFont',
+    'sans-serif',
+  ].join(', '),
   h1: {
     color: palette.text.primary,
     fontWeight: 500,
-    fontSize: '50px',
+    fontSize: '42px',
     lineHeight: 1.1,
   },
   h2: {

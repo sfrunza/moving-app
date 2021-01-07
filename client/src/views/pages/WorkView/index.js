@@ -20,7 +20,7 @@ import {
   reviews,
   partners
 } from 'src/views/pages/HomeView/data';
-import backgroundImage from 'src/assets/img/work-background-min.jpg'
+import backgroundImage from 'src/assets/img/work-background-min2.jpg'
 import Contact from 'src/views/pages/HomeView/Contact';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 
@@ -29,6 +29,8 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
     width: '100%',
     overflow: 'hidden',
+    // maxWidth: 1500,
+    // margin: 'auto',
   },
   pagePaddingTop: {
     paddingTop: theme.spacing(5),
@@ -99,29 +101,20 @@ const WorkView = props => {
       />
       <Section className={classes.pagePaddingTop}>
         <Partners data={partners} />
+        <Gallery images={images}/>
+        <Section>
+          <Divider />
+        </Section>
+        <Reviews data={reviews}/>
+        <Section>
+          <Divider />
+        </Section>
+        <BookSection />
+        <Section>
+          <Divider />
+        </Section>
+        <Contact />
       </Section>
-
-      <Gallery images={images}/>
-
-      <Section className={classes.pagePaddingTop}>
-        <Section>
-          <Reviews data={reviews}/>
-        </Section>
-
-        <Divider />
-
-        <Section>
-          <BookSection />
-        </Section>
-
-        <Divider />
-
-        <Section>
-          <Contact />
-        </Section>
-
-      </Section>
-      <Divider />
     </Page>
   );
 };

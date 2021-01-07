@@ -36,7 +36,7 @@ const Partners = props => {
   const classes = useStyles();
 
   return (
-    <div className={clsx(classes.root, className)} data-aos="fade-up" {...rest}>
+    <div className={clsx(classes.root, className)} {...rest}>
       <div className={classes.copy}>
         <Grid container spacing={2}>
           <Grid item xs={12}>

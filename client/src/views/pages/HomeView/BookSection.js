@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#f5f7ff',
     borderRadius: theme.spacing(1),
     boxShadow: 'none',
-    padding: theme.spacing(12, 0),
+    padding: theme.spacing(15, 2),
     boxShadow: '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)'
   },
   textPurple: {
@@ -32,9 +32,6 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'center',
   },
-  button: {
-    borderRadius: '24px',
-  }
 }));
 
 const BookSection = props => {
@@ -47,14 +44,10 @@ const BookSection = props => {
   });
 
   return (
-    <div className={clsx(className)} {...rest} data-aos="fade-up">
+    <div className={clsx(className)} {...rest}>
         <Grid className={classes.root}>
           <SectionHeader
-            title={
-              <span>
-                We make moving easy.
-              </span>
-            }
+            title="We make moving easy"
             subtitle={
               <span className={classes.textPurple}>
                 Our quick application process takes only 2 minutes. No credit card required.

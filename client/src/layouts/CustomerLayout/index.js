@@ -110,6 +110,8 @@ function CustomerLayout({ children, user, handleLogout, history }) {
   const fullName = user.first_name + " " + user.last_name
   const isMountedRef = useIsMountedRef();
   const [jobs, setJobs] = useState(null);
+  const [completed, setCompleted] = useState(0);
+  const [confirmed, setConfirmed] = useState(0);
 
   const getJobs = useCallback(() => {
     axios
@@ -117,6 +119,18 @@ function CustomerLayout({ children, user, handleLogout, history }) {
       .then((response) => {
         if (isMountedRef.current) {
           setJobs(response.data.jobs);
+          let jobs = response.data.jobs;
+          let completed = 0;
+          let confirmed = 0;
+          for(let i = 0; i < jobs.length; i++) {
+            if (jobs[i].job_status === "Completed") {
+              completed += 1;
+            } else if (jobs[i].job_status === "Confirmed") {
+              confirmed += 1;
+            }
+          }
+          setCompleted(completed);
+          setConfirmed(confirmed);
         }
       });
   }, [isMountedRef]);
@@ -128,17 +142,12 @@ function CustomerLayout({ children, user, handleLogout, history }) {
   if (!jobs) {
     return null;
   }
-  let total = jobs.length;
-  let completed = 0;
-  let confirmed = 0;
-  for(let i = 0; i < total; i++) {
-    if (jobs[i].job_status === "Completed") {
-      completed ++;
-    } else if (jobs[i].job_status === "Confirmed") {
-      confirmed += 1
-    }
-  }
-
+  // const theJobs = () => {
+  //   let total = jobs.length;
+  //   let completed = 0;
+  //   let confirmed = 0;
+  //
+  // }
 
     return (
       <div className={classes.root}>
@@ -158,7 +167,7 @@ function CustomerLayout({ children, user, handleLogout, history }) {
                   justifyContent="space-evenly"
                 >
                   <Box>
-                    <span className={classes.jobs}>{total}</span>{total > 1 ? 'jobs' : 'job'}
+                    <span className={classes.jobs}>{jobs.length}</span>{jobs.length > 1 ? 'jobs' : 'job'}
                   </Box>
                   <Box>
                     <span className={classes.jobs}>{confirmed}</span>confirmed

@@ -8,7 +8,7 @@ import { SectionHeader } from 'src/components/molecules';
 const useStyles = makeStyles(theme => ({
   root: {},
   fontWeightBold: {
-    fontWeight: 'bold',
+    fontWeight: 600,
   },
   faqTitle: {
     display: 'block',
@@ -32,14 +32,11 @@ const Faq = props => {
     <div className={clsx(classes.root, className)} {...rest}>
       <SectionHeader
         title="Frequently asked questions"
-        titleProps={{
-          className: classes.fontWeightBold,
-        }}
       />
       <Grid container spacing={isMd ? 4 : 0}>
         {data.map((item, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
-            <ListItem disableGutters key={index} data-aos="fade-up">
+            <ListItem disableGutters key={index}>
               <ListItemText
                 primary={item.title}
                 secondary={item.text}
@@ -48,8 +45,8 @@ const Faq = props => {
                   className: clsx(classes.fontWeightBold, classes.faqTitle),
                 }}
                 secondaryTypographyProps={{
-                  variant: 'body2',
-                  color: 'textPrimary',
+                  variant: 'body1',
+                  color: 'textSecondary',
                 }}
               />
             </ListItem>
