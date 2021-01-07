@@ -44,27 +44,19 @@ const Interstate = props => {
   return (
     <div className={clsx(classes.root, className)} {...rest}>
       <SectionHeader
-        title={
-          <span>
-            Flat Rates
-          </span>
-        }
-        subtitle={
-          <span>
-            Call us for more infomation and rates.
-          </span>
-        }
+        title="Flat rates"
+        subtitle="Call us for more infomation and rates."
         subtitleProps={{
           variant: 'body1',
           color: 'textSecondary',
         }}
-        data-aos="fade-up"
+
       />
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
           <Grid container spacing={2}>
             {data.account.items.map((item, index) => (
-              <Grid item xs={12} key={index} data-aos="fade-up">
+              <Grid item xs={12} key={index} >
                 <CardJobMinimal
                   title={item.title}
                   subtitle={
@@ -85,7 +77,7 @@ const Interstate = props => {
         <Grid item xs={12} md={6}>
           <Grid container spacing={2}>
             {data.billing.items.map((item, index) => (
-              <Grid item xs={12} key={index} data-aos="fade-up">
+              <Grid item xs={12} key={index} >
                 <CardJobMinimal
                   title={item.title}
                   subtitle={

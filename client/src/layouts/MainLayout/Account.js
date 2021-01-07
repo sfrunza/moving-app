@@ -78,7 +78,7 @@ function Account({ user, handleLogout, currentJob, path, navbar }) {
     }
 
   return (
-    <>
+    <div>
       <Box
         display="flex"
         alignItems="center"
@@ -121,7 +121,7 @@ function Account({ user, handleLogout, currentJob, path, navbar }) {
           Log Out
         </MenuItem>
       </Menu>
-    </>
+    </div>
   );
 }
 

@@ -16,11 +16,7 @@ import { Section, SectionAlternate } from 'src/components/organisms';
 import { Parallax, Background } from 'react-parallax';
 import Header from './Header';
 import Interstate from './Interstate';
-import Local from './Local';
-import Packing from './Packing';
-import Storage from './Storage';
-import PricingTableNew from './PricingTableNew';
-import backgroundImage from 'src/assets/img/home-background.jpg'
+import PricingTableMain from './PricingTableMain';
 import FAQS from 'src/views/pages/HomeView/FAQS';
 import Contact from 'src/views/pages/HomeView/Contact';
 import {
@@ -87,9 +83,8 @@ const PricingVew = () => {
 
         <Divider />
 
-        <Section>
-          <PricingTableNew />
-        </Section>
+        <PricingTableMain />
+
 
         <Divider />
 

@@ -8,32 +8,11 @@ import { CardBase } from 'src/components/organisms';
 import { Parallax } from 'react-parallax';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    position: 'relative',
-  },
-  image: {
-    position: 'absolute',
-    objectFit: 'cover',
-    /* support for plugin https://github.com/bfred-it/object-fit-images */
-    fontFamily: 'object-fit: cover;',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    zIndex: -1,
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center center',
-  },
   bgImage: {
-    // height: '75vh !important',
+    marginTop: 0,
     width: '100% !important',
-    // top: '20% !important',
     minWidth: '1000px !important',
     minHeight: '80vh !important',
-  },
-  headerSection: {
-    backgroundImage: 'linear-gradient(#000000c9, #0000007d)',
   },
   fullHeight: {
     width: '100%',
@@ -57,54 +36,56 @@ const useStyles = makeStyles(theme => ({
 
 
 const Parallaxx = props => {
+
   const { backgroundImage, title, subtitle, className, typedText, buttons, ...rest } = props;
 
   const classes = useStyles();
 
   return (
     <Parallax
-          bgImage={backgroundImage}
-          bgImageAlt="bg"
-          strength={200}
-          bgClassName={classes.bgImage}
-      >
-      <div className={clsx(classes.fullHeight, classes.headerSection)}>
-      <SectionHeader
-        title={
-          <>
+      bgImage={backgroundImage}
+      bgImageAlt="bg"
+      strength={100}
+      bgClassName={classes.bgImage}
+    >
+      <div className={classes.fullHeight}>
+        <SectionHeader
+          title={
+            <>
+              <span className={classes.textWhite}>
+                {title}
+              </span>
+              <br />
+              <TypedText
+                component="span"
+                variant="h2"
+                className={classes.typed}
+                typedProps={{
+                  strings: typedText,
+                  typeSpeed: 100,
+                  loop: true,
+                }}
+              />
+            </>
+          }
+          subtitle={
             <span className={classes.textWhite}>
-              {title}
+              {subtitle}
             </span>
-            <br />
-            <TypedText
-              component="span"
-              variant="h2"
-              className={classes.typed}
-              typedProps={{
-                strings: typedText,
-                typeSpeed: 100,
-                loop: true,
-              }}
-            />
-          </>
-        }
-        subtitle={
-          <span className={classes.textWhite}>
-            {subtitle}
-          </span>
-        }
-        align="center"
-        titleProps={{
-          variant: 'h1',
-        }}
-        subtitleProps={{
-          variant: 'h4',
-        }}
-        ctaGroup={buttons}
+          }
+          align="center"
+          titleProps={{
+            variant: 'h1',
+          }}
+          subtitleProps={{
+            variant: 'h4',
+          }}
+          ctaGroup={buttons}
+          data-aos="fade-up"
+          disableGutter
+        />
 
-        data-aos="fade-up"
-        disableGutter
-      />
+
       </div>
     </Parallax>
   );

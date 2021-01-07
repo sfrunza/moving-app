@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold'
   },
   addInfoSubTitle: {
-    backgroundColor: '#f7f7f7',
+    backgroundColor: '#f4f6f8',
     padding: '15px',
     wordWrap: 'break-word',
     display: 'flex',

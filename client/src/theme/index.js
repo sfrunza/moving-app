@@ -3,6 +3,7 @@
 import _ from 'lodash';
 import { colors, createMuiTheme, responsiveFontSizes } from '@material-ui/core';
 import typography from './typography';
+import palette from './palette';
 import { softShadows, strongShadows } from './shadows';
 import { THEMES } from '../constants';
 
@@ -42,27 +43,7 @@ const themeConfigs = [
         }
       }
     },
-    palette: {
-      type: 'light',
-      action: {
-        active: colors.blueGrey[600]
-      },
-      background: {
-        default: colors.common.white,
-        dark: '#f4f6f8',
-        paper: colors.common.white
-      },
-      primary: {
-        main: colors.indigo[600]
-      },
-      secondary: {
-        main: colors.deepPurple['A200']
-      },
-      text: {
-        primary: colors.blueGrey[900],
-        secondary: colors.blueGrey[600]
-      }
-    },
+    palette,
     shadows: softShadows
   },
   {

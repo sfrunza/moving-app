@@ -39,19 +39,11 @@ const Partners = props => {
   const classes = useStyles();
 
   return (
-    <div className={clsx(classes.root, className)} data-aos="fade-up" {...rest}>
+    <div className={clsx(classes.root, className)} {...rest}>
       <div className={classes.copy}>
         <SectionHeader
-        title={
-          <span>
-            We make moving{' '}
-            <span className="text-highlighted">
-              Easy
-            </span>
-          </span>
-        }
+        title="We make moving easy"
           subtitle="Professional and secure packing of furniture and valuable objects."
-          data-aos="fade-up"
           subtitleProps={{
             variant: 'body1',
             color: 'textSecondary',

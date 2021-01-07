@@ -10,19 +10,12 @@ import { Link as RouterLink } from 'react-router-dom';
 import MyButton from 'src/components/MyButton'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    // backgroundColor: theme.palette.background.dark,
-    // padding: theme.spacing(12, 2),
-    // borderRadius: '16px'
-  },
+  root: {},
   header: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
   },
-  button: {
-    borderRadius: '24px',
-  }
 }));
 
 const IncludeSection = props => {
@@ -41,7 +34,7 @@ const IncludeSection = props => {
         spacing={isMd ? 4 : 0}
         alignItems={isMd ? 'center' : 'flex-start'}
       >
-        <Grid item xs={12} md={4} data-aos="fade-up" >
+        <Grid item xs={12} md={4} >
           <SectionHeader
             title="What's included"
             className={classes.header}
@@ -59,10 +52,10 @@ const IncludeSection = props => {
             disableGutter={isMd}
           />
         </Grid>
-        <Grid item xs={12} md={8} data-aos="fade-up">
+        <Grid item xs={12} md={8}>
           <Grid container spacing={4}>
             {data.map((item, index) => (
-              <Grid key={index} item xs={12} sm={6} data-aos={'fade-up'}>
+              <Grid key={index} item xs={12} sm={6}>
                 <Grid item container alignItems="center" xs={12} wrap="wrap">
                   <IconText
                     fontIconClass={item.icon}

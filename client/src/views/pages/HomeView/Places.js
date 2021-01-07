@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     left: theme.spacing(2),
   },
   button: {
-    borderRadius: '24px',
+    borderRadius: theme.spacing(1),
   }
 }));
 
@@ -45,7 +45,7 @@ const Places = props => {
   return (
     <div className={clsx(classes.root, className)} {...rest}>
       <SectionHeader
-        title='Long Distance Movers in Boston'
+        title='Long distance movers in Boston'
         subtitle="Flat Rate Moving. Gas, mileage, tolls, insurance are included. No hidden fees. Miami, Chicago, Dallas, Atlanta... We move people everywhere!"
         subtitleProps={{
           variant: 'body1',
@@ -60,7 +60,6 @@ const Places = props => {
             text="See more destinations"
           />
         ]}
-        data-aos="fade-up"
       />
       <GridList cellHeight={isMd ? 360 : 260} cols={4} spacing={isMd ? 24 : 8}>
         {data.map((item, index) => (

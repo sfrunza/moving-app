@@ -2,78 +2,39 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { useMediaQuery, Typography, Grid } from '@material-ui/core';
-import { Image, LearnMoreLink } from 'src/components/atoms';
-import { CardProduct, HeroSideImage } from 'src/components/organisms';
+import { useMediaQuery, GridList, GridListTile, Button } from '@material-ui/core';
+import { Image } from 'src/components/atoms';
 import { SectionHeader } from 'src/components/molecules';
+import { Link as RouterLink } from 'react-router-dom';
+import MyButton from 'src/components/MyButton';
+import { LearnMoreLink } from 'src/components/atoms';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    margin: theme.spacing(12, 0, 0, 0),
-  },
-  cardProduct: {
-    display: 'flex',
-    flexDirection: 'column',
-    borderRadius: theme.spacing(1),
-    boxShadow: 'none',
-    background: 'transparent',
-    paddingBottom: theme.spacing(2),
-    '& .card-product__content': {
-      padding: theme.spacing(4),
-      zIndex: 1,
-      background: 'white',
-      width: '90%',
-      margin: '0 auto',
-      marginTop: theme.spacing(-6),
-      borderRadius: theme.spacing(1),
-      boxShadow: '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);'
-    },
-    '& .card-product__media': {
-      minHeight: 300,
-      '& img': {
-        transitionDuration: '.7s',
-        transform: 'scale(1.0)',
-      },
-    },
-    '&:hover': {
-      '& .card-product__media img': {
-        transform: 'scale(1.2)',
-      },
-    },
+    paddingTop: 40,
   },
   image: {
     objectFit: 'cover',
+    borderRadius: theme.spacing(1),
   },
-  blogTitle: {
-    fontWeight: 700,
-    margin: theme.spacing(0, 2, 2, 0),
+  textWhite: {
+    color: 'white',
   },
-  tags: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    margin: theme.spacing(3, 0, 0, 0),
+  title: {
+    fontWeight: 600,
   },
-  tag: {
-    padding: theme.spacing(1 / 2, 1),
-    borderRadius: theme.spacing(1 / 2),
-    color: '#4caf50',
-    border: '1px solid #4caf50',
-    margin: theme.spacing(0, 1, 1, 0),
-    [theme.breakpoints.up('md')]: {
-      margin: theme.spacing(0, 2, 2, 0),
-    },
+  starting: {
   },
-  author: {
-    margin: theme.spacing(1, 0),
-    [theme.breakpoints.up('md')]: {
-      margin: theme.spacing(2, 0),
-    },
+  gridListTile: {
+    position: 'relative',
   },
-  fontWeightBold: {
-    fontWeight: 'bold',
-  },
-  learnMoreLink: {
-    marginTop: theme.spacing(2),
+  gridListSection: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '85%',
+    margin: 'auto',
   },
 }));
 
@@ -82,67 +43,50 @@ const Services = props => {
   const classes = useStyles();
 
   const theme = useTheme();
-  const isMd = useMediaQuery(theme.breakpoints.up('md'), {
+  const isSm = useMediaQuery(theme.breakpoints.up('sm'), {
     defaultMatches: true,
   });
 
-  const BlogMediaContent = props => (
-    <Image
-      {...props}
-      className={classes.image}
-      lazyProps={{ width: '100%', height: '100%' }}
-    />
-  );
-
-  const BlogContent = props => (
-    <div>
-      <Typography
-        variant="h4"
-        color="textPrimary"
-        className={classes.blogTitle}
-      >
-        {props.title}
-      </Typography>
-      <Typography variant="body1" color="textPrimary">
-        {props.subtitle}
-      </Typography>
-
-      <LearnMoreLink
-        title="Learn more"
-        variant="subtitle2"
-        className={classes.learnMoreLink}
-        href='/services'
-      />
-    </div>
-  );
-
   return (
     <div className={clsx(classes.root, className)} {...rest}>
-      <Grid container spacing={isMd ? 10 : 6}>
-        <SectionHeader
-          title='Service that Works for You'
-          data-aos="fade-up"
-        />
+      <SectionHeader
+        title='Service that works for you'
+      />
+    <GridList cellHeight={isSm ? 350 : 350} cols={4} spacing={isSm ? 24 : 8}>
         {data.map((item, index) => (
-          <Grid item xs={12} sm={6} key={index} data-aos="fade-up">
-            <CardProduct
-              className={classes.cardProduct}
-              mediaContent={
-                <BlogMediaContent {...item.cover} alt={item.title} />
-              }
-              cardContent={
-                <BlogContent
-                  title={item.title}
-                  subtitle={item.subtitle}
-                  author={item.author}
-                  date={item.date}
-                  tags={item.tags}
-                />
-              }
+          <GridListTile
+            key={index}
+            cols={isSm ? item.cols : 4 || 1}
+            className={classes.gridListTile}
+          >
+            <Image
+              {...item.image}
+              alt={item.location}
+              className={classes.image}
+              lazyProps={{
+                width: '100%',
+                height: '100%',
+              }}
             />
-          </Grid>
+            <SectionHeader
+              title={<span className={clsx(classes.textWhite, classes.title)}>{item.location}</span>}
+              subtitle={
+                <span className={clsx(classes.textWhite, classes.starting)}>
+                  {item.properties}
+                </span>
+              }
+              subtitleVariant='subtitle1'
+              titleProps={{
+                variant: 'h2',
+              }}
+              disableGutter
+              className={classes.gridListSection}
+              align="center"
+              ctaGroup={[<LearnMoreLink title="Learn more" to='/services' variant='subtitle1'/>]}
+            />
+          </GridListTile>
         ))}
-      </Grid>
+      </GridList>
     </div>
   );
 };

@@ -13,7 +13,7 @@ import { Icon } from 'src/components/atoms';
 import { SectionHeader, TypedText } from 'src/components/molecules';
 import { Section, CardPricingStandard } from 'src/components/organisms';
 import { Parallax } from 'src/components/organisms';
-import backgroundImage from 'src/assets/img/pricing-background-min.jpg'
+import backgroundImage from 'src/assets/img/pricing-background-min2.jpg'
 import { Link as RouterLink } from 'react-router-dom';
 import MyButton from 'src/components/MyButton'
 
@@ -139,7 +139,7 @@ const Header = props => {
           <Section className={classes.sectionNoPaddingTop}>
             <Grid container spacing={isMd ? 4 : 2}>
               {data.map((item, index) => (
-                <Grid item xs={12} md={4} data-aos="fade-up" key={index}>
+                <Grid item xs={12} md={4} key={index}>
                   <CardPricingStandard
                     variant="outlined"
                     withShadow={item.isHighlighted ? true : false}

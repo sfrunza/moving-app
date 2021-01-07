@@ -3,13 +3,13 @@ import { colors } from '@material-ui/core';
 const white = '#FFFFFF';
 const black = '#000000';
 
-export default {
+const palette =  {
   black,
   white,
   alternate: 'rgb(247, 249, 250)',
-  primary: {
-    main: '#7c4dff'
-  },
+  // primary: {
+  //   main: '#2997ff',
+  // },
   secondary: {
     main: colors.deepPurple['A200'],
   },
@@ -43,9 +43,12 @@ export default {
     link: colors.blue[600],
   },
   background: {
-    default: '#F4F6F8',
+    default: '#fff',
     paper: white,
+    dark: '#f4f6f8'
   },
   icon: colors.blueGrey[600],
   divider: colors.grey[200],
 };
+
+export default palette;

@@ -1,3 +1,9 @@
+import ny from 'src/assets/img/ny.jpeg'
+import local from 'src/assets/img/local1-min.jpg'
+import inter from 'src/assets/img/interstate1-min.jpg'
+import packing from 'src/assets/img/packing1-min.jpg'
+import storage from 'src/assets/img/storage1-min.jpg'
+
 export const partners = [
   {
     name: 'google my business',
@@ -89,6 +95,45 @@ export const places = [
   },
 ];
 
+export const servicesNew = [
+  {
+    image: {
+      src: `${local}`,
+      srcSet: `${local}`,
+    },
+    location: 'Local Moving',
+    properties: 'Hourly based full moving services in Metro Boston and 125 miles around it.',
+    cols: 2,
+  },
+  {
+    image: {
+      src: `${inter}`,
+      srcSet: `${inter}`,
+    },
+    location: 'Interstate Moving',
+    properties: 'Flat Rate Moving. Same or Next Day moving services on distance up to 1,500 miles.',
+    cols: 2,
+  },
+  {
+    image: {
+      src: `${packing}`,
+      srcSet: `${packing}`,
+    },
+    location: 'Packing Services',
+    properties: 'Our experienced movers will have all necessary packing materials to pack up everything.',
+    cols: 2,
+  },
+  {
+    image: {
+      src: `${storage}`,
+      srcSet: `${storage}`,
+    },
+    location: 'Storage Solutions',
+    properties: 'Insight Moving provides climate controlled storage for up to 6 months.',
+    cols: 2,
+  },
+];
+
 export const faq = [
   {
     id: 'faq-1',
@@ -125,75 +170,6 @@ export const faq = [
     title: 'How far in advance should you schedule movers?',
     text:
       'As early as you can, especially if you are planning to move in a peak moving season. Typically 2-3 weeks is enough to reserve the date you want. We also accept early and last minute bookings.',
-  },
-];
-export const services = [
-  {
-    cover: {
-      src: 'https://www.niche.com/blog/wp-content/uploads/2019/04/5-moving-lessons-learned-the-hard-way-social.jpg',
-      srcSet: 'https://www.niche.com/blog/wp-content/uploads/2019/04/5-moving-lessons-learned-the-hard-way-social.jpg',
-    },
-    title: 'Local Moving',
-    subtitle:
-      'Hourly based full moving services in Metro Boston and 125 miles around it.',
-    author: {
-      photo: {
-        src: '/images/photos/people/veronica-adams.jpg',
-        srcSet: '/images/photos/people/veronica-adams@2x.jpg 2x',
-      },
-      name: 'Veronica Adams',
-    },
-    tags: ['safe', 'fast', 'reliable',],
-  },
-  {
-    cover: {
-      src: 'https://www.trucks.com/wp-content/uploads/2015/09/Moving-Semi-Truck-Driving-on-Highway-Back-View.jpg',
-      srcSet: 'https://www.trucks.com/wp-content/uploads/2015/09/Moving-Semi-Truck-Driving-on-Highway-Back-View.jpg',
-    },
-    title: 'Interstate Moving',
-    subtitle:
-      'Flat Rate Moving. Same or Next Day moving services on distance up to 1,500 miles.',
-    author: {
-      photo: {
-        src: '/images/photos/people/akachi-luccini.jpg',
-        srcSet: '/images/photos/people/akachi-luccini@2x.jpg 2x',
-      },
-      name: 'Akachi Luccini',
-    },
-    tags: ['flat rate', 'insured', 'fast', 'safe'],
-  },
-  {
-    cover: {
-      src: 'https://dumbomoving.com/wp-content/uploads/moving-boxes.jpg',
-      srcSet: 'https://dumbomoving.com/wp-content/uploads/moving-boxes.jpg',
-    },
-    title: 'Packing Services',
-    subtitle:
-      'Our experienced movers will have all necessary packing materials to pack up everything.',
-    author: {
-      photo: {
-        src: '/images/photos/people/akachi-luccini.jpg',
-        srcSet: '/images/photos/people/akachi-luccini@2x.jpg 2x',
-      },
-      name: 'Akachi Luccini',
-    },
-    tags: ['full packing', 'kitchen', 'closets', 'books'],
-  },
-  {
-    cover: {
-      src: 'https://www.ezselfstoragenj.com/images/EZ-Self-Storage-NJ-Main5.jpg',
-    },
-    title: 'Storage Solutions',
-    subtitle:
-      'Insight Moving provides climate controlled storage for up to 6 months.',
-    author: {
-      photo: {
-        src: '/images/photos/people/akachi-luccini.jpg',
-        srcSet: '/images/photos/people/akachi-luccini@2x.jpg 2x',
-      },
-      name: 'Akachi Luccini',
-    },
-    tags: ['clean', 'dry', 'safe', 'climate controlled'],
   },
 ];
 

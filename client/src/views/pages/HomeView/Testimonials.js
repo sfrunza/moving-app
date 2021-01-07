@@ -20,8 +20,9 @@ const useStyles = makeStyles((theme) => ({
     margin: '0px auto',
     padding: theme.spacing(0, 0, 3),
   },
-  button: {
-    borderRadius: '24px',
+  secondCard: {
+    width: '95%',
+    height: '95%',
   }
 }));
 
@@ -35,13 +36,9 @@ const Testimonials = props => {
   });
 
   return (
-    <div className={clsx(classes.root, className)} data-aos="fade-up" {...rest}>
+    <div className={clsx(classes.root, className)} {...rest}>
       <SectionHeader
-        title={
-          <span>
-            What people are saying
-          </span>
-        }
+        title="What people are saying"
         fadeUp
       />
       <Grid container className={classes.rating} justify="space-evenly" alignItems='center'>
@@ -70,7 +67,6 @@ const Testimonials = props => {
             direction="column"
             xs={12}
             sm={4}
-            data-aos="fade-up"
           >
             <CardReview
               variant="outlined"
@@ -84,10 +80,11 @@ const Testimonials = props => {
               authorName={review.authorName}
               authorTitle={review.authorOccupation}
               authorPhoto={review.authorPhoto}
+              className={index !== 1 ?classes.secondCard : null}
             />
           </Grid>
         ))}
-        <Grid item container xs={12} justify="center">
+        <Grid item container xs={12} justify="center" style={{marginTop: '27px'}}>
           <MyButton
             variant="outlined"
             size={isMd ? 'large' : 'medium'}

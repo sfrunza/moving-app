@@ -85,7 +85,7 @@ function NavItem({
   let paddingLeft = 8;
 
   if (depth > 0) {
-    paddingLeft = 32 + 8 * depth;
+    paddingLeft = 8 * depth;
   }
 
   const style = { paddingLeft };

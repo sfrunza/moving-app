@@ -103,7 +103,7 @@ class Routes extends Component {
     );
 
     return (
-      <Suspense fallback=''>
+      <Suspense fallback={<LoadingScreen />}>
         <Switch>
           <Route
             exact
@@ -259,9 +259,6 @@ class Routes extends Component {
                       path="/account/bill"
                       component={lazy(() => import('src/views/customerView/BillOfLading'))}
                     />
-
-
-
                   </Switch>
                 </Suspense>
               </CustomerLayout>

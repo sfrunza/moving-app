@@ -98,8 +98,8 @@ const NewLogin = ({ history, handleLogin, loginStatus, ...rest }) => {
           if (response.data.current_user.admin === true) {
             redirect('/app')
           } else if (response.data.current_user.customer === true) {
-            // getJob(response.data.current_user.id)
-            redirect('/account')
+            getJob(response.data.current_user.id)
+            // redirect('/account')
           }
           else redirect('/calendar')
         } else {

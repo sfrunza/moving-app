@@ -38,7 +38,6 @@ const useStyles = makeStyles(theme => ({
 
   },
   ratesSpan: {
-    color: deepPurple['A200'],
     fontSize: '60px',
     fontWeight: 500,
     [theme.breakpoints.down('xs')]: {
@@ -76,17 +75,15 @@ const Rates = props => {
   });
 
   return (
-    <div className={clsx(classes.root, className)} {...rest} data-aos="fade-up">
+    <div className={clsx(classes.root, className)} {...rest}>
       <SectionHeader
         title='Clear pricing. Affordable rates.'
-        fadeUp
       />
       <Grid container spacing={isMd ? 4 : 2}>
         <Grid item xs={12} md={6}>
           <Grid
             container
             className={classes.gridCard}
-            data-aos="fade-up"
           >
             <SectionHeader
               title="Local Hourly Rates"
@@ -103,6 +100,7 @@ const Rates = props => {
             <Box className={classes.rates}>
               <Typography
                 color="textPrimary"
+                variant='h5'
                 >
                 2 MOVERS & TRUCK
               </Typography>
@@ -115,6 +113,7 @@ const Rates = props => {
             <Box className={classes.rates}>
               <Typography
                 color="textPrimary"
+                variant='h5'
                 >
                 3 MOVERS & TRUCK
               </Typography>
@@ -130,7 +129,6 @@ const Rates = props => {
           <Grid
             container
             className={classes.gridCard}
-            data-aos="fade-up"
           >
             <SectionHeader
               title="Flat Rate Moving"
@@ -149,6 +147,7 @@ const Rates = props => {
                 style={{ margin: '1em 0em 1em 0em'}}
                 align="center"
                 color="textPrimary"
+                variant='h5'
                 >
               NEW YORK <SyncAltIcon className={classes.icon}/>BOSTON
               </Typography>

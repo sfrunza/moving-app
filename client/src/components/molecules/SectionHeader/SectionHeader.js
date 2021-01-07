@@ -68,7 +68,6 @@ const SectionHeader = props => {
     <Grid
       container
       spacing={2}
-      data-aos={fadeUp ? 'fade-up' : ''}
       className={clsx(
         'section-header',
         classes.root,
