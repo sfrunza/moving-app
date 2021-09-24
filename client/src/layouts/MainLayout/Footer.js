@@ -10,7 +10,6 @@ import {
   List,
   ListItem,
   Link,
-  colors,
 } from "@material-ui/core";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import TwitterIcon from "@material-ui/icons/Twitter";
@@ -33,15 +32,11 @@ const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: "flex",
     justifyContent: "space-evenly",
-    // fontFamily: "Maison Neue",
     padding: theme.spacing(4, 0),
     color: "#fff",
 
     minWidth: "370px",
     margin: "auto",
-    // [theme.breakpoints.down('md')]: {
-    //   maxWidth: '',
-    // },
   },
   link: {
     cursor: "pointer",
@@ -57,8 +52,6 @@ const useStyles = makeStyles((theme) => ({
   logoContainer: {
     width: 120,
     height: 60,
-    // backgroundColor: '#ffffffd1',
-    // borderRadius: '10px',
     padding: "3px 3px",
   },
   socialContainer: {
