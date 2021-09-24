@@ -1,54 +1,83 @@
-import { colors } from '@material-ui/core';
-
-const white = '#FFFFFF';
-const black = '#000000';
-
-const palette =  {
-  black,
-  white,
-  alternate: 'rgb(247, 249, 250)',
-  // primary: {
-  //   main: '#2997ff',
-  // },
+export const light = {
+  alternate: {
+    main: "rgb(247, 249, 250)",
+    dark: "#e8eaf6",
+  },
+  cardShadow: "rgba(23, 70, 161, .11)",
+  type: "light",
+  primary: {
+    contrastText: "#ffffff",
+    main: "#01ab56",
+  },
   secondary: {
-    main: colors.deepPurple['A200'],
+    light: "#f07373",
+    main: "#F65858",
+    dark: "#e04c4c",
+    contrastText: "rgba(255, 255, 255, 1)",
   },
   success: {
-    contrastText: white,
-    dark: colors.green[900],
-    main: colors.green[600],
-    light: colors.green[400],
-  },
-  info: {
-    contrastText: white,
-    dark: colors.blue[900],
-    main: colors.blue[600],
-    light: colors.blue[400],
-  },
-  warning: {
-    contrastText: white,
-    dark: colors.orange[900],
-    main: colors.orange[600],
-    light: colors.orange[400],
+    contrastText: "#ffffff",
+    main: "#3076FF",
   },
   error: {
-    contrastText: white,
-    dark: colors.red[900],
-    main: colors.red[600],
-    light: colors.red[400],
+    contrastText: "#ffffff",
+    main: "#f44336",
+  },
+  primary2: {
+    contrastText: "#ffffff",
+    main: "pink",
   },
   text: {
-    primary: '#121037',
-    secondary: colors.blueGrey[600],
-    link: colors.blue[600],
+    // primary: "#172b4d",
+    primary: "#0a0b0d",
+    // secondary: "#6b778c",
+    secondary: "#5b616e",
   },
+  // divider: "rgba(236, 239, 241)",
   background: {
-    default: '#fff',
-    paper: white,
-    dark: '#f4f6f8'
+    dashboard: "#5765D2",
+    navbar: "rgba(255,255,255,0.72)",
+    paper: "#fff",
+    default: "#fff",
+    level2: "#F5F5F7",
+    level1: "#fff",
+    footer: "#1A212C",
   },
-  icon: colors.blueGrey[600],
-  divider: colors.grey[200],
 };
 
-export default palette;
+export const dark = {
+  alternate: {
+    main: "#2D3748",
+    dark: "#24242b",
+  },
+  cardShadow: "rgba(0, 0, 0, .11)",
+  common: {
+    black: "#000",
+    white: "#fff",
+  },
+  type: "dark",
+  primary: {
+    contrastText: "#ffffff",
+    main: "#01ab56",
+  },
+  secondary: {
+    light: "#f07373",
+    main: "#F65858",
+    dark: "#e04c4c",
+    contrastText: "rgba(255, 255, 255, 1)",
+  },
+  text: {
+    primary: "#ffffff",
+    secondary: "#919eab",
+  },
+  divider: "rgba(255, 255, 255, 0.12)",
+  background: {
+    dashboard: "#2D3848",
+    navbar: "rgba(45,56,72,0.72)",
+    paper: "#2D3848",
+    default: "#2D3848",
+    level2: "#1A212C",
+    level1: "#2D3748",
+    footer: "#2D3848",
+  },
+};

@@ -3,8 +3,13 @@ module Api::V1
     # before_action :set_image, only: [:show, :update, :destroy]
 
   def index
-    @images = Image.all.order('id DESC')
-    render json: @images
+    if !current_user
+      @images = Image.all.order('id DESC').where(job_id: 0)
+      render json: @images
+    else
+      @images = Image.all.order('id DESC')
+      render json: @images
+    end
   end
 
   def show

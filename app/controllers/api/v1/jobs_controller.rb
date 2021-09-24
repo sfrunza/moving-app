@@ -9,7 +9,7 @@ module Api::V1
         render json: @jobs
       elsif current_user && current_user.customer == true
         @current_user = current_user
-        @user_jobs = @current_user.jobs.as_json
+        @user_jobs = @current_user.jobs
         render json: @user_jobs
       else
         render json: {message: "Please sign in."}
@@ -24,7 +24,7 @@ module Api::V1
         @origin = @job.origin
         @destination = @job.destination
         @images = @job.images
-        render json: {job: @job, origin: @origin, destination: @destination, images: @images}
+        render json: @job
       elsif current_user && current_user.customer == true
         @current_user = current_user
         @user_jobs = @current_user.jobs.find(params[:id])
@@ -55,6 +55,8 @@ module Api::V1
     # PATCH/PUT /jobs/1
     def update
       if @job.update(job_params)
+        @user = User.find(@job.user_id)
+        # UserMailer.with(user: @user, job: @job).status_email.deliver_later
         render json: @job
       else
         render json: @job.errors, status: :unprocessable_entity

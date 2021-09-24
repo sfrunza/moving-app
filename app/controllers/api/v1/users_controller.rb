@@ -38,7 +38,7 @@ module Api::V1
     def show
      if current_user && current_user.customer == false
        @user = User.find(params[:id])
-       @jobs = @user.jobs.as_json
+       @jobs = @user.jobs.order('created_at DESC')
        @origins = @user.origins.as_json
        @destinations = @user.destinations.as_json
        @images = @user.images.as_json
@@ -71,28 +71,30 @@ module Api::V1
     end
 
       def create
-        @user = User.new(user_params)
-
         if User.exists?(email: user_params[:email])
           @old_user= User.find_by_email!(user_params[:email])
-          UserMailer.with(user: @old_user).welcome_email.deliver_later
+          # UserMailer.with(user: @old_user).welcome_email.deliver_later
           render json: {
             user: @old_user
           }
-        end
-        if @user.save
-          UserMailer.with(user: @user).welcome_email.deliver_later
-          render json: {
-            status: :created,
-            user: @user
-          }
+        
+        else  @user = User.new(user_params)
+          if @user.save
+          # UserMailer.with(user: @user).welcome_email.deliver_later
+            render json: {
+              status: :created,
+              user: @user
+            }
+          end
         end
       end
 
       def update
         user = User.find(params[:id])
         user.update_attributes(user_params)
-        render json: user
+        render json: {
+          user: user
+        }
       end
 
       # DELETE /origins/1

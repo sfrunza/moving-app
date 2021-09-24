@@ -7,4 +7,10 @@ class UserMailer < ApplicationMailer
     @url = 'https://www.insightmoving.com'
     mail(to: @user.email, subject: 'Moving Details')
   end
+
+  def status_email
+    @user = params[:user]
+    @job = params[:job]
+    mail(to: @user.email, subject: 'Status Update')
+  end
 end

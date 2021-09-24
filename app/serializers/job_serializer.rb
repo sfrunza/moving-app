@@ -1,6 +1,6 @@
 class JobSerializer < ActiveModel::Serializer
   attributes :id,
-            :user_id,
+            :user,
             :pick_up_date,
             :delivery_date,
             :start_time,
@@ -16,6 +16,7 @@ class JobSerializer < ActiveModel::Serializer
             :job_duration,
             :total_amount,
             :created_at,
+            :updated_at,
             :origin,
             :destination,
             :images

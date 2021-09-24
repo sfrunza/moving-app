@@ -1,83 +1,42 @@
-import palette from './palette';
-
 const typography = {
-  fontFamily: [
-    '-apple-system',
-    'BlinkMacSystemFont',
-    'sans-serif',
-  ].join(', '),
+  // fontFamily: ["Varela Round Regular", "sans-serif"].join(", "),
+  // fontFamily: ["Poppins", "sans-serif"].join(", "),
+  fontFamily:
+    '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
+  fontDisplay: "swap",
   h1: {
-    color: palette.text.primary,
-    fontWeight: 500,
-    fontSize: '42px',
-    lineHeight: 1.1,
+    fontWeight: 600,
+    fontSize: "3.5rem",
   },
   h2: {
-    color: palette.text.primary,
-    fontWeight: 500,
-    fontSize: '38px',
-    lineHeight: 1.5,
+    fontWeight: 600,
+    fontSize: "3rem",
   },
   h3: {
-    color: '#0a0519',
-    fontWeight: 500,
-    fontSize: '32px',
-    lineHeight: 1.3,
+    fontWeight: 600,
+    fontSize: "2.25rem",
   },
   h4: {
-    color: palette.text.primary,
-    fontWeight: 500,
-    fontSize: '22px',
-    lineHeight: 1.35,
+    fontWeight: 600,
+    fontSize: "2rem",
   },
   h5: {
-    color: palette.text.primary,
-    fontWeight: 500,
-    fontSize: '1.125rem',
-    lineHeight: 1.4,
+    fontWeight: 600,
+    fontSize: "1.5rem",
   },
   h6: {
-    color: palette.text.primary,
-    fontSize: '14px',
-    lineHeight: 1.45,
-  },
-  subtitle1: {
-    color: palette.text.primary,
-    fontSize: '16px',
-    lineHeight: 1.6,
-  },
-  subtitle2: {
-    color: palette.text.secondary,
-    fontWeight: 400,
-    fontSize: '16px',
-    lineHeight: 1.4,
-  },
-  body1: {
-    color: palette.text.primary,
-    fontSize: '16px',
-    lineHeight: 1.6,
-  },
-  body2: {
-    color: palette.text.secondary,
-    fontSize: '14px',
-    lineHeight: 1.6,
+    fontWeight: 600,
+    fontSize: "1.25rem",
   },
   button: {
-    color: palette.text.primary,
-    fontSize: '14px',
-    fontWeight: 500,
-    lineHeight: 1.3,
-  },
-  caption: {
-    color: palette.text.secondary,
-    fontSize: '12px',
-    lineHeight: 1.35,
+    fontWeight: 600,
   },
   overline: {
-    fontSize: '13px',
-    textTransform: 'uppercase',
-    fontWeight: 'bold',
+    fontWeight: 600,
+  },
+  body2: {
+    lineHeight: 1.7,
   },
 };
 
-export default typography
+export default typography;

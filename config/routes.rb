@@ -10,7 +10,11 @@ devise_for :users, controllers: { registrations: 'registrations', sessions: 'ses
         resources :destinations
       end
 
-      resources :users, only: [:index, :show, :create, :edit, :update, :destroy]
+      resources :users, only: [:index, :show, :create, :edit, :update, :destroy] do 
+        resources :jobs
+      end
+      
+      resources :rates
       resources :images, only: [:index, :show, :create, :destroy]
       resources :origins, only: [:index, :show, :create, :edit, :update, :destroy]
       resources :destinations, only: [:index, :show, :create, :edit, :update, :destroy]

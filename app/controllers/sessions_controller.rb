@@ -27,15 +27,19 @@ class SessionsController < Devise::SessionsController
   end
 
 
-    private
+  private
 
-    def invalid_login_attempt
-      warden.custom_failure!
-      render json: {error: ['No such user!', ' Verify credentials and try again']}, status: :unprocessable_entity
-    end
+  def invalid_login_attempt
+    warden.custom_failure!
+    # render json: {error: ['No such user!', ' Verify credentials and try again']}, status: :unprocessable_entity
+    render json: {
+      status: :unprocessable_entity,
+      errors: ['No such user!', ' Verify credentials and try again']
+    }
+  end
 
-    def user_params
-       params.require(:user).permit(:email, :password, :active)
-    end
+  def user_params
+     params.require(:user).permit(:email, :password, :active)
+  end
 
 end

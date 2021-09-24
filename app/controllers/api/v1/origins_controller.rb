@@ -52,7 +52,7 @@ module Api::V1
 
       # Only allow a trusted parameter "white list" through.
       def origin_params
-        params.require(:origin).permit(:address, :add_address, :job_id, :floor, :apt_number)
+        params.require(:origin).permit(:address, :city, :state, :zip, :job_id, :floor, :apt_number)
       end
   end
 end

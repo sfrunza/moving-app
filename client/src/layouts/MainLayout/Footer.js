@@ -1,8 +1,8 @@
-import React from 'react';
-import { NavLink as RouterLink } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import { NavLink as RouterLink } from "react-router-dom";
+import PropTypes from "prop-types";
+import clsx from "clsx";
+import { makeStyles } from "@material-ui/core/styles";
 import {
   Typography,
   IconButton,
@@ -10,45 +10,45 @@ import {
   List,
   ListItem,
   Link,
-  colors
-} from '@material-ui/core';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import TwitterIcon from '@material-ui/icons/Twitter';
-import InstagramIcon from '@material-ui/icons/Instagram';
-import PinterestIcon from '@material-ui/icons/Pinterest';
-import logoWhite from 'src/assets/img/logowhite.png'
+  colors,
+} from "@material-ui/core";
+import FacebookIcon from "@material-ui/icons/Facebook";
+import TwitterIcon from "@material-ui/icons/Twitter";
+import InstagramIcon from "@material-ui/icons/Instagram";
+import PinterestIcon from "@material-ui/icons/Pinterest";
+// import logoWhite from 'src/assets/img/logowhite.png'
 
-import { Image } from 'src/components/atoms';
+// import { Image } from "src/components/atoms";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(4, 0),
-    background: colors.deepPurple[800],
-    overflow: 'hidden',
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'column',
+    background: theme.palette.background.footer,
+    overflow: "hidden",
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "column",
   },
   wrapper: {
-    display: 'flex',
-    justifyContent: 'space-evenly',
+    display: "flex",
+    justifyContent: "space-evenly",
     // fontFamily: "Maison Neue",
     padding: theme.spacing(4, 0),
-    color: '#fff',
+    color: "#fff",
 
-    minWidth: '370px',
-    margin: 'auto',
+    minWidth: "370px",
+    margin: "auto",
     // [theme.breakpoints.down('md')]: {
     //   maxWidth: '',
     // },
   },
   link: {
-    cursor: 'pointer',
-    color: '#fff'
+    cursor: "pointer",
+    color: "#fff",
   },
   content: {
-    color: '#fff',
+    color: "#fff",
   },
 
   logoContainerItem: {
@@ -59,23 +59,23 @@ const useStyles = makeStyles(theme => ({
     height: 60,
     // backgroundColor: '#ffffffd1',
     // borderRadius: '10px',
-    padding: '3px 3px',
+    padding: "3px 3px",
   },
   socialContainer: {
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   logoImage: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
   },
   socialIcon: {
     padding: 0,
     marginRight: theme.spacing(1),
-    color: 'rgba(255,255,255,.6)',
-    '&:hover': {
-      background: 'transparent',
+    color: "rgba(255,255,255,.6)",
+    "&:hover": {
+      background: "transparent",
     },
-    '&:last-child': {
+    "&:last-child": {
       marginRight: 0,
     },
   },
@@ -84,7 +84,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Footer = props => {
+const Footer = (props) => {
   const { pages, className, ...rest } = props;
 
   const classes = useStyles();
@@ -92,9 +92,9 @@ const Footer = props => {
   return (
     <div {...rest} className={clsx(classes.root, className)}>
       <Grid className={classes.root}>
-        <Grid item >
-          <List >
-            <ListItem  className={classes.logoContainerItem}>
+        <Grid item>
+          <List>
+            {/* <ListItem  className={classes.logoContainerItem}>
               <div className={classes.logoContainer}>
                 <Link to="/" component={RouterLink}>
                   <Image
@@ -105,7 +105,7 @@ const Footer = props => {
                   />
                 </Link>
               </div>
-            </ListItem>
+            </ListItem> */}
             <ListItem className={classes.socialContainer}>
               <IconButton className={classes.socialIcon}>
                 <FacebookIcon className={classes.icon} />
@@ -131,10 +131,14 @@ const Footer = props => {
             © {new Date().getFullYear()}
           </Typography>
           <Typography className={classes.content}>
-            <Link to="/privacy" component={RouterLink} className={classes.link}>Privacy</Link>
+            <Link to="/privacy" component={RouterLink} className={classes.link}>
+              Privacy
+            </Link>
           </Typography>
           <Typography className={classes.content}>
-            <Link to="/terms" component={RouterLink} className={classes.link}>Terms</Link>
+            <Link to="/terms" component={RouterLink} className={classes.link}>
+              Terms
+            </Link>
           </Typography>
         </Grid>
       </Grid>
@@ -144,7 +148,7 @@ const Footer = props => {
 
 Footer.propTypes = {
   className: PropTypes.string,
-  pages: PropTypes.object.isRequired,
+  pages: PropTypes.array.isRequired,
 };
 
 export default Footer;

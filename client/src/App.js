@@ -1,80 +1,109 @@
-import React from 'react';
-import { Router } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
-import { create } from 'jss';
-import rtl from 'jss-rtl';
-import MomentUtils from '@date-io/moment';
-import { SnackbarProvider } from 'notistack';
-import DateFnsUtils from "@date-io/date-fns";
+import React, { useEffect } from "react";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { createBrowserHistory } from "history";
+import { BrowserRouter as Router } from "react-router-dom";
+import Routes from "./routes";
+import { SnackbarProvider } from "notistack";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import MomentUtils from "@date-io/moment";
 import {
-  createStyles,
-  jssPreset,
-  makeStyles,
-  StylesProvider,
-  ThemeProvider
-} from '@material-ui/core';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import GoogleAnalytics from 'src/components/GoogleAnalytics';
-import ScrollReset from 'src/components/ScrollReset';
-import useSettings from 'src/hooks/useSettings';
-import { createTheme } from 'src/theme';
-import Routes from 'src/RoutesAlternative';
-import 'swiper/swiper-bundle.css';
-import 'aos/dist/aos.css';
-import './assets/scss/index.scss';
-import AOS from 'aos';
+  createTheme,
+  ThemeProvider,
+  responsiveFontSizes,
+} from "@material-ui/core/styles";
+import { light, dark } from "src/theme/palette";
+import typography from "src/theme/typography";
+import { lightShadows, darkShadows } from "src/theme/shadows";
+import { useDispatch, useSelector } from "src/store";
+import { verifyAuth } from "./slices/auth";
+import LoadingTable from "./components/LoadingTable";
+import ScrollReset from "./components/ScrollReset";
 
-const history = createBrowserHistory();
-const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
-
-const useStyles = makeStyles(() => createStyles({
-  '@global': {
-    '*': {
-      boxSizing: 'border-box',
-      margin: 0,
-      padding: 0,
-      fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
-    },
-    html: {
-      '-webkit-font-smoothing': 'antialiased',
-      '-moz-osx-font-smoothing': 'grayscale',
-      height: '100%',
-      width: '100%'
-    },
-    body: {
-      height: '100%',
-      width: '100%'
-    },
-    '#root': {
-      height: '100%',
-      width: '100%'
-    }
-  }
-}));
+export const history = createBrowserHistory();
 
 function App() {
-  useStyles();
+  // useStyles();
+  const { isDark } = useSelector((state) => state.theme);
+  const { isVerifying } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
-  const { settings } = useSettings();
-  AOS.init({
-    once: true,
-    delay: 50,
-    duration: 500,
-    easing: 'ease-in-out',
+  let darkTheme = createTheme({
+    overrides: {
+      MuiAvatar: {
+        fallback: {
+          height: "75%",
+          width: "75%",
+        },
+      },
+      MuiButton: {
+        root: {
+          textTransform: "none",
+        },
+      },
+      MuiIconButton: {
+        root: {
+          color: "#6b778c",
+        },
+      },
+      MuiTypography: {
+        root: {
+          textDecoration: "none",
+        },
+      },
+      MuiCardHeader: {
+        title: {
+          fontSize: 18,
+        },
+      },
+      MuiLinearProgress: {
+        root: {
+          borderRadius: 3,
+          overflow: "hidden",
+        },
+      },
+      MuiListItemIcon: {
+        root: {
+          minWidth: "auto",
+          marginRight: "16px",
+        },
+      },
+      MuiTableRow: {
+        root: {
+          verticalAlign: "baseline",
+        },
+      },
+    },
+    layout: {
+      contentWidth: 1236,
+    },
+    palette: isDark ? dark : light,
+    typography,
+    shape: {
+      borderRadius: 8,
+    },
+    shadows: isDark ? darkShadows : lightShadows,
   });
+  darkTheme = responsiveFontSizes(darkTheme);
+
+  useEffect(() => {
+    localStorage.setItem("dark", JSON.stringify(isDark));
+    dispatch(verifyAuth());
+  }, [dispatch, isDark]);
+
+  if (isVerifying) {
+    return <LoadingTable />;
+  }
   return (
-    <ThemeProvider theme={createTheme(settings)}>
-      <StylesProvider jss={jss}>
-        <MuiPickersUtilsProvider utils={MomentUtils}>
-          <SnackbarProvider maxSnack={1}>
-            <Router history={history}>
-                <ScrollReset />
-                <GoogleAnalytics />
-                <Routes />
-            </Router>
-          </SnackbarProvider>
-        </MuiPickersUtilsProvider>
-      </StylesProvider>
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+        <SnackbarProvider maxSnack={2}>
+          <Router>
+            <ScrollReset />
+            <Routes />
+          </Router>
+        </SnackbarProvider>
+      </MuiPickersUtilsProvider>
     </ThemeProvider>
   );
 }

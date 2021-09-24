@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Status Updated </h1>
+    <% if @job.job_status === "Confirmed" %>
+    <p>
+      Job Status: <%= @job.job_status %>.<br>
+    </p>
+    <p>
+      See you on <%= @job.pick_up_date %>.<br>
+    </p>
+    <% elsif @job.job_status === "Completed" %>
+    <p>
+      Job Status: <%= @job.job_status %>.<br>
+    </p>
+    <p>
+      Total $: <%= @job.total_amount %>.<br>
+    </p>
+    <p>
+      Total h <%= @job.job_duration %>.<br>
+    </p>
+    <% else %>
+    <p>
+      Job Status: <%= @job.job_status %>.<br>
+    </p>
+    <% end %>
+
+
+    <p>Thanks for choosing InsightMoving and have a great day!</p>
+  </body>
+</html>

@@ -50,7 +50,7 @@ module Api::V1
 
       # Only allow a trusted parameter "white list" through.
       def destination_params
-        params.require(:destination).permit(:address, :add_address, :job_id, :floor, :apt_number)
+        params.require(:destination).permit(:address, :city, :state, :zip, :job_id, :floor, :apt_number)
       end
   end
 end

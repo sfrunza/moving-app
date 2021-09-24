@@ -17,8 +17,8 @@ class RegistrationsController < Devise::RegistrationsController
   def update
     @user = User.find_by_email(user_params[:email])
 
-    if @user.update_attributes(user_params)
-      render json: @user
+    if update_resource(@user, user_params)
+      bypass_sign_in(@user)
     else
       warden.custom_failure!
       render :json=> @user.errors, :status=>422

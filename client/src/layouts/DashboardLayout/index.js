@@ -1,73 +1,62 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core';
-import NavBar from './NavBar';
-import TopBar from './TopBar';
-import LoadingScreen from 'src/components/LoadingScreen';
-import { Redirect } from 'react-router-dom';
+import { useState } from "react";
+import { styled } from "@material-ui/core/styles";
+import DashboardNavbar from "./DashboardNavbar";
+import DashboardSidebar from "./DashboardSidebar";
+import { useSelector } from "src/store";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.dark,
-    display: 'flex',
-    height: '100%',
-    overflow: 'hidden',
-    width: '100%'
-  },
-  wrapper: {
-    display: 'flex',
-    flex: '1 1 auto',
-    overflow: 'hidden',
-    paddingTop: 54,
-    [theme.breakpoints.up('lg')]: {
-      paddingLeft: 256
-    }
-  },
-  contentContainer: {
-    display: 'flex',
-    flex: '1 1 auto',
-    overflow: 'hidden'
-  },
-  content: {
-    flex: '1 1 auto',
-    height: '100%',
-    overflow: 'auto'
-  }
+const DashboardLayoutRoot = styled("div")(({ theme }) => ({
+  backgroundColor: theme.palette.background.level2,
+  display: "flex",
+  height: "100%",
+  overflow: "hidden",
+  width: "100%",
 }));
 
-function DashboardLayout({ children, user, loggedInStatus, handleLogout, history }) {
-  const classes = useStyles();
-  const [isMobileNavOpen, setMobileNavOpen] = useState(false);
+const DashboardLayoutWrapper = styled("div")(({ theme }) => ({
+  display: "flex",
+  flex: "1 1 auto",
+  overflow: "hidden",
+  paddingTop: "40px",
+  [theme.breakpoints.up("lg")]: {
+    paddingLeft: "280px",
+  },
+}));
 
-  if (user.email === undefined) {
-    return <LoadingScreen />
-  }
-  else if (!user.admin) {
-    return <Redirect to="/404" />
-  } else {
-    return (
-      <div className={classes.root}>
-        <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} user={user} handleLogout={handleLogout} />
-        <NavBar
-          onMobileClose={() => setMobileNavOpen(false)}
-          openMobile={isMobileNavOpen}
-          user={user}
-        />
-        <div className={classes.wrapper}>
-          <div className={classes.contentContainer}>
-            <div className={classes.content}>
-              {children}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+const DashboardLayoutContainer = styled("div")({
+  display: "flex",
+  flex: "1 1 auto",
+  overflow: "hidden",
+});
 
-}
+const DashboardLayoutContent = styled("div")({
+  flex: "1 1 auto",
+  height: "100%",
+  overflow: "auto",
+  position: "relative",
+  WebkitOverflowScrolling: "touch",
+});
 
-DashboardLayout.propTypes = {
-  children: PropTypes.any
+const DashboardLayout = ({ children }) => {
+  const [isSidebarMobileOpen, setIsSidebarMobileOpen] = useState(false);
+  const { isLoggingOut } = useSelector((state) => state.auth);
+  return (
+    <DashboardLayoutRoot>
+      <DashboardNavbar
+        onSidebarMobileOpen={() => setIsSidebarMobileOpen(true)}
+      />
+      <DashboardSidebar
+        onMobileClose={() => setIsSidebarMobileOpen(false)}
+        openMobile={isSidebarMobileOpen}
+      />
+      <DashboardLayoutWrapper>
+        <DashboardLayoutContainer>
+          <DashboardLayoutContent>
+            {isLoggingOut ? "Loading" : children}
+          </DashboardLayoutContent>
+        </DashboardLayoutContainer>
+      </DashboardLayoutWrapper>
+    </DashboardLayoutRoot>
+  );
 };
 
 export default DashboardLayout;
