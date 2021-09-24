@@ -265,11 +265,11 @@ const FirstStep = ({ handleNext, initial }) => {
       } else if (loc === "to") {
         dispatch(setDestination(city + ", " + state));
       }
-      // if (isApiLoaded) {
-      //   setTimeout(function () {
-      //     findTravelTime();
-      //   }, 500);
-      // }
+      if (isApiLoaded) {
+        setTimeout(function () {
+          findTravelTime();
+        }, 500);
+      }
     }
   };
 

@@ -254,8 +254,8 @@ export const submitRequest = (data) => (dispatch) => {
           var destination = data.destination;
           origin.job_id = jobId;
           destination.job_id = jobId;
-          axios.post(`api/v1/jobs/${jobId}/origins`, { origin });
-          axios.post(`api/v1/jobs/${jobId}/destinations`, { destination });
+          axios.post("api/v1/origins", { origin });
+          axios.post("api/v1/destinations", { destination });
         })
         .catch((error) =>
           dispatch(slice.actions.setSubmitFailure(response.data.errors))

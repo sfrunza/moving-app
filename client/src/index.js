@@ -6,8 +6,6 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import configureStore from "src/store";
 import smoothscroll from "smoothscroll-polyfill";
-// import "~slick-carousel/slick/slick.css";
-// import "~slick-carousel/slick/slick-theme.css";
 
 smoothscroll.polyfill();
 
