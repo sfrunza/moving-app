@@ -4,15 +4,12 @@ import {
   Button,
   ButtonGroup,
   Grid,
-  Hidden,
   IconButton,
   Tooltip,
   Typography,
 } from "@material-ui/core";
 import ViewConfigIcon from "@material-ui/icons/ViewComfy";
 import ViewWeekIcon from "@material-ui/icons/ViewWeek";
-import ViewDayIcon from "@material-ui/icons/ViewDay";
-import ViewAgendaIcon from "@material-ui/icons/ViewAgenda";
 import moment from "moment";
 
 const viewOptions = [

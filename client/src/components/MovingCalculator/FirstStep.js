@@ -470,6 +470,7 @@ const FirstStep = ({ handleNext, initial }) => {
               Move Date
             </label>
             <CalendarWithRates
+              // onClick={() => dispatch(getRates())}
               variant="dialog"
               inputVariant="outlined"
               id="date"

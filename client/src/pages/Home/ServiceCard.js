@@ -53,7 +53,7 @@ export default function ServiceCard({ item }) {
           component={RouterLink}
           to={item.href}
         >
-          Learn more
+          {item.location}
         </Button>
       </CardActions>
     </Card>

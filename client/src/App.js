@@ -85,14 +85,14 @@ function App() {
   });
   darkTheme = responsiveFontSizes(darkTheme);
 
-  useEffect(() => {
-    localStorage.setItem("dark", JSON.stringify(isDark));
-    dispatch(verifyAuth());
-  }, [dispatch, isDark]);
+  // useEffect(() => {
+  //   localStorage.setItem("dark", JSON.stringify(isDark));
+  //   dispatch(verifyAuth());
+  // }, [dispatch, isDark]);
 
-  if (isVerifying) {
-    return <LoadingTable />;
-  }
+  // if (isVerifying) {
+  //   return <LoadingTable />;
+  // }
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />

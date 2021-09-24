@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import ReactDOM from "react-dom";
-import { Link as RouterLink } from "react-router-dom";
 import Page from "src/components/Page";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -14,28 +13,20 @@ import "@fullcalendar/timegrid/main.css";
 import "@fullcalendar/list/main.css";
 import {
   Box,
-  Breadcrumbs,
-  Button,
   Card,
   Container,
   Dialog,
-  Grid,
-  Link,
   makeStyles,
-  Typography,
   useTheme,
   Tooltip,
 } from "@material-ui/core";
 import { alpha, styled, withStyles } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Toolbar from "./Toolbar";
-import ChevronRightIcon from "src/icons/ChevronRight";
-import PlusIcon from "src/icons/Plus";
 import gtm from "src/lib/gtm";
 import {
   closeModal,
   getEvents,
-  openModal,
   selectRange,
   updateEvent,
 } from "src/slices/calendar";
@@ -237,10 +228,6 @@ const Calendar = (props) => {
       calendarApi.next();
       setDate(calendarApi.getDate());
     }
-  };
-
-  const handleAddClick = () => {
-    dispatch(openModal());
   };
 
   const handleRangeSelect = (arg) => {
