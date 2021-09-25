@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/styles";
@@ -117,6 +117,14 @@ function MovingDetails({
   });
   const [distance, setDistance] = useState(null);
   const google = (window.google = window.google ? window.google : {});
+
+  const [map, setMap] = useState(null);
+
+  useEffect(() => {
+    if (job.id) {
+      setMap(initMap());
+    }
+  }, [job.id]);
 
   const initMap = () => {
     let origin =
@@ -394,7 +402,7 @@ function MovingDetails({
       className={clsx(disableShadow ? classes.root : {}, className)}
     >
       <CardHeader title="Move Overview" />
-      {isLoaded && initMap()}
+      {isLoaded && map}
       {/* <div id="overMap" className={classes.overMap}>
         <img
           className={classes.overMapImg}
@@ -565,6 +573,21 @@ function MovingDetails({
                   <label>
                     ${job.estimated_quote[0]} - ${job.estimated_quote[1]}{" "}
                   </label>
+                </TableCell>
+              </TableRow>
+            )}
+            {job.job_status === "Completed" && (
+              <TableRow>
+                <TableCell>Crew:</TableCell>
+                <TableCell>
+                  {job.crew.map((name, i) => {
+                    return (
+                      <label key={i}>
+                        {name}
+                        {i === job.crew.length - 1 ? null : ", "}
+                      </label>
+                    );
+                  })}
                 </TableCell>
               </TableRow>
             )}

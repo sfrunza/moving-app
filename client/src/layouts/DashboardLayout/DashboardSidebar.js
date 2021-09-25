@@ -49,6 +49,11 @@ const sections = [
         icon: <UsersIcon fontSize="small" />,
       },
       {
+        title: "Employees",
+        path: "/dashboard/employees",
+        icon: <UsersIcon fontSize="small" />,
+      },
+      {
         title: "Rates",
         path: "/dashboard/rates",
         icon: <CurrencyDollar fontSize="small" />,
@@ -106,7 +111,7 @@ const DashboardSidebar = (props) => {
               padding: 16,
             }}
           >
-            <RouterLink to="/dashboard/account">
+            <RouterLink to={`/dashboard/users/${user.id}`}>
               <Avatar
                 style={{
                   cursor: "pointer",

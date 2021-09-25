@@ -123,6 +123,7 @@ const ReviewAndSubmit = ({ handleBack, handleNext }) => {
       phone: phone,
       password: "2222222222",
       password_confirmation: "2222222222",
+      customer: true,
     },
     job: {
       pick_up_date: date,

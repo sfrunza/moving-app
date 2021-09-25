@@ -22,6 +22,14 @@ function Header({ user }) {
         >
           Dashboard
         </Link>
+        <Link
+          color="textPrimary"
+          component={RouterLink}
+          to="/dashboard/employees"
+          variant="subtitle2"
+        >
+          Employees
+        </Link>
         <Typography color="textSecondary" variant="subtitle2">
           {user.first_name + " " + user.last_name}
         </Typography>

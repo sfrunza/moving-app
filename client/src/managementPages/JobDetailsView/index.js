@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from "src/store";
 import { cleanEvent, getEvent } from "src/slices/calendar";
 import MovingDetails from "./MovingDetails";
 import OtherActions from "./OtherActions";
+import { getUsers } from "src/slices/employees";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -21,12 +22,14 @@ function JobDetailsView({ match, history }) {
   const classes = useStyles();
   const path = match.params.id;
   const { event } = useSelector((state) => state.calendar);
+  const { users } = useSelector((state) => state.employees);
   const dispatch = useDispatch();
 
   const handleDeleteJob = (id) => {};
 
   useEffect(() => {
     dispatch(getEvent(path));
+    dispatch(getUsers());
     return () => {
       dispatch(cleanEvent());
     };
@@ -35,6 +38,13 @@ function JobDetailsView({ match, history }) {
   if (!event) {
     return null;
   }
+
+  const init = {
+    job_duration: event.estimated_time[0],
+    total_amount: event.estimated_quote[0],
+    job_status: "Completed",
+    crew: event.crew,
+  };
 
   return (
     <Page className={classes.root} title="Job Details">
@@ -51,7 +61,12 @@ function JobDetailsView({ match, history }) {
             <Grid item md={4} xl={3} xs={12}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <CustomerDetails user={event.user} job={event} />
+                  <CustomerDetails
+                    user={event.user}
+                    job={event}
+                    init={init}
+                    users={users}
+                  />
                 </Grid>
                 <Grid item xs={12}>
                   <OtherActions

@@ -77,9 +77,11 @@ module Api::V1
         render json: { message: 'job id not found' }, status: :not_found
       end
 
+    
+
       # Only allow a trusted parameter "white list" through.
       def job_params
-        params.require(:job).permit(:pick_up_date, :delivery_date,  :job_duration, :user_id, :job_size, :job_status, :start_time, :crew_size, :job_rate, :estimated_time, :travel_time, :estimated_quote, :additional_info, :total_amount, :job_type)
+        params.require(:job).permit(:pick_up_date, :delivery_date,  :job_duration, :user_id, :job_size, :job_status, :start_time, :crew_size, :job_rate, :estimated_time, :travel_time, :estimated_quote, :additional_info, :total_amount, :job_type, :crew)
       end
   end
 end

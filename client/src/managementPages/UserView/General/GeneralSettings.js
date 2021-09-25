@@ -9,6 +9,9 @@ import {
   TextField,
   Card,
   CardContent,
+  FormControl,
+  Select,
+  MenuItem,
 } from "@material-ui/core";
 import { useSnackbar } from "notistack";
 import validate from "validate.js";
@@ -16,6 +19,7 @@ import User from "src/icons/User";
 import Mail from "src/icons/Mail";
 import Phone from "src/icons/Phone";
 import { phoneFilter, phoneFormatter } from "src/components/PhoneFormatter";
+import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 
 const useStyles = makeStyles((theme) => ({
   label: {
@@ -60,13 +64,26 @@ const schema = {
   },
 };
 
+const roles = ["Helper", "Driver", "Foreman", "Manager"];
+
+const roleSelect = () => {
+  let moveSize = roles.map((item, index) => {
+    return (
+      <MenuItem key={index} value={item}>
+        {item}
+      </MenuItem>
+    );
+  });
+  return moveSize;
+};
+
 const GeneralSettings = ({ user, handleUpdate, isUpdating }) => {
   const currentUser = {
     first_name: user.first_name,
     last_name: user.last_name,
     email: user.email,
     phone: user.phone,
-    add_phone: user.add_phone,
+    role: user.role,
   };
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
@@ -141,7 +158,7 @@ const GeneralSettings = ({ user, handleUpdate, isUpdating }) => {
 
     if (formState.isValid) {
       handleUpdate(user.id, formState.values);
-      enqueueSnackbar("Customer updated", {
+      enqueueSnackbar("Employee updated", {
         anchorOrigin: {
           horizontal: "right",
           vertical: "top",
@@ -256,6 +273,31 @@ const GeneralSettings = ({ user, handleUpdate, isUpdating }) => {
                   hasError("phone") ? formState.errors.phone[0] : null
                 }
               />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <label htmlFor="role" className={classes.label}>
+                <AssignmentIndIcon className={classes.icon} />
+                Role
+              </label>
+              <FormControl
+                variant="outlined"
+                size="small"
+                className={classes.inputWidth}
+                placeholder="Select"
+              >
+                <Select
+                  id="role"
+                  variant="outlined"
+                  placeholder="Select"
+                  name="role"
+                  size="small"
+                  displayEmpty
+                  value={formState.values.role}
+                  onChange={handleChange}
+                >
+                  {roleSelect()}
+                </Select>
+              </FormControl>
             </Grid>
           </Grid>
         </CardContent>

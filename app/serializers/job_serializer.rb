@@ -9,6 +9,7 @@ class JobSerializer < ActiveModel::Serializer
             :job_type,
             :crew_size,
             :job_rate,
+            :crew,
             :estimated_time,
             :travel_time,
             :estimated_quote,
