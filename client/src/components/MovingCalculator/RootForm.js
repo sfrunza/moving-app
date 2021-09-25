@@ -11,6 +11,7 @@ import { useSelector } from "src/store";
 import FourthStep from "./FourthStep";
 import ContactInfoStep from "./ContactInfoStep";
 import ReviewAndSubmit from "./ReviewAndSubmit";
+import ThankYou from "./ThankYou";
 
 const useStyles = makeStyles((theme) => ({
   dialogTitle: {
@@ -85,7 +86,7 @@ const RootForm = ({ handleClose, showX }) => {
         classes={{ root: classes.dialogTitle }}
       >
         {dialogTitle[activeStep]}
-        {activeStep === 0 && showX ? (
+        {(activeStep === 0 || activeStep === 6) && showX ? (
           <IconButton
             aria-label="close"
             className={classes.closeButton}
@@ -157,6 +158,7 @@ const RootForm = ({ handleClose, showX }) => {
         {activeStep === 5 && (
           <ReviewAndSubmit handleNext={handleNext} handleBack={handleBack} />
         )}
+        {activeStep === 6 && <ThankYou handleClose={handleClose} />}
       </DialogContent>
     </Container>
   );

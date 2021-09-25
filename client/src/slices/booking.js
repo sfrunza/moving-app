@@ -132,6 +132,38 @@ const slice = createSlice({
       state.getError = false;
       state.error = action.payload;
     },
+    resetAll(state) {
+      state.date = null;
+      state.time = "08=00=00";
+      state.deliveryDate = null;
+      state.fromZip = "";
+      state.toZip = "";
+      state.movingService = "Moving";
+      state.check = false;
+      state.fromAddress = "";
+      state.toAddress = "";
+      state.fromApt = "";
+      state.toApt = "";
+      state.origin = "";
+      state.destination = "";
+      state.movingSize = "";
+      state.fromHouseType = "";
+      state.toHouseType = "";
+      state.crewSize = null;
+      state.travelTime = [20, 20];
+      state.timeBetween = 15;
+      state.rates = [];
+      state.rate = null;
+      state.estimateQuote = [];
+      state.estimateTime = [];
+      state.firstName = "";
+      state.lastName = "";
+      state.email = "";
+      state.phone = "";
+      state.additionalInfo = "";
+      state.isLoading = false;
+      state.getError = false;
+    },
   },
 });
 
@@ -220,21 +252,16 @@ export const setPhone = (phone) => (dispatch) => {
 export const setAdditionalInfo = (info) => (dispatch) => {
   dispatch(slice.actions.setAdditionalInfo(info));
 };
-// export const setDuration = (duration) => (dispatch) => {
-//   dispatch(slice.actions.setDuration(duration));
-// };
-// export const setPrice = (price) => (dispatch) => {
-//   dispatch(slice.actions.setPrice(price));
-// };
-// export const setCustomer = (customer) => (dispatch) => {
-//   dispatch(slice.actions.setCustomer(customer));
-// };
 
 export const handleNext = () => (dispatch) => {
   dispatch(slice.actions.handleNext());
 };
 export const handlePrev = () => (dispatch) => {
   dispatch(slice.actions.handlePrev());
+};
+
+export const resetAll = () => (dispatch) => {
+  dispatch(slice.actions.resetAll());
 };
 
 export const submitRequest = (data) => (dispatch) => {
