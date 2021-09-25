@@ -3,11 +3,11 @@ import { Grid } from "@material-ui/core";
 import ProfileDetails from "./ProfileDetails";
 import GeneralSettings from "./GeneralSettings";
 import { useSelector, useDispatch } from "src/store";
-import { updateUser } from "src/slices/auth";
+import { updateUser } from "src/slices/employees";
 
-function General() {
+function General({ user }) {
   const dispatch = useDispatch();
-  const { user, isUpdating } = useSelector((state) => state.auth);
+  const { isUpdating } = useSelector((state) => state.employees);
 
   const handleUpdate = (id, updatedUser) => {
     dispatch(updateUser(id, updatedUser));

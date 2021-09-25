@@ -2,14 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  customers: null,
-  customer: null,
-  employees: null,
-  employee: null,
-  jobs: [],
-  customerJobs: [],
-  // customerOrigins: [],
-  // customerDestinations: [],
+  users: null,
+  user: null,
+  userJobs: [],
   status: true,
   errors: [],
   isUpdating: false,
@@ -18,26 +13,17 @@ const initialState = {
 };
 
 const slice = createSlice({
-  name: "customers",
+  name: "employees",
   initialState,
   reducers: {
-    getCustomers(state, action) {
-      state.customers = action.payload;
+    getUsers(state, action) {
+      state.users = action.payload;
     },
-    getCustomer(state, action) {
-      state.customer = action.payload;
+    getUser(state, action) {
+      state.user = action.payload;
     },
-    getJobs(state, action) {
-      state.jobs = action.payload;
-    },
-    // getCustomerOrigins(state, action) {
-    //   state.customerOrigins = action.payload;
-    // },
-    // getCustomerDestinations(state, action) {
-    //   state.customerDestinations = action.payload;
-    // },
-    getCustomerJobs(state, action) {
-      state.customerJobs = action.payload;
+    getUserJobs(state, action) {
+      state.userJobs = action.payload;
     },
     setLoading(state, action) {
       state.status = action.payload;
@@ -51,7 +37,7 @@ const slice = createSlice({
     },
     updateSuccess(state, action) {
       state.isUpdating = false;
-      state.customer = action.payload;
+      state.user = action.payload;
     },
     updateFailure(state, action) {
       state.isUpdating = false;
@@ -63,16 +49,16 @@ const slice = createSlice({
 
 export const { reducer } = slice;
 
-export const getCustomers = () => async (dispatch) => {
+export const getUsers = () => async (dispatch) => {
   dispatch(slice.actions.setLoading(true));
   try {
     const response = await axios.get("/api/v1/users");
     const data = await response.data;
     if (response.status === 200) {
-      let customers = data.users.filter((user) => user.customer);
-      dispatch(slice.actions.getCustomers(customers));
+      let users = data.users.filter((user) => !user.customer);
+      dispatch(slice.actions.getUsers(users));
     } else {
-      dispatch(slice.actions.getCustomers(null));
+      dispatch(slice.actions.getUsers(null));
       dispatch(slice.actions.setErrors(data.message));
     }
     dispatch(slice.actions.setLoading(false));
@@ -83,18 +69,15 @@ export const getCustomers = () => async (dispatch) => {
   }
 };
 
-export const getCustomer = (customerId) => async (dispatch) => {
+export const getUser = (userId) => async (dispatch) => {
   dispatch(slice.actions.setLoading(true));
   try {
-    const response = await axios.get(`/api/v1/users/${customerId}`);
+    const response = await axios.get(`/api/v1/users/${userId}`);
     const data = await response.data;
     if (response.data) {
-      dispatch(slice.actions.getCustomer(data.user));
-      dispatch(slice.actions.getCustomerJobs(data.jobs));
-      // dispatch(slice.actions.getCustomerOrigins(data.origins));
-      // dispatch(slice.actions.getCustomerDestinations(data.destinations));
+      dispatch(slice.actions.getUser(data.user));
     } else {
-      dispatch(slice.actions.getCustomer(null));
+      dispatch(slice.actions.getUser(null));
       dispatch(slice.actions.setErrors(data.message));
     }
     dispatch(slice.actions.setLoading(false));
@@ -105,14 +88,21 @@ export const getCustomer = (customerId) => async (dispatch) => {
   }
 };
 
-export const getCustomerJobs = (customerId) => async (dispatch) => {
+export const getUserJobs = (name) => async (dispatch) => {
   dispatch(slice.actions.setLoading(true));
   try {
-    const response = await axios.get(`/api/v1/users/${customerId}/jobs`);
+    const response = await axios.get("/api/v1/jobs");
     const data = await response.data;
     if (response.data) {
-      let data = response.data;
-      dispatch(slice.actions.getCustomerJobs(data));
+      let data = response.data.filter((job) =>
+        job.crew.find((n) => n === name)
+      );
+      data.sort(function (a, b) {
+        // Turn your strings into dates, and then subtract them
+        // to get a value that is either negative, positive, or zero.
+        return new Date(b.pick_up_date) - new Date(a.pick_up_date);
+      });
+      dispatch(slice.actions.getUserJobs(data));
     } else {
       dispatch(slice.actions.setErrors(data.message));
     }
@@ -124,14 +114,14 @@ export const getCustomerJobs = (customerId) => async (dispatch) => {
   }
 };
 
-export const updateCustomer = (customerId, update) => async (dispatch) => {
+export const updateUser = (userId, update) => async (dispatch) => {
   dispatch(slice.actions.updateRequest());
   const requestOptions = {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(update),
   };
-  await fetch(`/api/v1/users/${customerId}`, requestOptions)
+  await fetch(`/api/v1/users/${userId}`, requestOptions)
     .then((response) => {
       return response.json();
     })
@@ -143,8 +133,11 @@ export const updateCustomer = (customerId, update) => async (dispatch) => {
     });
 };
 
-export const cleanCustomer = () => async (dispatch) => {
-  dispatch(slice.actions.getCustomer(null));
+export const cleanUser = () => async (dispatch) => {
+  dispatch(slice.actions.getUser(null));
+};
+export const cleanUserJobs = () => async (dispatch) => {
+  dispatch(slice.actions.getUserJobs(null));
 };
 
 export const setLoading = (status) => (dispatch) => {

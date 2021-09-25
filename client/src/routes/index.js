@@ -26,6 +26,8 @@ const Private = lazy(() => import("src/pages/Private"));
 // const Book = lazy(() => import("src/pages/Book"));
 const CustomerList = lazy(() => import("src/managementPages/CustomerList"));
 const CustomerView = lazy(() => import("src/managementPages/CustomerView"));
+const EmployeeList = lazy(() => import("src/managementPages/EmployeeList"));
+// const CustomerView = lazy(() => import("src/managementPages/CustomerView"));
 const CalendarView = lazy(() => import("src/managementPages/CalendarView"));
 const UserView = lazy(() => import("src/managementPages/UserView"));
 const JobList = lazy(() => import("src/managementPages/JobList"));
@@ -54,6 +56,11 @@ function Routes(props) {
                   />
                   <Route
                     exact
+                    path="/dashboard/employees"
+                    component={EmployeeList}
+                  />
+                  <Route
+                    exact
                     path="/dashboard/customers/:id"
                     component={CustomerView}
                   />
@@ -74,7 +81,11 @@ function Routes(props) {
                     component={JobDetailsView}
                   />
                   <Route exact path="/dashboard/rates" component={RatesView} />
-                  <Route exact path="/dashboard/account" component={UserView} />
+                  <Route
+                    exact
+                    path="/dashboard/users/:id"
+                    component={UserView}
+                  />
                 </Switch>
               </Suspense>
             </DashboardLayout>

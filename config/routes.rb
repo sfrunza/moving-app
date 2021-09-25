@@ -11,7 +11,7 @@ devise_for :users, controllers: { registrations: 'registrations', sessions: 'ses
       end
 
       resources :users, only: [:index, :show, :create, :edit, :update, :destroy] do 
-        resources :jobs
+        resources :jobs, only: [:index]
       end
       
       resources :rates

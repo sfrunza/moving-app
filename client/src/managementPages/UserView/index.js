@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Container,
@@ -11,7 +11,9 @@ import Page from "src/components/Page";
 import Header from "./Header";
 import General from "./General";
 import Security from "./Security";
-import { useSelector } from "src/store";
+import { useDispatch, useSelector } from "src/store";
+import { cleanUser, getUser } from "src/slices/employees";
+import Jobs from "./Jobs";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,14 +22,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function UserView() {
+function UserView({ match }) {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const userId = match.params.id;
   const [currentTab, setCurrentTab] = useState("general");
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.employees);
   const tabs = [
     { value: "general", label: "General" },
+    { value: "jobs", label: "Jobs" },
     { value: "security", label: "Security" },
   ];
+
+  useEffect(() => {
+    dispatch(getUser(userId));
+    return () => {
+      dispatch(cleanUser());
+    };
+  }, [dispatch, userId]);
 
   const handleTabsChange = (event, value) => {
     setCurrentTab(value);
@@ -42,6 +54,11 @@ function UserView() {
       },
     });
   };
+
+  if (!user) {
+    return null;
+  }
+
   return (
     <Page className={classes.root} title="Settings">
       <Box
@@ -69,7 +86,8 @@ function UserView() {
           </Box>
           <Divider />
           <Box mt={3}>
-            {currentTab === "general" && <General />}
+            {currentTab === "general" && <General user={user} />}
+            {currentTab === "jobs" && <Jobs user={user} />}
             {currentTab === "security" && (
               <Security
                 user={user}

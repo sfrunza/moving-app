@@ -9,6 +9,7 @@ class CreateJobs < ActiveRecord::Migration[5.2]
       t.string :job_size
       t.integer :crew_size
       t.integer :job_rate
+      t.string :crew, array: true, default: []
       t.float :estimated_time, array: true, default: []
       t.integer :travel_time, array: true, default: []
       t.integer :estimated_quote, array: true, default: []

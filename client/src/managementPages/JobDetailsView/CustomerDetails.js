@@ -17,13 +17,20 @@ import {
   Box,
   Avatar,
   Typography,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Paper,
+  IconButton,
 } from "@material-ui/core";
-// import { useSnackbar } from "notistack";
+import { useSnackbar } from "notistack";
 import Phone from "src/icons/Phone";
 import Mail from "src/icons/Mail";
 import StatusLabel from "../../components/StatusLabel";
 import { useDispatch } from "src/store";
 import { updateEvent } from "src/slices/calendar";
+import CompleteForm from "./CompleteForm";
+import X from "src/icons/X";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -51,29 +58,55 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.primary.main,
     },
   },
+  closeButton: {
+    position: "absolute",
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.text.secondary,
+  },
 }));
 
 const statusOptions = ["Needs Attention", "Confirmed", "Canceled", "Completed"];
 
-function CustomerDetails({ user, job, className, ...rest }) {
-  const [status, setStatus] = useState(job.job_status);
-  // const { enqueueSnackbar } = useSnackbar();
-  const dispatch = useDispatch();
+function PaperComponent(props) {
+  return <Paper {...props} />;
+}
 
+function CustomerDetails({ user, job, className, users, init, ...rest }) {
   const classes = useStyles();
-  const handleChange = (event) => {
-    event.persist();
-    setStatus(event.target.value);
-    // handleStatusUpdate(event.target.value);
+  const [status, setStatus] = useState(job.job_status);
+  const { enqueueSnackbar } = useSnackbar();
+  const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
-  const handleStatusUpdate = async (status) => {
+  const handleChange = (event) => {
+    event.persist();
+    if (event.target.value === "Completed") {
+      setOpen(true);
+    } else {
+      setStatus(event.target.value);
+    }
+  };
+
+  const handleStatusUpdate = async (values) => {
     try {
       await dispatch(
         updateEvent(job.id, {
-          job_status: status,
+          ...values,
+          crew: values.crew === undefined ? `{}` : `{${values.crew}}`,
         })
       );
+      enqueueSnackbar("Status Changed", {
+        variant: "success",
+        anchorOrigin: {
+          horizontal: "right",
+          vertical: "top",
+        },
+      });
     } catch (err) {
       console.error(err);
     }
@@ -168,13 +201,43 @@ function CustomerDetails({ user, job, className, ...rest }) {
             size="small"
             disableElevation
             color="primary"
-            onClick={() => handleStatusUpdate(status)}
+            onClick={() => handleStatusUpdate({ job_status: status })}
             disabled={job.job_status === status ? true : false}
           >
             Update
           </Button>
         </Box>
       </CardContent>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        PaperComponent={PaperComponent}
+        aria-labelledby="draggable-dialog-title"
+        // disableBackdropClick
+      >
+        <DialogTitle
+          id="form-dialog-title"
+          classes={{ root: classes.dialogTitle }}
+        >
+          <IconButton
+            aria-label="close"
+            className={classes.closeButton}
+            onClick={() => handleClose()}
+          >
+            <X />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <CompleteForm
+            onClose={handleClose}
+            handleStatusUpdate={handleStatusUpdate}
+            setStatus={setStatus}
+            handleClose={handleClose}
+            init={init}
+            users={users}
+          />
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 }
