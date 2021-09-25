@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "src/store";
 import InformationCircle from "src/icons/InformationCircle";
 import moment from "moment";
 import { Link as RouterLink } from "react-router-dom";
-import { submitRequest } from "src/slices/booking";
+import { resetAll, submitRequest } from "src/slices/booking";
 
 const useStyles = makeStyles((theme) => ({
   infoIcon: {
@@ -104,6 +104,8 @@ const ReviewAndSubmit = ({ handleBack, handleNext }) => {
       //   handleNext();
       console.log("submitted");
       handleSubmit();
+      handleNext();
+      dispatch(resetAll());
     },
   });
 
