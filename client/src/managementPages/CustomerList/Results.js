@@ -7,9 +7,7 @@ import Scrollbar from "../Scrollbar";
 import {
   Avatar,
   Box,
-  Button,
   Card,
-  Checkbox,
   IconButton,
   InputAdornment,
   Link,
@@ -27,7 +25,6 @@ import {
   withStyles,
 } from "@material-ui/core";
 import ArrowRightIcon from "src/icons/ArrowRight";
-import PencilAltIcon from "src/icons/PencilAlt";
 import SearchIcon from "src/icons/Search";
 import { formatPhoneNumber } from "src/components/FormatPhoneNumber";
 
@@ -110,7 +107,6 @@ const StyledTableCell = withStyles((theme) => ({
 
 function Results({ className, customers, events, ...rest }) {
   const classes = useStyles();
-  const [selectedCustomers, setSelectedCustomers] = useState([]);
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
   const [query, setQuery] = useState("");
@@ -118,16 +114,6 @@ function Results({ className, customers, events, ...rest }) {
   const handleQueryChange = (event) => {
     event.persist();
     setQuery(event.target.value);
-  };
-
-  const handleSelectOneCustomer = (event, customerId) => {
-    if (!selectedCustomers.includes(customerId)) {
-      setSelectedCustomers([customerId]);
-    } else {
-      setSelectedCustomers((prevSelected) =>
-        prevSelected.filter((id) => id !== customerId)
-      );
-    }
   };
 
   const handlePageChange = (event, newPage) => {
@@ -141,7 +127,6 @@ function Results({ className, customers, events, ...rest }) {
   // Usually query is done on backend with indexing solutions
   const filteredCustomers = applyFilters(customers, query);
   const paginatedCustomers = applyPagination(filteredCustomers, page, limit);
-  const enableBulkOperations = selectedCustomers.length > 0;
 
   const numberOfJobs = (customer) => {
     let number = 0;
@@ -176,27 +161,11 @@ function Results({ className, customers, events, ...rest }) {
         />
         <Box flexGrow={1} />
       </Box>
-      {enableBulkOperations && (
-        <div className={classes.bulkOperations}>
-          <div className={classes.bulkActions}>
-            <Button
-              variant="outlined"
-              color="primary"
-              className={classes.bulkAction}
-              component={RouterLink}
-              to={`/app/customers/${selectedCustomers[0]}/edit`}
-            >
-              Edit
-            </Button>
-          </div>
-        </div>
-      )}
       <Scrollbar>
         <Box minWidth={1000}>
           <Table>
             <TableHead>
               <TableRow>
-                <StyledTableCell padding="checkbox"></StyledTableCell>
                 <StyledTableCell>Name</StyledTableCell>
                 <StyledTableCell>Phone</StyledTableCell>
                 <StyledTableCell align="right">Actions</StyledTableCell>
@@ -204,25 +173,8 @@ function Results({ className, customers, events, ...rest }) {
             </TableHead>
             <TableBody>
               {paginatedCustomers.map((customer) => {
-                const isCustomerSelected = selectedCustomers.includes(
-                  customer.id
-                );
-
                 return (
-                  <TableRow
-                    hover
-                    key={customer.id}
-                    selected={isCustomerSelected}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={isCustomerSelected}
-                        onChange={(event) =>
-                          handleSelectOneCustomer(event, customer.id)
-                        }
-                        value={isCustomerSelected}
-                      />
-                    </TableCell>
+                  <TableRow hover key={customer.id}>
                     <TableCell>
                       <Box display="flex" alignItems="center">
                         <Avatar
@@ -256,13 +208,13 @@ function Results({ className, customers, events, ...rest }) {
                     </TableCell>
                     <TableCell>{formatPhoneNumber(customer.phone)}</TableCell>
                     <TableCell align="right">
-                      <IconButton
+                      {/* <IconButton
                         classes={{ root: classes.hoverIcon }}
                         component={RouterLink}
                         to={`/dashboard/customers/${customer.id}/edit`}
                       >
                         <PencilAltIcon fontSize="small" />
-                      </IconButton>
+                      </IconButton> */}
                       <IconButton
                         classes={{ root: classes.hoverIcon }}
                         component={RouterLink}

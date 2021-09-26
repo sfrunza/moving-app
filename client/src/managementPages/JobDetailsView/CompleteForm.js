@@ -41,8 +41,8 @@ const validate = (values) => {
 
   if (values.job_duration === "") {
     errors.job_duration = "Required";
-  } else if (values.job_duration % 0.25 !== 0) {
-    errors.job_duration = "Wrong";
+  } else if (values.job_duration === "") {
+    errors.job_duration = "Required";
   }
   if (values.total_amount === "") {
     errors.total_amount = "Required";

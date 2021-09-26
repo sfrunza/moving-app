@@ -83,7 +83,7 @@ function MainLayout({ children, history }) {
         history={history}
       />
       <main className={classes.main}>{children}</main>
-      <Footer pages={pages} />
+      {/* <Footer pages={pages} /> */}
     </div>
   );
 }

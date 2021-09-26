@@ -89,7 +89,8 @@ export const getCustomer = (customerId) => async (dispatch) => {
     const response = await axios.get(`/api/v1/users/${customerId}`);
     const data = await response.data;
     if (response.data) {
-      dispatch(slice.actions.getCustomer(data.user));
+      // debugger;
+      dispatch(slice.actions.getCustomer(data));
       dispatch(slice.actions.getCustomerJobs(data.jobs));
       // dispatch(slice.actions.getCustomerOrigins(data.origins));
       // dispatch(slice.actions.getCustomerDestinations(data.destinations));
@@ -106,22 +107,23 @@ export const getCustomer = (customerId) => async (dispatch) => {
 };
 
 export const getCustomerJobs = (customerId) => async (dispatch) => {
-  dispatch(slice.actions.setLoading(true));
-  try {
-    const response = await axios.get(`/api/v1/users/${customerId}/jobs`);
-    const data = await response.data;
-    if (response.data) {
-      let data = response.data;
-      dispatch(slice.actions.getCustomerJobs(data));
-    } else {
-      dispatch(slice.actions.setErrors(data.message));
-    }
-    dispatch(slice.actions.setLoading(false));
-  } catch (error) {
-    console.log(error);
-    dispatch(slice.actions.setErrors(error.stack));
-    dispatch(slice.actions.setLoading(false));
-  }
+  // dispatch(slice.actions.setLoading(true));
+  // try {
+  //   const response = await axios.get(`/api/v1/users/${customerId}/jobs`);
+  //   const data = await response.data;
+  //   if (response.data) {
+  //     let data = response.data;
+  //     debugger;
+  //     dispatch(slice.actions.getCustomerJobs(data));
+  //   } else {
+  //     dispatch(slice.actions.setErrors(data.message));
+  //   }
+  //   dispatch(slice.actions.setLoading(false));
+  // } catch (error) {
+  //   console.log(error);
+  //   dispatch(slice.actions.setErrors(error.stack));
+  //   dispatch(slice.actions.setLoading(false));
+  // }
 };
 
 export const updateCustomer = (customerId, update) => async (dispatch) => {
@@ -145,6 +147,7 @@ export const updateCustomer = (customerId, update) => async (dispatch) => {
 
 export const cleanCustomer = () => async (dispatch) => {
   dispatch(slice.actions.getCustomer(null));
+  dispatch(slice.actions.getCustomerJobs(null));
 };
 
 export const setLoading = (status) => (dispatch) => {

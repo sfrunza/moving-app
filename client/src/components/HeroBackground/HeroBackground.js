@@ -9,7 +9,7 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    minHeight: "80vh",
+    height: 700,
   },
   colorDefault: {
     background: "#000",

@@ -16,7 +16,7 @@ import {
 } from "@material-ui/core";
 import CustomRouterLink from "src/components/CustomRouterLink";
 import Auth from "src/components/Auth";
-import { Link as RouterLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Menu from "src/icons/Menu";
 import { useSelector } from "src/store";
 import User from "src/icons/User";
@@ -140,7 +140,7 @@ function TopBar({ onSidebarOpen, pages, history }) {
             variant="body1"
             color="textPrimary"
             className={classes.listItemText}
-            component={RouterLink}
+            component={NavLink}
             to="/"
           >
             Company Logo
@@ -157,69 +157,71 @@ function TopBar({ onSidebarOpen, pages, history }) {
                   match = path.includes(page.href.slice(1));
                 }
                 return (
-                  <ListItem
-                    component={RouterLink}
-                    to={page.href}
-                    classes={{
-                      root: match
-                        ? classes.listItem
-                        : clsx(classes.listItem, classes.listItemHover),
-                      divider: classes.itemDivider,
-                    }}
-                    disableGutters
-                    key={i}
-                  >
-                    <Typography
-                      variant="body2"
-                      className={
-                        match
-                          ? classes.listItemTextActive
-                          : classes.listItemText
-                      }
+                  <li key={i}>
+                    <ListItem
+                      component={NavLink}
+                      to={page.href}
+                      classes={{
+                        root: match
+                          ? classes.listItem
+                          : clsx(classes.listItem, classes.listItemHover),
+                        divider: classes.itemDivider,
+                      }}
+                      disableGutters
                     >
-                      {page.title}
-                    </Typography>
-                  </ListItem>
+                      <Typography
+                        variant="body2"
+                        className={
+                          match
+                            ? classes.listItemTextActive
+                            : classes.listItemText
+                        }
+                      >
+                        {page.title}
+                      </Typography>
+                    </ListItem>
+                  </li>
                 );
               })}
             </Hidden>
-            {isAuthenticated ? (
-              <Auth history={history} />
-            ) : (
-              <ListItem
-                classes={{
-                  root:
-                    path === "/login"
-                      ? classes.listItem
-                      : clsx(classes.listItem, classes.listItemHover),
-                  divider: classes.itemDivider,
-                }}
-                component={CustomRouterLink}
-                to="/login"
-              >
-                <ListItemIcon classes={{ root: classes.iconMargin }}>
-                  <User
-                    classes={{
-                      root:
-                        path === "/login"
-                          ? classes.userIconActive
-                          : classes.userIcon,
-                    }}
-                  />
-                </ListItemIcon>
-                <Typography
-                  variant="body2"
-                  className={
-                    path === "/login"
-                      ? classes.listItemTextActive
-                      : classes.listItemText
-                  }
+            {!isAuthenticated && (
+              <li>
+                <ListItem
+                  classes={{
+                    root:
+                      path === "/login"
+                        ? classes.listItem
+                        : clsx(classes.listItem, classes.listItemHover),
+                    divider: classes.itemDivider,
+                  }}
+                  component={NavLink}
+                  to="/login"
                 >
-                  Login
-                </Typography>
-              </ListItem>
+                  <ListItemIcon classes={{ root: classes.iconMargin }}>
+                    <User
+                      classes={{
+                        root:
+                          path === "/login"
+                            ? classes.userIconActive
+                            : classes.userIcon,
+                      }}
+                    />
+                  </ListItemIcon>
+                  <Typography
+                    variant="body2"
+                    className={
+                      path === "/login"
+                        ? classes.listItemTextActive
+                        : classes.listItemText
+                    }
+                  >
+                    Login
+                  </Typography>
+                </ListItem>
+              </li>
             )}
           </List>
+          {isAuthenticated && <Auth history={history} />}
           <Hidden smDown>
             <div className={classes.flexGrow} />
           </Hidden>

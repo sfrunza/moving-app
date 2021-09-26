@@ -37,10 +37,10 @@ export default function ServiceCard({ item }) {
   return (
     <Card className={classes.root}>
       <CardContent classes={{ root: classes.contentSection }}>
-        <Typography gutterBottom variant="h6" component="h2">
+        <Typography gutterBottom variant="h6">
           {item.location}
         </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography variant="body2" color="textSecondary">
           {item.properties}
         </Typography>
       </CardContent>

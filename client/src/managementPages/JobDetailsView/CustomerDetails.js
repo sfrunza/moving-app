@@ -84,7 +84,8 @@ function CustomerDetails({ user, job, className, users, init, ...rest }) {
   };
 
   const handleChange = (event) => {
-    event.persist();
+    event.preventDefault();
+    event.currentTarget.blur();
     if (event.target.value === "Completed") {
       setOpen(true);
     } else {

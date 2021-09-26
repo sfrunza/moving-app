@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Hero = (props) => {
-  const { className, ...rest } = props;
+  // const { className } = props;
   const classes = useStyles();
 
   const theme = useTheme();
@@ -49,41 +49,41 @@ const Hero = (props) => {
   });
 
   return (
-    <div className={className} {...rest}>
-      <HeroBackground backgroundImg={background}>
-        <TypedText
-          component="span"
-          variant="subtitle1"
-          className={classes.typed}
-          typedProps={{
-            strings: ["A Badass Moving Company in Boston"],
-            typeSpeed: 70,
-            loop: true,
-          }}
-        />
-        <div className={classes.section}>
-          <Grid container spacing={isMd ? 4 : 2} justifyContent="center">
-            <Grid item xs={12} md={6}>
-              <Typography
-                variant="h3"
-                className={clsx(classes.textWhite, classes.title)}
-              >
-                Insight Moving
-              </Typography>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              {isMd ? (
-                <div className={classes.caluclatorContainer}>
-                  <MovingCalculator showX={false} />
-                </div>
-              ) : (
-                <CalculatorDialog />
-              )}
-            </Grid>
+    // <div className={className} {...rest}>
+    <HeroBackground backgroundImg={background}>
+      <TypedText
+        component="span"
+        variant="subtitle1"
+        className={classes.typed}
+        typedProps={{
+          strings: ["A Badass Moving Company in Boston"],
+          typeSpeed: 70,
+          loop: true,
+        }}
+      />
+      <div className={classes.section}>
+        <Grid container spacing={isMd ? 4 : 2} justifyContent="center">
+          <Grid item xs={12} md={6}>
+            <Typography
+              variant="h3"
+              className={clsx(classes.textWhite, classes.title)}
+            >
+              Insight Moving
+            </Typography>
           </Grid>
-        </div>
-      </HeroBackground>
-    </div>
+          <Grid item xs={12} md={6}>
+            {isMd ? (
+              <div className={classes.caluclatorContainer}>
+                <MovingCalculator showX={false} />
+              </div>
+            ) : (
+              <CalculatorDialog />
+            )}
+          </Grid>
+        </Grid>
+      </div>
+    </HeroBackground>
+    // </div>
   );
 };
 

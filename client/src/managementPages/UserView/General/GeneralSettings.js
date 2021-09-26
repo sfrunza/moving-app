@@ -292,7 +292,7 @@ const GeneralSettings = ({ user, handleUpdate, isUpdating }) => {
                   name="role"
                   size="small"
                   displayEmpty
-                  value={formState.values.role}
+                  value={formState.values.role || ""}
                   onChange={handleChange}
                 >
                   {roleSelect()}

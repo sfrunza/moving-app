@@ -10,7 +10,7 @@ import ServiceCard from "./ServiceCard";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    paddingTop: 40,
+    // paddingTop: 40,
     // borderRadius: 8,
     // padding: theme.spacing(10, 6),
     // backgroundColor: theme.palette.background.level2,

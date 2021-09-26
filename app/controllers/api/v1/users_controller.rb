@@ -38,30 +38,9 @@ module Api::V1
     def show
      if current_user && current_user.customer == false
        @user = User.find(params[:id])
-       @jobs = @user.jobs.order('created_at DESC')
-       @origins = @user.origins.as_json
-       @destinations = @user.destinations.as_json
-       @images = @user.images.as_json
-        render json: {
-          user: @user,
-          jobs: @jobs,
-          origins: @origins,
-          destinations: @destinations,
-          images: @images
-        }
+        render json: @user, include: ["jobs"]
       elsif current_user && current_user.customer == true
-        @current_user = current_user
-        @user_jobs = @current_user.jobs
-        @origins = @current_user.origins.as_json
-        @destinations = @current_user.destinations.as_json
-        @images = @current_user.images.as_json
-        render json: {
-          user: @current_user,
-          jobs: @user_jobs,
-          origins: @origins,
-          destinations: @destinations,
-          images: @images,
-        }
+        render json: current_user, include: ["jobs"]
       else
         render json: {
           status: 500,
