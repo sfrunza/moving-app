@@ -15,6 +15,10 @@ module Api::V1
         render json: {message: "Please sign in."}
       end
 
+      # @user_id = params[:user_id]
+      # @user_jobs = Job.where(user_id: @user_id)
+      # render json: @user_jobs
+
     end
 
     # GET /jobs/1

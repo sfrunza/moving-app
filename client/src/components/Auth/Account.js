@@ -117,7 +117,7 @@ const Account = ({ handleSignOut }) => {
         <MenuItem
           onClick={handleClose}
           component={CustomRouterLink}
-          to="/dashboard/account"
+          to={`/dashboard/users/${user.id}`}
         >
           <ListItemIcon
             style={{

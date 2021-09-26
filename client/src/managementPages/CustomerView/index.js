@@ -31,7 +31,7 @@ function CustomerView({ match }) {
   const customerId = match.params.id;
   const tabs = [
     { value: "details", label: "Details" },
-    { value: "jobs", label: `Jobs (${customerJobs.length})` },
+    { value: "jobs", label: `Jobs (${customerJobs?.length})` },
   ];
 
   const handleTabsChange = (event, value) => {
@@ -40,6 +40,7 @@ function CustomerView({ match }) {
 
   useEffect(() => {
     dispatch(getCustomer(customerId));
+    // dispatch(getCustomerJobs(customerId));
 
     return () => {
       dispatch(cleanCustomer());

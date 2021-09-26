@@ -75,7 +75,7 @@ export const getUser = (userId) => async (dispatch) => {
     const response = await axios.get(`/api/v1/users/${userId}`);
     const data = await response.data;
     if (response.data) {
-      dispatch(slice.actions.getUser(data.user));
+      dispatch(slice.actions.getUser(data));
     } else {
       dispatch(slice.actions.getUser(null));
       dispatch(slice.actions.setErrors(data.message));

@@ -44,22 +44,22 @@ const Section = (props) => {
   const classes = useStyles();
 
   return (
-    <div style={{ backgroundColor: `${background}` }}>
-      <section
-        className={clsx(
-          "section",
-          classes.root,
-          fullWidth ? classes.fullWidth : {},
-          narrow ? classes.narrow : {},
-          disablePadding ? classes.disablePadding : {},
-          alternate ? classes.alternate : {},
-          className
-        )}
-        {...rest}
-      >
-        {children}
-      </section>
-    </div>
+    // <div style={{ backgroundColor: `${background}` }}>
+    <section
+      className={clsx(
+        "section",
+        classes.root,
+        fullWidth ? classes.fullWidth : {},
+        narrow ? classes.narrow : {},
+        disablePadding ? classes.disablePadding : {},
+        alternate ? classes.alternate : {},
+        className
+      )}
+      {...rest}
+    >
+      {children}
+    </section>
+    // </div>
   );
 };
 

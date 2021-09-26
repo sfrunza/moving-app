@@ -20,7 +20,7 @@ import FileCopyIcon from "@material-ui/icons/FileCopy";
 import ChevronRight from "src/icons/ChevronRight";
 import HistoryIcon from "@material-ui/icons/History";
 import { useSelector, useDispatch } from "src/store";
-import { getCustomerJobs } from "src/slices/customers";
+import { getCustomer } from "src/slices/customers";
 import moment from "moment";
 import ArrowRightIcon from "src/icons/ArrowRight";
 
@@ -101,7 +101,7 @@ function OtherActions({ user, event, history, ...rest }) {
   const { customerJobs } = useSelector((state) => state.customers);
 
   useEffect(() => {
-    dispatch(getCustomerJobs(user.id));
+    dispatch(getCustomer(user.id));
   }, [dispatch, user.id]);
 
   const handleOpen = () => {

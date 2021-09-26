@@ -24,7 +24,7 @@ const Home = () => {
   const theme = useTheme();
 
   return (
-    <Page title="Company Name" className={classes.root}>
+    <Page title="Insight Moving" className={classes.root}>
       <Hero />
       <Section>
         <Services data={services} id="next" />

@@ -1,25 +1,38 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import React, { useEffect } from "react";
+import NProgress from "nprogress";
+import { Box, LinearProgress, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
-    display: "flex",
-    justifyContent: "center",
     alignItems: "center",
-    "& > * + *": {
-      marginTop: theme.spacing(2),
-    },
+    backgroundColor: theme.palette.background.default,
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
+    justifyContent: "center",
+    minHeight: "100%",
+    padding: theme.spacing(3),
   },
 }));
 
-export default function LoadingTable() {
+function LoadingTable() {
   const classes = useStyles();
+
+  useEffect(() => {
+    NProgress.start();
+
+    return () => {
+      NProgress.done();
+    };
+  }, []);
 
   return (
     <div className={classes.root}>
-      <CircularProgress />
+      <Box width={400}>
+        <LinearProgress />
+      </Box>
     </div>
   );
 }
+
+export default LoadingTable;

@@ -53,10 +53,10 @@ const Contact = (props) => {
       <SectionHeader
         title="Why choose us"
         subtitle="We are a small company of professional movers. Unlike movers from big companies, we will treat your belongings as ours. We will walk you through our smooth and simple process."
-        subtitleProps={{
-          variant: "body1",
-          color: "textSecondary",
-        }}
+        // subtitleProps={{
+        //   variant: "body1",
+        //   color: "textSecondary",
+        // }}
         border
         ctaGroup={[
           <Button
@@ -66,17 +66,17 @@ const Contact = (props) => {
             color="primary"
             disableElevation
           >
-            Get a quote
+            Request Your Move Online
           </Button>,
-          <Button
-            component={RouterLink}
-            to="/services"
-            variant="outlined"
-            color="primary"
-            disableElevation
-          >
-            View Services
-          </Button>,
+          // <Button
+          //   component={RouterLink}
+          //   to="/services"
+          //   variant="outlined"
+          //   color="primary"
+          //   disableElevation
+          // >
+          //   View Services
+          // </Button>,
         ]}
         fadeUp
       />
@@ -117,6 +117,7 @@ const Contact = (props) => {
             secondaryTypographyProps={{
               variant: "subtitle1",
               color: "textPrimary",
+              component: "span",
             }}
           />
         </ListItem>
@@ -137,6 +138,7 @@ const Contact = (props) => {
             secondaryTypographyProps={{
               variant: "subtitle1",
               color: "textPrimary",
+              component: "span",
             }}
           />
         </ListItem>

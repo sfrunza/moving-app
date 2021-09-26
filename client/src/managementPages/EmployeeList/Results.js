@@ -7,9 +7,7 @@ import Scrollbar from "../Scrollbar";
 import {
   Avatar,
   Box,
-  Button,
   Card,
-  Checkbox,
   IconButton,
   InputAdornment,
   Link,
@@ -26,7 +24,6 @@ import {
   withStyles,
 } from "@material-ui/core";
 import ArrowRightIcon from "src/icons/ArrowRight";
-import PencilAltIcon from "src/icons/PencilAlt";
 import SearchIcon from "src/icons/Search";
 
 function applyFilters(users, query) {
@@ -61,32 +58,12 @@ function applyPagination(users, page, limit) {
 const useStyles = makeStyles((theme) => ({
   root: {},
   queryField: {
-    width: 500,
-  },
-  bulkOperations: {
-    position: "relative",
-  },
-  bulkActions: {
-    paddingLeft: 4,
-    paddingRight: 4,
-    marginTop: 11,
-    position: "absolute",
-    width: "100%",
-    zIndex: 2,
-    backgroundColor: theme.palette.background.level2,
-  },
-  bulkAction: {
-    marginLeft: theme.spacing(2),
+    width: 300,
   },
   avatar: {
     height: 42,
     width: 42,
     marginRight: theme.spacing(1),
-  },
-  badge: {
-    "& span": {
-      right: "-12px",
-    },
   },
   hoverIcon: {
     color: theme.palette.text.secondary,
@@ -108,7 +85,6 @@ const StyledTableCell = withStyles((theme) => ({
 
 function Results({ className, users, events, ...rest }) {
   const classes = useStyles();
-  const [selectedCustomers, setSelectedCustomers] = useState([]);
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
   const [query, setQuery] = useState("");
@@ -116,16 +92,6 @@ function Results({ className, users, events, ...rest }) {
   const handleQueryChange = (event) => {
     event.persist();
     setQuery(event.target.value);
-  };
-
-  const handleSelectOneCustomer = (event, userId) => {
-    if (!selectedCustomers.includes(userId)) {
-      setSelectedCustomers([userId]);
-    } else {
-      setSelectedCustomers((prevSelected) =>
-        prevSelected.filter((id) => id !== userId)
-      );
-    }
   };
 
   const handlePageChange = (event, newPage) => {
@@ -137,9 +103,8 @@ function Results({ className, users, events, ...rest }) {
   };
 
   // Usually query is done on backend with indexing solutions
-  const filteredCustomers = applyFilters(users, query);
-  const paginatedCustomers = applyPagination(filteredCustomers, page, limit);
-  const enableBulkOperations = selectedCustomers.length > 0;
+  const filteredUsers = applyFilters(users, query);
+  const paginatedUsers = applyPagination(filteredUsers, page, limit);
 
   return (
     <Card className={clsx(classes.root, className)} {...rest}>
@@ -163,21 +128,6 @@ function Results({ className, users, events, ...rest }) {
         />
         <Box flexGrow={1} />
       </Box>
-      {enableBulkOperations && (
-        <div className={classes.bulkOperations}>
-          <div className={classes.bulkActions}>
-            <Button
-              variant="outlined"
-              color="primary"
-              className={classes.bulkAction}
-              component={RouterLink}
-              to={`/app/users/${selectedCustomers[0]}/edit`}
-            >
-              Edit
-            </Button>
-          </div>
-        </div>
-      )}
       <Scrollbar>
         <Box minWidth={650}>
           <Table>
@@ -190,8 +140,8 @@ function Results({ className, users, events, ...rest }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {paginatedCustomers.map((user) => {
-                const isCustomerSelected = selectedCustomers.includes(user.id);
+              {paginatedUsers.map((user) => {
+                const isCustomerSelected = filteredUsers.includes(user.id);
 
                 return (
                   <TableRow hover key={user.id} selected={isCustomerSelected}>
@@ -219,13 +169,6 @@ function Results({ className, users, events, ...rest }) {
                       <IconButton
                         classes={{ root: classes.hoverIcon }}
                         component={RouterLink}
-                        to={`/dashboard/users/${user.id}/edit`}
-                      >
-                        <PencilAltIcon fontSize="small" />
-                      </IconButton>
-                      <IconButton
-                        classes={{ root: classes.hoverIcon }}
-                        component={RouterLink}
                         to={`/dashboard/users/${user.id}`}
                       >
                         <ArrowRightIcon fontSize="small" />
@@ -240,7 +183,7 @@ function Results({ className, users, events, ...rest }) {
       </Scrollbar>
       <TablePagination
         component="div"
-        count={filteredCustomers.length}
+        count={filteredUsers.length}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleLimitChange}
         page={page}

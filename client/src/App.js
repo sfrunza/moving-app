@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createBrowserHistory } from "history";
 import { BrowserRouter as Router } from "react-router-dom";
@@ -14,9 +14,9 @@ import {
 import { light, dark } from "src/theme/palette";
 import typography from "src/theme/typography";
 import { lightShadows, darkShadows } from "src/theme/shadows";
-import { useDispatch, useSelector } from "src/store";
-import { verifyAuth } from "./slices/auth";
-import LoadingTable from "./components/LoadingTable";
+import { useSelector } from "src/store";
+// import { verifyAuth } from "./slices/auth";
+// import LoadingTable from "./components/LoadingTable";
 import ScrollReset from "./components/ScrollReset";
 
 export const history = createBrowserHistory();
@@ -24,8 +24,8 @@ export const history = createBrowserHistory();
 function App() {
   // useStyles();
   const { isDark } = useSelector((state) => state.theme);
-  const { isVerifying } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
+  // const { isVerifying } = useSelector((state) => state.auth);
+  // const dispatch = useDispatch();
 
   let darkTheme = createTheme({
     overrides: {
