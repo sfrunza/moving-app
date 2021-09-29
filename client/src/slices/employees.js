@@ -55,7 +55,7 @@ export const getUsers = () => async (dispatch) => {
     const response = await axios.get("/api/v1/users");
     const data = await response.data;
     if (response.status === 200) {
-      let users = data.users.filter((user) => !user.customer);
+      let users = data.users;
       dispatch(slice.actions.getUsers(users));
     } else {
       dispatch(slice.actions.getUsers(null));
@@ -76,8 +76,10 @@ export const getUser = (userId) => async (dispatch) => {
     const data = await response.data;
     if (response.data) {
       dispatch(slice.actions.getUser(data));
+      dispatch(slice.actions.getUserJobs(data.jobs));
     } else {
       dispatch(slice.actions.getUser(null));
+      dispatch(slice.actions.getUserJobs(null));
       dispatch(slice.actions.setErrors(data.message));
     }
     dispatch(slice.actions.setLoading(false));
@@ -88,31 +90,31 @@ export const getUser = (userId) => async (dispatch) => {
   }
 };
 
-export const getUserJobs = (name) => async (dispatch) => {
-  dispatch(slice.actions.setLoading(true));
-  try {
-    const response = await axios.get("/api/v1/jobs");
-    const data = await response.data;
-    if (response.data) {
-      let data = response.data.filter((job) =>
-        job.crew.find((n) => n === name)
-      );
-      data.sort(function (a, b) {
-        // Turn your strings into dates, and then subtract them
-        // to get a value that is either negative, positive, or zero.
-        return new Date(b.pick_up_date) - new Date(a.pick_up_date);
-      });
-      dispatch(slice.actions.getUserJobs(data));
-    } else {
-      dispatch(slice.actions.setErrors(data.message));
-    }
-    dispatch(slice.actions.setLoading(false));
-  } catch (error) {
-    console.log(error);
-    dispatch(slice.actions.setErrors(error.stack));
-    dispatch(slice.actions.setLoading(false));
-  }
-};
+// export const getUserJobs = (name) => async (dispatch) => {
+//   dispatch(slice.actions.setLoading(true));
+//   try {
+//     const response = await axios.get("/api/v1/jobs");
+//     const data = await response.data;
+//     if (response.data) {
+//       let data = response.data.filter((job) =>
+//         job.crew.find((n) => n === name)
+//       );
+//       data.sort(function (a, b) {
+//         // Turn your strings into dates, and then subtract them
+//         // to get a value that is either negative, positive, or zero.
+//         return new Date(b.pick_up_date) - new Date(a.pick_up_date);
+//       });
+//       dispatch(slice.actions.getUserJobs(data));
+//     } else {
+//       dispatch(slice.actions.setErrors(data.message));
+//     }
+//     dispatch(slice.actions.setLoading(false));
+//   } catch (error) {
+//     console.log(error);
+//     dispatch(slice.actions.setErrors(error.stack));
+//     dispatch(slice.actions.setLoading(false));
+//   }
+// };
 
 export const updateUser = (userId, update) => async (dispatch) => {
   dispatch(slice.actions.updateRequest());
@@ -135,10 +137,11 @@ export const updateUser = (userId, update) => async (dispatch) => {
 
 export const cleanUser = () => async (dispatch) => {
   dispatch(slice.actions.getUser(null));
-};
-export const cleanUserJobs = () => async (dispatch) => {
   dispatch(slice.actions.getUserJobs(null));
 };
+// export const cleanUserJobs = () => async (dispatch) => {
+//   dispatch(slice.actions.getUserJobs(null));
+// };
 
 export const setLoading = (status) => (dispatch) => {
   dispatch(slice.actions.setLoading(status));

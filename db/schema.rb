@@ -10,10 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_11_005108) do
+ActiveRecord::Schema.define(version: 2021_09_26_232113) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "customers", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "phone"
+    t.string "add_phone"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "customers_users", id: false, force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "customer_id", null: false
+    t.index ["customer_id", "user_id"], name: "index_customers_users_on_customer_id_and_user_id"
+    t.index ["user_id", "customer_id"], name: "index_customers_users_on_user_id_and_customer_id"
+  end
 
   create_table "destinations", force: :cascade do |t|
     t.string "address"
@@ -37,23 +54,32 @@ ActiveRecord::Schema.define(version: 2021_09_11_005108) do
   create_table "jobs", force: :cascade do |t|
     t.string "pick_up_date"
     t.string "delivery_date"
+    t.boolean "is_flat_rate", default: false
     t.string "job_type"
     t.string "start_time"
     t.string "job_status"
     t.string "job_size"
     t.integer "crew_size"
     t.integer "job_rate"
-    t.string "crew", default: [], array: true
     t.float "estimated_time", default: [], array: true
     t.integer "travel_time", default: [], array: true
     t.integer "estimated_quote", default: [], array: true
     t.text "additional_info"
     t.float "job_duration"
     t.float "total_amount"
+    t.bigint "customer_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_jobs_on_customer_id"
     t.index ["user_id"], name: "index_jobs_on_user_id"
+  end
+
+  create_table "jobs_users", id: false, force: :cascade do |t|
+    t.bigint "job_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["job_id", "user_id"], name: "index_jobs_users_on_job_id_and_user_id"
+    t.index ["user_id", "job_id"], name: "index_jobs_users_on_user_id_and_job_id"
   end
 
   create_table "origins", force: :cascade do |t|
@@ -89,8 +115,9 @@ ActiveRecord::Schema.define(version: 2021_09_11_005108) do
     t.string "last_name"
     t.string "role"
     t.string "phone"
-    t.string "add_phone"
-    t.boolean "customer", default: false, null: false
+    t.integer "rate"
+    t.string "ssn"
+    t.string "address"
     t.boolean "active", default: false, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

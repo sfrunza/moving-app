@@ -394,8 +394,6 @@ function MovingDetails({
     return <MapWithADirectionsRenderer google={google} />;
   };
 
-  console.log(job.estimated_quote[0][0]);
-
   return (
     <Card
       {...rest}
@@ -432,7 +430,7 @@ function MovingDetails({
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>Arrival time:</TableCell>
+              <TableCell>Start time:</TableCell>
               <TableCell style={{ fontWeight: 700 }}>
                 {moment(job.pick_up_date).format("h A")}
               </TableCell>
@@ -506,20 +504,22 @@ function MovingDetails({
                 {job.crew_size} movers
               </TableCell>
             </TableRow>
-            <TableRow>
-              <TableCell>Hourly rate:</TableCell>
-              <TableCell
-                children={
-                  <Typography
-                    variant="body1"
-                    color="primary"
-                    style={{ fontWeight: 700 }}
-                  >
-                    ${job.job_rate}/hr
-                  </Typography>
-                }
-              />
-            </TableRow>
+            {!job.is_flat_rate && (
+              <TableRow>
+                <TableCell>Hourly rate:</TableCell>
+                <TableCell
+                  children={
+                    <Typography
+                      variant="body1"
+                      color="primary"
+                      style={{ fontWeight: 700 }}
+                    >
+                      ${job.job_rate}/hr
+                    </Typography>
+                  }
+                />
+              </TableRow>
+            )}
             {job.job_status === "Completed" ? (
               <TableRow>
                 <TableCell>Duration:</TableCell>
@@ -534,22 +534,24 @@ function MovingDetails({
                 </TableCell>
               </TableRow>
             ) : (
-              <TableRow>
-                <TableCell>Estimated time:</TableCell>
-                <TableCell
-                  children={
-                    <Typography
-                      variant="body1"
-                      color="secondary"
-                      style={{ fontWeight: 700 }}
-                    >
-                      {job.estimated_time[0]} - {job.estimated_time[1]} hours*
-                    </Typography>
-                  }
-                />
-              </TableRow>
+              !job.is_flat_rate && (
+                <TableRow>
+                  <TableCell>Estimated time:</TableCell>
+                  <TableCell
+                    children={
+                      <Typography
+                        variant="body1"
+                        color="secondary"
+                        style={{ fontWeight: 700 }}
+                      >
+                        {job.estimated_time[0]} - {job.estimated_time[1]} hours*
+                      </Typography>
+                    }
+                  />
+                </TableRow>
+              )
             )}
-            {job.job_status === "Completed" ? null : (
+            {job.job_status === "Completed" || job.is_flat_rate ? null : (
               <TableRow>
                 <TableCell>Travel time:</TableCell>
                 <TableCell>
@@ -568,11 +570,17 @@ function MovingDetails({
               </TableRow>
             ) : (
               <TableRow>
-                <TableCell>Estimated quote:</TableCell>
+                <TableCell>
+                  {job.is_flat_rate ? "FLAT PRICE" : "Estimated quote:"}
+                </TableCell>
                 <TableCell style={{ fontWeight: 600, fontSize: "18px" }}>
-                  <label>
-                    ${job.estimated_quote[0]} - ${job.estimated_quote[1]}{" "}
-                  </label>
+                  {!job.is_flat_rate ? (
+                    <label>
+                      ${job.estimated_quote[0]} - ${job.estimated_quote[1]}{" "}
+                    </label>
+                  ) : (
+                    <label>${job.estimated_quote[0]}</label>
+                  )}
                 </TableCell>
               </TableRow>
             )}
@@ -580,11 +588,11 @@ function MovingDetails({
               <TableRow>
                 <TableCell>Crew:</TableCell>
                 <TableCell>
-                  {job.crew.map((name, i) => {
+                  {job.users.map((user, i) => {
                     return (
                       <label key={i}>
-                        {name}
-                        {i === job.crew.length - 1 ? null : ", "}
+                        {user.first_name + " " + user.last_name}
+                        {i === job.users.length - 1 ? null : ", "}
                       </label>
                     );
                   })}

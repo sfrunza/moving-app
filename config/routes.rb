@@ -13,6 +13,10 @@ devise_for :users, controllers: { registrations: 'registrations', sessions: 'ses
       resources :users, only: [:index, :show, :create, :edit, :update, :destroy] do 
         resources :jobs, only: [:show]
       end
+
+      resources :customers, only: [:index, :show, :create, :edit, :update, :destroy] do 
+        resources :jobs, only: [:index]
+      end
       
       resources :rates
       resources :images, only: [:index, :show, :create, :destroy]

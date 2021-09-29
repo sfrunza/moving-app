@@ -47,6 +47,9 @@ function ProfileDetails({ user }) {
           <Typography color="textSecondary" variant="body1">
             {user.email}
           </Typography>
+          <Typography color="textSecondary" variant="body1">
+            {user.active ? "Active" : "Not active"}
+          </Typography>
         </Box>
       </CardContent>
     </Card>

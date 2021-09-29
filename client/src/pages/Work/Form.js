@@ -82,7 +82,6 @@ function Form() {
   };
 
   const handleScheduled = (date) => {
-    console.log(date);
     // setFormState({
     //   ...formState,
     //   values: {

@@ -1,8 +1,9 @@
 module Api::V1
   class UsersController < ApplicationController
+    before_action :set_user, only: [:show, :update, :destroy]
 
     def index
-      if current_user && current_user.customer == false
+      if current_user && current_user.admin
         @users = User.all.order('id DESC')
         @current_user = current_user
         render json: {
@@ -10,7 +11,7 @@ module Api::V1
           logged_in: true,
           users: @users,
         }
-      elsif current_user && current_user.customer == true
+      elsif current_user 
         @current_user = current_user
         render json: {
           current_user: @current_user,
@@ -36,16 +37,15 @@ module Api::V1
     end
 
     def show
-     if current_user && current_user.customer == false
+     if current_user && current_user.admin
        @user = User.find(params[:id])
+       render json: @user, include: ["jobs"]
+
+      elsif current_user 
+        @user = current_user 
         render json: @user, include: ["jobs"]
-      elsif current_user && current_user.customer == true
-        render json: current_user, include: ["jobs"]
       else
-        render json: {
-          status: 500,
-          errors: ['user not found']
-        }
+        render json: {status: :not_found}
       end
     end
 
@@ -82,8 +82,16 @@ module Api::V1
       end
 
     protected
+
+    def set_user
+      @user = User.find(params[:id])
+    rescue => e
+      logger.info e
+      render json: { message: 'user id not found' }, status: :not_found
+    end
+
     def user_params
-      params.require(:user).permit(:id, :email, :admin, :first_name, :last_name, :active, :role, :password, :password_confirmation, :phone, :customer, :add_phone)
+      params.require(:user).permit(:id, :email, :admin, :first_name, :last_name, :active, :role, :password, :password_confirmation, :phone, :rate, :ssn, :address)
     end
   end
 end

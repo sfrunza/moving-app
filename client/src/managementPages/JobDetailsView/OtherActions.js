@@ -15,7 +15,6 @@ import {
   MenuItem,
 } from "@material-ui/core";
 import BeachAccessIcon from "@material-ui/icons/BeachAccess";
-import Label from "src/components/Label";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import ChevronRight from "src/icons/ChevronRight";
 import HistoryIcon from "@material-ui/icons/History";
@@ -23,6 +22,7 @@ import { useSelector, useDispatch } from "src/store";
 import { getCustomer } from "src/slices/customers";
 import moment from "moment";
 import ArrowRightIcon from "src/icons/ArrowRight";
+import StatusLabel from "src/components/StatusLabel";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -31,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
   },
   cardHeader: {
     textAlign: "center",
-    // fontSize: "1rem",
   },
   button: {
     display: "flex",
@@ -67,32 +66,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function getStatusLabel(status) {
-  const map = {
-    Completed: {
-      text: "Completed",
-      color: "primary",
-    },
-    Canceled: {
-      text: "Canceled",
-      color: "error",
-    },
-    "Needs Attention": {
-      text: "Needs Attention",
-      color: "warning",
-    },
-    Confirmed: {
-      text: "Confirmed",
-      color: "success",
-    },
-  };
-
-  const { text, color } = map[status];
-
-  return <Label color={color}>{text}</Label>;
-}
-
-function OtherActions({ user, event, history, ...rest }) {
+function OtherActions({ customer, event, history, ...rest }) {
   const dispatch = useDispatch();
   const classes = useStyles();
   const ref = useRef(null);
@@ -101,8 +75,8 @@ function OtherActions({ user, event, history, ...rest }) {
   const { customerJobs } = useSelector((state) => state.customers);
 
   useEffect(() => {
-    dispatch(getCustomer(user.id));
-  }, [dispatch, user.id]);
+    dispatch(getCustomer(customer.id));
+  }, [dispatch, customer.id]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -200,7 +174,7 @@ function OtherActions({ user, event, history, ...rest }) {
                     </Box>
                     <Box className={classes.statusBox}>
                       <Typography>
-                        {getStatusLabel(job.job_status)}
+                        <StatusLabel status={job.job_status} />
                         {job.job_duration ? (
                           <Typography
                             variant="caption"

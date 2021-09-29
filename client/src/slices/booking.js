@@ -3,6 +3,7 @@ import axios from "axios";
 
 const initialState = {
   date: null,
+  isFlatRate: false,
   time: "08:00:00",
   deliveryDate: null,
   fromZip: "",
@@ -21,6 +22,7 @@ const initialState = {
   crewSize: null,
   travelTime: [20, 20],
   timeBetween: 15,
+  distance: 0,
   rates: [],
   rate: null,
   estimateQuote: [],
@@ -40,6 +42,9 @@ const slice = createSlice({
   reducers: {
     setDate(state, action) {
       state.date = action.payload;
+    },
+    setIsFlatRate(state, action) {
+      state.isFlatRate = action.payload;
     },
     setDeliveryDate(state, action) {
       state.deliveryDate = action.payload;
@@ -85,6 +90,9 @@ const slice = createSlice({
     },
     setTimeBetween(state, action) {
       state.timeBetween = action.payload;
+    },
+    setDistance(state, action) {
+      state.distance = action.payload;
     },
     setRates(state, action) {
       state.rates = action.payload;
@@ -134,6 +142,7 @@ const slice = createSlice({
     },
     resetAll(state) {
       state.date = null;
+      state.isFlatRate = false;
       state.time = "08=00=00";
       state.deliveryDate = null;
       state.fromZip = "";
@@ -152,6 +161,7 @@ const slice = createSlice({
       state.crewSize = null;
       state.travelTime = [20, 20];
       state.timeBetween = 15;
+      state.distance = 0;
       state.rates = [];
       state.rate = null;
       state.estimateQuote = [];
@@ -171,6 +181,9 @@ export const { reducer } = slice;
 
 export const setDate = (date) => (dispatch) => {
   dispatch(slice.actions.setDate(date));
+};
+export const setIsFlatRate = (rate) => (dispatch) => {
+  dispatch(slice.actions.setIsFlatRate(rate));
 };
 export const setDeliveryDate = (date) => (dispatch) => {
   dispatch(slice.actions.setDeliveryDate(date));
@@ -216,6 +229,9 @@ export const setTravelTime = (travelTime) => (dispatch) => {
 };
 export const setTimeBetween = (timeBetween) => (dispatch) => {
   dispatch(slice.actions.setTimeBetween(timeBetween));
+};
+export const setDistance = (distance) => (dispatch) => {
+  dispatch(slice.actions.setDistance(distance));
 };
 export const setRates = (rates) => (dispatch) => {
   dispatch(slice.actions.setRates(rates));
@@ -266,13 +282,13 @@ export const resetAll = () => (dispatch) => {
 
 export const submitRequest = (data) => (dispatch) => {
   dispatch(slice.actions.setSubmitRequest());
-  var user = data.user;
+  var customer = data.user;
   axios
-    .post("api/v1/users", { user }, { withCredentials: true })
+    .post("api/v1/customers", { customer })
     .then((response) => {
-      let userId = response.data.user.id;
+      let userId = response.data.customer.id;
       var job = data.job;
-      job.user_id = userId;
+      job.customer_id = userId;
       axios
         .post("api/v1/jobs", { job })
         .then((response) => {

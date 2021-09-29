@@ -10,7 +10,7 @@ const useStyles = makeStyles(() => ({
   dateBox: {
     margin: "2px 4px",
     borderRadius: 8,
-    border: "1px solid white",
+    border: "1px solid transparent",
     "& >.MuiPickersDay-current": {
       borderRadius: 12,
     },

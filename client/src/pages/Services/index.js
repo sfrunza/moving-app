@@ -71,8 +71,12 @@ const useStyles = makeStyles((theme) => ({
   },
   tabs: {
     backgroundColor: theme.palette.background.paper,
-    border: `1px solid ${theme.palette.divider}`,
+    borderBottom: `1px solid ${theme.palette.divider}`,
     width: "100%",
+    "&>div>div": {
+      maxWidth: 1400,
+      margin: "auto",
+    },
   },
 }));
 

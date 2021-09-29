@@ -175,7 +175,7 @@ const Calendar = (props) => {
     let date = moment(info.pick_up_date).format("MM/DD/YYYY");
     let ratesArr = findRatesInDb(rates, date);
     let customerName =
-      info.user.first_name + " " + info.user.last_name[0] + ".";
+      info.customer.first_name + " " + info.customer.last_name[0] + ".";
     arr.push({
       ...info,
       title: customerName,
@@ -243,9 +243,7 @@ const Calendar = (props) => {
   };
 
   const handleEventSelect = (arg) => {
-    // console.log(arg);
     props.history.push(`/dashboard/jobs/${arg.event.id}`);
-    // dispatch(selectEvent(arg.event.id));
   };
 
   const handleEventResize = async ({ event }) => {
@@ -299,21 +297,22 @@ const Calendar = (props) => {
   const EventDetail = ({ event, el }) => {
     let moveType = event.extendedProps.job_type;
     let status = event.extendedProps.job_status;
-    let jobs = events.filter((e) => e.user.id === event.extendedProps.user.id);
+    let jobs = events.filter(
+      (e) => e.customer.id === event.extendedProps.customer.id
+    );
     let jobsNumber = jobs.length;
     let crewSize = event.extendedProps.crew_size;
     let estimatedTime = event.extendedProps.estimated_time;
     let startTime = moment(event.extendedProps.pick_up_date).format("hA");
     let symbol = "";
-    let completedColor = "#007C00";
+    let completedColor = theme.palette.primary.main;
     if (status === "Completed") {
-      completedColor = "#5800ff";
+      completedColor = theme.palette.success.main;
     } else if (status === "Needs Attention") {
-      completedColor = "orange";
+      completedColor = theme.palette.warning.main;
     } else if (status === "Canceled") {
-      completedColor = "red";
+      completedColor = theme.palette.error.main;
     }
-    // console.log(event);
     function image() {
       return (
         <img
@@ -336,49 +335,50 @@ const Calendar = (props) => {
     }
     // extendedProps is used to access additional event properties.
     const content = (
-      <StyledTooltip
-        title={
-          <Box>
-            <p>{event.extendedProps.job_size}</p>
-            <b>
-              {estimatedTime[0]}
-              {estimatedTime[1] ? " - " + estimatedTime[1] : null} hr
-            </b>
-          </Box>
-        }
-        placement="top-start"
-      >
-        <Box display="flex" alignItems="center" className="fc-title">
-          <Box style={{ width: 35 }}>{startTime}</Box>
-          <Box
-            style={{ color: `${completedColor}` }}
-            className={classes.hoverName}
-          >
-            {event.title}
-          </Box>
+      <Box display="flex" alignItems="center" className="fc-title">
+        <Box style={{ width: 35 }}>{startTime}</Box>
 
-          {jobsNumber > 1 ? (
-            <span
-              style={{
-                fontSize: 8,
-                position: "relative",
-                fontWeight: 600,
-                bottom: 5,
-                color: "#00F",
-              }}
-            >
-              {jobsNumber}
-            </span>
-          ) : null}
-          <Box flexGrow={1} />
-          <Box style={{ marginRight: "5px", display: "flex" }}>
-            {symbol === "P" ? image() : symbol}
-          </Box>
+        <Box
+          style={{ color: `${completedColor}` }}
+          className={classes.hoverName}
+        >
+          {event.title}
+        </Box>
+
+        {jobsNumber > 1 ? (
+          <span
+            style={{
+              fontSize: 8,
+              position: "relative",
+              fontWeight: 600,
+              bottom: 5,
+              color: "#00F",
+            }}
+          >
+            {jobsNumber}
+          </span>
+        ) : null}
+        <Box flexGrow={1} />
+        <Box style={{ marginRight: "5px", display: "flex" }}>
+          {symbol === "P" ? image() : symbol}
+        </Box>
+        <StyledTooltip
+          title={
+            <Box>
+              <p>{event.extendedProps.job_size}</p>
+              <b>
+                {estimatedTime[0]}
+                {estimatedTime[1] ? " - " + estimatedTime[1] : null} hr
+              </b>
+            </Box>
+          }
+          placement="top-start"
+        >
           <Box>
             {crewSize}/{Math.floor(estimatedTime[0])}
           </Box>
-        </Box>
-      </StyledTooltip>
+        </StyledTooltip>
+      </Box>
     );
     ReactDOM.render(content, el);
     return el;

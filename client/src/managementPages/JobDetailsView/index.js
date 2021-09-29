@@ -43,7 +43,7 @@ function JobDetailsView({ match, history }) {
     job_duration: event.estimated_time[0],
     total_amount: event.estimated_quote[0],
     job_status: "Completed",
-    crew: event.crew,
+    user_ids: [],
   };
 
   return (
@@ -62,7 +62,7 @@ function JobDetailsView({ match, history }) {
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <CustomerDetails
-                    user={event.user}
+                    customer={event.customer}
                     job={event}
                     init={init}
                     users={users}
@@ -70,7 +70,7 @@ function JobDetailsView({ match, history }) {
                 </Grid>
                 <Grid item xs={12}>
                   <OtherActions
-                    user={event.user}
+                    customer={event.customer}
                     event={event}
                     history={history}
                   />

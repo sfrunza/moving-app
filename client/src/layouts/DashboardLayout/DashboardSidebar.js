@@ -28,11 +28,17 @@ import Scrollbar from "../../components/Scrollbar";
 import { useSelector } from "src/store";
 import TruckFillIcon from "src/icons/TruckFill";
 import CurrencyDollar from "src/icons/CurrencyDollar";
+import ChartSquareBar from "src/icons/ChartSquareBar";
 
 const sections = [
   {
     title: "",
     items: [
+      {
+        title: "Overview",
+        path: "/dashboard/analytics",
+        icon: <ChartSquareBar fontSize="small" />,
+      },
       {
         title: "Calendar",
         path: "/dashboard/calendar",

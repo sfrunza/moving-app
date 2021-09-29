@@ -5,16 +5,13 @@ import Header from "./Header";
 import Results from "./Results";
 import { useSelector, useDispatch } from "src/store";
 import { cleanCustomer, getCustomers } from "src/slices/customers";
-import { getEvents } from "src/slices/calendar";
 
 function CustomerList() {
   const dispatch = useDispatch();
   const { customers, errors } = useSelector((state) => state.customers);
-  const { events } = useSelector((state) => state.calendar);
 
   useEffect(() => {
     dispatch(getCustomers());
-    dispatch(getEvents());
     dispatch(cleanCustomer());
   }, [dispatch]);
 
@@ -36,7 +33,7 @@ function CustomerList() {
           )}
           {customers && (
             <Box mt={3}>
-              <Results customers={customers} errors={errors} events={events} />
+              <Results customers={customers} errors={errors} />
             </Box>
           )}
         </Container>

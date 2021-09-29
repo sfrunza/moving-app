@@ -14,6 +14,7 @@ import Security from "./Security";
 import { useDispatch, useSelector } from "src/store";
 import { cleanUser, getUser } from "src/slices/employees";
 import Jobs from "./Jobs";
+import Settings from "./Settings";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,10 +28,11 @@ function UserView({ match }) {
   const dispatch = useDispatch();
   const userId = match.params.id;
   const [currentTab, setCurrentTab] = useState("general");
-  const { user } = useSelector((state) => state.employees);
+  const { user, userJobs } = useSelector((state) => state.employees);
   const tabs = [
     { value: "general", label: "General" },
     { value: "jobs", label: "Jobs" },
+    { value: "settings", label: "Settings" },
     { value: "security", label: "Security" },
   ];
 
@@ -87,7 +89,8 @@ function UserView({ match }) {
           <Divider />
           <Box mt={3}>
             {currentTab === "general" && <General user={user} />}
-            {currentTab === "jobs" && <Jobs user={user} />}
+            {currentTab === "jobs" && <Jobs jobs={userJobs} user={user}/>}
+            {currentTab === "settings" && <Settings user={user} />}
             {currentTab === "security" && (
               <Security
                 user={user}

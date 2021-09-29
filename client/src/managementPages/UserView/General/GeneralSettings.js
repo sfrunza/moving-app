@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
   },
   icon: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(1),
     top: 6,
     width: 20,
     position: "relative",

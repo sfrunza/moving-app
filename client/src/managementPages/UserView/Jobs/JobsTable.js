@@ -13,8 +13,8 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Link,
   withStyles,
+  Button,
 } from "@material-ui/core";
 import moment from "moment";
 import StatusLabel from "src/components/StatusLabel";
@@ -29,7 +29,7 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
-function JobsTable({ className, userJobs, ...rest }) {
+function JobsTable({ className, jobs }) {
   return (
     <div>
       <Card>
@@ -50,18 +50,16 @@ function JobsTable({ className, userJobs, ...rest }) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {userJobs.map((job) => (
+                {jobs.map((job) => (
                   <TableRow key={job.id} hover>
                     <TableCell>
-                      <Link
-                        variant="subtitle2"
-                        color="textPrimary"
+                      <Button
                         component={RouterLink}
-                        underline="none"
                         to={`/dashboard/jobs/${job.id}`}
+                        disableElevation
                       >
                         {job.id}
-                      </Link>
+                      </Button>
                     </TableCell>
                     <TableCell>
                       {moment(job.pick_up_date).format("MMM DD, YYYY")}
@@ -81,7 +79,7 @@ function JobsTable({ className, userJobs, ...rest }) {
         </Scrollbar>
         <TablePagination
           component="div"
-          count={userJobs.length}
+          count={jobs.length}
           onPageChange={() => {}}
           onRowsPerPageChange={() => {}}
           page={0}
