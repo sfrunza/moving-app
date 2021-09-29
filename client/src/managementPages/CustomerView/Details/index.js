@@ -18,8 +18,8 @@ function Details({ customer, className, ...rest }) {
 
   const { isUpdating } = useSelector((state) => state.customers);
 
-  const handleUpdate = (id, updatedUser) => {
-    dispatch(updateCustomer(id, updatedUser));
+  const handleUpdate = (id, updatedCustomer) => {
+    dispatch(updateCustomer(id, updatedCustomer));
   };
 
   return (
@@ -41,7 +41,7 @@ function Details({ customer, className, ...rest }) {
       </Grid>
       <Grid item md={8} xl={9} xs={12}>
         <GeneralSettings
-          user={customer}
+          customer={customer}
           handleUpdate={handleUpdate}
           isUpdating={isUpdating}
         />

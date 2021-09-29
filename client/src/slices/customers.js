@@ -66,11 +66,10 @@ export const { reducer } = slice;
 export const getCustomers = () => async (dispatch) => {
   dispatch(slice.actions.setLoading(true));
   try {
-    const response = await axios.get("/api/v1/users");
+    const response = await axios.get("/api/v1/customers");
     const data = await response.data;
     if (response.status === 200) {
-      let customers = data.users.filter((user) => user.customer);
-      dispatch(slice.actions.getCustomers(customers));
+      dispatch(slice.actions.getCustomers(data));
     } else {
       dispatch(slice.actions.getCustomers(null));
       dispatch(slice.actions.setErrors(data.message));
@@ -86,10 +85,9 @@ export const getCustomers = () => async (dispatch) => {
 export const getCustomer = (customerId) => async (dispatch) => {
   dispatch(slice.actions.setLoading(true));
   try {
-    const response = await axios.get(`/api/v1/users/${customerId}`);
+    const response = await axios.get(`/api/v1/customers/${customerId}`);
     const data = await response.data;
     if (response.data) {
-      // debugger;
       dispatch(slice.actions.getCustomer(data));
       dispatch(slice.actions.getCustomerJobs(data.jobs));
       // dispatch(slice.actions.getCustomerOrigins(data.origins));
@@ -133,12 +131,12 @@ export const updateCustomer = (customerId, update) => async (dispatch) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(update),
   };
-  await fetch(`/api/v1/users/${customerId}`, requestOptions)
+  await fetch(`/api/v1/customers/${customerId}`, requestOptions)
     .then((response) => {
       return response.json();
     })
     .then((data) => {
-      dispatch(slice.actions.updateSuccess(data.user));
+      dispatch(slice.actions.updateSuccess(data));
     })
     .catch((error) => {
       dispatch(slice.actions.updateFailure(error.message));

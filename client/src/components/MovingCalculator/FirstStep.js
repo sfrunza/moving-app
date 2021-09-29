@@ -32,6 +32,7 @@ import {
   setMovingService,
   setCheck,
   setDeliveryDate,
+  setDistance,
 } from "src/slices/booking";
 import CalendarWithRates from "../CalendarWithRates";
 import InformationCircle from "src/icons/InformationCircle";
@@ -40,6 +41,7 @@ import TruckFill from "src/icons/TruckFill";
 import moment from "moment";
 import { jsonCityState } from "./UsCities";
 import Clock from "src/icons/Clock";
+import { setIsFlatRate } from "../../slices/booking";
 
 const useStyles = makeStyles((theme) => ({
   label: {
@@ -333,12 +335,18 @@ const FirstStep = ({ handleNext, initial }) => {
 
             console.log("from HQ", fromHq);
             console.log("Distance BETWEEN", getMiles(distanceBetween));
+            dispatch(setDistance(getMiles(distanceBetween)));
             console.log("------------------");
             if (fromHq < 20) fromHq = 20;
             if (toHq < 20) toHq = 20;
             dispatch(setTravelTime([fromHq, fromHq]));
             dispatch(setTimeBetween(0));
             setIsLocationError(false);
+            if (getMiles(distanceBetween) > 180) {
+              dispatch(setIsFlatRate(true));
+            } else {
+              dispatch(setIsFlatRate(false));
+            }
           } else if (
             isEmptyString(response.originAddresses) &&
             isEmptyString(response.destinationAddresses) &&
@@ -358,12 +366,19 @@ const FirstStep = ({ handleNext, initial }) => {
             console.log("to HQ", toHq);
             console.log("Time BETWEEN", timeBetween);
             console.log("Distance BETWEEN", getMiles(distanceBetween));
+            dispatch(setDistance(getMiles(distanceBetween)));
+
             console.log("------------------");
             if (fromHq < 20) fromHq = 20;
             if (toHq < 20) toHq = 20;
             dispatch(setTravelTime([fromHq, toHq]));
             dispatch(setTimeBetween(timeBetween));
             setIsLocationError(false);
+            if (getMiles(distanceBetween) > 180) {
+              dispatch(setIsFlatRate(true));
+            } else {
+              dispatch(setIsFlatRate(false));
+            }
           } else {
             setIsLocationError(true);
             alert("Not in Service Area, Plese try Different Zip Code");

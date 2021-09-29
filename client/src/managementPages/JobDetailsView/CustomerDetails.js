@@ -72,7 +72,7 @@ function PaperComponent(props) {
   return <Paper {...props} />;
 }
 
-function CustomerDetails({ user, job, className, users, init, ...rest }) {
+function CustomerDetails({ customer, job, className, users, init, ...rest }) {
   const classes = useStyles();
   const [status, setStatus] = useState(job.job_status);
   const { enqueueSnackbar } = useSnackbar();
@@ -94,11 +94,20 @@ function CustomerDetails({ user, job, className, users, init, ...rest }) {
   };
 
   const handleStatusUpdate = async (values) => {
+    let userIdsArray = [];
+
+    if (values.user_ids) {
+      values.user_ids.map((user) => {
+        userIdsArray.push(user.id);
+        return null;
+      });
+      values.user_ids = userIdsArray;
+    }
+
     try {
       await dispatch(
         updateEvent(job.id, {
           ...values,
-          crew: values.crew === undefined ? `{}` : `{${values.crew}}`,
         })
       );
       enqueueSnackbar("Status Changed", {
@@ -131,42 +140,42 @@ function CustomerDetails({ user, job, className, users, init, ...rest }) {
                 <Typography
                   component={RouterLink}
                   color="textPrimary"
-                  to={`/dashboard/customers/${user.id}`}
+                  to={`/dashboard/customers/${customer.id}`}
                   className={classes.name}
                 >
-                  {user.first_name} {user.last_name}
+                  {customer.first_name} {customer.last_name}
                 </Typography>
                 <Button
                   color="default"
                   component="a"
-                  href={`tel:${user.phone}`}
+                  href={`tel:${customer.phone}`}
                   className={classes.button}
                   fullWidth
                   startIcon={<Phone />}
                 >
-                  {user.phone}
+                  {customer.phone}
                 </Button>
-                {user.add_phone ? (
+                {customer.add_phone ? (
                   <Button
                     color="default"
                     component="a"
-                    href={`tel:${user.add_phone}`}
+                    href={`tel:${customer.add_phone}`}
                     className={classes.button}
                     fullWidth
                     startIcon={<Phone />}
                   >
-                    {user.add_phone}
+                    {customer.add_phone}
                   </Button>
                 ) : null}
                 <Button
                   color="default"
                   component="a"
-                  href={`mailto:${user.email}`}
+                  href={`mailto:${customer.email}`}
                   className={classes.button}
                   fullWidth
                   startIcon={<Mail />}
                 >
-                  {user.email}
+                  {customer.email}
                 </Button>
               </TableCell>
             </TableRow>
@@ -245,7 +254,7 @@ function CustomerDetails({ user, job, className, users, init, ...rest }) {
 
 CustomerDetails.propTypes = {
   className: PropTypes.string,
-  user: PropTypes.object.isRequired,
+  customer: PropTypes.object.isRequired,
   job: PropTypes.object.isRequired,
 };
 

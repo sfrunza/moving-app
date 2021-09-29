@@ -4,42 +4,28 @@ module Api::V1
 
     # GET /jobs
     def index
-      if current_user && current_user.customer == false
+      if current_user && current_user.admin
         @jobs = Job.all.order('created_at DESC')
-        render json: @jobs
-      elsif current_user && current_user.customer == true
-        @current_user = current_user
-        @user_jobs = @current_user.jobs
-        render json: @user_jobs
+        render json: @jobs, include: ["users"]
+      elsif current_user 
+        @jobs = Job.all.order('created_at DESC')
+        render json: @jobs, include: ["users"]
       else
         render json: {message: "Please sign in."}
       end
-
-      # @user_id = params[:user_id]
-      # @user_jobs = Job.where(user_id: @user_id)
-      # render json: @user_jobs
-
     end
 
     # GET /jobs/1
     def show
-      if current_user && current_user.customer == false
+      if current_user && current_user.admin
         @job = Job.find(params[:id])
-        @origin = @job.origin
-        @destination = @job.destination
-        @images = @job.images
-        render json: @job
-      elsif current_user && current_user.customer == true
-        @current_user = current_user
-        @user_jobs = @current_user.jobs.find(params[:id])
-        @origin = @user_jobs.origin
-        @destination = @user_jobs.destination
-        @images = @user_jobs.images
-        render json: {job: @user_jobs, origin: @origin, destination: @destination, images: @images}
+        render json: @job, include: ["users"]
+      elsif current_user 
+        @job = Job.find(params[:id])
+        render json: @job, include: ["users"]
       else
         render json: {message: "Please sign in."}
       end
-
     end
 
     # POST /jobs
@@ -58,8 +44,17 @@ module Api::V1
 
     # PATCH/PUT /jobs/1
     def update
+      if params.has_key?(:user_ids)
+      @users = User.find(params[:user_ids])
+      @job.users << @users
+      else 
+        @job.users = []
+        @job.user_ids = []
+        @job.job_duration = nil
+        @job.total_amount = nil
+      end
       if @job.update(job_params)
-        @user = User.find(@job.user_id)
+        # @user = User.find(@job.user_id)
         # UserMailer.with(user: @user, job: @job).status_email.deliver_later
         render json: @job
       else
@@ -81,11 +76,9 @@ module Api::V1
         render json: { message: 'job id not found' }, status: :not_found
       end
 
-    
-
       # Only allow a trusted parameter "white list" through.
       def job_params
-        params.require(:job).permit(:pick_up_date, :delivery_date,  :job_duration, :user_id, :job_size, :job_status, :start_time, :crew_size, :job_rate, :estimated_time, :travel_time, :estimated_quote, :additional_info, :total_amount, :job_type, :crew)
+        params.require(:job).permit(:pick_up_date, :delivery_date, :is_flat_rate, :job_duration, :job_size, :job_status, :start_time, :crew_size, :job_rate, :estimated_time, :travel_time, :estimated_quote, :additional_info, :total_amount, :job_type, :customer_id, user_ids: [])
       end
   end
 end

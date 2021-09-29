@@ -136,6 +136,7 @@ function Results({ className, users, events, ...rest }) {
                 <StyledTableCell>Name</StyledTableCell>
                 <StyledTableCell>Role</StyledTableCell>
                 <StyledTableCell>Phone</StyledTableCell>
+                <StyledTableCell>Status</StyledTableCell>
                 <StyledTableCell align="right">Actions</StyledTableCell>
               </TableRow>
             </TableHead>
@@ -165,6 +166,9 @@ function Results({ className, users, events, ...rest }) {
                     </TableCell>
                     <TableCell>{user.role}</TableCell>
                     <TableCell>{user.phone}</TableCell>
+                    <TableCell>
+                      {user.active ? "Active" : "Not Active"}
+                    </TableCell>
                     <TableCell align="right">
                       <IconButton
                         classes={{ root: classes.hoverIcon }}

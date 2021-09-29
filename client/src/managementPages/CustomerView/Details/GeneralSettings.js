@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
   },
   icon: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(1),
     top: 6,
     width: 20,
     position: "relative",
@@ -60,13 +60,13 @@ const schema = {
   },
 };
 
-const GeneralSettings = ({ user, handleUpdate, isUpdating }) => {
+const GeneralSettings = ({ customer, handleUpdate, isUpdating }) => {
   const currentUser = {
-    first_name: user.first_name,
-    last_name: user.last_name,
-    email: user.email,
-    phone: user.phone,
-    add_phone: user.add_phone,
+    first_name: customer.first_name,
+    last_name: customer.last_name,
+    email: customer.email,
+    phone: customer.phone,
+    add_phone: customer.add_phone,
   };
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
@@ -84,7 +84,7 @@ const GeneralSettings = ({ user, handleUpdate, isUpdating }) => {
       isValid: errors ? false : true,
       errors: errors || {},
     }));
-  }, [formState.values, user]);
+  }, [formState.values, customer]);
 
   const handleChange = (event) => {
     event.persist();
@@ -140,7 +140,7 @@ const GeneralSettings = ({ user, handleUpdate, isUpdating }) => {
     event.preventDefault();
 
     if (formState.isValid) {
-      handleUpdate(user.id, formState.values);
+      handleUpdate(customer.id, formState.values);
       enqueueSnackbar("Customer updated", {
         anchorOrigin: {
           horizontal: "right",

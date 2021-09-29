@@ -47,8 +47,8 @@ const validate = (values) => {
   if (values.total_amount === "") {
     errors.total_amount = "Required";
   }
-  if (values.crew.length < 2) {
-    errors.crew = "Min 2 movers";
+  if (values.user_ids.length < 2) {
+    errors.user_ids = "Min 2 movers";
   }
 
   return errors;
@@ -65,8 +65,7 @@ const CompleteForm = ({
 
   const names = [];
   users.map((user) => {
-    let fullName = user.first_name + " " + user.last_name;
-    names.push(fullName);
+    names.push(user);
     return null;
   });
 
@@ -150,7 +149,7 @@ const CompleteForm = ({
             />
           </Grid>
           <Grid item xs={12}>
-            <label htmlFor="crew" className={classes.label}>
+            <label htmlFor="user_ids" className={classes.label}>
               <UsersIcon className={classes.icon} />
               Crew
             </label>
@@ -159,40 +158,44 @@ const CompleteForm = ({
               size="small"
               placeholder="Select"
               fullWidth
-              error={formik.touched.crew && Boolean(formik.errors.crew)}
+              error={formik.touched.user_ids && Boolean(formik.errors.user_ids)}
             >
               <Select
-                id="crew"
+                id="user_ids"
                 variant="outlined"
                 placeholder="Select"
-                name="crew"
+                name="user_ids"
                 size="small"
                 multiple
                 renderValue={(selected) => {
                   return (
                     <div className={classes.chips}>
-                      {selected.map((value) => (
-                        <Chip
-                          key={value}
-                          label={value}
-                          className={classes.chip}
-                        />
-                      ))}
+                      {selected.map((value, i) => {
+                        return (
+                          <Chip
+                            key={i}
+                            label={value.first_name + " " + value.last_name}
+                            className={classes.chip}
+                          />
+                        );
+                      })}
                     </div>
                   );
                 }}
-                value={formik.values.crew}
+                value={formik.values.user_ids}
                 onChange={formik.handleChange}
-                error={formik.touched.crew && Boolean(formik.errors.crew)}
+                error={
+                  formik.touched.user_ids && Boolean(formik.errors.user_ids)
+                }
               >
-                {names.map((name) => (
-                  <MenuItem key={name} value={name}>
-                    {name}
+                {names.map((user, i) => (
+                  <MenuItem key={i} value={user}>
+                    {user.first_name + " " + user.last_name}
                   </MenuItem>
                 ))}
               </Select>
-              {formik.touched.crew && Boolean(formik.errors.crew) ? (
-                <FormHelperText>{formik.errors.crew}</FormHelperText>
+              {formik.touched.user_ids && Boolean(formik.errors.user_ids) ? (
+                <FormHelperText>{formik.errors.user_ids}</FormHelperText>
               ) : null}
             </FormControl>
           </Grid>

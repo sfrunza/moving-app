@@ -110,6 +110,7 @@ const ThirdStep = ({ handleBack, handleNext, ratesFromDb }) => {
 
   const {
     date,
+    isFlatRate,
     origin,
     destination,
     movingSize,
@@ -120,6 +121,7 @@ const ThirdStep = ({ handleBack, handleNext, ratesFromDb }) => {
     timeBetween,
     movingService,
     rates,
+    distance,
   } = useSelector((state) => state.booking);
 
   const getCrewSize = (apartment, fromFloor, toFloor) => {
@@ -284,10 +286,16 @@ const ThirdStep = ({ handleBack, handleNext, ratesFromDb }) => {
   };
 
   const estimateQuote = () => {
-    let estimateQuoteArray = [
-      estimateJobTime()[0] * getRate(crewSize),
-      estimateJobTime()[1] * getRate(crewSize),
-    ];
+    let estimateQuoteArray = [];
+    if (isFlatRate) {
+      estimateQuoteArray = [estimateJobTime()[0] * getRate(crewSize)];
+    } else {
+      estimateQuoteArray = [
+        estimateJobTime()[0] * getRate(crewSize),
+        estimateJobTime()[1] * getRate(crewSize),
+      ];
+    }
+
     return estimateQuoteArray;
   };
 
@@ -295,6 +303,8 @@ const ThirdStep = ({ handleBack, handleNext, ratesFromDb }) => {
   console.log("between", timeBetween);
   console.log("service", movingService);
   console.log("rates", rates);
+  console.log("quote", estimateQuote());
+  console.log("time", estimateJobTime());
 
   return (
     <Fade in={true} mountOnEnter unmountOnExit>
@@ -312,81 +322,130 @@ const ThirdStep = ({ handleBack, handleNext, ratesFromDb }) => {
             {toHouseType && (
               <Typography component="p" variant="body2">
                 {" "}
-                &nbsp;to {toHouseType}
+                &nbsp;to {toHouseType}. Distance - {distance} miles.
               </Typography>
             )}
           </StyledGrid>
-          <StyledGrid item xs={12}>
-            <Typography variant="button" classes={{ root: classes.location }}>
-              {origin}
-              {destination && <ArrowRightIcon className={classes.icon} />}
-              {destination}
-            </Typography>
-          </StyledGrid>
-
-          <StyledGrid item xs={6} md={6}>
-            {crewSize} Movers Crew
-          </StyledGrid>
-          <StyledGrid item xs={6} md={6}>
-            <Typography variant="button">${getRate(crewSize)}</Typography>
-            <Typography variant="body2" style={{ marginLeft: 4 }}>
+          {isFlatRate && (
+            <StyledGrid item xs={12} style={{ marginTop: 8 }}>
+              <Typography component="p" variant="body2">
+                The FLAT RATE for this move starts from:
+              </Typography>
+            </StyledGrid>
+          )}
+          {!isFlatRate && (
+            <>
               {" "}
-              /hour
-            </Typography>
-          </StyledGrid>
-          <StyledGrid item xs={6} md={6}>
-            Estimate job time
-          </StyledGrid>
-          <StyledGrid item xs={6} md={6}>
-            <Typography variant="button">
-              {estimateJobTime()[0]}{" "}
-              {estimateJobTime()[1] ? "- " + estimateJobTime()[1] : null}
-            </Typography>
-            <Typography variant="body2" style={{ marginLeft: 4 }}>
-              {" "}
-              hours*
-              <Tooltip
-                title="Job Time = Labour Time + Travel Time"
-                placement="top-end"
-                arrow
+              <StyledGrid item xs={12}>
+                <Typography
+                  variant="button"
+                  classes={{ root: classes.location }}
+                >
+                  {origin}
+                  {destination && <ArrowRightIcon className={classes.icon} />}
+                  {destination}
+                </Typography>
+              </StyledGrid>
+              <StyledGrid item xs={6} md={6}>
+                {crewSize} Movers Crew
+              </StyledGrid>
+              <StyledGrid item xs={6} md={6}>
+                <Typography variant="button">${getRate(crewSize)}</Typography>
+                <Typography variant="body2" style={{ marginLeft: 4 }}>
+                  {" "}
+                  /hour
+                </Typography>
+              </StyledGrid>
+              <StyledGrid item xs={6} md={6}>
+                Estimate job time
+              </StyledGrid>
+              <StyledGrid item xs={6} md={6}>
+                <Typography variant="button">
+                  {estimateJobTime()[0]}{" "}
+                  {estimateJobTime()[1] ? "- " + estimateJobTime()[1] : null}
+                </Typography>
+                <Typography variant="body2" style={{ marginLeft: 4 }}>
+                  {" "}
+                  hours*
+                  <Tooltip
+                    title="Job Time = Labour Time + Travel Time"
+                    placement="top-end"
+                    arrow
+                  >
+                    <InformationCircle className={classes.infoIcon} />
+                  </Tooltip>
+                </Typography>
+              </StyledGrid>
+              <StyledGrid item xs={6} md={6}>
+                Travel time
+              </StyledGrid>
+              <StyledGrid item xs={6} md={6}>
+                <Typography variant="body1">
+                  {travelTime[0]}/{travelTime[1]}{" "}
+                </Typography>
+                <Typography variant="body2" style={{ marginLeft: 4 }}>
+                  {" "}
+                  min.
+                  <Tooltip
+                    title="from/to Headquarter"
+                    placement="top-end"
+                    arrow
+                  >
+                    <InformationCircle className={classes.infoIcon} />
+                  </Tooltip>
+                </Typography>
+              </StyledGrid>
+              <StyledGrid item xs={6} md={6}>
+                Estimated Quote
+              </StyledGrid>
+              <StyledGrid item xs={6} md={6}>
+                <Typography variant="button">
+                  ${estimateQuote()[0]}
+                  {estimateQuote()[1] ? " - $" + estimateQuote()[1] : null}
+                </Typography>
+              </StyledGrid>
+            </>
+          )}
+          {isFlatRate && (
+            <>
+              <StyledGrid
+                item
+                xs={6}
+                md={6}
+                style={{ marginTop: 16, marginBottom: 16 }}
               >
-                <InformationCircle className={classes.infoIcon} />
-              </Tooltip>
-            </Typography>
-          </StyledGrid>
-          <StyledGrid item xs={6} md={6}>
-            Travel time
-          </StyledGrid>
-          <StyledGrid item xs={6} md={6}>
-            <Typography variant="body1">
-              {travelTime[0]}/{travelTime[1]}{" "}
-            </Typography>
-            <Typography variant="body2" style={{ marginLeft: 4 }}>
-              {" "}
-              min.
-              <Tooltip title="from/to Headquarter" placement="top-end" arrow>
-                <InformationCircle className={classes.infoIcon} />
-              </Tooltip>
-            </Typography>
-          </StyledGrid>
-          <StyledGrid item xs={6} md={6}>
-            Estimated Quote
-          </StyledGrid>
-          <StyledGrid item xs={6} md={6}>
-            <Typography variant="button">
-              ${estimateQuote()[0]}
-              {estimateQuote()[1] ? " - $" + estimateQuote()[1] : null}
-            </Typography>
-          </StyledGrid>
+                {crewSize} Movers Crew
+              </StyledGrid>
+              <StyledGrid
+                item
+                xs={6}
+                md={6}
+                style={{ marginTop: 16, marginBottom: 16 }}
+              >
+                <Typography variant="h6">${estimateQuote()[0]}*</Typography>
+              </StyledGrid>
+            </>
+          )}
           <Divider style={{ width: "100%", margin: "8px 0px" }} />
-          <StyledGrid item xs={12}>
-            <Typography variant="caption">
-              Please note, this quote is just an estimate and provided for your
-              convenience only. We give you a database average for generally
-              similar moves. However, your final cost is based on hourly rate
-              and actual time your move will take.
-            </Typography>
-          </StyledGrid>
+          {!isFlatRate && (
+            <StyledGrid item xs={12}>
+              <Typography variant="caption">
+                Please note, this quote is just an estimate and provided for
+                your convenience only. We give you a database average for
+                generally similar moves. However, your final cost is based on
+                hourly rate and actual time your move will take.
+              </Typography>
+            </StyledGrid>
+          )}
+          {isFlatRate && (
+            <StyledGrid item xs={12}>
+              <Typography variant="caption">
+                Please note, the above information provides an estimated quote
+                only and is subject to change. The final Flat Price will be
+                determined based on actual inventory and specific moving loads.
+              </Typography>
+            </StyledGrid>
+          )}
         </Grid>
 
         <Grid

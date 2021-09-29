@@ -1,15 +1,15 @@
 class JobSerializer < ActiveModel::Serializer
   attributes :id,
-            :user,
+            :customer,
             :pick_up_date,
             :delivery_date,
+            :is_flat_rate,
             :start_time,
             :job_status,
             :job_size,
             :job_type,
             :crew_size,
             :job_rate,
-            :crew,
             :estimated_time,
             :travel_time,
             :estimated_quote,
@@ -20,5 +20,7 @@ class JobSerializer < ActiveModel::Serializer
             :updated_at,
             :origin,
             :destination,
-            :images
+            :images,
+            :user_ids
+            has_many :users
 end

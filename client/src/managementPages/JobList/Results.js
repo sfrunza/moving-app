@@ -9,7 +9,6 @@ import {
   Card,
   InputAdornment,
   IconButton,
-  Link,
   SvgIcon,
   Table,
   TableBody,
@@ -20,6 +19,7 @@ import {
   TextField,
   makeStyles,
   withStyles,
+  Button,
 } from "@material-ui/core";
 import Scrollbar from "../Scrollbar";
 import SearchIcon from "src/icons/Search";
@@ -60,14 +60,14 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
-function applyFilters(jobs, users, query, filters) {
+function applyFilters(jobs, query, filters) {
   const jobsFilter = jobs.filter((job) => {
     let matches = true;
 
     if (
       query &&
-      !job.user.first_name.toLowerCase().includes(query.toLowerCase()) &&
-      !job.user.last_name.toLowerCase().includes(query.toLowerCase()) &&
+      !job.customer.first_name.toLowerCase().includes(query.toLowerCase()) &&
+      !job.customer.last_name.toLowerCase().includes(query.toLowerCase()) &&
       !job.id.toString().includes(query.toLowerCase())
     ) {
       matches = false;
@@ -128,7 +128,6 @@ const useStyles = makeStyles((theme) => ({
   root: {},
   queryField: {
     marginRight: theme.spacing(2),
-    // marginBottom: theme.spacing(2),
   },
   statusField: {
     marginLeft: theme.spacing(2),
@@ -189,7 +188,7 @@ function Results({ className, jobs, users, ...rest }) {
   };
 
   // Usually query is done on backend with indexing solutions
-  const filteredJobs = applyFilters(jobs, users, query, filters);
+  const filteredJobs = applyFilters(jobs, query, filters);
   const paginatedJobs = applyPagination(filteredJobs, page, limit);
 
   return (
@@ -234,7 +233,7 @@ function Results({ className, jobs, users, ...rest }) {
       </Box>
       <Scrollbar>
         <Box minWidth={1300}>
-          <Table aria-label="simple table">
+          <Table aria-label="simple table" stickyHeader>
             <TableHead>
               <TableRow>
                 <StyledTableCell>#</StyledTableCell>
@@ -252,20 +251,17 @@ function Results({ className, jobs, users, ...rest }) {
             <TableBody>
               {paginatedJobs.map((job, i) => {
                 return (
-                  <TableRow hover key={job.id}>
+                  <TableRow hover key={i}>
                     <TableCell>
-                      <Link
-                        variant="subtitle2"
-                        color="textPrimary"
+                      <Button
                         component={RouterLink}
-                        underline="none"
                         to={`/dashboard/jobs/${job.id}`}
+                        disableElevation
                       >
                         {job.id}
-                      </Link>
+                      </Button>
                     </TableCell>
                     <TableCell>
-                      {" "}
                       <StatusLabel status={job.job_status} />
                     </TableCell>
                     <TableCell>{job.job_type}</TableCell>
@@ -281,7 +277,7 @@ function Results({ className, jobs, users, ...rest }) {
                       {moment(job.pick_up_date).format("MMM DD, YYYY")}
                     </TableCell>
                     <TableCell>
-                      {job.user.first_name + " " + job.user.last_name}
+                      {job.customer.first_name + " " + job.customer.last_name}
                     </TableCell>
 
                     <TableCell>{job.job_size}</TableCell>

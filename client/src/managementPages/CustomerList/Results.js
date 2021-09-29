@@ -105,7 +105,7 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
-function Results({ className, customers, events, ...rest }) {
+function Results({ className, customers, ...rest }) {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
@@ -127,17 +127,6 @@ function Results({ className, customers, events, ...rest }) {
   // Usually query is done on backend with indexing solutions
   const filteredCustomers = applyFilters(customers, query);
   const paginatedCustomers = applyPagination(filteredCustomers, page, limit);
-
-  const numberOfJobs = (customer) => {
-    let number = 0;
-    events.map((event) => {
-      if (event.user.id === customer.id) {
-        number = number + 1;
-      }
-      return null;
-    });
-    return number;
-  };
 
   return (
     <Card className={clsx(classes.root, className)} {...rest}>
@@ -188,11 +177,11 @@ function Results({ className, customers, events, ...rest }) {
                             to={`/dashboard/customers/${customer.id}`}
                             variant="subtitle2"
                           >
-                            {numberOfJobs(customer) === 1 ? (
+                            {customer.jobs.length < 2 ? (
                               customer.first_name + " " + customer.last_name
                             ) : (
                               <Badge
-                                badgeContent={numberOfJobs(customer)}
+                                badgeContent={customer.jobs.length}
                                 color="secondary"
                                 className={classes.badge}
                               >

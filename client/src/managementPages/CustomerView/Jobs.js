@@ -15,8 +15,8 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Link,
   withStyles,
+  Button,
 } from "@material-ui/core";
 import { ArrowRight as ArrowRightIcon } from "react-feather";
 import { makeStyles } from "@material-ui/core/styles";
@@ -42,7 +42,7 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
-function Jobs({ className, jobs, ...rest }) {
+function Jobs({ className, jobs }) {
   const classes = useStyles();
 
   return (
@@ -69,18 +69,15 @@ function Jobs({ className, jobs, ...rest }) {
                 {jobs.map((job) => (
                   <TableRow key={job.id} hover>
                     <TableCell>
-                      <Link
-                        variant="subtitle2"
-                        color="textPrimary"
+                      <Button
                         component={RouterLink}
-                        underline="none"
                         to={`/dashboard/jobs/${job.id}`}
+                        disableElevation
                       >
                         {job.id}
-                      </Link>
+                      </Button>
                     </TableCell>
                     <TableCell>
-                      {" "}
                       <StatusLabel status={job.job_status} />
                     </TableCell>
                     <TableCell>{job.job_type}</TableCell>
@@ -90,10 +87,8 @@ function Jobs({ className, jobs, ...rest }) {
                     <TableCell>{job.job_size}</TableCell>
                     <TableCell>{job.crew_size}</TableCell>
                     <TableCell variant="footer">
-                      {" "}
                       {moment(job.created_at).format("MM/DD/YYYY")}
                     </TableCell>
-
                     <TableCell align="right">
                       <IconButton
                         component={RouterLink}

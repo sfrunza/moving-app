@@ -17,6 +17,7 @@ import Work from "src/pages/Work";
 import Book from "src/pages/Book";
 import Login from "src/pages/Login";
 import Pricing from "src/pages/Pricing";
+import AnalyticsOverview from "src/managementPages/AnalyticsOverview";
 
 const DashboardLayout = lazy(() => import("src/layouts/DashboardLayout"));
 const MainLayout = lazy(() => import("src/layouts/MainLayout"));
@@ -59,8 +60,8 @@ function Routes(props) {
                     <Route exact path="/dashboard" component={Private} />
                     <Route
                       exact
-                      path="/dashboard/finance"
-                      component={Private}
+                      path="/dashboard/analytics"
+                      component={AnalyticsOverview}
                     />
                     <Route
                       exact
