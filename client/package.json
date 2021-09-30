@@ -48,7 +48,11 @@
     "smoothscroll-polyfill": "^0.4.4",
     "validate.js": "^0.13.1",
     "web-vitals": "^1.1.2",
-    "yup": "^0.32.9"
+    "yup": "^0.32.9",
+    "brotli-webpack-plugin": "^1.1.0",
+    "compression-webpack-plugin": "^6.0.5",
+    "copy-webpack-plugin": "^6.4.1",
+    "react-app-rewired": "^2.1.8"
   },
   "scripts": {
     "start": "react-app-rewired start ",
@@ -74,10 +78,5 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "brotli-webpack-plugin": "^1.1.0",
-    "compression-webpack-plugin": "^6.0.5",
-    "copy-webpack-plugin": "^6.4.1",
-    "react-app-rewired": "^2.1.8"
-  }
+  "devDependencies": {}
 }
