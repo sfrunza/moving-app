@@ -66,7 +66,7 @@ const Contact = (props) => {
             color="primary"
             disableElevation
           >
-            Request Your Move Online
+            Get Your Quote Now
           </Button>,
           // <Button
           //   component={RouterLink}
