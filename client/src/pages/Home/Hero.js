@@ -6,7 +6,7 @@ import { useMediaQuery, Grid, Typography } from "@material-ui/core";
 import HeroBackground from "../../components/HeroBackground";
 import CalculatorDialog from "./CalculatorDialog";
 import MovingCalculator from "src/components/MovingCalculator";
-import background from "src/assets/img/home.webp";
+import background from "src/assets/img/home.jpg";
 import TypedText from "src/components/TypedText";
 
 const useStyles = makeStyles((theme) => ({

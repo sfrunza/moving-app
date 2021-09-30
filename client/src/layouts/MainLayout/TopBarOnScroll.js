@@ -15,6 +15,7 @@ import {
   Button,
   useScrollTrigger,
   Fade,
+  Fab,
 } from "@material-ui/core";
 import CustomRouterLink from "src/components/CustomRouterLink";
 import Auth from "src/components/Auth";
@@ -22,6 +23,7 @@ import { NavLink } from "react-router-dom";
 import Menu from "src/icons/Menu";
 import User from "src/icons/User";
 import { useSelector } from "src/store";
+import Phone from "src/icons/Phone";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -111,6 +113,15 @@ const useStyles = makeStyles((theme) => ({
       position: "relative",
       bottom: 2,
     },
+  },
+  callButtonContainer: {
+    position: "fixed",
+    bottom: theme.spacing(4),
+    left: theme.spacing(2),
+  },
+  callButton: {
+    color: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.primary.main,
   },
 }));
 
@@ -271,6 +282,11 @@ function TopBarOnScroll({ onSidebarOpen, pages, history }) {
               </IconButton>
             </Hidden>
           </Toolbar>
+          <div role="presentation" className={classes.callButtonContainer}>
+            <Fab color="primary" aria-label="call" component="a" href="#">
+              <Phone />
+            </Fab>
+          </div>
         </AppBar>
       </ShowOnScroll>
     </React.Fragment>
