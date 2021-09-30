@@ -333,19 +333,16 @@ const ThirdStep = ({ handleBack, handleNext, ratesFromDb }) => {
               </Typography>
             </StyledGrid>
           )}
+
+          <StyledGrid item xs={12}>
+            <Typography variant="button" classes={{ root: classes.location }}>
+              {origin}
+              {destination && <ArrowRightIcon className={classes.icon} />}
+              {destination}
+            </Typography>
+          </StyledGrid>
           {!isFlatRate && (
             <>
-              {" "}
-              <StyledGrid item xs={12}>
-                <Typography
-                  variant="button"
-                  classes={{ root: classes.location }}
-                >
-                  {origin}
-                  {destination && <ArrowRightIcon className={classes.icon} />}
-                  {destination}
-                </Typography>
-              </StyledGrid>
               <StyledGrid item xs={6} md={6}>
                 {crewSize} Movers Crew
               </StyledGrid>

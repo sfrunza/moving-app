@@ -80,17 +80,17 @@ const Storage = (props) => {
         <SectionHeader
           title={
             <Box className={classes.rates}>
-              <Typography variant="h6" color="textPrimary" gutterBottom>
+              <Typography variant="button" color="textPrimary" gutterBottom>
                 Room
                 <br></br>
                 <span>$100/mo</span>
               </Typography>
-              <Typography variant="h6" color="textPrimary" gutterBottom>
+              <Typography variant="button" color="textPrimary" gutterBottom>
                 Studio
                 <br></br>
                 <span>$150/mo</span>
               </Typography>
-              <Typography variant="h6" color="textPrimary" gutterBottom>
+              <Typography variant="button" color="textPrimary" gutterBottom>
                 1 Bedroom
                 <br></br>
                 <span>$250/mo</span>
@@ -127,7 +127,7 @@ const Storage = (props) => {
         <SectionHeader
           title={
             <Box className={clsx(classes.rates, classes.overnight)}>
-              <Typography variant="h6" color="textPrimary" gutterBottom>
+              <Typography variant="button" color="textPrimary" gutterBottom>
                 We collect $200 for keeping your items overnight.
               </Typography>
             </Box>
