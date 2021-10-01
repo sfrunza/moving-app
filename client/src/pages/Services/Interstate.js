@@ -15,7 +15,7 @@ import Image from "src/components/Image";
 import ChevronRight from "src/icons/ChevronRight";
 import { Link as RouterLink } from "react-router-dom";
 
-import img from "src/assets/img/inter-img-min3.jpg";
+import img from "src/assets/img/inter-22.jpg";
 import usa from "src/assets/img/usamap2.jpg";
 
 const useStyles = makeStyles((theme) => ({

@@ -41,8 +41,6 @@ const validate = (values) => {
 
   if (values.job_duration === "") {
     errors.job_duration = "Required";
-  } else if (values.job_duration === "") {
-    errors.job_duration = "Required";
   }
   if (values.total_amount === "") {
     errors.total_amount = "Required";
@@ -97,7 +95,7 @@ const CompleteForm = ({
               name="job_duration"
               variant="outlined"
               size="small"
-              type="number"
+              // type="number"
               placeholder="Duration"
               // onInput={(e) => onlyNumbers(e)}
               inputProps={{
@@ -128,7 +126,7 @@ const CompleteForm = ({
               name="total_amount"
               variant="outlined"
               size="small"
-              type="number"
+              // type="number"
               placeholder="Amount"
               // onInput={(e) => onlyNumbers(e)}
               inputProps={{

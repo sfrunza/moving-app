@@ -40,6 +40,14 @@ const slice = createSlice({
         return ev;
       });
     },
+    addImage(state, action) {
+      state.event.images.push(action.payload);
+    },
+    deleteImage(state, action) {
+      state.event.images = state.event.images.filter(
+        (image) => image.id !== action.payload
+      );
+    },
     deleteEvent(state, action) {
       const { eventId } = action.payload;
 
@@ -101,6 +109,33 @@ export const updateEvent = (eventId, update) => async (dispatch) => {
     .then((data) => {
       dispatch(slice.actions.updateEvent(data));
     });
+};
+
+export const addImage = (eventId, imageData) => async (dispatch) => {
+  const formData = new FormData();
+  formData.append("image", imageData.name);
+  formData.append("photo", imageData);
+  formData.append("job_id", eventId);
+
+  await fetch("/api/v1/images.json", {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      dispatch(slice.actions.addImage(data));
+    });
+};
+
+export const deleteImage = (imageId) => async (dispatch) => {
+  await fetch(`/api/v1/images/${imageId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then((resp) => {
+    dispatch(slice.actions.deleteImage(imageId));
+  });
 };
 
 export const deleteEvent = (eventId) => async (dispatch) => {
