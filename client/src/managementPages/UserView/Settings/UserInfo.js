@@ -17,8 +17,8 @@ import Home from "src/icons/Home";
 import CurrencyDollar from "src/icons/CurrencyDollar";
 import Lock from "src/icons/Lock";
 import ContactPhoneRoundedIcon from "@material-ui/icons/ContactPhoneRounded";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import Eye from "src/icons/Eye";
+import EyeOff from "src/icons/EyeOff";
 
 const useStyles = makeStyles((theme) => ({
   label: {
@@ -34,8 +34,8 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
   },
   inputWidth: {
-    width: "calc(100% - 33px)",
-    marginLeft: 33,
+    width: "calc(100% - 24px)",
+    marginLeft: 24,
   },
   iconPadding: {
     padding: 0,
@@ -64,7 +64,7 @@ const validate = (values) => {
   return errors;
 };
 
-const shallowEqual = (object1, object2) => {
+const areObjectsEqual = (object1, object2) => {
   const keys1 = Object.keys(object1);
   const keys2 = Object.keys(object2);
   if (keys1.length !== keys2.length) {
@@ -154,7 +154,7 @@ const UserInfo = ({ user, handleUpdate, isUpdating, init }) => {
                       onClick={handleClickShowPassword}
                       // onMouseDown={handleMouseDownPassword}
                     >
-                      {show ? <Visibility /> : <VisibilityOff />}
+                      {show ? <Eye /> : <EyeOff />}
                     </IconButton>
                   ),
                 }}
@@ -183,7 +183,7 @@ const UserInfo = ({ user, handleUpdate, isUpdating, init }) => {
             type="submit"
             variant="contained"
             disableElevation
-            disabled={shallowEqual(formik.values, init)}
+            disabled={areObjectsEqual(formik.values, init)}
           >
             {isUpdating ? "Loading..." : "Save Changes"}
           </Button>

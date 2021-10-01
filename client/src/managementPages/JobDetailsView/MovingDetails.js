@@ -22,10 +22,12 @@ import {
   DirectionsRenderer,
 } from "react-google-maps";
 import { compose, withProps, lifecycle } from "recompose";
+import Uploader from "./Uploader";
+import GridGallery from "./GridGallery";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    boxShadow: "none",
+    // boxShadow: "none",
   },
   content: {
     padding: 0,
@@ -44,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
   addInfoTitle: {
     fontSize: "14px",
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
     textTransform: "uppercase",
     fontWeight: 600,
   },
@@ -55,10 +57,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
   },
-  address: {
-    textTransform: "uppercase",
-    fontSize: 14,
-  },
+
   paragraph: {
     fontStyle: "italic",
     fontSize: 12,
@@ -66,51 +65,12 @@ const useStyles = makeStyles((theme) => ({
   margTop: {
     marginTop: 6,
   },
-  overMap: {
-    display: "flex",
-    width: "100%",
-    justifyContent: "space-between",
-    position: "relative",
-    bottom: "6rem",
-    left: "20%",
-    [theme.breakpoints.down("sm")]: {
-      left: "10%",
-    },
-  },
-  overMapImg: {
-    transition: "all .2s ease-in-out",
-    // transformOrigin: "bottom right",
-    // "&:hover": {
-    //   height: 110,
-    //   width: 150,
-    // },
-  },
-  from: {
-    // color: "#F9F9F9",
-    // position: "absolute",
-    // padding: "2px 5px 4px",
-    // bottom: 30,
-    // fontSize: 11,
-    // letterSpacing: 1,
-    // lineHeight: 11,
-    // fontWeight: 300,
-    // backgroundColor: "rgba(0,0,0,0.65)",
-    // zIndex: 100,
+  crewNames: {
+    color: theme.palette.text.secondary,
   },
 }));
 
-function MovingDetails({
-  job,
-  className,
-  images,
-  setImages,
-  handleDeleteImage,
-  disableShadow,
-  disableHeader,
-  setJob,
-  removeAddPickup,
-  ...rest
-}) {
+function MovingDetails({ job, dispatch, ...rest }) {
   const classes = useStyles();
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: "AIzaSyADEDKabHN5FBcOroOU1W7BzUam0Az8gGQ",
@@ -395,29 +355,9 @@ function MovingDetails({
   };
 
   return (
-    <Card
-      {...rest}
-      className={clsx(disableShadow ? classes.root : {}, className)}
-    >
+    <Card {...rest} className={classes.root}>
       <CardHeader title="Move Overview" />
       {isLoaded && map}
-      {/* <div id="overMap" className={classes.overMap}>
-        <img
-          className={classes.overMapImg}
-          width="120px"
-          height="80px"
-          alt="fomAddress"
-          src="https://maps.googleapis.com/maps/api/streetview?size=300x200&sensor=false&location=110+Waverly+St,+Everett+MA+02149&key=AIzaSyCQQbGb76eFgStTEJsr0G0bSOaPayDBiXg"
-        />
-        <img
-          className={classes.overMapImg}
-          alt="toAddress"
-          width="120px"
-          height="80px"
-          src="https://maps.googleapis.com/maps/api/streetview?size=300x200&sensor=false&location=19+Overlook+Ridge+Terrace,+Revere+MA+02151&key=AIzaSyCQQbGb76eFgStTEJsr0G0bSOaPayDBiXg"
-        />
-        <div class="clearfix"></div>
-      </div> */}
       <CardContent className={classes.content}>
         <Box className={classes.headerDistance}>{distance}</Box>
         <Divider />
@@ -524,14 +464,23 @@ function MovingDetails({
               <TableRow>
                 <TableCell>Duration:</TableCell>
                 <TableCell
-                  style={{
-                    color: "#FD7013",
-                    fontSize: "18px",
-                    fontWeight: 700,
-                  }}
-                >
-                  <label>{job.job_duration || ""}</label> hours
-                </TableCell>
+                  children={
+                    <Typography
+                      variant="body1"
+                      color="secondary"
+                      style={{ fontWeight: 700 }}
+                    >
+                      {job.job_duration || ""} hours
+                    </Typography>
+                  }
+                  // style={{
+                  //   color: "#FD7013",
+                  //   fontSize: "18px",
+                  //   fontWeight: 700,
+                  // }}
+                />
+                {/* <label>{job.job_duration || ""}</label> hours */}
+                {/* </TableCell> */}
               </TableRow>
             ) : (
               !job.is_flat_rate && (
@@ -590,7 +539,7 @@ function MovingDetails({
                 <TableCell>
                   {job.users.map((user, i) => {
                     return (
-                      <label key={i}>
+                      <label key={i} className={classes.crewNames}>
                         {user.first_name + " " + user.last_name}
                         {i === job.users.length - 1 ? null : ", "}
                       </label>
@@ -648,12 +597,9 @@ function MovingDetails({
               {job.additional_info}
             </Typography>
 
-            {/* <GridGallery
-              images={images}
-              jobStatus={job.job_status}
-              handleDeleteImage={handleDeleteImage}
-            />
-            {job.job_status === "Completed" ? null : (
+            {job.images.length > 0 && <Divider />}
+            <GridGallery images={job.images} dispatch={dispatch} />
+            {/* {job.job_status === "Completed" ? null : (
               <Uploader
                 jobId={job.id}
                 images={images}
@@ -661,6 +607,7 @@ function MovingDetails({
                 text="Add photo to inventory"
               />
             )} */}
+            <Uploader jobId={job.id} dispatch={dispatch} />
           </Box>
           {job.job_status === "Completed" ? null : (
             <Typography

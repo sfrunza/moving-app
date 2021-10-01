@@ -23,6 +23,7 @@ import { getCustomer } from "src/slices/customers";
 import moment from "moment";
 import ArrowRightIcon from "src/icons/ArrowRight";
 import StatusLabel from "src/components/StatusLabel";
+import DocumentText from "src/icons/DocumentText";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -53,16 +54,20 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     marginTop: "-5px",
+    padding: 0,
     "& span ": {
-      fontSize: "10px",
+      fontSize: 10,
       backgroundColor: "transparent",
+      fontWeight: 400,
+      padding: 0,
     },
   },
   topInfo: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
   },
 }));
 
@@ -144,7 +149,7 @@ function OtherActions({ customer, event, history, ...rest }) {
                   <Box display="flex" className={classes.menuBox}>
                     <Box className={classes.topInfo}>
                       <Box>
-                        <Typography variant="body2">
+                        <Typography variant="body2" color="textSecondary">
                           {moment(job.pick_up_date).format("MM/DD/YYYY")}
                         </Typography>
                       </Box>
@@ -178,6 +183,7 @@ function OtherActions({ customer, event, history, ...rest }) {
                         {job.job_duration ? (
                           <Typography
                             variant="caption"
+                            color="textSecondary"
                             style={{ marginLeft: 4 }}
                           >
                             {job.job_duration}hr
@@ -195,6 +201,11 @@ function OtherActions({ customer, event, history, ...rest }) {
           <Button className={classes.button}>
             <BeachAccessIcon className={classes.actionIcon} />
             Certificate of Insurance
+            <ChevronRight className={clsx(classes.actionIcon, classes.arrow)} />
+          </Button>
+          <Button className={classes.button} disabled={!event.receipt}>
+            <DocumentText className={classes.actionIcon} />
+            Moving Receipt
             <ChevronRight className={clsx(classes.actionIcon, classes.arrow)} />
           </Button>
           <Button className={classes.button}>

@@ -143,9 +143,13 @@ function Results({ className, users, events, ...rest }) {
             <TableBody>
               {paginatedUsers.map((user) => {
                 const isCustomerSelected = filteredUsers.includes(user.id);
-
                 return (
-                  <TableRow hover key={user.id} selected={isCustomerSelected}>
+                  <TableRow
+                    hover
+                    key={user.id}
+                    selected={isCustomerSelected}
+                    style={{ verticalAlign: "inherit" }}
+                  >
                     <TableCell>
                       <Box display="flex" alignItems="center">
                         <Avatar className={classes.avatar} src={user.avatar} />

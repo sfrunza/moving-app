@@ -151,7 +151,7 @@ function Results({ className, customers, ...rest }) {
         <Box flexGrow={1} />
       </Box>
       <Scrollbar>
-        <Box minWidth={1000}>
+        <Box minWidth={650}>
           <Table>
             <TableHead>
               <TableRow>
@@ -163,7 +163,11 @@ function Results({ className, customers, ...rest }) {
             <TableBody>
               {paginatedCustomers.map((customer) => {
                 return (
-                  <TableRow hover key={customer.id}>
+                  <TableRow
+                    hover
+                    key={customer.id}
+                    style={{ verticalAlign: "inherit" }}
+                  >
                     <TableCell>
                       <Box display="flex" alignItems="center">
                         <Avatar

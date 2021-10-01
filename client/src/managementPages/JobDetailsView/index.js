@@ -78,7 +78,7 @@ function JobDetailsView({ match, history }) {
               </Grid>
             </Grid>
             <Grid item md={8} xl={9} xs={12}>
-              <MovingDetails job={event} />
+              <MovingDetails job={event} dispatch={dispatch} />
             </Grid>
             <Grid item md={3} xs={12}></Grid>
             <Divider style={{ marginTop: 40, width: "100%" }} />

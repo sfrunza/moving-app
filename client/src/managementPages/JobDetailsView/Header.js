@@ -7,11 +7,25 @@ import {
   Link,
   Typography,
   Box,
+  List,
+  ListItem,
 } from "@material-ui/core";
 import ChevronRightIcon from "src/icons/ChevronRight";
 import PencilAltIcon from "src/icons/PencilAlt";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 function Header({ job }) {
+  if (!job)
+    return (
+      <List>
+        <ListItem>
+          <Skeleton variant="text" width={250} />
+        </ListItem>
+        <ListItem>
+          <Skeleton variant="text" width={200} />
+        </ListItem>
+      </List>
+    );
   return (
     <Grid container justifyContent="space-between" spacing={3}>
       <Grid item>

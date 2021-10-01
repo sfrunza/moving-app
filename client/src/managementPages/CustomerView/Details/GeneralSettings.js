@@ -31,8 +31,8 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
   },
   inputWidth: {
-    width: "calc(100% - 33px)",
-    marginLeft: 33,
+    width: "calc(100% - 24px)",
+    marginLeft: 24,
   },
 }));
 
