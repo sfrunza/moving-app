@@ -42,8 +42,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("md")]: {
       padding: theme.spacing(4),
     },
-    boxShadow: theme.shadows[2],
+    // boxShadow: theme.shadows[2],
     borderRadius: theme.spacing(1),
+    border: `1px solid ${theme.palette.divider}`,
     // transition: "transform 250ms ease, box-shadow 250ms ease",
     // "&:hover": {
     //   transform: "translateY(-0.25rem)",

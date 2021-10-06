@@ -14,6 +14,7 @@ import RoomIcon from "@material-ui/icons/Room";
 import { Link as RouterLink } from "react-router-dom";
 import Mail from "src/icons/Mail";
 import Phone from "src/icons/Phone";
+import Section from "src/components/Section";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -49,7 +50,7 @@ const Contact = (props) => {
   const { className, ...rest } = props;
   const classes = useStyles();
   return (
-    <div className={clsx(classes.root, className)} {...rest}>
+    <Section className={clsx(classes.root, className)} {...rest}>
       <SectionHeader
         title="Why choose us"
         subtitle="We are a small company of professional movers. Unlike movers from big companies, we will treat your belongings as ours. We will walk you through our smooth and simple process."
@@ -143,7 +144,7 @@ const Contact = (props) => {
           />
         </ListItem>
       </List>
-    </div>
+    </Section>
   );
 };
 

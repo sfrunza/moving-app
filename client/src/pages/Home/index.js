@@ -1,7 +1,7 @@
 import React from "react";
 import Page from "src/components/Page";
 import { makeStyles } from "@material-ui/core/styles";
-import { useTheme } from "@material-ui/core";
+import { useTheme, useMediaQuery } from "@material-ui/core";
 import Section from "src/components/Section";
 import { services, faq, properties } from "./data";
 import Services from "./Services";
@@ -10,6 +10,7 @@ import Include from "./Include";
 import Contact from "./Contact";
 import Rates from "./Rates";
 import Hero from "./Hero";
+import CurbBottom from "src/icons/CurbBottom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,25 +23,45 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
   const classes = useStyles();
   const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up("md"), {
+    defaultMatches: true,
+  });
 
   return (
-    <Page title="Insight Moving" className={classes.root}>
+    <Page
+      title="Insight Moving | Boston Movers Who Care (Free Estimate)"
+      className={classes.root}
+    >
       <Hero />
       <Section>
         <Services data={services} id="next" />
       </Section>
-      <Section background={theme.palette.background.level2}>
+      <div style={{ backgroundColor: theme.palette.background.level2 }}>
         <Include data={properties} />
-      </Section>
+      </div>
       <Section>
         <Rates />
       </Section>
-      <Section>
+      <div
+        style={{
+          backgroundImage: ` linear-gradient(rgba(255, 255, 255, 0), ${theme.palette.background.level2}`,
+        }}
+      >
         <FAQS data={faq} />
-      </Section>
-      <Section background={theme.palette.background.level2}>
-        <Contact />
-      </Section>
+      </div>
+      <svg
+        width="100%"
+        height={isMd ? 80 : 60}
+        viewBox="0 0 500 80"
+        preserveAspectRatio="none"
+        style={{ marginTop: isMd ? -40 : -30 }}
+      >
+        <path
+          d="M0,0 L0,40 Q250,80 500,40 L500,0 Z"
+          fill={`${theme.palette.background.level2}`}
+        />
+      </svg>
+      <Contact />
     </Page>
   );
 };

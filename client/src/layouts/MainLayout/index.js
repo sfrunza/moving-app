@@ -49,6 +49,10 @@ function MainLayout({ children, history }) {
       title: "Our work",
       href: "/work",
     },
+    {
+      title: "+1 (000) 000-0000",
+      href: "tel:0000000000",
+    },
   ];
 
   const [openSidebar, setOpenSidebar] = useState(false);

@@ -4,12 +4,12 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Welcome to <%= link_to "InsightMoving", @url %>, <%= @user.first_name %> <%= @user.last_name %></h1>
+    <h1>Welcome to <%= link_to "InsightMoving", @url %>, <%= @customer.first_name %></h1>
     <p>
-      your login is: <%= @user.email %>.<br>
+      Job Size: <%= @job.job_size %>.<br>
     </p>
     <p>
-      your password is: <%= @user.phone %>.<br>
+      Moving Date: <%= @job.pick_up_date %>.<br>
     </p>
     <p>
       To view your moving details, just follow this link: <%= link_to "View My Moving Details", @login_url %>.

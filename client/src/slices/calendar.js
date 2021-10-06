@@ -50,9 +50,9 @@ const slice = createSlice({
     },
     deleteEvent(state, action) {
       const { eventId } = action.payload;
-
       state.events = state.events.filter((event) => event.id !== eventId);
     },
+
     selectRange(state, action) {
       const { start, end } = action.payload;
 
@@ -139,9 +139,7 @@ export const deleteImage = (imageId) => async (dispatch) => {
 };
 
 export const deleteEvent = (eventId) => async (dispatch) => {
-  await axios.post("/api/v1/events/remove", {
-    eventId,
-  });
+  await axios.delete(`/api/v1/jobs/${eventId}`);
   dispatch(slice.actions.deleteEvent({ eventId }));
 };
 

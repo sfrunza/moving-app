@@ -332,6 +332,8 @@ const Calendar = (props) => {
       symbol = "\u2192 ]";
     } else if (moveType === "Packing Only") {
       symbol = "P";
+    } else if (moveType === "Moving from Storage") {
+      symbol = "[ \u2192";
     }
     // extendedProps is used to access additional event properties.
     const content = (
@@ -500,7 +502,6 @@ const Calendar = (props) => {
                 events={arr}
                 eventRender={EventDetail}
                 header={false}
-                headerToolbar={true}
                 height={800}
                 initialDate={date}
                 // initialView={view}

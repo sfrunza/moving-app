@@ -7,6 +7,7 @@ import { useMediaQuery, Grid, Button, Typography } from "@material-ui/core";
 import SectionHeader from "src/components/SectionHeader";
 import { Link as RouterLink } from "react-router-dom";
 import Check from "src/icons/Check";
+import Section from "src/components/Section";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,7 +43,7 @@ const Include = (props) => {
   });
 
   return (
-    <div className={clsx(classes.root, className)} {...rest}>
+    <Section className={clsx(classes.root, className)} {...rest}>
       <Grid
         container
         spacing={isMd ? 4 : 0}
@@ -85,7 +86,7 @@ const Include = (props) => {
           </Grid>
         </Grid>
       </Grid>
-    </div>
+    </Section>
   );
 };
 

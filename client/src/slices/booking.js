@@ -22,7 +22,7 @@ const initialState = {
   crewSize: null,
   travelTime: [20, 20],
   timeBetween: 15,
-  distance: 0,
+  distance: null,
   rates: [],
   rate: null,
   estimateQuote: [],
@@ -143,7 +143,7 @@ const slice = createSlice({
     resetAll(state) {
       state.date = null;
       state.isFlatRate = false;
-      state.time = "08=00=00";
+      state.time = "08:00:00";
       state.deliveryDate = null;
       state.fromZip = "";
       state.toZip = "";

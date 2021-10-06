@@ -232,7 +232,8 @@ const FirstStep = ({ handleNext, initial }) => {
       dispatch(setCheck(values.check));
       dispatch(setMovingService(values.movingService));
 
-      if (!isLocationError) {
+      if (!isLocationError && isApiLoaded) {
+        findTravelTime();
         handleNext();
       }
     },
@@ -241,17 +242,16 @@ const FirstStep = ({ handleNext, initial }) => {
   // formik.values.fromZip.isValid();
 
   const handleZipBlur = (e, loc) => {
-    let zip = e.target.value;
-    const cityObject = findCity(zip);
-    if (!cityObject) {
-      // enqueueSnackbar("Invalid Zipcode", {
-      //   anchorOrigin: {
-      //     horizontal: "right",
-      //     vertical: "top",
-      //   },
-      //   variant: "error",
-      // });
+    let zip = "";
+    if (e === null) {
+      zip = "";
+    } else {
+      zip = e.target.value;
     }
+    // let zip = e.target.value;
+    const cityObject = findCity(zip);
+
+    console.log(cityObject);
     if (cityObject) {
       const city = cityObject.c;
       const state = cityObject.s;
@@ -267,11 +267,6 @@ const FirstStep = ({ handleNext, initial }) => {
       } else if (loc === "to") {
         dispatch(setDestination(city + ", " + state));
       }
-      if (isApiLoaded) {
-        setTimeout(function () {
-          findTravelTime();
-        }, 500);
-      }
     }
   };
 
@@ -283,14 +278,6 @@ const FirstStep = ({ handleNext, initial }) => {
   }
 
   const findTravelTime = () => {
-    const isReadyToCalculate =
-      !formik.touched.fromZip &&
-      !Boolean(formik.errors.fromZip) &&
-      !formik.touched.toZip &&
-      !Boolean(formik.errors.toZip);
-    if (!isReadyToCalculate) {
-      return;
-    }
     let office = "02026";
     let fromZip = formik.values.fromZip;
     let toZip = formik.values.toZip;
@@ -333,10 +320,10 @@ const FirstStep = ({ handleNext, initial }) => {
             fromHq = getMinutes(response.rows[0].elements[0].duration.value);
             distanceBetween = response.rows[0].elements[0].distance.text;
 
-            console.log("from HQ", fromHq);
-            console.log("Distance BETWEEN", getMiles(distanceBetween));
-            dispatch(setDistance(getMiles(distanceBetween)));
-            console.log("------------------");
+            // console.log("from HQ", fromHq);
+            // console.log("Distance BETWEEN", getMiles(distanceBetween));
+            // dispatch(setDistance(getMiles(distanceBetween)));
+            // console.log("------------------");
             if (fromHq < 20) fromHq = 20;
             if (toHq < 20) toHq = 20;
             dispatch(setTravelTime([fromHq, fromHq]));
@@ -362,13 +349,13 @@ const FirstStep = ({ handleNext, initial }) => {
             );
             distanceBetween = response.rows[1].elements[1].distance.text;
 
-            console.log("from HQ", fromHq);
-            console.log("to HQ", toHq);
-            console.log("Time BETWEEN", timeBetween);
-            console.log("Distance BETWEEN", getMiles(distanceBetween));
+            // console.log("from HQ", fromHq);
+            // console.log("to HQ", toHq);
+            // console.log("Time BETWEEN", timeBetween);
+            // console.log("Distance BETWEEN", getMiles(distanceBetween));
             dispatch(setDistance(getMiles(distanceBetween)));
 
-            console.log("------------------");
+            // console.log("------------------");
             if (fromHq < 20) fromHq = 20;
             if (toHq < 20) toHq = 20;
             dispatch(setTravelTime([fromHq, toHq]));
@@ -394,7 +381,7 @@ const FirstStep = ({ handleNext, initial }) => {
   };
 
   const getMinutes = (i) => {
-    return Math.ceil(i / 60 / 5) * 5;
+    return Math.round(i / 60 / 5) * 5;
     // return parseInt(i / 60);
   };
 
@@ -473,7 +460,7 @@ const FirstStep = ({ handleNext, initial }) => {
     );
   };
 
-  // console.log(isLocationError);
+  // console.log("toZip:::>>>>>>>>", formik.values.toZip);
 
   return (
     <Fade in={true} mountOnEnter unmountOnExit>
@@ -644,13 +631,18 @@ const FirstStep = ({ handleNext, initial }) => {
                   value={formik.values.movingService}
                   onChange={(e) => {
                     formik.setFieldValue("movingService", e.target.value);
-                    // if (
-                    //   e.target.value !== "Moving" ||
-                    //   e.target.value !== "Moving with Storagr"
-                    // ) {
-                    //   formik.setFieldValue("toZip", "");
-                    //   dispatch(setDestination(""));
-                    // }
+                  }}
+                  onBlur={(e) => {
+                    if (
+                      e.target.value === "Inside Move" ||
+                      e.target.value === "Loading Help" ||
+                      e.target.value === "Unloading Help" ||
+                      e.target.value === "Packing Only"
+                    ) {
+                      formik.setFieldValue("toZip", "");
+                      dispatch(setDistance(null));
+                      dispatch(setDestination(""));
+                    }
                   }}
                   error={
                     formik.touched.movingService &&
@@ -696,8 +688,10 @@ const FirstStep = ({ handleNext, initial }) => {
                   formik.touched.deliveryDate && formik.errors.deliveryDate
                 }
                 onChange={(date) => {
-                  // formik.handleChange("date", date);
-                  formik.setFieldValue("deliveryDate", date.format());
+                  formik.setFieldValue(
+                    "deliveryDate",
+                    moment(date).format(`YYYY-MM-DDT08:00:00`)
+                  );
                 }}
               />
             </Grid>

@@ -31,8 +31,12 @@ module Api::V1
     # POST /jobs
     def create
       @job = Job.new(job_params)
-
+      @customer = Customer.find(job_params[:customer_id])
+      # @email = NewJobEmail.new(job_params)
       if @job.save
+        UserMailer.with(customer: @customer, job: @job).new_job_email.deliver_later
+        UserMailer.with(customer: @customer, job: @job).welcome_email.deliver_later
+      
         render json: {
           status: :created,
           job: @job

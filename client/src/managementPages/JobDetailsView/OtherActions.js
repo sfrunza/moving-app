@@ -98,9 +98,9 @@ function OtherActions({ customer, event, history, ...rest }) {
   return (
     <Card className={clsx(classes.root)} {...rest}>
       <CardHeader
-        title="HELPFUL LINKS"
-        className={classes.cardHeader}
-        titleTypographyProps={{ variant: "caption" }}
+        title="Helpful links"
+        // className={classes.cardHeader}
+        // titleTypographyProps={{ variant: "caption" }}
       />
       <Divider />
       <CardContent>
@@ -157,7 +157,9 @@ function OtherActions({ customer, event, history, ...rest }) {
                         {job.origin && (
                           <Box>
                             <Typography variant="body2">
-                              {job.origin.city},{job.origin.state}
+                              {job.job_type === "Moving with Storage"
+                                ? "IM Storage"
+                                : job.origin.city + "," + job.origin.state}
                             </Typography>
                           </Box>
                         )}
@@ -168,10 +170,14 @@ function OtherActions({ customer, event, history, ...rest }) {
                           />
                         )}
 
-                        {job.destination?.city && (
+                        {job.destination && job.destination.address && (
                           <Box>
                             <Typography variant="body2">
-                              {job.destination.city},{job.destination.state}
+                              {job.job_type === "Moving from Storage"
+                                ? "IM Storage"
+                                : job.destination?.city +
+                                  "," +
+                                  job.destination?.state}
                             </Typography>
                           </Box>
                         )}

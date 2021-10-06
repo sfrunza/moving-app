@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
 import SectionHeader from "src/components/SectionHeader";
+import Section from "src/components/Section";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -17,7 +18,7 @@ const Faq = (props) => {
   const classes = useStyles();
 
   return (
-    <div className={clsx(classes.root, className)} {...rest}>
+    <Section className={clsx(classes.root, className)} {...rest}>
       <SectionHeader
         title="Frequently Asked Questions"
         subtitle="Answers to commonly asked questions from the experts at Insight Moving."
@@ -41,7 +42,7 @@ const Faq = (props) => {
         title=""
         subtitle="Didn’t find your answer? Contact us here"
       />
-    </div>
+    </Section>
   );
 };
 

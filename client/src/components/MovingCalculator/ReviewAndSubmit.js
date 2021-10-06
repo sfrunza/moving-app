@@ -121,9 +121,13 @@ const ReviewAndSubmit = ({ handleBack, handleNext }) => {
     }
   };
 
+  const isMovingWithStorage = (service) => {
+    return service === "Moving with Storage";
+  };
+
   // console.log(fromZip);
   // console.log(destination);
-  console.log(flatRate());
+  // console.log(flatRate());
 
   const obj = {
     user: {
@@ -131,9 +135,6 @@ const ReviewAndSubmit = ({ handleBack, handleNext }) => {
       last_name: lastName,
       email: email,
       phone: phone,
-      // password: "2222222222",
-      // password_confirmation: "2222222222",
-      // customer: true,
     },
     job: {
       pick_up_date: date,
@@ -143,8 +144,11 @@ const ReviewAndSubmit = ({ handleBack, handleNext }) => {
       crew_size: crewSize,
       job_rate: rate,
       is_flat_rate: isFlatRate,
+      // is_to_storage: isMovingWithStorage(movingService),
       estimated_time: `{${estimateTime[0]},${estimateTime[1]}}`,
-      travel_time: `{${travelTime[0]},${travelTime[1]}}`,
+      travel_time: isMovingWithStorage(movingService)
+        ? `{${travelTime[0]},${travelTime[0]}}`
+        : `{${travelTime[0]},${travelTime[1]}}`,
       estimated_quote: flatRate(),
       additional_info: additionalInfo,
       job_status: "Needs Attention",
@@ -167,8 +171,49 @@ const ReviewAndSubmit = ({ handleBack, handleNext }) => {
     },
   };
 
-  const handleSubmit = (data) => {
+  const objDelivery = {
+    user: {
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      phone: phone,
+      // password: "2222222222",
+      // password_confirmation: "2222222222",
+      // customer: true,
+    },
+    job: {
+      pick_up_date: deliveryDate,
+      job_size: movingSize,
+      job_type: "Moving from Storage",
+      crew_size: crewSize,
+      job_rate: rate,
+      estimated_time: `{${estimateTime[0]},${estimateTime[1]}}`,
+      travel_time: `{${travelTime[1]},${travelTime[1]}}`,
+      estimated_quote: flatRate(),
+      additional_info: additionalInfo,
+      job_status: "Needs Attention",
+    },
+    origin: {
+      address: "20 Allied Dr",
+      city: "Dedham",
+      state: "MA",
+      zip: "02026",
+    },
+    destination: {
+      address: toAddress,
+      city: cityZipArray(destination)[0],
+      state: cityZipArray(destination)[1],
+      zip: toZip,
+      floor: toHouseType,
+      apt_number: toApt,
+    },
+  };
+
+  const handleSubmit = () => {
     dispatch(submitRequest(obj));
+    if (movingService === "Moving with Storage") {
+      dispatch(submitRequest(objDelivery));
+    }
   };
 
   const hideDestination = (movingService) => {
@@ -178,12 +223,22 @@ const ReviewAndSubmit = ({ handleBack, handleNext }) => {
     return false;
   };
 
+  const getDaysDiff = (start_date, end_date, date_format = "YYYY-MM-DD") => {
+    const getDateAsArray = (date) => {
+      return moment(date.split(/\D+/), date_format);
+    };
+    return getDateAsArray(end_date).diff(getDateAsArray(start_date), "days");
+  };
+
+  // var differenceInTime = date2.getTime() - date1.getTime();
+  // const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+
   return (
     <Fade in={true} mountOnEnter unmountOnExit>
       <div>
         <Grid container spacing={2} alignItems="center">
           <StyledGrid item xs={6} md={6}>
-            {deliveryDate ? "Pick-up Date" : "Date"}
+            {deliveryDate ? "Moving date" : "Date"}
           </StyledGrid>
           <StyledGrid item xs={6} md={6}>
             <Typography variant="button">
@@ -192,7 +247,7 @@ const ReviewAndSubmit = ({ handleBack, handleNext }) => {
           </StyledGrid>
           {deliveryDate && (
             <StyledGrid item xs={6} md={6}>
-              Delivery Date
+              Storage till
             </StyledGrid>
           )}
           {deliveryDate && (
@@ -204,7 +259,7 @@ const ReviewAndSubmit = ({ handleBack, handleNext }) => {
           )}
 
           <StyledGrid item xs={6} md={6}>
-            Origin
+            From
           </StyledGrid>
           <StyledGrid item xs={6} md={6}>
             <Typography variant="body2">
@@ -213,9 +268,22 @@ const ReviewAndSubmit = ({ handleBack, handleNext }) => {
             </Typography>
           </StyledGrid>
 
+          {isMovingWithStorage(movingService) && (
+            <>
+              <StyledGrid item xs={6} md={6}>
+                Storage
+              </StyledGrid>
+              <StyledGrid item xs={6} md={6}>
+                <Typography variant="body2">
+                  Insight Moving Storage *{getDaysDiff(date, deliveryDate)} days
+                </Typography>
+              </StyledGrid>
+            </>
+          )}
+
           {hideDestination(movingService) && (
             <StyledGrid item xs={6} md={6}>
-              Destination
+              To
             </StyledGrid>
           )}
           {hideDestination(movingService) && (
@@ -226,12 +294,12 @@ const ReviewAndSubmit = ({ handleBack, handleNext }) => {
             </StyledGrid>
           )}
 
-          <StyledGrid item xs={6} md={6}>
+          {/* <StyledGrid item xs={6} md={6}>
             Service
           </StyledGrid>
           <StyledGrid item xs={6} md={6}>
             <Typography variant="body2">{movingService}</Typography>
-          </StyledGrid>
+          </StyledGrid> */}
 
           <StyledGrid item xs={6} md={6}>
             Size
@@ -292,7 +360,9 @@ const ReviewAndSubmit = ({ handleBack, handleNext }) => {
               </StyledGrid>
               <StyledGrid item xs={6} md={6}>
                 <Typography variant="body1">
-                  {travelTime[0]}/{travelTime[1]}
+                  {isMovingWithStorage(movingService)
+                    ? travelTime[0] + "/" + travelTime[0]
+                    : travelTime[0] + "/" + travelTime[1]}
                 </Typography>
                 <Typography variant="body2" style={{ marginLeft: 4 }}>
                   min.

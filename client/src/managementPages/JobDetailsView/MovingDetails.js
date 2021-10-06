@@ -24,6 +24,13 @@ import {
 import { compose, withProps, lifecycle } from "recompose";
 import Uploader from "./Uploader";
 import GridGallery from "./GridGallery";
+import EditMainContainer from "./EditMainContainer";
+import { useSelector } from "src/store";
+import DateChange from "./components/DateChange";
+import ServiceChange from "./components/ServiceChange";
+import EditMoveSize from "./components/EditMoveSize";
+import EditCrewSize from "./components/EditCrewSize";
+import EditAddress from "./components/EditAddress";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,9 +75,22 @@ const useStyles = makeStyles((theme) => ({
   crewNames: {
     color: theme.palette.text.secondary,
   },
+  editIcon: {
+    color: theme.palette.primary.main,
+  },
 }));
 
-function MovingDetails({ job, dispatch, ...rest }) {
+function MovingDetails({
+  job,
+  dispatch,
+  setFormState,
+  formState,
+  recalc,
+  setRecalc,
+  saveAndUpdate,
+  setSaveAndUpdate,
+  ...rest
+}) {
   const classes = useStyles();
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: "AIzaSyADEDKabHN5FBcOroOU1W7BzUam0Az8gGQ",
@@ -80,10 +100,72 @@ function MovingDetails({ job, dispatch, ...rest }) {
 
   const [map, setMap] = useState(null);
 
+  const { rates } = useSelector((state) => state.rates);
+
+  const searchRate = (selectedDay, data) => {
+    let dateFormat = moment(selectedDay).format("MM/DD/YYYY");
+    for (var i = 0; i < data.length; i++) {
+      let renderedDay = data[i].date;
+      if (renderedDay && renderedDay === dateFormat) {
+        return data[i].rates;
+      }
+    }
+  };
+
+  function roundToHalf(value) {
+    var converted = parseFloat(value); // Make sure we have a number
+    var decimal = converted - parseInt(converted, 10);
+    decimal = Math.round(decimal * 10);
+    if (decimal === 5) {
+      return parseInt(converted, 10) + 0.5;
+    }
+    if (decimal < 3 || decimal > 7) {
+      return Math.round(converted);
+    } else {
+      return parseInt(converted, 10) + 0.5;
+    }
+  }
+
+  const getDaysDiff = (start_date, end_date, date_format = "YYYY-MM-DD") => {
+    const getDateAsArray = (date) => {
+      return moment(date.split(/\D+/), date_format);
+    };
+    return getDateAsArray(end_date).diff(getDateAsArray(start_date), "days");
+  };
+
+  const changeEstimate = (crewSize) => {
+    let estimate = formState.estimated_time;
+    let crew = formState.crew_size;
+    let diff = crew - crewSize;
+    if (Math.sign(diff) < 0) {
+      if (Math.abs(diff) === 1) {
+        estimate = estimate.map((x) => roundToHalf(x - x * 0.2));
+      } else if (Math.abs(diff) === 2) {
+        estimate = estimate.map((x) => roundToHalf(x - x * 0.4));
+      }
+    }
+    if (Math.sign(diff) > 0) {
+      if (Math.abs(diff) === 1) {
+        estimate = estimate.map((x) => roundToHalf(x + x * 0.2));
+      } else if (Math.abs(diff) === 2) {
+        estimate = estimate.map((x) => roundToHalf(x + x * 0.4));
+      }
+    }
+    return estimate;
+  };
+
+  const changeQuote = (rate, estTime) => {
+    let quote = [rate * estTime[0], rate * estTime[1]];
+    return quote;
+  };
+
   useEffect(() => {
     if (job.id) {
       setMap(initMap());
     }
+    return () => {
+      setMap(null);
+    };
   }, [job.id]);
 
   const initMap = () => {
@@ -365,8 +447,38 @@ function MovingDetails({ job, dispatch, ...rest }) {
           <TableBody>
             <TableRow>
               <TableCell>Move date:</TableCell>
-              <TableCell style={{ fontWeight: 700 }}>
+              <TableCell
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  fontWeight: 700,
+                }}
+              >
                 {moment(job.pick_up_date).format("dddd, MMMM DD, YYYY")}
+                {job.job_type === "Moving with Storage" && (
+                  <Typography variant="caption" color="textSecondary">
+                    *storage till{" "}
+                    {moment(job.delivery_date).format("MMMM DD, YYYY")}
+                  </Typography>
+                )}
+              </TableCell>
+              <TableCell>
+                <EditMainContainer>
+                  {/* <DateChange
+                    // value={job.pick_up_date}
+                    onChange={(date) => {
+                      setFormState({
+                        ...formState,
+                        pick_up_date: moment(date).format(
+                          `YYYY-MM-DDT${moment(formState.pick_up_date).format(
+                            "hh:mm:ss"
+                          )}`
+                        ),
+                        // job_rate: parseInt(searchRate(date, rates)[crew - 2]),
+                      });
+                    }}
+                  /> */}
+                </EditMainContainer>
               </TableCell>
             </TableRow>
             <TableRow>
@@ -375,32 +487,73 @@ function MovingDetails({ job, dispatch, ...rest }) {
                 {moment(job.pick_up_date).format("h A")}
               </TableCell>
             </TableRow>
-            <TableRow>
-              <TableCell>
-                {!job.destination.address ? "Address:" : "Moving from:"}
-              </TableCell>
-              <TableCell style={{ display: "flex", flexDirection: "column" }}>
-                {job.origin.address},
-                <Typography style={{ fontWeight: 600 }} variant="body2">
-                  {job.origin.city}, {job.origin.state}, {job.origin.zip}
-                </Typography>
-                {job.origin.apt_number && (
-                  <Typography variant="caption" color="textSecondary">
-                    Apt #{job.origin.apt_number}
+            {job.job_type === "Moving from Storage" ? (
+              <TableRow>
+                <TableCell>
+                  {!job.destination.address ? "Address:" : "Moving from:"}
+                </TableCell>
+                <TableCell style={{ display: "flex", flexDirection: "column" }}>
+                  <Typography style={{ fontWeight: 600 }} variant="body2">
+                    Insight Moving Storage
                   </Typography>
-                )}
-                <Typography variant="caption" color="textSecondary">
-                  *{job.origin.floor ? job.origin.floor : job.destination.floor}
-                </Typography>
-              </TableCell>
-            </TableRow>
+                  <Typography variant="caption" color="textSecondary">
+                    *unit #0000
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            ) : (
+              <TableRow>
+                <TableCell>
+                  {!job.destination.address ? "Address:" : "Moving from:"}
+                </TableCell>
+                <TableCell style={{ display: "flex", flexDirection: "column" }}>
+                  {job.origin.address},
+                  <Typography style={{ fontWeight: 600 }} variant="body2">
+                    {job.origin.city}, {job.origin.state}, {job.origin.zip}
+                  </Typography>
+                  {job.origin.apt_number && (
+                    <Typography variant="caption" color="textSecondary">
+                      Apt #{job.origin.apt_number}
+                    </Typography>
+                  )}
+                  <Typography variant="caption" color="textSecondary">
+                    *
+                    {job.origin.floor
+                      ? job.origin.floor
+                      : job.destination.floor}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <EditMainContainer>
+                    <EditAddress
+                      job={job}
+                      formState={formState}
+                      setFormState={setFormState}
+                    />
+                  </EditMainContainer>
+                </TableCell>
+              </TableRow>
+            )}
+            {job.job_type === "Moving with Storage" && (
+              <TableRow>
+                <TableCell>Storage:</TableCell>
+                <TableCell style={{ display: "flex", flexDirection: "column" }}>
+                  <Typography style={{ fontWeight: 600 }} variant="body2">
+                    Insight Moving Storage
+                  </Typography>
+                  <Typography variant="caption" color="textSecondary">
+                    *{getDaysDiff(job.pick_up_date, job.delivery_date)} days
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            )}
             {job.destination.address ? (
               <TableRow>
                 <TableCell>Moving to:</TableCell>
                 <TableCell style={{ display: "flex", flexDirection: "column" }}>
                   {job.destination.address},
                   <Typography style={{ fontWeight: 600 }} variant="body2">
-                    {job.destination.city}, {job.destination.state},
+                    {job.destination.city}, {job.destination.state},{" "}
                     {job.destination.zip}
                   </Typography>
                   {job.destination.apt_number && (
@@ -412,9 +565,25 @@ function MovingDetails({ job, dispatch, ...rest }) {
                     *{job.destination.floor}
                   </Typography>
                 </TableCell>
+                <TableCell>
+                  <EditMainContainer>
+                    {/* <EditAddress
+                      // value={formState.job_type}
+                      // onChange={(e) => {
+                      //   setFormState({
+                      //     ...formState,
+                      //     job_type: e.target.value,
+                      //   });
+                      // }}
+                    /> */}
+                  </EditMainContainer>
+                </TableCell>
               </TableRow>
             ) : null}
             <TableRow>
+              <TableCell style={{ padding: "0px" }}>
+                <Divider />
+              </TableCell>
               <TableCell style={{ padding: "0px" }}>
                 <Divider />
               </TableCell>
@@ -425,12 +594,43 @@ function MovingDetails({ job, dispatch, ...rest }) {
             <TableRow>
               <TableCell>Service:</TableCell>
               <TableCell>{job.job_type}</TableCell>
+              <TableCell>
+                <EditMainContainer>
+                  <ServiceChange
+                    value={formState.job_type}
+                    onChange={(e) => {
+                      setFormState({
+                        ...formState,
+                        job_type: e.target.value,
+                      });
+                    }}
+                  />
+                </EditMainContainer>
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Move size:</TableCell>
               <TableCell style={{ fontWeight: 700 }}>{job.job_size}</TableCell>
+              <TableCell>
+                <EditMainContainer>
+                  <EditMoveSize
+                    value={formState.job_size}
+                    onChange={(e) => {
+                      setRecalc(false);
+                      setSaveAndUpdate(true);
+                      setFormState({
+                        ...formState,
+                        job_size: e.target.value,
+                      });
+                    }}
+                  />
+                </EditMainContainer>
+              </TableCell>
             </TableRow>
             <TableRow>
+              <TableCell style={{ padding: "0px" }}>
+                <Divider />
+              </TableCell>
               <TableCell style={{ padding: "0px" }}>
                 <Divider />
               </TableCell>
@@ -442,6 +642,29 @@ function MovingDetails({ job, dispatch, ...rest }) {
               <TableCell>Crew:</TableCell>
               <TableCell style={{ fontWeight: 700 }}>
                 {job.crew_size} movers
+              </TableCell>
+              <TableCell>
+                <EditMainContainer>
+                  <EditCrewSize
+                    value={formState.crew_size}
+                    onChange={(e) => {
+                      setRecalc(true);
+                      let date = formState.pick_up_date;
+                      setFormState({
+                        ...formState,
+                        crew_size: e.target.value,
+                        job_rate: parseInt(
+                          searchRate(date, rates)[e.target.value - 2]
+                        ),
+                        estimated_time: changeEstimate(e.target.value),
+                        estimated_quote: changeQuote(
+                          parseInt(searchRate(date, rates)[e.target.value - 2]),
+                          changeEstimate(e.target.value)
+                        ),
+                      });
+                    }}
+                  />
+                </EditMainContainer>
               </TableCell>
             </TableRow>
             {!job.is_flat_rate && (
@@ -473,14 +696,7 @@ function MovingDetails({ job, dispatch, ...rest }) {
                       {job.job_duration || ""} hours
                     </Typography>
                   }
-                  // style={{
-                  //   color: "#FD7013",
-                  //   fontSize: "18px",
-                  //   fontWeight: 700,
-                  // }}
                 />
-                {/* <label>{job.job_duration || ""}</label> hours */}
-                {/* </TableCell> */}
               </TableRow>
             ) : (
               !job.is_flat_rate && (

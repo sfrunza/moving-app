@@ -14,6 +14,7 @@ import {
 import CloseIcon from "@material-ui/icons/Close";
 import CustomRouterLink from "src/components/CustomRouterLink";
 import Phone from "src/icons/Phone";
+import Mail from "src/icons/Mail";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,6 +64,10 @@ const useStyles = makeStyles((theme) => ({
   divider: {
     width: "100%",
   },
+  buttons: {
+    padding: 0,
+    textAlign: "right",
+  },
 }));
 
 const SidebarNav = ({ pages, onClose, className, history, ...rest }) => {
@@ -80,6 +85,7 @@ const SidebarNav = ({ pages, onClose, className, history, ...rest }) => {
           } else {
             match = path.includes(page.href.slice(1));
           }
+          if (i === props.pages.length - 1) return null;
           return (
             <ListItem
               disableGutters
@@ -129,7 +135,7 @@ const SidebarNav = ({ pages, onClose, className, history, ...rest }) => {
       <ListItem className={classes.listItem}>
         <Divider className={classes.divider} />
       </ListItem>
-      <ListItem className={classes.listItem}>
+      <ListItem className={clsx(classes.listItem, classes.buttons)}>
         <Button
           variant="contained"
           color="primary"
@@ -141,15 +147,24 @@ const SidebarNav = ({ pages, onClose, className, history, ...rest }) => {
           Book Online
         </Button>
       </ListItem>
-      <ListItem className={classes.listItem}>
+      <ListItem className={clsx(classes.listItem, classes.buttons)}>
         <Button
-          variant="outlined"
           color="primary"
-          href="tel:617-206-0968"
+          href="tel:000-000-0000"
           disableElevation
-          startIcon={<Phone fontSize="large" />}
+          startIcon={<Phone />}
         >
-          (617) 232-2312
+          (000) 000-0000
+        </Button>
+      </ListItem>
+      <ListItem className={clsx(classes.listItem, classes.buttons)}>
+        <Button
+          color="secondary"
+          href="mailto:info@insightmoving.com"
+          disableElevation
+          startIcon={<Mail />}
+        >
+          info@insightmoving.com
         </Button>
       </ListItem>
     </List>
