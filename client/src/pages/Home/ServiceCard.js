@@ -6,6 +6,7 @@ import {
   CardContent,
   Card,
   CardActions,
+  CardMedia,
 } from "@material-ui/core";
 import ChevronRight from "src/icons/ChevronRight";
 import { NavLink as RouterLink } from "react-router-dom";
@@ -13,8 +14,9 @@ import { NavLink as RouterLink } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     borderRadius: theme.spacing(1),
-    boxShadow: theme.shadows[1],
-    backgroundColor: theme.palette.background.paper,
+    // boxShadow: theme.shadows[1],
+    // backgroundColor: theme.palette.background.paper,
+    border: `1px solid ${theme.palette.divider}`,
     height: "100%",
     transition: "transform 250ms ease, box-shadow 250ms ease",
     "&:hover": {
@@ -28,6 +30,12 @@ const useStyles = makeStyles((theme) => ({
   linkSection: {
     display: "flex",
     justifyContent: "center",
+    padding: theme.spacing(3, 1),
+  },
+  media: {
+    height: 0,
+    paddingTop: "30%", // 16:9
+    backgroundSize: "50%",
   },
 }));
 
@@ -36,11 +44,20 @@ export default function ServiceCard({ item }) {
 
   return (
     <Card className={classes.root}>
+      <CardMedia
+        className={classes.media}
+        image={item.image}
+        title={item.location}
+      />
       <CardContent classes={{ root: classes.contentSection }}>
         <Typography gutterBottom variant="h6">
           {item.location}
         </Typography>
-        <Typography variant="body2" color="textSecondary">
+        <Typography
+          variant="body2"
+          color="textSecondary"
+          style={{ width: "70%", margin: "auto" }}
+        >
           {item.properties}
         </Typography>
       </CardContent>

@@ -106,15 +106,6 @@ function Jobs({ className, jobs }) {
             </Table>
           </Box>
         </Scrollbar>
-        <TablePagination
-          component="div"
-          count={jobs.length}
-          onPageChange={() => {}}
-          onRowsPerPageChange={() => {}}
-          page={0}
-          rowsPerPage={5}
-          rowsPerPageOptions={[5, 10, 25]}
-        />
       </Card>
     </div>
   );

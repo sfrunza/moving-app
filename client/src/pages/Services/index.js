@@ -217,9 +217,7 @@ const Services = (props) => {
       </Section>
       <Divider />
 
-      <Section>
-        <FAQS data={faq} />
-      </Section>
+      <FAQS data={faq} />
     </Page>
   );
 };

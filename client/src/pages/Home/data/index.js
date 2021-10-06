@@ -1,7 +1,13 @@
+import local from "src/assets/img/local-service.png";
+import inter from "src/assets/img/inter-service.png";
+import packing from "src/assets/img/packing-service.png";
+import storage from "src/assets/img/storage-service.png";
+
 export const services = [
   {
     location: "Local Moving",
     href: "/services/local-moving",
+    image: local,
     properties:
       "Hourly based full moving services in Metro Boston and 125 miles around it.",
     cols: 2,
@@ -9,6 +15,7 @@ export const services = [
   {
     location: "Interstate Moving",
     href: "/services/interstate-moving",
+    image: inter,
     properties:
       "Flat Rate Moving. Same or Next Day moving services on distance up to 1,500 miles.",
     cols: 2,
@@ -16,6 +23,7 @@ export const services = [
   {
     location: "Packing Services",
     href: "/services/packing",
+    image: packing,
     properties:
       "Our experienced movers will have all necessary packing materials to pack up everything.",
     cols: 2,
@@ -23,6 +31,7 @@ export const services = [
   {
     location: "Storage Solutions",
     href: "/services/storage",
+    image: storage,
     properties:
       "Insight Moving provides climate controlled storage for up to 6 months.",
     cols: 2,

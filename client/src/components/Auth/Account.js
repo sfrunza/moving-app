@@ -61,6 +61,7 @@ const Account = ({ handleSignOut }) => {
       <IconButton
         aria-controls="user-menu"
         aria-haspopup="true"
+        aria-label="Go to account"
         disableRipple={true}
         onClick={handleClick}
       >

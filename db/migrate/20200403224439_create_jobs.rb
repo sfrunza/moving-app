@@ -4,6 +4,8 @@ class CreateJobs < ActiveRecord::Migration[5.2]
       t.string :pick_up_date
       t.string :delivery_date
       t.boolean :is_flat_rate, default: false
+      t.boolean :is_to_storage, default: false
+      t.boolean :is_from_storage, default: false
       t.string :job_type
       t.string :start_time
       t.string :job_status

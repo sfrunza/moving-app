@@ -63,6 +63,9 @@ const useStyles = makeStyles((theme) => ({
     width: "auto",
     padding: theme.spacing(1.5, 3),
     margin: theme.spacing(0, 1),
+    [theme.breakpoints.down("md")]: {
+      padding: theme.spacing(1, 2),
+    },
   },
   listItemHover: {
     "&:hover": {
@@ -84,14 +87,14 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 600,
   },
   iconButton: {
-    padding: theme.spacing(0.2, 1),
-    marginLeft: theme.spacing(2),
-    color: theme.palette.text.primary,
-    border: `1px solid ${theme.palette.primary.contrastText}`,
-    borderRadius: theme.spacing(1),
-    "&:hover": {
-      background: "transparent",
-    },
+    padding: theme.spacing(0),
+    // marginLeft: theme.spacing(2),
+    // color: theme.palette.text.primary,
+    // border: `1px solid ${theme.palette.primary.contrastText}`,
+    // borderRadius: theme.spacing(1),
+    // "&:hover": {
+    //   background: "transparent",
+    // },
   },
   listItemLogin: {
     marginRight: theme.spacing(3),
@@ -156,32 +159,61 @@ function TopBar({ onSidebarOpen, pages, history }) {
                 } else {
                   match = path.includes(page.href.slice(1));
                 }
-                return (
-                  <li key={i}>
-                    <ListItem
-                      component={NavLink}
-                      to={page.href}
-                      classes={{
-                        root: match
-                          ? classes.listItem
-                          : clsx(classes.listItem, classes.listItemHover),
-                        divider: classes.itemDivider,
-                      }}
-                      disableGutters
-                    >
-                      <Typography
-                        variant="body2"
-                        className={
-                          match
-                            ? classes.listItemTextActive
-                            : classes.listItemText
-                        }
+                if (i === pages.length - 1) {
+                  return (
+                    <li key={i}>
+                      <ListItem
+                        component="a"
+                        href={page.href}
+                        classes={{
+                          root: match
+                            ? classes.listItem
+                            : clsx(classes.listItem, classes.listItemHover),
+                          divider: classes.itemDivider,
+                        }}
+                        disableGutters
                       >
-                        {page.title}
-                      </Typography>
-                    </ListItem>
-                  </li>
-                );
+                        <Typography
+                          variant="body2"
+                          className={
+                            match
+                              ? classes.listItemTextActive
+                              : classes.listItemText
+                          }
+                        >
+                          {page.title}
+                        </Typography>
+                      </ListItem>
+                    </li>
+                  );
+                } else {
+                  return (
+                    <li key={i}>
+                      <ListItem
+                        component={NavLink}
+                        to={page.href}
+                        classes={{
+                          root: match
+                            ? classes.listItem
+                            : clsx(classes.listItem, classes.listItemHover),
+                          divider: classes.itemDivider,
+                        }}
+                        disableGutters
+                      >
+                        <Typography
+                          variant="body2"
+                          className={
+                            match
+                              ? classes.listItemTextActive
+                              : classes.listItemText
+                          }
+                        >
+                          {page.title}
+                        </Typography>
+                      </ListItem>
+                    </li>
+                  );
+                }
               })}
             </Hidden>
             {!isAuthenticated && (

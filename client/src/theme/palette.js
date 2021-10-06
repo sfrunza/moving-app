@@ -6,8 +6,9 @@ export const light = {
   cardShadow: "rgba(23, 70, 161, .11)",
   type: "light",
   primary: {
-    contrastText: "#ffffff",
+    contrastText: "#fff",
     main: "#01ab56",
+    // main: "#3bedb7",
   },
   secondary: {
     light: "#f07373",
@@ -28,10 +29,12 @@ export const light = {
     main: "pink",
   },
   text: {
-    // primary: "#172b4d",
-    primary: "#0a0b0d",
-    // secondary: "#6b778c",
-    secondary: "#5b616e",
+    primary: "#172b4d",
+    // primary: "#2d3748",
+    // primary: "#0a0b0d",
+    secondary: "#6b778c",
+    // secondary: "#5b616e",
+    // secondary: "#646e73",
   },
   // divider: "rgba(236, 239, 241)",
   background: {
@@ -39,7 +42,8 @@ export const light = {
     navbar: "rgba(255,255,255,0.72)",
     paper: "#fff",
     default: "#fff",
-    level2: "#F5F5F7",
+    // level2: "#F5F5F7",
+    level2: "#f5f8ff",
     level1: "#fff",
     footer: "#1A212C",
   },

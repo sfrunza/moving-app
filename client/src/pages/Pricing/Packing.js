@@ -70,7 +70,7 @@ const itemData = [
 export default function Packing() {
   const classes = useStyles();
   const theme = useTheme();
-  const isMd = useMediaQuery(theme.breakpoints.up("md"), {
+  const isMd = useMediaQuery(theme.breakpoints.up("sm"), {
     defaultMatches: true,
   });
 
@@ -81,7 +81,7 @@ export default function Packing() {
     infinite: true,
     speed: 500,
     slidesToShow: isMd ? 4 : 2,
-    slidesToScroll: 2,
+    slidesToScroll: isMd ? 2 : 1,
   };
 
   return (

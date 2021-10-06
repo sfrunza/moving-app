@@ -1,7 +1,7 @@
 import React from "react";
 import Page from "src/components/Page";
 import { makeStyles } from "@material-ui/core/styles";
-import { Divider } from "@material-ui/core";
+import { Divider, useTheme } from "@material-ui/core";
 import Section from "src/components/Section";
 import PricingTable from "./PricingTable";
 import Main from "./components/Main";
@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Pricing = () => {
   const classes = useStyles();
+  const theme = useTheme();
 
   return (
     <Page title="Pricing | Company Name" className={classes.root}>
@@ -36,10 +37,9 @@ const Pricing = () => {
       <Section className={classes.pagePaddingTop}>
         <Packing />
       </Section>
-      <Divider />
-      <Section className={classes.pagePaddingTop}>
+      <div style={{ backgroundColor: theme.palette.background.level2 }}>
         <Contact />
-      </Section>
+      </div>
     </Page>
   );
 };
