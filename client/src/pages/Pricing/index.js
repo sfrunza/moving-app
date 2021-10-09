@@ -9,6 +9,7 @@ import { pricings, flatPricings, flatRates } from "./data";
 import Contact from "../Home/Contact";
 import FlatRates from "./FlatRates";
 import Packing from "./Packing";
+import Footer from "src/layouts/MainLayout/Footer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,6 +41,8 @@ const Pricing = () => {
       <div style={{ backgroundColor: theme.palette.background.level2 }}>
         <Contact />
       </div>
+      <Divider />
+      <Footer />
     </Page>
   );
 };

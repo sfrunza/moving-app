@@ -17,6 +17,7 @@ import TruckFill from "src/icons/TruckFill";
 import Hero from "./Hero";
 import FAQS from "../Home/FAQS";
 import { faq } from "../Home/data";
+import Footer from "src/layouts/MainLayout/Footer";
 
 function TabPanel(props) {
   const { children, value, index, isMd, ...other } = props;
@@ -218,6 +219,7 @@ const Services = (props) => {
       <Divider />
 
       <FAQS data={faq} />
+      <Footer />
     </Page>
   );
 };

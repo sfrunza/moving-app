@@ -67,7 +67,7 @@ function JobDetailsView({ match, history }) {
     return null;
   }
 
-  // console.log(formState);
+  console.log(formState);
 
   const init = {
     job_duration: event.estimated_time[0],
@@ -100,7 +100,8 @@ function JobDetailsView({ match, history }) {
                     users={users}
                   />
                 </Grid>
-                {!shallowEqual(event, formState) && (
+                {(!shallowEqual(event, formState) ||
+                  event.job_type === "Moving from Storage") && (
                   <Grid item xs={12}>
                     <ChangesMade
                       formState={formState}
@@ -134,6 +135,7 @@ function JobDetailsView({ match, history }) {
                 setRecalc={setRecalc}
                 saveAndUpdate={saveAndUpdate}
                 setSaveAndUpdate={setSaveAndUpdate}
+                rates={rates}
               />
             </Grid>
             <Grid item md={3} xs={12}></Grid>

@@ -196,6 +196,7 @@ const FirstStep = ({ handleNext, initial }) => {
   });
   const [isLocationError, setIsLocationError] = useState(false);
   const [isApiLoaded, setIsApiLoaded] = useState(false);
+  const [travelTimeCalculated, setTravelTimeCalculated] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -216,25 +217,30 @@ const FirstStep = ({ handleNext, initial }) => {
     enableReinitialize: false,
     validate: (values) => validate(values),
     onSubmit: (values) => {
-      if (
-        values.movingService === "Moving" ||
-        values.movingService === "Moving with Storage"
-      ) {
-        dispatch(setToZip(values.toZip));
-      } else {
-        dispatch(setToZip(""));
-        dispatch(setDestination(""));
-      }
-      dispatch(setDate(values.date));
-      dispatch(setDeliveryDate(values.deliveryDate));
-      dispatch(setFromZip(values.fromZip));
-      // dispatch(setToZip(values.toZip));
-      dispatch(setCheck(values.check));
-      dispatch(setMovingService(values.movingService));
+      setTravelTimeCalculated(true);
 
       if (!isLocationError && isApiLoaded) {
-        findTravelTime();
-        handleNext();
+        setTimeout(function () {
+          findTravelTime();
+          if (!travelTimeCalculated) {
+            handleNext();
+            if (
+              values.movingService === "Moving" ||
+              values.movingService === "Moving with Storage"
+            ) {
+              dispatch(setToZip(values.toZip));
+            } else {
+              dispatch(setToZip(""));
+              dispatch(setDestination(""));
+            }
+            dispatch(setDate(values.date));
+            dispatch(setDeliveryDate(values.deliveryDate));
+            dispatch(setFromZip(values.fromZip));
+            // dispatch(setToZip(values.toZip));
+            dispatch(setCheck(values.check));
+            dispatch(setMovingService(values.movingService));
+          }
+        }, 500);
       }
     },
   });
@@ -251,7 +257,7 @@ const FirstStep = ({ handleNext, initial }) => {
     // let zip = e.target.value;
     const cityObject = findCity(zip);
 
-    console.log(cityObject);
+    // console.log(cityObject);
     if (cityObject) {
       const city = cityObject.c;
       const state = cityObject.s;
@@ -288,8 +294,8 @@ const FirstStep = ({ handleNext, initial }) => {
       originsArray = [office + "USA"];
       destinationsArray = [fromZip + "USA"];
     } else {
-      originsArray = [office + "USA", fromZip + "USA"];
-      destinationsArray = [fromZip + "USA", toZip + "USA"];
+      originsArray = [office, fromZip];
+      destinationsArray = [fromZip, toZip];
     }
 
     const TravelTime = new window.google.maps.DistanceMatrixService();
@@ -299,6 +305,7 @@ const FirstStep = ({ handleNext, initial }) => {
         destinations: destinationsArray,
         travelMode: "DRIVING",
         unitSystem: window.google.maps.UnitSystem.IMPERIAL,
+        region: "US",
         avoidHighways: false,
         avoidTolls: false,
       },
@@ -334,6 +341,7 @@ const FirstStep = ({ handleNext, initial }) => {
             } else {
               dispatch(setIsFlatRate(false));
             }
+            setTravelTimeCalculated(false);
           } else if (
             isEmptyString(response.originAddresses) &&
             isEmptyString(response.destinationAddresses) &&
@@ -366,8 +374,10 @@ const FirstStep = ({ handleNext, initial }) => {
             } else {
               dispatch(setIsFlatRate(false));
             }
+            setTravelTimeCalculated(false);
           } else {
             setIsLocationError(true);
+            setTravelTimeCalculated(false);
             alert("Not in Service Area, Plese try Different Zip Code");
           }
         }
@@ -400,10 +410,11 @@ const FirstStep = ({ handleNext, initial }) => {
           <Grid item xs={3} md={3} classes={{ item: classes.gridItem }}>
             <Tooltip
               title={
-                "2 Men & Truck: $120/h, 3 Men & Truck: $140/h, 4 Men & Truck: $160/h"
+                "2 Men & Truck: $120/h, 3 Men & Truck: $160/h, 4 Men & Truck: $200/h"
               }
               classes={{ tooltip: classes.customWidth }}
               placement="top"
+              arrow
             >
               <Typography
                 variant="caption"
@@ -419,10 +430,11 @@ const FirstStep = ({ handleNext, initial }) => {
           <Grid item xs={3} md={3} classes={{ item: classes.gridItem }}>
             <Tooltip
               title={
-                "2 Men & Truck: $160/h, 3 Men & Truck: $180/h, 4 Men & Truck: $200/h"
+                "2 Men & Truck: $140/h, 3 Men & Truck: $180/h, 4 Men & Truck: $220/h"
               }
               classes={{ tooltip: classes.customWidth }}
               placement="top"
+              arrow
             >
               <Typography
                 variant="caption"
@@ -438,10 +450,11 @@ const FirstStep = ({ handleNext, initial }) => {
           <Grid item xs={3} md={3} classes={{ item: classes.gridItem }}>
             <Tooltip
               title={
-                "2 Men & Truck: $200/h, 3 Men & Truck: $220/h, 4 Men & Truck: $240/h"
+                "2 Men & Truck: $160/h, 3 Men & Truck: $200/h, 4 Men & Truck: $240/h"
               }
               classes={{ tooltip: classes.customWidth }}
               placement="top"
+              arrow
             >
               <Typography
                 variant="caption"
@@ -709,8 +722,9 @@ const FirstStep = ({ handleNext, initial }) => {
               fullWidth
               type="submit"
               disableElevation
+              disabled={travelTimeCalculated}
             >
-              Continue
+              {travelTimeCalculated ? "Loading..." : "Continue"}
             </Button>
           </Grid>
         </Grid>

@@ -52,7 +52,8 @@ const Include = (props) => {
         <Grid item xs={12} md={4}>
           <SectionHeader
             title="What's included"
-            className={classes.header}
+            // titleVariant="h2"
+            // className={classes.header}
             ctaGroup={[
               <Button
                 variant="contained"

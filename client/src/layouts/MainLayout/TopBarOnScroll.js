@@ -16,6 +16,7 @@ import {
   useScrollTrigger,
   Fade,
   Fab,
+  Slide,
 } from "@material-ui/core";
 import CustomRouterLink from "src/components/CustomRouterLink";
 import Auth from "src/components/Auth";
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     overflow: "hidden",
     justifyContent: "center",
-    background: theme.palette.background.default,
+    backgroundColor: theme.palette.background.default,
     boxShadow: "none",
     borderBottom: `1px solid ${theme.palette.divider}`,
     maxHeight: 56,
@@ -47,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "100%",
     margin: "auto",
     padding: theme.spacing(0, 2),
+    minHeight: 56,
   },
   logoContainer: {
     width: 60,
@@ -133,15 +135,36 @@ function ShowOnScroll(props) {
 
   const trigger = useScrollTrigger({
     disableHysteresis: true,
-    threshold: 150,
+    threshold: 100,
+  });
+
+  return (
+    <Slide
+      direction="down"
+      in={trigger}
+      mountOnEnter
+      unmountOnExit
+      timeout={{ enter: 300, exit: 100 }}
+    >
+      {children}
+    </Slide>
+  );
+}
+
+function ShowPhoneOnScroll(props) {
+  const { children } = props;
+
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 110,
   });
 
   return (
     <Fade
-      appear={true}
-      direction="down"
       in={trigger}
-      timeout={{ enter: 500, exit: 100 }}
+      mountOnEnter
+      unmountOnExit
+      timeout={{ enter: 300, exit: 100 }}
     >
       {children}
     </Fade>
@@ -296,7 +319,7 @@ function TopBarOnScroll({ onSidebarOpen, pages, history }) {
                   root: classes.buttonMargin,
                 }}
               >
-                Book Online
+                Get a Quote
               </Button>
             </Hidden>
             <Hidden mdUp>
@@ -313,13 +336,15 @@ function TopBarOnScroll({ onSidebarOpen, pages, history }) {
               </IconButton>
             </Hidden>
           </Toolbar>
-          <div role="presentation" className={classes.callButtonContainer}>
-            <Fab color="primary" aria-label="call" component="a" href="#">
-              <Phone />
-            </Fab>
-          </div>
         </AppBar>
       </ShowOnScroll>
+      <ShowPhoneOnScroll>
+        <div role="presentation" className={classes.callButtonContainer}>
+          <Fab color="primary" aria-label="call" component="a" href="#">
+            <Phone />
+          </Fab>
+        </div>
+      </ShowPhoneOnScroll>
     </React.Fragment>
   );
 }

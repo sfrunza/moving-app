@@ -13,7 +13,7 @@ import moment from "moment";
 import { updateEvent } from "src/slices/calendar";
 
 const averageTime = {
-  "Room or less (partial move)": 30,
+  "Room or less (partial move)": 60,
   "Studio apartment": 100,
   "1 Bedroom apartment": 120,
   "2 Bedroom apartment": 180,
@@ -79,7 +79,22 @@ function ChangesMade({
 }) {
   const classes = useStyles();
 
+  const searchRate = (selectedDay) => {
+    let dateFormat = moment(selectedDay).format("MM/DD/YYYY");
+    for (var i = 0; i < rates.length; i++) {
+      let renderedDay = rates[i].date;
+      if (renderedDay && renderedDay === dateFormat) {
+        return rates[i].rates;
+      }
+    }
+  };
+
   const getCrewSize = (apartment, fromFloor, toFloor) => {
+    // console.log(apartment);
+    // console.log(fromFloor);
+    // console.log(toFloor);
+    if (!fromFloor) fromFloor = "1st/Ground floor";
+    if (!toFloor) toFloor = "1st/Ground floor";
     let nr = 2;
     for (let i = 0; i < apt.length; i++) {
       if (apt[i] === apartment) {
@@ -111,6 +126,7 @@ function ChangesMade({
         }
       }
     }
+    estimateQuote(nr);
     return nr;
   };
 
@@ -132,6 +148,9 @@ function ChangesMade({
   const isMovingWithStorage = (service) => {
     return service === "Moving with Storage";
   };
+  const isMovingFromStorage = (service) => {
+    return service === "Moving from Storage";
+  };
 
   function roundToHalf(value) {
     var converted = parseFloat(value); // Make sure we have a number
@@ -152,6 +171,10 @@ function ChangesMade({
     let movingSize = formState.job_size;
     let fromHouseType = formState.origin.floor;
     let toHouseType = formState.destination.floor;
+    let timeBetween = formState.time_between;
+
+    if (!fromHouseType) fromHouseType = "1st/Ground floor";
+    if (!toHouseType) toHouseType = "1st/Ground floor";
 
     let travelTimeSum = formState.travel_time.reduce((a, b) => a + b);
     if (isInsideMove(movingService))
@@ -164,72 +187,51 @@ function ChangesMade({
       averageLabourTime = averageTime[movingSize] * 0.5;
     if (isInsideMove(movingService))
       averageLabourTime = averageTime[movingSize] * 0.4;
-    if (isMovingWithStorage(movingService))
-      averageLabourTime = averageTime[movingSize] * 0.8;
 
-    let totalTimeInMinutes = 0;
+    let totalTimeInMinutes =
+      averageLabourTime +
+      averageFloorTime(movingSize)[fromHouseType] +
+      averageFloorTime(movingSize)[toHouseType] +
+      travelTimeSum +
+      timeBetween;
 
-    let diff = formState.crew_size - event.crew_size;
+    console.log("traveltime---sum", travelTimeSum);
+    console.log("labour", averageLabourTime);
+    console.log("totaltime-->minutes", totalTimeInMinutes);
 
-    // console.log(diff);
-    // console.log(
-    //   "getCrew",
-    //   getCrewSize(
-    //     formState.job_size,
-    //     formState.origin ? formState.origin.floor : formState.destination.floor,
-    //     formState.destination
-    //       ? formState.destination.floor
-    //       : formState.origin.floor
-    //   )
-    // );
-    // console.log("crew", formState.crew_size);
+    // let diff = formState.crew_size - event.crew_size;
+    // console.log(Math.sign(diff));
 
-    if (fromHouseType === "") {
-      totalTimeInMinutes =
-        averageLabourTime +
-        averageFloorTime(movingSize)[toHouseType] +
-        travelTimeSum;
-    } else if (toHouseType === "") {
-      totalTimeInMinutes =
-        averageLabourTime +
-        averageFloorTime(movingSize)[fromHouseType] +
-        travelTimeSum;
-    } else {
-      totalTimeInMinutes =
-        averageLabourTime +
-        averageFloorTime(movingSize)[fromHouseType] +
-        averageFloorTime(movingSize)[toHouseType] +
-        travelTimeSum;
-      // +
-      // timeBetween;
-    }
-
-    if (Math.sign(diff) < 0) {
-      if (Math.abs(diff) === 1) {
-        totalTimeInMinutes = roundToHalf(
-          totalTimeInMinutes + totalTimeInMinutes * 0.2
-        );
-      } else if (Math.abs(diff) === 2) {
-        totalTimeInMinutes = roundToHalf(
-          totalTimeInMinutes + totalTimeInMinutes * 0.35
-        );
-      }
-    }
-    if (Math.sign(diff) > 0) {
-      if (Math.abs(diff) === 1) {
-        totalTimeInMinutes = roundToHalf(
-          totalTimeInMinutes - totalTimeInMinutes * 0.2
-        );
-      } else if (Math.abs(diff) === 2) {
-        totalTimeInMinutes = roundToHalf(
-          totalTimeInMinutes - totalTimeInMinutes * 0.35
-        );
-      }
-    }
+    // if (Math.sign(diff) < 0) {
+    //   if (Math.abs(diff) === 1) {
+    //     totalTimeInMinutes = roundToHalf(
+    //       totalTimeInMinutes + totalTimeInMinutes * 0.2
+    //     );
+    //   } else if (Math.abs(diff) === 2) {
+    //     totalTimeInMinutes = roundToHalf(
+    //       totalTimeInMinutes + totalTimeInMinutes * 0.35
+    //     );
+    //   }
+    // }
+    // if (Math.sign(diff) > 0) {
+    //   if (Math.abs(diff) === 1) {
+    //     totalTimeInMinutes = roundToHalf(
+    //       totalTimeInMinutes - totalTimeInMinutes * 0.2
+    //     );
+    //   } else if (Math.abs(diff) === 2) {
+    //     totalTimeInMinutes = roundToHalf(
+    //       totalTimeInMinutes - totalTimeInMinutes * 0.35
+    //     );
+    //   }
+    // }
 
     let totalTimeInHours = roundTime(totalTimeInMinutes / 60);
     let estimateTimeArray = [];
-    if (movingService === "Moving" || movingService === "Moving with Storage") {
+    if (
+      movingService === "Moving" ||
+      movingService === "Moving with Storage" ||
+      movingService === "Moving from Storage"
+    ) {
       estimateTimeArray = [
         roundTime(totalTimeInHours),
         roundTime(totalTimeInHours + 1),
@@ -245,13 +247,15 @@ function ChangesMade({
     return estimateTimeArray;
   };
 
-  const estimateQuote = () => {
+  const estimateQuote = (crewSize) => {
     let estimateQuoteArray = [];
+    let rate = searchRate(formState.pick_up_date)[crewSize - 2];
+    console.log(crewSize);
+    console.log(searchRate(formState.pick_up_date)[crewSize - 2]);
+
     estimateQuoteArray = [
-      estimateJobTime()[0] *
-        searchRate(formState.pick_up_date)[formState.crew_size - 2],
-      estimateJobTime()[1] *
-        searchRate(formState.pick_up_date)[formState.crew_size - 2],
+      estimateJobTime()[0] * rate,
+      estimateJobTime()[1] * rate,
     ];
     return estimateQuoteArray;
   };
@@ -276,15 +280,7 @@ function ChangesMade({
     return true;
   }
 
-  const searchRate = (selectedDay) => {
-    let dateFormat = moment(selectedDay).format("MM/DD/YYYY");
-    for (var i = 0; i < rates.length; i++) {
-      let renderedDay = rates[i].date;
-      if (renderedDay && renderedDay === dateFormat) {
-        return rates[i].rates;
-      }
-    }
-  };
+  // console.log("estimated Time CHNANGE", formState.estimated_time);
 
   return (
     <Card>
@@ -419,13 +415,26 @@ function ChangesMade({
                           : formState.origin.floor
                       ) - 2
                     ]
-                  : formState.job_rate,
+                  : searchRate(formState.pick_up_date)[formState.crew_size - 2],
               estimated_time: estimateJobTime(),
-              estimated_quote: estimateQuote(),
+              estimated_quote: estimateQuote(
+                getCrewSize(
+                  formState.job_size,
+                  formState.origin.floor,
+                  formState.destination.floor
+                )
+              ),
             });
 
-            // console.log(estimateJobTime());
+            console.log(estimateJobTime());
             // console.log(estimateQuote());
+            // console.log(
+            //   getCrewSize(
+            //     formState.job_size,
+            //     formState.origin.floor,
+            //     formState.destination.floor
+            //   )
+            // );
           }}
         >
           Recalculate

@@ -73,10 +73,10 @@ const Rates = (props) => {
           <Grid container className={classes.gridCard}>
             <SectionHeader
               title="Local Hourly Rates"
-              titleVariant="h6"
-              titleProps={{
-                className: classes.title,
-              }}
+              titleVariant="h2"
+              // titleProps={{
+              //   className: classes.title,
+              // }}
               subtitle="Within Boston & surrounding 125 miles."
               subtitleVariant="body2"
               subtitleColor="textSecondary"
@@ -112,10 +112,10 @@ const Rates = (props) => {
           <Grid container className={classes.gridCard}>
             <SectionHeader
               title="Flat Rate Moving"
-              titleVariant="h6"
-              titleProps={{
-                className: classes.title,
-              }}
+              titleVariant="h2"
+              // titleProps={{
+              //   className: classes.title,
+              // }}
               subtitle="House Flat Rate Moving is available upon request."
               subtitleVariant="body2"
               subtitleColor="textSecondary"

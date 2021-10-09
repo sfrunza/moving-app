@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
     width: 18,
     margin: theme.spacing(0, 1),
-    top: 6,
     position: "relative",
     "&:hover": {
       cursor: "pointer",
@@ -83,6 +82,7 @@ const ReviewAndSubmit = ({ handleBack, handleNext }) => {
     toHouseType,
     crewSize,
     travelTime,
+    timeBetween,
     movingService,
     rate,
     estimateQuote,
@@ -125,7 +125,7 @@ const ReviewAndSubmit = ({ handleBack, handleNext }) => {
     return service === "Moving with Storage";
   };
 
-  // console.log(fromZip);
+  console.log(timeBetween);
   // console.log(destination);
   // console.log(flatRate());
 
@@ -143,6 +143,7 @@ const ReviewAndSubmit = ({ handleBack, handleNext }) => {
       job_type: movingService,
       crew_size: crewSize,
       job_rate: rate,
+      time_between: isMovingWithStorage(movingService) ? 0 : timeBetween,
       is_flat_rate: isFlatRate,
       // is_to_storage: isMovingWithStorage(movingService),
       estimated_time: `{${estimateTime[0]},${estimateTime[1]}}`,
@@ -187,6 +188,7 @@ const ReviewAndSubmit = ({ handleBack, handleNext }) => {
       job_type: "Moving from Storage",
       crew_size: crewSize,
       job_rate: rate,
+      time_between: 0,
       estimated_time: `{${estimateTime[0]},${estimateTime[1]}}`,
       travel_time: `{${travelTime[1]},${travelTime[1]}}`,
       estimated_quote: flatRate(),
@@ -198,6 +200,7 @@ const ReviewAndSubmit = ({ handleBack, handleNext }) => {
       city: "Dedham",
       state: "MA",
       zip: "02026",
+      floor: "1st/Ground floor",
     },
     destination: {
       address: toAddress,
@@ -230,182 +233,188 @@ const ReviewAndSubmit = ({ handleBack, handleNext }) => {
     return getDateAsArray(end_date).diff(getDateAsArray(start_date), "days");
   };
 
-  // var differenceInTime = date2.getTime() - date1.getTime();
-  // const differenceInDays = differenceInTime / (1000 * 3600 * 24);
-
   return (
     <Fade in={true} mountOnEnter unmountOnExit>
       <div>
-        <Grid container spacing={2} alignItems="center">
-          <StyledGrid item xs={6} md={6}>
+        <Grid
+          container
+          spacing={2}
+          alignItems="baseline"
+          justifyContent="space-between"
+        >
+          <StyledGrid item xs={4}>
             {deliveryDate ? "Moving date" : "Date"}
           </StyledGrid>
-          <StyledGrid item xs={6} md={6}>
-            <Typography variant="button">
-              {moment(date).format("MMM DD, YYYY")}
+          <StyledGrid item xs={7}>
+            <Typography variant="body2">
+              <b>{moment(date).format("MMMM DD, YYYY")}</b>
             </Typography>
           </StyledGrid>
           {deliveryDate && (
-            <StyledGrid item xs={6} md={6}>
+            <StyledGrid item xs={4}>
               Storage till
             </StyledGrid>
           )}
           {deliveryDate && (
-            <StyledGrid item xs={6} md={6}>
-              <Typography variant="button">
-                {moment(deliveryDate).format("MMM DD, YYYY")}
+            <StyledGrid item xs={7}>
+              <Typography variant="body2">
+                <b>{moment(deliveryDate).format("MMMM DD, YYYY")}</b>
               </Typography>
             </StyledGrid>
           )}
 
-          <StyledGrid item xs={6} md={6}>
+          {deliveryDate && (
+            <StyledGrid item xs={12}>
+              <Typography variant="caption" color="textPrimary">
+                <b>
+                  Delivery rate and time will depend on your final destination
+                  and date of delivery.
+                </b>
+              </Typography>
+            </StyledGrid>
+          )}
+          <Divider style={{ width: "100%" }} />
+
+          <StyledGrid item xs={4}>
             From
           </StyledGrid>
-          <StyledGrid item xs={6} md={6}>
+          <StyledGrid item xs={7}>
             <Typography variant="body2">
-              {fromAddress}, {origin}, {fromZip} (
-              {fromHouseType !== "" ? fromHouseType : toHouseType})
+              <b>
+                {fromAddress}, {origin} {fromZip}
+              </b>
+              <br></br>({fromHouseType !== "" ? fromHouseType : toHouseType})
             </Typography>
           </StyledGrid>
 
           {isMovingWithStorage(movingService) && (
             <>
-              <StyledGrid item xs={6} md={6}>
+              <StyledGrid item xs={4}>
                 Storage
               </StyledGrid>
-              <StyledGrid item xs={6} md={6}>
+              <StyledGrid item xs={7}>
                 <Typography variant="body2">
-                  Insight Moving Storage *{getDaysDiff(date, deliveryDate)} days
+                  <b> Insight Moving Storage</b> <br></br>*
+                  {getDaysDiff(date, deliveryDate)} days
                 </Typography>
               </StyledGrid>
             </>
           )}
 
           {hideDestination(movingService) && (
-            <StyledGrid item xs={6} md={6}>
+            <StyledGrid item xs={4}>
               To
             </StyledGrid>
           )}
           {hideDestination(movingService) && (
-            <StyledGrid item xs={6} md={6}>
+            <StyledGrid item xs={7}>
               <Typography variant="body2">
-                {toAddress}, {destination}, {toZip} ({toHouseType})
+                <b>
+                  {toAddress}, {destination} {toZip}
+                </b>
+                <br></br>({toHouseType})
               </Typography>
             </StyledGrid>
           )}
 
-          {/* <StyledGrid item xs={6} md={6}>
+          {/* <StyledGrid item xs={7}>
             Service
           </StyledGrid>
-          <StyledGrid item xs={6} md={6}>
+          <StyledGrid item xs={7}>
             <Typography variant="body2">{movingService}</Typography>
           </StyledGrid> */}
 
-          <StyledGrid item xs={6} md={6}>
+          <Divider style={{ width: "100%" }} />
+
+          <StyledGrid item xs={4}>
             Size
           </StyledGrid>
-          <StyledGrid item xs={6} md={6}>
+          <StyledGrid item xs={7}>
             <Typography variant="body2">{movingSize}</Typography>
           </StyledGrid>
 
-          <StyledGrid item xs={6} md={6}>
+          <StyledGrid item xs={4}>
             Crew Size
           </StyledGrid>
-          <StyledGrid item xs={6} md={6}>
-            <Typography variant="button">{crewSize}</Typography>
-            <Typography variant="body2" style={{ marginLeft: 4 }}>
-              Movers
+          <StyledGrid item xs={7}>
+            <Typography variant="body2">
+              <b>{crewSize}</b> Movers
             </Typography>
           </StyledGrid>
 
-          <StyledGrid item xs={6} md={6}>
+          <StyledGrid item xs={4}>
             {isFlatRate ? "FLAT PRICE" : "Rate"}
           </StyledGrid>
           {!isFlatRate && (
-            <StyledGrid item xs={6} md={6}>
-              <Typography variant="button">${rate}</Typography>
-              <Typography variant="body2" style={{ marginLeft: 4 }}>
-                /hour
+            <StyledGrid item xs={7}>
+              <Typography variant="body2">
+                <b>${rate}</b>/hour
               </Typography>
             </StyledGrid>
           )}
           {isFlatRate && (
-            <StyledGrid item xs={6} md={6}>
+            <StyledGrid item xs={7}>
               <Typography variant="button"> ${estimateQuote[0]}</Typography>
             </StyledGrid>
           )}
           {!isFlatRate && (
             <>
-              <StyledGrid item xs={6} md={6}>
+              <StyledGrid item xs={4}>
                 Estimate job time
               </StyledGrid>
-              <StyledGrid item xs={6} md={6}>
-                <Typography variant="button">
-                  {estimateTime[0]}
-                  {estimateTime[1] ? " - " + estimateTime[1] : null}
-                </Typography>
-                <Typography variant="body2" style={{ marginLeft: 4 }}>
+              <StyledGrid item xs={7}>
+                <Typography variant="body2">
+                  <b>
+                    {estimateTime[0]}
+                    {estimateTime[1] ? " - " + estimateTime[1] : null}
+                  </b>{" "}
                   hours*
-                  <Tooltip
-                    title="Job Time = Labour Time + Travel Time"
-                    placement="top-end"
-                    arrow
-                  >
-                    <InformationCircle className={classes.infoIcon} />
-                  </Tooltip>
                 </Typography>
+                <Tooltip
+                  title="Job Time = Labour Time + Travel Time"
+                  placement="top-end"
+                  arrow
+                >
+                  <InformationCircle className={classes.infoIcon} />
+                </Tooltip>
               </StyledGrid>
-              <StyledGrid item xs={6} md={6}>
+              <StyledGrid item xs={4}>
                 Travel time
               </StyledGrid>
-              <StyledGrid item xs={6} md={6}>
-                <Typography variant="body1">
-                  {isMovingWithStorage(movingService)
-                    ? travelTime[0] + "/" + travelTime[0]
-                    : travelTime[0] + "/" + travelTime[1]}
-                </Typography>
-                <Typography variant="body2" style={{ marginLeft: 4 }}>
+              <StyledGrid item xs={7}>
+                <Typography variant="body2">
+                  <b>
+                    {isMovingWithStorage(movingService)
+                      ? travelTime[0] + "/" + travelTime[0]
+                      : travelTime[0] + "/" + travelTime[1]}
+                  </b>{" "}
                   min.
-                  <Tooltip
-                    title="from/to Headquarter"
-                    placement="top-end"
-                    arrow
-                  >
-                    <InformationCircle className={classes.infoIcon} />
-                  </Tooltip>
                 </Typography>
+                <Tooltip title="from/to Headquarter" placement="top-end" arrow>
+                  <InformationCircle className={classes.infoIcon} />
+                </Tooltip>
               </StyledGrid>
-              <StyledGrid item xs={6} md={6}>
+              <StyledGrid item xs={4}>
                 Estimated Quote
               </StyledGrid>
-              <StyledGrid item xs={6} md={6}>
-                <Typography variant="button">
-                  ${estimateQuote[0]}
-                  {estimateQuote[1] ? " - $" + estimateQuote[1] : null}
+              <StyledGrid item xs={7}>
+                <Typography variant="body2">
+                  <b>
+                    ${estimateQuote[0]}
+                    {estimateQuote[1] ? " - $" + estimateQuote[1] : null}
+                  </b>
                 </Typography>
               </StyledGrid>
             </>
           )}
           <Divider style={{ width: "100%", margin: "8px 0px" }} />
-          {!isFlatRate && (
-            <StyledGrid item xs={12}>
-              <Typography variant="caption">
-                Please note, this quote is just an estimate and provided for
-                your convenience only. We give you a database average for
-                generally similar moves. However, your final cost is based on
-                hourly rate and actual time your move will take.
-              </Typography>
-            </StyledGrid>
-          )}
-          {isFlatRate && (
-            <StyledGrid item xs={12}>
-              <Typography variant="caption">
-                Please note, the above information provides an estimated quote
-                only and is subject to change. The final Flat Price will be
-                determined based on actual inventory and specific moving loads.
-              </Typography>
-            </StyledGrid>
-          )}
+          <StyledGrid item xs={12}>
+            <Typography variant="caption" color="textSecondary">
+              *Please note, the above information provides an estimated quote
+              only and is subject to change in case of undisclosed or
+              unpredicetd circumstances.
+            </Typography>
+          </StyledGrid>
         </Grid>
         <form onSubmit={formik.handleSubmit}>
           <Grid
@@ -454,25 +463,23 @@ const ReviewAndSubmit = ({ handleBack, handleNext }) => {
                 No credit card required, no obligation!
               </Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={6} md={6}>
               <Button
                 color="primary"
                 variant="outlined"
                 fullWidth
                 onClick={() => handleBack()}
-                // disabled={!formik.isValid}
               >
                 Back
               </Button>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={6} md={6}>
               <Button
                 color="primary"
                 variant="contained"
                 fullWidth
                 type="submit"
                 disableElevation
-                // disabled={!formik.isValid}
               >
                 Submit Request
               </Button>

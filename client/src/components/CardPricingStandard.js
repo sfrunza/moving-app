@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme) => ({
   featureCheck: {
     marginRight: theme.spacing(1),
   },
+  featrueAlign: {
+    alignItems: "unset",
+  },
 }));
 
 /**
@@ -79,7 +82,7 @@ const CardPricingStandard = (props) => {
                 <ListItem
                   key={index}
                   disableGutters
-                  className="card-pricing-standard__feature-list-item"
+                  className={classes.featrueAlign}
                 >
                   {featureCheckComponent && (
                     <div

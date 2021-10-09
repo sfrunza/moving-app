@@ -70,11 +70,11 @@ const CalendarWithRates = ({ ...rest }) => {
                   selectColor = "rgb(0 186 93 / 25%)";
                   selectBorderColor = "rgb(0 186 93 / 10%)";
                 }
-                if (rate === "160") {
+                if (rate === "140") {
                   selectColor = "rgba(253 201 9 / 25%)";
                   selectBorderColor = "rgba(253 201 9 / 10%)";
                 }
-                if (rate === "200") {
+                if (rate === "160") {
                   selectColor = "rgba(251 0 9 / 25%)";
                   selectBorderColor = "rgba(253 153 9 / 10%)";
                 }

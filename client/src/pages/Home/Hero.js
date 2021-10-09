@@ -23,6 +23,8 @@ const useStyles = makeStyles((theme) => ({
   section: {
     padding: theme.spacing(10, 2),
     maxWidth: 1200,
+    position: "relative",
+    top: theme.spacing(4),
   },
   caluclatorContainer: {
     backgroundColor: theme.palette.background.paper,
@@ -64,10 +66,7 @@ const Hero = (props) => {
       <div className={classes.section}>
         <Grid container spacing={isMd ? 4 : 2} justifyContent="center">
           <Grid item xs={12} md={6}>
-            <Typography
-              variant="h3"
-              className={clsx(classes.textWhite, classes.title)}
-            >
+            <Typography className={clsx(classes.textWhite, classes.title)}>
               Insight Moving
             </Typography>
           </Grid>

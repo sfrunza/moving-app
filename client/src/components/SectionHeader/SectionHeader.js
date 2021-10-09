@@ -176,7 +176,7 @@ const SectionHeader = (props) => {
 };
 
 SectionHeader.defaultProps = {
-  titleVariant: "h4",
+  titleVariant: "h1",
   labelProps: {},
   titleProps: {},
   subtitleProps: {},

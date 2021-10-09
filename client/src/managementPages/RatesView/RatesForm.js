@@ -41,9 +41,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const rateOptions = [
-  { text: "Regular", rate: "120, 140, 160", value: "{120,140,160}" },
-  { text: "SubPick", rate: "160, 180, 200", value: "{160,180,200}" },
-  { text: "Pick", rate: "200, 220, 240", value: "{200,220,240}" },
+  { text: "Regular", rate: "120, 160, 200", value: "{120,160,200}" },
+  { text: "SubPick", rate: "140, 180, 220", value: "{140,180,220}" },
+  { text: "Pick", rate: "160, 200, 240", value: "{160,200,240}" },
 ];
 
 const validate = (values) => {

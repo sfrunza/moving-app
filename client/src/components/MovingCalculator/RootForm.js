@@ -73,7 +73,7 @@ const RootForm = ({ handleClose, showX }) => {
   const dialogTitle = [
     "Get a Quote!",
     "Fill Move Details",
-    "Moving calculator result",
+    "Calculator Results",
     "Fill Address",
     "Fill Contact Info",
     "Review & Submit",

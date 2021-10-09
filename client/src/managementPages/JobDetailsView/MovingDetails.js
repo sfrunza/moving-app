@@ -89,6 +89,7 @@ function MovingDetails({
   setRecalc,
   saveAndUpdate,
   setSaveAndUpdate,
+  rates,
   ...rest
 }) {
   const classes = useStyles();
@@ -99,8 +100,6 @@ function MovingDetails({
   const google = (window.google = window.google ? window.google : {});
 
   const [map, setMap] = useState(null);
-
-  const { rates } = useSelector((state) => state.rates);
 
   const searchRate = (selectedDay, data) => {
     let dateFormat = moment(selectedDay).format("MM/DD/YYYY");
@@ -134,23 +133,36 @@ function MovingDetails({
   };
 
   const changeEstimate = (crewSize) => {
-    let estimate = formState.estimated_time;
+    var estimate = formState.estimated_time;
+    console.log("formState Estimate---->", estimate);
     let crew = formState.crew_size;
     let diff = crew - crewSize;
+    // console.log("NEW ESTIMATE---->", estimate);
+    // console.log("Round---->", roundToHalf(2.8));
+    console.log(Math.sign(diff));
     if (Math.sign(diff) < 0) {
       if (Math.abs(diff) === 1) {
-        estimate = estimate.map((x) => roundToHalf(x - x * 0.2));
+        let zero = estimate[0] - roundToHalf(estimate[0] * 0.15);
+        let one = zero + 1;
+        estimate = [zero, one];
       } else if (Math.abs(diff) === 2) {
-        estimate = estimate.map((x) => roundToHalf(x - x * 0.4));
+        let zero = estimate[0] - roundToHalf(estimate[0] * 0.3);
+        let one = zero + 1;
+        estimate = [zero, one];
       }
     }
     if (Math.sign(diff) > 0) {
       if (Math.abs(diff) === 1) {
-        estimate = estimate.map((x) => roundToHalf(x + x * 0.2));
+        let zero = estimate[0] + roundToHalf(estimate[0] * 0.15);
+        let one = zero + 1;
+        estimate = [zero, one];
       } else if (Math.abs(diff) === 2) {
-        estimate = estimate.map((x) => roundToHalf(x + x * 0.4));
+        let zero = estimate[0] + roundToHalf(estimate[0] * 0.3);
+        let one = zero + 1;
+        estimate = [zero, one];
       }
     }
+    console.log("NEW ESTIMATE---->", estimate);
     return estimate;
   };
 
@@ -161,7 +173,7 @@ function MovingDetails({
 
   useEffect(() => {
     if (job.id) {
-      setMap(initMap());
+      // setMap(initMap());
     }
     return () => {
       setMap(null);
@@ -439,7 +451,7 @@ function MovingDetails({
   return (
     <Card {...rest} className={classes.root}>
       <CardHeader title="Move Overview" />
-      {isLoaded && map}
+      {/* {isLoaded && map} */}
       <CardContent className={classes.content}>
         <Box className={classes.headerDistance}>{distance}</Box>
         <Divider />

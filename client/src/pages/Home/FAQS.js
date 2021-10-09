@@ -30,7 +30,10 @@ const Faq = (props) => {
             <SectionHeader
               title={item.title}
               subtitle={item.text}
-              titleVariant="h6"
+              titleVariant="h2"
+              // titleProps={{
+              //   component: "body1",
+              // }}
               subtitleVariant="body2"
               align="left"
               disableGutter
