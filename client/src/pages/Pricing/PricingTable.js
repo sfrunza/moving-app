@@ -3,20 +3,42 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
+import Box from "@material-ui/core/Box";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import SectionHeader from "src/components/SectionHeader";
+import { Typography } from "@material-ui/core";
+import Clock from "src/icons/Clock";
+import Truck from "src/icons/Truck";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 510,
     maxWidth: 1160,
     width: "100%",
     margin: "auto",
   },
-});
+  bottomInfo: {
+    display: "flex",
+
+    [theme.breakpoints.down("xs")]: {
+      flexWrap: "wrap",
+    },
+    justifyContent: "space-between",
+    marginTop: theme.spacing(3),
+    "& p": {
+      padding: theme.spacing(2),
+      maxWidth: 600,
+    },
+  },
+  icon: {
+    position: "relative",
+    top: 5,
+    marginRight: 5,
+  },
+}));
 
 const StyledTableCellHeader = withStyles((theme) => ({
   root: {
@@ -24,8 +46,6 @@ const StyledTableCellHeader = withStyles((theme) => ({
     boxShadow: "none",
   },
   head: {
-    // backgroundColor: theme.palette.common.black,
-    // color: theme.palette.common.white,
     fontWeight: 600,
     fontSize: "1rem",
   },
@@ -123,6 +143,19 @@ export default function PricingTable() {
           </TableBody>
         </Table>
       </TableContainer>
+      <Box className={classes.bottomInfo}>
+        <Typography variant="body2" color="textSecondary">
+          <Truck className={classes.icon} />
+          <b>40 min Travel Time</b> is applied to all jobs in Metro Boston area.
+          (approx 20 min for our movers to get to you address from our office
+          plus approx 20 min to get back when the move is finished).
+        </Typography>
+        <Typography variant="body2" color="textSecondary">
+          <Clock className={classes.icon} />
+          We have a <b>2 hours minimum,</b> including travel time, charge
+          policy. After first 2 hours, the move time is prorated every 15 min.
+        </Typography>
+      </Box>
     </>
   );
 }

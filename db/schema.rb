@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 2021_09_26_232113) do
     t.string "job_size"
     t.integer "crew_size"
     t.integer "job_rate"
+    t.integer "time_between"
     t.float "estimated_time", default: [], array: true
     t.integer "travel_time", default: [], array: true
     t.integer "estimated_quote", default: [], array: true

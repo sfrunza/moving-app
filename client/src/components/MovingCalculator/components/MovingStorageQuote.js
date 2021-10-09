@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     width: 18,
     margin: theme.spacing(0, 1),
     // right: 17,
-    top: 6,
+    // top: 6,
     position: "relative",
     "&:hover": {
       cursor: "pointer",
@@ -64,7 +64,6 @@ const MovingStorageQuote = ({
         )}
         {toHouseType && (
           <Typography component="span" variant="body2">
-            {" "}
             &nbsp;to <b>{toHouseType}</b>
           </Typography>
         )}
@@ -85,60 +84,59 @@ const MovingStorageQuote = ({
         {crewSize} Movers Crew
       </StyledGrid>
       <StyledGrid item xs={6} md={6}>
-        <Typography variant="button">${rate}</Typography>
-        <Typography variant="body2" style={{ marginLeft: 4 }}>
-          {" "}
-          /hour
+        <Typography variant="body2">
+          <b>${rate}</b> /hour
         </Typography>
       </StyledGrid>
       <StyledGrid item xs={6} md={6}>
         Estimate job time
       </StyledGrid>
       <StyledGrid item xs={6} md={6}>
-        <Typography variant="button">
-          {estimateJobTime()[0]}{" "}
-          {estimateJobTime()[1] ? "- " + estimateJobTime()[1] : null}
-        </Typography>
-        <Typography variant="body2" style={{ marginLeft: 4 }}>
-          {" "}
+        <Typography variant="body2">
+          <b>
+            {estimateJobTime()[0]}{" "}
+            {estimateJobTime()[1] ? "- " + estimateJobTime()[1] : null}
+          </b>{" "}
           hours*
-          <Tooltip
-            title="Job Time = Labour Time + Travel Time"
-            placement="top-end"
-            arrow
-          >
-            <InformationCircle className={classes.infoIcon} />
-          </Tooltip>
         </Typography>
+        <Tooltip
+          title="Job Time = Labour Time + Travel Time"
+          placement="top-end"
+          arrow
+        >
+          <InformationCircle className={classes.infoIcon} />
+        </Tooltip>
       </StyledGrid>
       <StyledGrid item xs={6} md={6}>
         Travel time
       </StyledGrid>
       <StyledGrid item xs={6} md={6}>
-        <Typography variant="body1">
-          {travelTime[0]}/{isMovingWithStorage ? travelTime[0] : travelTime[1]}{" "}
-        </Typography>
-        <Typography variant="body2" style={{ marginLeft: 4 }}>
-          {" "}
+        <Typography variant="body2">
+          <b>
+            {travelTime[0]}/
+            {isMovingWithStorage ? travelTime[0] : travelTime[1]}
+          </b>{" "}
           min.
-          <Tooltip title="from/to Headquarter" placement="top-end" arrow>
-            <InformationCircle className={classes.infoIcon} />
-          </Tooltip>
         </Typography>
+        <Tooltip title="from/to Headquarter" placement="top-end" arrow>
+          <InformationCircle className={classes.infoIcon} />
+        </Tooltip>
       </StyledGrid>
       <StyledGrid item xs={6} md={6}>
         Estimated Quote
       </StyledGrid>
       <StyledGrid item xs={6} md={6}>
-        <Typography variant="button">
-          ${estimateQuote()[0]}
-          {estimateQuote()[1] ? " - $" + estimateQuote()[1] : null}
+        <Typography variant="body2">
+          <b>
+            ${estimateQuote()[0]}
+            {estimateQuote()[1] ? " - $" + estimateQuote()[1] : null}
+          </b>
         </Typography>
       </StyledGrid>
       <Divider style={{ width: "100%", margin: "8px 0px" }} />
       <StyledGrid item xs={12}>
-        <Typography variant="caption">
-          Please note, this quote is just an estimate and provided for your
+        <Typography variant="caption" color="textSecondary">
+          *Please note, this quote is just an estimate and provided for your
           convenience only. We give you a database average for generally similar
           moves. However, your final cost is based on hourly rate and actual
           time your move will take.

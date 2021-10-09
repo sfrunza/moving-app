@@ -6,7 +6,7 @@ import { useMediaQuery, Grid, Typography, Button } from "@material-ui/core";
 import { ToggleButtonGroup, ToggleButton } from "@material-ui/lab";
 import CardPricingStandard from "src/components/CardPricingStandard";
 import Section from "src/components/Section";
-import Check from "src/icons/Check";
+import Check from "src/icons/CheckCircle";
 import Hero from "../../Hero";
 
 const useStyles = makeStyles((theme) => ({

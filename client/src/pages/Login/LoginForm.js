@@ -26,10 +26,10 @@ import Lock from "src/icons/Lock";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    boxShadow: theme.shadows[2],
-    background: theme.palette.background.paper,
-    borderRadius: theme.spacing(1),
-    padding: theme.spacing(3),
+    // boxShadow: theme.shadows[2],
+    // background: theme.palette.background.paper,
+    // borderRadius: theme.spacing(1),
+    // padding: theme.spacing(3),
   },
   title: {
     paddingBottom: theme.spacing(4),

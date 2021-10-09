@@ -207,7 +207,8 @@ const ThirdStep = ({ handleBack, handleNext, ratesFromDb }) => {
 
   const estimateJobTime = () => {
     let travelTimeSum = travelTime.reduce((a, b) => a + b);
-    if (isInsideMove(movingService)) travelTimeSum = travelTime[0] * 2;
+    if (isInsideMove(movingService) || isMovingWithStorage(movingService))
+      travelTimeSum = travelTime[0] * 2;
 
     let averageLabourTime = averageTime[movingSize];
     if (isLoading(movingService))
@@ -216,8 +217,10 @@ const ThirdStep = ({ handleBack, handleNext, ratesFromDb }) => {
       averageLabourTime = averageTime[movingSize] * 0.5;
     if (isInsideMove(movingService))
       averageLabourTime = averageTime[movingSize] * 0.4;
-    if (isMovingWithStorage(movingService))
-      averageLabourTime = averageTime[movingSize] * 0.5;
+    if (isMovingWithStorage(movingService)) {
+      // averageLabourTime = averageTime[movingSize] * 0.8;
+      travelTimeSum = travelTime[0] * 2;
+    }
 
     let totalTimeInMinutes = 0;
     if (fromHouseType === "") {
@@ -236,10 +239,13 @@ const ThirdStep = ({ handleBack, handleNext, ratesFromDb }) => {
         averageFloorTime(movingSize)[fromHouseType] +
         averageFloorTime(movingSize)[toHouseType] +
         travelTimeSum +
-        timeBetween;
+        (isMovingWithStorage(movingService) ? 0 : timeBetween);
     }
-
+    // console.log("travelTime", travelTimeSum);
+    // console.log("labour", averageLabourTime);
+    // console.log("tt-->minutes", totalTimeInMinutes);
     let totalTimeInHours = roundTime(totalTimeInMinutes / 60);
+    console.log(totalTimeInHours);
     let estimateTimeArray = [];
     if (movingService === "Moving" || movingService === "Moving with Storage") {
       estimateTimeArray = [

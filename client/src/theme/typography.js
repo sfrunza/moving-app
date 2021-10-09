@@ -5,12 +5,16 @@ const typography = {
     '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
   fontDisplay: "swap",
   h1: {
+    // fontWeight: 600,
+    // fontSize: "3.5rem",
     fontWeight: 600,
-    fontSize: "3.5rem",
+    fontSize: "2rem",
   },
   h2: {
+    // fontWeight: 600,
+    // fontSize: "3rem",
     fontWeight: 600,
-    fontSize: "3rem",
+    fontSize: "1.25rem",
   },
   h3: {
     fontWeight: 600,

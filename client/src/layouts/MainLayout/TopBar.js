@@ -270,7 +270,7 @@ function TopBar({ onSidebarOpen, pages, history }) {
                 root: classes.buttonMargin,
               }}
             >
-              Book Online
+              Get a Quote
             </Button>
           </Hidden>
           <Hidden mdUp>

@@ -45,7 +45,7 @@ export const light = {
     // level2: "#F5F5F7",
     level2: "#f5f8ff",
     level1: "#fff",
-    footer: "#1A212C",
+    footer: "#353348",
   },
 };
 

@@ -12,6 +12,7 @@ class JobSerializer < ActiveModel::Serializer
             :job_rate,
             :estimated_time,
             :travel_time,
+            :time_between,
             :estimated_quote,
             :additional_info,
             :job_duration,

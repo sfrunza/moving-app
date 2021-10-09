@@ -50,7 +50,7 @@ export default function ServiceCard({ item }) {
         title={item.location}
       />
       <CardContent classes={{ root: classes.contentSection }}>
-        <Typography gutterBottom variant="h6">
+        <Typography gutterBottom variant="h2">
           {item.location}
         </Typography>
         <Typography

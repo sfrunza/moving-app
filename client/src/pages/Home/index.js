@@ -10,7 +10,7 @@ import Include from "./Include";
 import Contact from "./Contact";
 import Rates from "./Rates";
 import Hero from "./Hero";
-import CurbBottom from "src/icons/CurbBottom";
+import Footer from "src/layouts/MainLayout/Footer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,6 +62,7 @@ const Home = () => {
         />
       </svg>
       <Contact />
+      <Footer />
     </Page>
   );
 };

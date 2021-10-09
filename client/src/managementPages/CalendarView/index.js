@@ -329,11 +329,11 @@ const Calendar = (props) => {
     } else if (moveType === "Inside Move") {
       symbol = "I";
     } else if (moveType === "Moving with Storage") {
-      symbol = "\u2192 ]";
+      symbol = "\u2192 S]";
     } else if (moveType === "Packing Only") {
       symbol = "P";
     } else if (moveType === "Moving from Storage") {
-      symbol = "[ \u2192";
+      symbol = "[S \u2192";
     }
     // extendedProps is used to access additional event properties.
     const content = (
