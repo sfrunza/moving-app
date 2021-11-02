@@ -111,8 +111,8 @@ function Routes(props) {
                       path="/dashboard/users/:id"
                       component={UserView}
                     />
-                    <Route path="/not-found" component={NotFound} />
-                    <Redirect to="/not-found" />
+                    {/* <Route path="/not-found" component={NotFound} />
+                    <Redirect to="/not-found" /> */}
                   </Switch>
                 </Suspense>
               </DashboardLayout>
@@ -159,8 +159,8 @@ function Routes(props) {
                   <Route exact path="/work" component={Work} />
                   <Route exact path="/book" component={Book} />
                   <Route exact path="/login" component={Login} />
-                  <Route path="/not-found" component={NotFound} />
-                  <Redirect to="/not-found" />
+                  {/* <Route path="/not-found" component={NotFound} />
+                  <Redirect to="/not-found" /> */}
                 </Switch>
               </MainLayout>
             )}
