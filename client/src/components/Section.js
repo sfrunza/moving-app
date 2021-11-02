@@ -5,16 +5,14 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // width: 740,
-    // maxWidth: "100%",
-    margin: "auto",
-    // display: "flex",
-    // flexDirection: "column",
-    // justifyContent: "center",
-    // alignItems: "center",
-    padding: theme.spacing(10, 2),
+    maxWidth: theme.layout.contentWidth,
+    width: "100%",
+    margin: "0 auto",
+    padding: theme.spacing(6, 2),
+    [theme.breakpoints.up("sm")]: {
+      padding: theme.spacing(8, 2),
+    },
     [theme.breakpoints.up("md")]: {
-      width: 1200,
       padding: theme.spacing(12, 2),
     },
   },
@@ -29,22 +27,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * Component to display the sections
+ *
+ * @param {Object} props
+ */
 const Section = (props) => {
-  const {
-    children,
-    fullWidth,
-    narrow,
-    disablePadding,
-    alternate,
-    background,
-    className,
-    ...rest
-  } = props;
+  const { children, fullWidth, narrow, disablePadding, className, ...rest } =
+    props;
 
   const classes = useStyles();
 
   return (
-    // <div style={{ backgroundColor: `${background}` }}>
     <section
       className={clsx(
         "section",
@@ -52,14 +46,12 @@ const Section = (props) => {
         fullWidth ? classes.fullWidth : {},
         narrow ? classes.narrow : {},
         disablePadding ? classes.disablePadding : {},
-        alternate ? classes.alternate : {},
         className
       )}
       {...rest}
     >
       {children}
     </section>
-    // </div>
   );
 };
 

@@ -121,7 +121,7 @@ function Results({ className, users, events, ...rest }) {
             ),
           }}
           onChange={handleQueryChange}
-          placeholder="Search by Name or Email"
+          placeholder="Search by Name or Role"
           value={query}
           size="small"
           variant="outlined"

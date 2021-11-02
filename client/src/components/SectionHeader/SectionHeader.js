@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
   border: {
     width: 50,
     height: 2,
+    marginTop: theme.spacing(1),
     marginRight: "auto",
     marginLeft: "auto",
     backgroundColor: theme.palette.secondary.main,
@@ -82,7 +83,7 @@ const SectionHeader = (props) => {
   return (
     <Grid
       container
-      spacing={4}
+      spacing={2}
       data-aos={fadeUp ? "fade-up" : ""}
       className={clsx(
         "section-header",

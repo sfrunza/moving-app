@@ -11,6 +11,9 @@ const useStyles = makeStyles((theme) => ({
     border: `1px solid ${theme.palette.divider}`,
     padding: theme.spacing(3),
     borderRadius: theme.spacing(1),
+    "&:hover": {
+      boxShadow: "rgb(140 152 164 / 10%) 0px 12px 15px",
+    },
   },
   city: {
     fontWeight: "bold",

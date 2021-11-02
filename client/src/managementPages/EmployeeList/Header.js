@@ -1,17 +1,10 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
-import {
-  Breadcrumbs,
-  Grid,
-  Link,
-  Typography,
-  Button,
-  Box,
-} from "@material-ui/core";
-import PlusIcon from "src/icons/Plus";
+import { Breadcrumbs, Grid, Link, Typography, Box } from "@material-ui/core";
 import ChevronRightIcon from "src/icons/ChevronRight";
+import NewEmployeeForm from "./NewEmployeeForm";
 
-function Header() {
+function Header({ dispatch }) {
   return (
     <Grid container justifyContent="space-between" spacing={3}>
       <Grid item>
@@ -38,17 +31,7 @@ function Header() {
       </Grid>
       <Grid item>
         <Box m={-1}>
-          <Button
-            color="primary"
-            disabled
-            disableElevation
-            // onClick={handleAddClick}
-            startIcon={<PlusIcon fontSize="small" />}
-            style={{ margin: 8 }}
-            variant="contained"
-          >
-            New Appointment
-          </Button>
+          <NewEmployeeForm dispatch={dispatch} />
         </Box>
       </Grid>
     </Grid>

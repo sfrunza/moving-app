@@ -183,9 +183,9 @@ const UserInfo = ({ user, handleUpdate, isUpdating, init }) => {
             type="submit"
             variant="contained"
             disableElevation
-            disabled={areObjectsEqual(formik.values, init)}
+            disabled={areObjectsEqual(formik.values, init) || isUpdating}
           >
-            {isUpdating ? "Loading..." : "Save Changes"}
+            Save Changes
           </Button>
         </Box>
       </Card>

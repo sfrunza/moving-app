@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     padding: 10,
     minWidth: theme.spacing(6),
     [theme.breakpoints.down("xs")]: {
-      padding: 6,
+      padding: 8,
       minWidth: theme.spacing(5),
     },
   },

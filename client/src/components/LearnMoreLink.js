@@ -4,7 +4,7 @@ import clsx from "clsx";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
-import ChevronRightRoundedIcon from "@material-ui/icons/ChevronRightRounded";
+import ChevronRight from "src/icons/ChevronRight";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -14,15 +14,13 @@ const useStyles = makeStyles(() => ({
     justifyContent: "center",
   },
   title: {
-    fontWeight: 500,
-    // color: "#2997ff",
+    fontWeight: 700,
     "&:hover": {
       textDecoration: "underline",
     },
   },
   icon: {
     padding: 0,
-    // color: "#2997ff",
     "&:hover": {
       background: "transparent",
     },
@@ -65,7 +63,7 @@ const LearnMoreLink = (props) => {
       >
         {title}
       </Typography>
-      <ChevronRightRoundedIcon
+      <ChevronRight
         className={classes.arrowIcon}
         color={color || "secondary"}
       />

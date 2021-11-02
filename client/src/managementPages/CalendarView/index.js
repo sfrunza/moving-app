@@ -15,7 +15,6 @@ import {
   Box,
   Card,
   Container,
-  Dialog,
   makeStyles,
   useTheme,
   Tooltip,
@@ -24,27 +23,11 @@ import { alpha, styled, withStyles } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Toolbar from "./Toolbar";
 import gtm from "src/lib/gtm";
-import {
-  closeModal,
-  getEvents,
-  selectRange,
-  updateEvent,
-} from "src/slices/calendar";
+import { getEvents, selectRange, updateEvent } from "src/slices/calendar";
 import { useSnackbar } from "notistack";
 import { useDispatch, useSelector } from "src/store";
-import AddEditEventForm from "./AddEditEventForm";
 import moment from "moment";
 import { getRates } from "src/slices/rates";
-
-const selectedEventSelector = (state) => {
-  const { events, selectedEventId } = state.calendar;
-
-  if (selectedEventId) {
-    return events.find((event) => event.id === parseInt(selectedEventId));
-  }
-
-  return null;
-};
 
 const FullCalendarWrapper = styled("div")(({ theme }) => ({
   "& .fc-license-message": {
@@ -130,7 +113,7 @@ function findRatesInDb(array, value) {
   if (!array) return null;
   for (var i = 0; i < array.length; i++) {
     if (array[i].date === value) {
-      return array[i].rates;
+      return array[i];
     }
   }
 }
@@ -151,12 +134,9 @@ const Calendar = (props) => {
   const theme = useTheme();
   const calendarRef = useRef(null);
   const mobileDevice = useMediaQuery((theme) => theme.breakpoints.down("sm"));
-  const { events, isModalOpen, selectedRange } = useSelector(
-    (state) => state.calendar
-  );
+  const { events } = useSelector((state) => state.calendar);
   const { enqueueSnackbar } = useSnackbar();
   const { rates } = useSelector((state) => state.rates);
-  const selectedEvent = useSelector(selectedEventSelector);
 
   const [date, setDate] = useState(new Date());
   const [view, setView] = useState(mobileDevice ? "listWeek" : "dayGridMonth");
@@ -263,7 +243,9 @@ const Calendar = (props) => {
     let date = moment(event.start).format("MM/DD/YYYY");
     let crewSize = event.extendedProps.crew_size;
     let estimatedTime = event.extendedProps.estimated_time;
-    let ratesArr = findRatesInDb(rates, date);
+    let ratesFromDb = findRatesInDb(rates, date);
+    let ratesArr = ratesFromDb.rates;
+    let theRatesType = ratesFromDb.rate_type;
 
     let newJobRate = parseInt(ratesArr[crewSize - 2]);
 
@@ -276,6 +258,7 @@ const Calendar = (props) => {
           end: moment(event.start).format("YYYY-MM-DDTHH:mm:ss"),
           job_rate: newJobRate,
           estimated_quote: `{${newEstimatedQuote}}`,
+          rate_type: theRatesType,
         })
       );
     } catch (err) {
@@ -288,10 +271,6 @@ const Calendar = (props) => {
       },
       variant: "success",
     });
-  };
-
-  const handleModalClose = () => {
-    dispatch(closeModal());
   };
 
   const EventDetail = ({ event, el }) => {
@@ -388,18 +367,22 @@ const Calendar = (props) => {
 
   const HeaderDetail = ({ date, el, view }) => {
     let formatedDate = moment(date).format("MM/DD/YYYY");
-    let theRates = findRatesInDb(rates, formatedDate);
-    if (!theRates) return null;
+    let theRatesObject = findRatesInDb(rates, formatedDate);
+
+    if (!theRatesObject) return null;
+
+    let theRates = theRatesObject.rates;
+    let theRatesType = theRatesObject.rate_type;
 
     let selectBackgroundColor = "transparent";
 
-    if (theRates[0] === "120") {
+    if (theRatesType === "regular") {
       selectBackgroundColor = "rgb(0 186 93 / 25%)";
     }
-    if (theRates[0] === "160") {
+    if (theRatesType === "subpick") {
       selectBackgroundColor = "rgba(253 201 9 / 25%)";
     }
-    if (theRates[0] === "200") {
+    if (theRatesType === "pick") {
       selectBackgroundColor = "rgba(251 0 9 / 25%)";
     }
 
@@ -520,24 +503,6 @@ const Calendar = (props) => {
               />
             </FullCalendarWrapper>
           </Card>
-          <Dialog
-            fullWidth
-            maxWidth="xs"
-            onClose={handleModalClose}
-            open={isModalOpen}
-          >
-            {/* Dialog renders its body even if not open */}
-            {isModalOpen && (
-              <AddEditEventForm
-                event={selectedEvent}
-                onAddComplete={handleModalClose}
-                onCancel={handleModalClose}
-                onDeleteComplete={handleModalClose}
-                onEditComplete={handleModalClose}
-                range={selectedRange}
-              />
-            )}
-          </Dialog>
         </Container>
       </Box>
     </Page>

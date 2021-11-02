@@ -245,7 +245,7 @@ const ThirdStep = ({ handleBack, handleNext, ratesFromDb }) => {
     // console.log("labour", averageLabourTime);
     // console.log("tt-->minutes", totalTimeInMinutes);
     let totalTimeInHours = roundTime(totalTimeInMinutes / 60);
-    console.log(totalTimeInHours);
+    // console.log(totalTimeInHours);
     let estimateTimeArray = [];
     if (movingService === "Moving" || movingService === "Moving with Storage") {
       estimateTimeArray = [

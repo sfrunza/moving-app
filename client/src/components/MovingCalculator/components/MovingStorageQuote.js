@@ -1,8 +1,9 @@
 import React from "react";
-import { Grid, Typography, Tooltip, Divider } from "@material-ui/core";
+import { Grid, Typography, Divider } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import ArrowRightIcon from "src/icons/ArrowRight";
 import InformationCircle from "src/icons/InformationCircle";
+import ToolTip from "src/components/ToolTip";
 
 const useStyles = makeStyles((theme) => ({
   location: {
@@ -18,9 +19,6 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
     width: 18,
     margin: theme.spacing(0, 1),
-    // right: 17,
-    // top: 6,
-    position: "relative",
     "&:hover": {
       cursor: "pointer",
     },
@@ -99,13 +97,9 @@ const MovingStorageQuote = ({
           </b>{" "}
           hours*
         </Typography>
-        <Tooltip
-          title="Job Time = Labour Time + Travel Time"
-          placement="top-end"
-          arrow
-        >
+        <ToolTip title="Job Time = Labour Time + Travel Time">
           <InformationCircle className={classes.infoIcon} />
-        </Tooltip>
+        </ToolTip>
       </StyledGrid>
       <StyledGrid item xs={6} md={6}>
         Travel time
@@ -118,9 +112,9 @@ const MovingStorageQuote = ({
           </b>{" "}
           min.
         </Typography>
-        <Tooltip title="from/to Headquarter" placement="top-end" arrow>
+        <ToolTip title="from/to Headquarter">
           <InformationCircle className={classes.infoIcon} />
-        </Tooltip>
+        </ToolTip>
       </StyledGrid>
       <StyledGrid item xs={6} md={6}>
         Estimated Quote

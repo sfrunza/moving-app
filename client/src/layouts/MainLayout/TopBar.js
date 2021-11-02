@@ -61,11 +61,11 @@ const useStyles = makeStyles((theme) => ({
   },
   listItem: {
     width: "auto",
-    padding: theme.spacing(1.5, 3),
-    margin: theme.spacing(0, 1),
-    [theme.breakpoints.down("md")]: {
-      padding: theme.spacing(1, 2),
-    },
+    padding: theme.spacing(1, 1.5),
+    margin: theme.spacing(0, 2),
+    // [theme.breakpoints.down("md")]: {
+    //   padding: theme.spacing(1, 2),
+    // },
   },
   listItemHover: {
     "&:hover": {
@@ -88,19 +88,13 @@ const useStyles = makeStyles((theme) => ({
   },
   iconButton: {
     padding: theme.spacing(0),
-    // marginLeft: theme.spacing(2),
-    // color: theme.palette.text.primary,
-    // border: `1px solid ${theme.palette.primary.contrastText}`,
-    // borderRadius: theme.spacing(1),
-    // "&:hover": {
-    //   background: "transparent",
-    // },
   },
   listItemLogin: {
     marginRight: theme.spacing(3),
   },
   buttonMargin: {
     marginLeft: theme.spacing(3),
+    borderColor: theme.palette.primary.contrastText,
   },
   userIcon: {
     color: theme.palette.primary.contrastText,
@@ -146,7 +140,7 @@ function TopBar({ onSidebarOpen, pages, history }) {
             component={NavLink}
             to="/"
           >
-            Company Logo
+            Insight Moving
           </Typography>
           <div className={classes.flexGrow} />
 
@@ -260,11 +254,12 @@ function TopBar({ onSidebarOpen, pages, history }) {
 
           <Hidden smDown>
             <Button
-              variant="contained"
-              color="primary"
+              variant="outlined"
+              // color="primary"
               to="/book"
               component={CustomRouterLink}
               disableElevation
+              className={classes.listItemText}
               size="small"
               classes={{
                 root: classes.buttonMargin,

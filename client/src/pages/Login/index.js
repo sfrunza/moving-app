@@ -31,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   image: {
-    objectFit: "cover",
+    // objectFit: "cover",
+    backgroundColor: theme.palette.background.level2,
   },
 }));
 

@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {
-  Box,
-  Button,
   Card,
   CardHeader,
   Divider,
@@ -15,8 +13,6 @@ import {
   Tooltip,
   IconButton,
 } from "@material-ui/core";
-import LockOpenIcon from "@material-ui/icons/LockOpenOutlined";
-import PersonIcon from "@material-ui/icons/PersonOutline";
 import PencilAltIcon from "src/icons/PencilAlt";
 
 const useStyles = makeStyles((theme) => ({
@@ -29,9 +25,6 @@ const useStyles = makeStyles((theme) => ({
   },
   editIcon: {
     color: theme.palette.primary.main,
-    // "&:hover": {
-    //   color: theme.palette.primary.main,
-    // },
   },
 }));
 
@@ -112,16 +105,6 @@ function CustomerInfo({ customer, className, ...rest }) {
           ) : null}
         </TableBody>
       </Table>
-      <Box p={1} display="flex" flexDirection="column" alignItems="flex-start">
-        <Button>
-          <LockOpenIcon className={classes.actionIcon} />
-          Reset &amp; Send Password
-        </Button>
-        <Button>
-          <PersonIcon className={classes.actionIcon} />
-          Login as Customer
-        </Button>
-      </Box>
     </Card>
   );
 }

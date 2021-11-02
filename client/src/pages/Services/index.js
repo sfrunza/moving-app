@@ -2,7 +2,7 @@ import Page from "src/components/Page";
 import Section from "src/components/Section";
 import React, { useRef, useEffect } from "react";
 import { makeStyles, useTheme, withStyles } from "@material-ui/core/styles";
-import { Tab, Tabs, useMediaQuery, Box, Divider } from "@material-ui/core";
+import { Tab, Tabs, useMediaQuery, Box } from "@material-ui/core";
 import PropTypes from "prop-types";
 import Interstate from "./Interstate";
 import Packing from "./Packing";
@@ -18,6 +18,7 @@ import Hero from "./Hero";
 import FAQS from "../Home/FAQS";
 import { faq } from "../Home/data";
 import Footer from "src/layouts/MainLayout/Footer";
+import CallSection from "./CallSection";
 
 function TabPanel(props) {
   const { children, value, index, isMd, ...other } = props;
@@ -216,9 +217,12 @@ const Services = (props) => {
           <Storage />
         </TabPanel>
       </Section>
-      <Divider />
+      <div style={{ backgroundColor: theme.palette.background.level2 }}>
+        <CallSection />
+      </div>
 
       <FAQS data={faq} />
+
       <Footer />
     </Page>
   );

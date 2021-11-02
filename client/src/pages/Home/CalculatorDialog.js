@@ -28,7 +28,7 @@ export default function CalculatorDialog() {
     <>
       <Button
         variant="contained"
-        color="primary"
+        // color="primary"
         onClick={handleClickOpen}
         disableElevation
         size="large"

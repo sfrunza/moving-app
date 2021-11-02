@@ -31,6 +31,9 @@ const slice = createSlice({
       state.getError = false;
       state.rates.push(action.payload);
     },
+    resetRates(state, action) {
+      state.rates = null;
+    },
   },
 });
 
@@ -50,6 +53,10 @@ export const getRates = () => (dispatch) => {
     .catch((error) => {
       dispatch(slice.actions.getRatesFailure(error.message));
     });
+};
+
+export const resetRates = () => (dispatch) => {
+  dispatch(slice.actions.resetRates());
 };
 
 export const saveRate = (data) => async (dispatch) => {

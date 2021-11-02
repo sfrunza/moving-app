@@ -1,1 +1,0 @@
-var legacyLib=legacyLib||{};legacyLib.pageLoadTime=new Date,legacyLib.authorize=function(){console.log("Authorize function invoked.")};

@@ -5,12 +5,10 @@ import { useMediaQuery } from "@material-ui/core";
 import TopBarOnScroll from "./TopBarOnScroll";
 import TopBar from "./TopBar";
 import Sidebar from "./Sidebar";
-import Footer from "./Footer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    // backgroundColor: theme.palette.background.level2,
     display: "flex",
     flexDirection: "column",
     minHeight: "100%",
@@ -19,9 +17,6 @@ const useStyles = makeStyles((theme) => ({
   },
   main: {
     flex: "1 0 auto",
-    // position: "relative",
-    // minHeight: "100vh",
-    // top: -65,
   },
 }));
 

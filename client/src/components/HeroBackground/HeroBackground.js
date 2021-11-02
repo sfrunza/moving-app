@@ -3,13 +3,17 @@ import clsx from "clsx";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     position: "relative",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    overflow: "visible",
     minHeight: 700,
+    [theme.breakpoints.down("xs")]: {
+      minHeight: 600,
+    },
   },
   colorDefault: {
     background: "#000",
@@ -30,7 +34,6 @@ const useStyles = makeStyles(() => ({
   heroBg: {
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    backgroundPosition: "center center",
   },
   noCoverOpacity: {
     opacity: 1,
@@ -49,6 +52,7 @@ const HeroBackground = (props) => {
     backgroundImg,
     backgroundPosition,
     backgroundColor,
+    contentSectionClassName,
     className,
     ...rest
   } = props;
@@ -80,15 +84,14 @@ const HeroBackground = (props) => {
       {...rest}
     >
       <div className={clsx("hero-background__wrapper", classes.heroWrapper)}>
-        {/* <Section
+        <div
           className={clsx(
             contentSectionClassName ? contentSectionClassName : "",
             "hero-background__section"
           )}
         >
           {children}
-        </Section> */}
-        {children}
+        </div>
       </div>
       <div
         className={clsx(

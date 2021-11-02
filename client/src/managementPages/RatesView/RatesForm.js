@@ -11,7 +11,6 @@ import {
   CardContent,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import moment from "moment";
 import CalendarWithRates from "src/components/CalendarWithRates";
 import { useDispatch } from "src/store";
 import { saveRate } from "src/slices/rates";
@@ -38,12 +37,37 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 310,
     margin: "auto",
   },
+  button: {
+    color: "rgba(253 201 9)",
+    borderColor: "rgba(253 201 9/ 70%)",
+    "&:hover": {
+      backgroundColor: "rgba(253 201 9 / 5%)",
+      borderColor: "rgba(253 201 9)",
+    },
+  },
+  btn: {
+    color: "#fff",
+    backgroundColor: "rgba(253 201 9)",
+    "&:hover": {
+      backgroundColor: "#e8b806",
+    },
+  },
 }));
 
 const rateOptions = [
-  { text: "Regular", rate: "120, 160, 200", value: "{120,160,200}" },
-  { text: "SubPick", rate: "140, 180, 220", value: "{140,180,220}" },
-  { text: "Pick", rate: "160, 200, 240", value: "{160,200,240}" },
+  {
+    text: "Regular",
+    type: "regular",
+    rate: "120/160/200",
+    value: "{120,160,200}",
+  },
+  {
+    text: "SubPick",
+    type: "subpick",
+    rate: "140/180/220",
+    value: "{140,180,220}",
+  },
+  { text: "Pick", type: "pick", rate: "160/200/240", value: "{160,200,240}" },
 ];
 
 const validate = (values) => {
@@ -60,62 +84,62 @@ const validate = (values) => {
   return errors;
 };
 
-const CustomButton = ({ selected, text, rate, ...rest }) => {
-  return (
-    <Box>
-      <Button
-        variant={selected ? "contained" : "outlined"}
-        color={
-          text === "Regular"
-            ? "primary"
-            : text === "SubPick"
-            ? "inherit"
-            : "secondary"
-        }
-        disableElevation
-        size="small"
-        fullWidth
-        {...rest}
-      >
-        {text}
-      </Button>
-      <Typography variant="body2" color="textSecondary">
-        {" "}
-        {rate}
-      </Typography>
-    </Box>
-  );
-};
-
 const RatesForm = () => {
   const classes = useStyles();
-
   const dispatch = useDispatch();
 
-  // const saveRate = async (data) => {
-  //   const requestOptions = {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify(data),
-  //   };
-  //   await fetch("/api/v1/rates", requestOptions)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //     });
-  // };
+  const CustomButton = ({ selected, text, rate, ...rest }) => {
+    return (
+      <Box>
+        <Button
+          className={
+            selected && text === "SubPick"
+              ? classes.btn
+              : text === "SubPick"
+              ? classes.button
+              : ""
+          }
+          variant={selected ? "contained" : "outlined"}
+          color={
+            text === "Regular"
+              ? "primary"
+              : text === "SubPick"
+              ? "inherit"
+              : "secondary"
+          }
+          disableElevation
+          size="small"
+          fullWidth
+          {...rest}
+        >
+          {text}
+        </Button>
+        <Typography variant="body2" color="textSecondary">
+          {" "}
+          {rate}
+        </Typography>
+      </Box>
+    );
+  };
 
   // initiate formik
   const formik = useFormik({
     initialValues: {
       date: null,
       rates: "",
+      rate_type: "",
     },
     validateOnMount: true,
     enableReinitialize: false,
     validate: (values) => validate(values),
     onSubmit: (values) => {
-      dispatch(saveRate(values));
+      let formattedDate = values.date.format("MM/DD/YYYY");
+      let data = {
+        date: formattedDate,
+        rates: values.rates,
+        rate_type: values.rate_type,
+      };
+      dispatch(saveRate(data));
     },
   });
 
@@ -135,17 +159,13 @@ const RatesForm = () => {
                 variant="static"
                 disableToolbar
                 autoOk
-                // maxDate={new Date().setMonth(new Date().getMonth() + 3)}
                 disablePast
                 fullWidth
                 value={formik.values.date}
                 error={formik.touched.date && Boolean(formik.errors.date)}
                 helperText={formik.touched.date && formik.errors.date}
                 onChange={(date) => {
-                  formik.setFieldValue(
-                    "date",
-                    moment(date).format("MM/DD/YYYY")
-                  );
+                  formik.setFieldValue("date", date);
                 }}
               />
             </Grid>
@@ -165,6 +185,7 @@ const RatesForm = () => {
                         value={item.value}
                         onClick={() => {
                           formik.setFieldValue("rates", item.value);
+                          formik.setFieldValue("rate_type", item.type);
                         }}
                         selected={
                           item.value === formik.values.rates ? true : false

@@ -1,77 +1,23 @@
-import { useState } from "react";
 import { NavLink as RouterLink } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Box, Button, Collapse, ListItem, useTheme } from "@material-ui/core";
-import ChevronDownIcon from "src/icons/ChevronDown";
-import ChevronRightIcon from "src/icons/ChevronRight";
+import { Box, Button, ListItem, useTheme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  startIcon: {
+    marginRight: 16,
+  },
+  root: {
+    "&:hover": {
+      backgroundColor: "#f5f8ff",
+    },
+  },
+}));
 
 const NavItem = (props) => {
-  const {
-    active,
-    children,
-    depth,
-    icon,
-    info,
-    open: openProp,
-    path,
-    title,
-    ...other
-  } = props;
-  const [open, setOpen] = useState(openProp);
+  const { active, icon, info, path, title } = props;
   const theme = useTheme();
-
-  const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
-
-  let paddingLeft = 16;
-
-  if (depth > 0) {
-    paddingLeft = 32 + 8 * depth;
-  }
-
-  // Branch
-  if (children) {
-    return (
-      <ListItem
-        disableGutters
-        style={{
-          display: "block",
-          paddingY: 0,
-        }}
-        {...other}
-      >
-        <Button
-          endIcon={
-            !open ? (
-              <ChevronRightIcon fontSize="small" />
-            ) : (
-              <ChevronDownIcon fontSize="small" />
-            )
-          }
-          onClick={handleToggle}
-          startIcon={icon}
-          style={{
-            color: theme.palette.text.secondary,
-            fontWeight: "fontWeightMedium",
-            justifyContent: "flex-start",
-            paddingLeft: `${paddingLeft}px`,
-            paddingRight: "8px",
-            paddingY: "12px",
-            textAlign: "left",
-            textTransform: "none",
-            width: "100%",
-          }}
-          variant="text"
-        >
-          <Box style={{ flexGrow: 1 }}>{title}</Box>
-          {info}
-        </Button>
-        <Collapse in={open}>{children}</Collapse>
-      </ListItem>
-    );
-  }
-
+  const classes = useStyles();
   // Leaf
   return (
     <ListItem
@@ -88,19 +34,21 @@ const NavItem = (props) => {
           color: theme.palette.text.secondary,
           justifyContent: "flex-start",
           textAlign: "left",
-          paddingLeft: `${paddingLeft}px`,
-          paddingRight: "8px",
-          paddingY: "12px",
+          paddingLeft: 16,
+          paddingRight: 8,
+          paddingY: 12,
           textTransform: "none",
-          width: "100%",
           ...(active && {
             color: theme.palette.primary.main,
+            backgroundColor: theme.palette.background.level2,
             fontWeight: "bold",
             "& svg": {
               color: theme.palette.primary.main,
             },
           }),
         }}
+        classes={{ startIcon: classes.startIcon, root: classes.root }}
+        fullWidth
         variant="text"
         to={path}
       >

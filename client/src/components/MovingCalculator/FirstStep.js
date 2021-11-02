@@ -7,7 +7,6 @@ import {
   Fade,
   Typography,
   Divider,
-  Tooltip,
   Checkbox,
   MenuItem,
   FormControl,
@@ -38,10 +37,11 @@ import CalendarWithRates from "../CalendarWithRates";
 import InformationCircle from "src/icons/InformationCircle";
 import clsx from "clsx";
 import TruckFill from "src/icons/TruckFill";
-import moment from "moment";
 import { jsonCityState } from "./UsCities";
 import Clock from "src/icons/Clock";
 import { setIsFlatRate } from "../../slices/booking";
+import ToolTip from "../ToolTip";
+import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   label: {
@@ -67,9 +67,13 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     border: "1px solid",
-    padding: "0px 3px",
+    // padding: "0px 3px",
     borderRadius: 6,
+    minWidth: 92,
     fontWeight: "bold",
+    "&:hover": {
+      cursor: "pointer",
+    },
   },
   infoIcon: {
     width: 16,
@@ -86,7 +90,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.main,
   },
   customWidth: {
-    maxWidth: 200,
+    maxWidth: 190,
     [theme.breakpoints.up("sm")]: {
       maxWidth: 135,
     },
@@ -245,8 +249,6 @@ const FirstStep = ({ handleNext, initial }) => {
     },
   });
 
-  // formik.values.fromZip.isValid();
-
   const handleZipBlur = (e, loc) => {
     let zip = "";
     if (e === null) {
@@ -313,7 +315,7 @@ const FirstStep = ({ handleNext, initial }) => {
         if (status !== "OK") {
           console.log("Error was:", status);
         } else {
-          console.log(response);
+          // console.log(response);
           let fromHq = 0;
           let toHq = 0;
           let timeBetween = 0;
@@ -408,16 +410,15 @@ const FirstStep = ({ handleNext, initial }) => {
       <>
         <Grid container justifyContent="space-evenly">
           <Grid item xs={3} md={3} classes={{ item: classes.gridItem }}>
-            <Tooltip
+            <ToolTip
               title={
                 "2 Men & Truck: $120/h, 3 Men & Truck: $160/h, 4 Men & Truck: $200/h"
               }
               classes={{ tooltip: classes.customWidth }}
               placement="top"
-              arrow
             >
               <Typography
-                variant="caption"
+                variant="body2"
                 className={clsx(classes.infoItem, classes.regular)}
               >
                 Regular
@@ -425,19 +426,18 @@ const FirstStep = ({ handleNext, initial }) => {
                   className={clsx(classes.infoIcon, classes.regular)}
                 />
               </Typography>
-            </Tooltip>
+            </ToolTip>
           </Grid>
           <Grid item xs={3} md={3} classes={{ item: classes.gridItem }}>
-            <Tooltip
+            <ToolTip
               title={
                 "2 Men & Truck: $140/h, 3 Men & Truck: $180/h, 4 Men & Truck: $220/h"
               }
               classes={{ tooltip: classes.customWidth }}
               placement="top"
-              arrow
             >
               <Typography
-                variant="caption"
+                variant="body2"
                 className={clsx(classes.infoItem, classes.subPeak)}
               >
                 SubPeak
@@ -445,19 +445,18 @@ const FirstStep = ({ handleNext, initial }) => {
                   className={clsx(classes.infoIcon, classes.subPeak)}
                 />
               </Typography>
-            </Tooltip>
+            </ToolTip>
           </Grid>
           <Grid item xs={3} md={3} classes={{ item: classes.gridItem }}>
-            <Tooltip
+            <ToolTip
               title={
                 "2 Men & Truck: $160/h, 3 Men & Truck: $200/h, 4 Men & Truck: $240/h"
               }
               classes={{ tooltip: classes.customWidth }}
               placement="top"
-              arrow
             >
               <Typography
-                variant="caption"
+                variant="body2"
                 className={clsx(classes.infoItem, classes.peak)}
               >
                 Peak
@@ -465,7 +464,7 @@ const FirstStep = ({ handleNext, initial }) => {
                   className={clsx(classes.infoIcon, classes.peak)}
                 />
               </Typography>
-            </Tooltip>
+            </ToolTip>
           </Grid>
         </Grid>
         <Divider style={{ width: "100%", marginBottom: 20 }} />
@@ -473,7 +472,7 @@ const FirstStep = ({ handleNext, initial }) => {
     );
   };
 
-  // console.log("toZip:::>>>>>>>>", formik.values.toZip);
+  // console.log("toZip:::>>>>>>>>", formik.values);
 
   return (
     <Fade in={true} mountOnEnter unmountOnExit>
@@ -505,7 +504,7 @@ const FirstStep = ({ handleNext, initial }) => {
               onChange={(date) => {
                 formik.setFieldValue(
                   "date",
-                  moment(date).format(`YYYY-MM-DDT${formik.values.time}`)
+                  date.format("YYYY-MM-DDT08:00:00")
                 );
               }}
             />
@@ -533,7 +532,7 @@ const FirstStep = ({ handleNext, initial }) => {
                   formik.setFieldValue("time", e.target.value);
                   formik.setFieldValue(
                     "date",
-                    moment(formik.values.date).format(
+                    moment(formik.values.date, "YYYY-MM-DDThh:mm:ss").format(
                       `YYYY-MM-DDT${e.target.value}`
                     )
                   );
@@ -703,7 +702,7 @@ const FirstStep = ({ handleNext, initial }) => {
                 onChange={(date) => {
                   formik.setFieldValue(
                     "deliveryDate",
-                    moment(date).format(`YYYY-MM-DDT08:00:00`)
+                    date.format("YYYY-MM-DDT08:00:00")
                   );
                 }}
               />

@@ -25,12 +25,11 @@ import { compose, withProps, lifecycle } from "recompose";
 import Uploader from "./Uploader";
 import GridGallery from "./GridGallery";
 import EditMainContainer from "./EditMainContainer";
-import { useSelector } from "src/store";
-import DateChange from "./components/DateChange";
 import ServiceChange from "./components/ServiceChange";
 import EditMoveSize from "./components/EditMoveSize";
 import EditCrewSize from "./components/EditCrewSize";
 import EditAddress from "./components/EditAddress";
+import EditAdditionalInfo from "./components/EditAdditionalInfo";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -173,7 +172,7 @@ function MovingDetails({
 
   useEffect(() => {
     if (job.id) {
-      // setMap(initMap());
+      setMap(initMap());
     }
     return () => {
       setMap(null);
@@ -451,7 +450,7 @@ function MovingDetails({
   return (
     <Card {...rest} className={classes.root}>
       <CardHeader title="Move Overview" />
-      {/* {isLoaded && map} */}
+      {isLoaded && map}
       <CardContent className={classes.content}>
         <Box className={classes.headerDistance}>{distance}</Box>
         <Divider />
@@ -817,6 +816,9 @@ function MovingDetails({
             <Typography className={classes.addInfoTitle}>
               Additional Information:
             </Typography>
+            <EditMainContainer>
+              <EditAdditionalInfo />
+            </EditMainContainer>
           </Box>
         </Box>
         <Box className={classes.addInfoContainer}>

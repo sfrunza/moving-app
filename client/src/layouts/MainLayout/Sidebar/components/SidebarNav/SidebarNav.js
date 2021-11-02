@@ -21,10 +21,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
   },
-  // listItem: {
-  //   flexDirection: "column",
-  //   alignItems: "center",
-  // },
   navLink: {
     fontWeight: 300,
     "&:hover": {
@@ -38,10 +34,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-end",
     cursor: "pointer",
   },
-  // menuGroupItem: {
-  //   padding: theme.spacing(2, 0),
-  //   justifyContent: "center",
-  // },
   listItem: {
     flexDirection: "column",
     alignItems: "center",
@@ -54,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.background.level2,
       borderRadius: theme.spacing(1),
     },
-    // margin: theme.spacing(0, 3),
   },
   menuGroupTitle: {
     fontWeight: 500,

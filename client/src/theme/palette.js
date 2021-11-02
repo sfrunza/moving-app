@@ -36,7 +36,7 @@ export const light = {
     // secondary: "#5b616e",
     // secondary: "#646e73",
   },
-  // divider: "rgba(236, 239, 241)",
+  divider: "#e5e8ec",
   background: {
     dashboard: "#5765D2",
     navbar: "rgba(255,255,255,0.72)",
