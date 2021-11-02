@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   calcBox: {
     backgroundColor: theme.palette.background.paper,
     borderRadius: theme.spacing(2),
-    boxShadow: theme.shadows[1],
+    boxShadow: theme.shadows[2],
     width: "fit-content",
   },
   section: {

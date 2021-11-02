@@ -24,7 +24,7 @@ function CustomerList() {
         }}
       >
         <Container maxWidth={false}>
-          <Header />
+          <Header dispatch={dispatch} />
           {errors && (
             <Box mt={3}>
               <p>{errors}</p>

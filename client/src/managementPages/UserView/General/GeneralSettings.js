@@ -309,7 +309,7 @@ const GeneralSettings = ({ user, handleUpdate, isUpdating }) => {
             variant="contained"
             disableElevation
           >
-            {isUpdating ? "Loading..." : "Save Changes"}
+            Save Changes
           </Button>
         </Box>
       </Card>

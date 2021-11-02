@@ -6,7 +6,6 @@ import {
   Fade,
   useMediaQuery,
   Typography,
-  Tooltip,
   Divider,
   Checkbox,
   Box,
@@ -18,13 +17,13 @@ import InformationCircle from "src/icons/InformationCircle";
 import moment from "moment";
 import { Link as RouterLink } from "react-router-dom";
 import { resetAll, submitRequest } from "src/slices/booking";
+import ToolTip from "../ToolTip";
 
 const useStyles = makeStyles((theme) => ({
   infoIcon: {
     color: theme.palette.text.secondary,
     width: 18,
     margin: theme.spacing(0, 1),
-    position: "relative",
     "&:hover": {
       cursor: "pointer",
     },
@@ -125,7 +124,7 @@ const ReviewAndSubmit = ({ handleBack, handleNext }) => {
     return service === "Moving with Storage";
   };
 
-  console.log(timeBetween);
+  // console.log(timeBetween);
   // console.log(destination);
   // console.log(flatRate());
 
@@ -330,7 +329,9 @@ const ReviewAndSubmit = ({ handleBack, handleNext }) => {
             Size
           </StyledGrid>
           <StyledGrid item xs={7}>
-            <Typography variant="body2">{movingSize}</Typography>
+            <Typography variant="body2">
+              <b>{movingSize}</b>
+            </Typography>
           </StyledGrid>
 
           <StyledGrid item xs={4}>
@@ -370,13 +371,9 @@ const ReviewAndSubmit = ({ handleBack, handleNext }) => {
                   </b>{" "}
                   hours*
                 </Typography>
-                <Tooltip
-                  title="Job Time = Labour Time + Travel Time"
-                  placement="top-end"
-                  arrow
-                >
+                <ToolTip title="Job Time = Labour Time + Travel Time">
                   <InformationCircle className={classes.infoIcon} />
-                </Tooltip>
+                </ToolTip>
               </StyledGrid>
               <StyledGrid item xs={4}>
                 Travel time
@@ -390,9 +387,9 @@ const ReviewAndSubmit = ({ handleBack, handleNext }) => {
                   </b>{" "}
                   min.
                 </Typography>
-                <Tooltip title="from/to Headquarter" placement="top-end" arrow>
+                <ToolTip title="from/to Headquarter">
                   <InformationCircle className={classes.infoIcon} />
-                </Tooltip>
+                </ToolTip>
               </StyledGrid>
               <StyledGrid item xs={4}>
                 Estimated Quote

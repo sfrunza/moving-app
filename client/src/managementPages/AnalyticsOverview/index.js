@@ -14,10 +14,11 @@ import Analytics from "./Analytics";
 import ChevronRight from "src/icons/ChevronRight";
 import Download from "src/icons/Download";
 import ChevronDown from "src/icons/ChevronDown";
+import Page from "src/components/Page";
 
 const AnalyticsOverview = () => {
   return (
-    <>
+    <Page title="Analytics">
       <Box
         sx={{
           backgroundColor: "background.default",
@@ -50,20 +51,25 @@ const AnalyticsOverview = () => {
               </Breadcrumbs>
             </Grid>
             <Grid item>
-              <Button
-                endIcon={<Download fontSize="small" />}
-                variant="outlined"
-              >
-                Export
-              </Button>
-              <Button
-                color="primary"
-                endIcon={<ChevronDown fontSize="small" />}
-                sx={{ ml: 2 }}
-                variant="contained"
-              >
-                Last month
-              </Button>
+              <Box m={-1}>
+                <Button
+                  endIcon={<Download fontSize="small" />}
+                  variant="outlined"
+                  disableElevation
+                  style={{ margin: 8 }}
+                >
+                  Export
+                </Button>
+                <Button
+                  color="primary"
+                  endIcon={<ChevronDown fontSize="small" />}
+                  style={{ margin: 8 }}
+                  disableElevation
+                  variant="contained"
+                >
+                  Last month
+                </Button>
+              </Box>
             </Grid>
           </Grid>
           <Box sx={{ py: 3 }}>
@@ -71,7 +77,7 @@ const AnalyticsOverview = () => {
           </Box>
         </Container>
       </Box>
-    </>
+    </Page>
   );
 };
 

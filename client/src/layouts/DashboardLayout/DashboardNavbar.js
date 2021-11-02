@@ -15,6 +15,7 @@ import { useHistory } from "react-router-dom";
 import CustomRouterLink from "src/components/CustomRouterLink";
 import ThemeToggler from "src/components/ThemeToggler";
 import Menu from "src/icons/Menu";
+import logo from "src/assets/img/logos/insght.png";
 // import ContactsPopover from './ContactsPopover';
 // import ContentSearch from './ContentSearch';
 // import LanguagePopover from './LanguagePopover';
@@ -109,7 +110,7 @@ const DashboardNavbar = (props) => {
               component={CustomRouterLink}
               to="/"
             >
-              Company Logo
+              <img src={logo} alt="Insight moving" width="140" height="100%" />
             </Typography>
           </ListItem>
           <div className={classes.flexGrow} />

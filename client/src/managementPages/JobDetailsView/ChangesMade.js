@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Card,
   CardHeader,
@@ -16,9 +16,9 @@ const averageTime = {
   "Room or less (partial move)": 60,
   "Studio apartment": 100,
   "1 Bedroom apartment": 120,
-  "2 Bedroom apartment": 180,
+  "2 Bedroom apartment": 160,
   "2 Bedroom House/Townhouse": 240,
-  "3+ Bedroom apartment": 360,
+  "3+ Bedroom apartment": 300,
   "3 Bedroom House/Townhouse": 420,
   "4+ Bedroom House/Townhouse": 520,
   "Office / Commercial space": 300,
@@ -145,26 +145,6 @@ function ChangesMade({
   const isInsideMove = (service) => {
     return service === "Inside Move";
   };
-  const isMovingWithStorage = (service) => {
-    return service === "Moving with Storage";
-  };
-  const isMovingFromStorage = (service) => {
-    return service === "Moving from Storage";
-  };
-
-  function roundToHalf(value) {
-    var converted = parseFloat(value); // Make sure we have a number
-    var decimal = converted - parseInt(converted, 10);
-    decimal = Math.round(decimal * 10);
-    if (decimal === 5) {
-      return parseInt(converted, 10) + 0.5;
-    }
-    if (decimal < 3 || decimal > 7) {
-      return Math.round(converted);
-    } else {
-      return parseInt(converted, 10) + 0.5;
-    }
-  }
 
   const estimateJobTime = () => {
     let movingService = formState.job_type;
@@ -182,9 +162,9 @@ function ChangesMade({
 
     let averageLabourTime = averageTime[movingSize];
     if (isLoading(movingService))
-      averageLabourTime = averageTime[movingSize] * 0.75;
+      averageLabourTime = averageTime[movingSize] * 0.6;
     if (isUnloading(movingService) || isPacking(movingService))
-      averageLabourTime = averageTime[movingSize] * 0.5;
+      averageLabourTime = averageTime[movingSize] * 0.4;
     if (isInsideMove(movingService))
       averageLabourTime = averageTime[movingSize] * 0.4;
 
@@ -250,6 +230,13 @@ function ChangesMade({
   const estimateQuote = (crewSize) => {
     let estimateQuoteArray = [];
     let rate = searchRate(formState.pick_up_date)[crewSize - 2];
+    if (crewSize > 4) {
+      let rateInDb = searchRate(formState.pick_up_date)[crewSize - 2];
+      rate = rateInDb + 40;
+    } else {
+      rate = searchRate(formState.pick_up_date)[crewSize - 2];
+    }
+    // let rate = searchRate(formState.pick_up_date)[crewSize - 2];
     console.log(crewSize);
     console.log(searchRate(formState.pick_up_date)[crewSize - 2]);
 
@@ -257,6 +244,7 @@ function ChangesMade({
       estimateJobTime()[0] * rate,
       estimateJobTime()[1] * rate,
     ];
+    console.log(estimateQuoteArray);
     return estimateQuoteArray;
   };
 
@@ -343,7 +331,10 @@ function ChangesMade({
             </b>{" "}
             to{" "}
             <b>
-              {formState.estimated_time[0]} - {formState.estimated_time[1]}
+              {formState.estimated_time[0]}{" "}
+              {formState.estimated_time[1]
+                ? "- " + formState.estimated_time[1]
+                : null}
             </b>
           </Typography>
         ) : null}
@@ -356,7 +347,10 @@ function ChangesMade({
             </b>{" "}
             to{" "}
             <b>
-              {formState.estimated_quote[0]} - {formState.estimated_quote[1]}
+              {formState.estimated_quote[0]}{" "}
+              {formState.estimated_quote[1]
+                ? "- " + formState.estimated_quote[1]
+                : null}
             </b>
           </Typography>
         ) : null}

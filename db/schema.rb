@@ -99,6 +99,7 @@ ActiveRecord::Schema.define(version: 2021_09_26_232113) do
   create_table "rates", force: :cascade do |t|
     t.string "date"
     t.string "rates", default: [], array: true
+    t.string "rate_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

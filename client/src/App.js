@@ -15,17 +15,12 @@ import { light, dark } from "src/theme/palette";
 import typography from "src/theme/typography";
 import { lightShadows, darkShadows } from "src/theme/shadows";
 import { useSelector } from "src/store";
-// import { verifyAuth } from "./slices/auth";
-// import LoadingTable from "./components/LoadingTable";
 import ScrollReset from "./components/ScrollReset";
 
 export const history = createBrowserHistory();
 
 function App() {
-  // useStyles();
   const { isDark } = useSelector((state) => state.theme);
-  // const { isVerifying } = useSelector((state) => state.auth);
-  // const dispatch = useDispatch();
 
   let darkTheme = createTheme({
     overrides: {
@@ -38,6 +33,7 @@ function App() {
       MuiButton: {
         root: {
           textTransform: "none",
+          fontWeight: 700,
         },
       },
       MuiIconButton: {
@@ -74,25 +70,17 @@ function App() {
       },
     },
     layout: {
-      contentWidth: 1236,
+      contentWidth: 1200,
     },
     palette: isDark ? dark : light,
     typography,
     shape: {
-      borderRadius: 8,
+      borderRadius: 10,
     },
     shadows: isDark ? darkShadows : lightShadows,
   });
   darkTheme = responsiveFontSizes(darkTheme);
 
-  // useEffect(() => {
-  //   localStorage.setItem("dark", JSON.stringify(isDark));
-  //   dispatch(verifyAuth());
-  // }, [dispatch, isDark]);
-
-  // if (isVerifying) {
-  //   return <LoadingTable />;
-  // }
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />

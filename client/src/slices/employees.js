@@ -10,6 +10,9 @@ const initialState = {
   isUpdating: false,
   updateError: false,
   uError: "",
+  isDeleting: false,
+  deleteError: false,
+  dError: "",
 };
 
 const slice = createSlice({
@@ -18,6 +21,9 @@ const slice = createSlice({
   reducers: {
     getUsers(state, action) {
       state.users = action.payload;
+    },
+    addUser(state, action) {
+      state.users.unshift(action.payload);
     },
     getUser(state, action) {
       state.user = action.payload;
@@ -43,6 +49,20 @@ const slice = createSlice({
       state.isUpdating = false;
       state.updateError = true;
       state.uError = action.payload;
+    },
+    deleteRequest(state) {
+      state.isDeleting = true;
+      state.deleteError = false;
+    },
+    deleteSuccess(state, action) {
+      state.isDeleting = false;
+      const { userId } = action.payload;
+      state.users = state.users.filter((user) => user.id !== userId);
+    },
+    deleteFailure(state, action) {
+      state.isDeleting = false;
+      state.deleteError = true;
+      state.dError = action.payload;
     },
   },
 });
@@ -90,31 +110,17 @@ export const getUser = (userId) => async (dispatch) => {
   }
 };
 
-// export const getUserJobs = (name) => async (dispatch) => {
-//   dispatch(slice.actions.setLoading(true));
-//   try {
-//     const response = await axios.get("/api/v1/jobs");
-//     const data = await response.data;
-//     if (response.data) {
-//       let data = response.data.filter((job) =>
-//         job.crew.find((n) => n === name)
-//       );
-//       data.sort(function (a, b) {
-//         // Turn your strings into dates, and then subtract them
-//         // to get a value that is either negative, positive, or zero.
-//         return new Date(b.pick_up_date) - new Date(a.pick_up_date);
-//       });
-//       dispatch(slice.actions.getUserJobs(data));
-//     } else {
-//       dispatch(slice.actions.setErrors(data.message));
-//     }
-//     dispatch(slice.actions.setLoading(false));
-//   } catch (error) {
-//     console.log(error);
-//     dispatch(slice.actions.setErrors(error.stack));
-//     dispatch(slice.actions.setLoading(false));
-//   }
-// };
+export const addUser = (data) => async (dispatch) => {
+  let user = data;
+  await axios
+    .post("api/v1/users", { user })
+    .then((response) => {
+      dispatch(slice.actions.addUser(response.data.user));
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+};
 
 export const updateUser = (userId, update) => async (dispatch) => {
   dispatch(slice.actions.updateRequest());
@@ -132,6 +138,18 @@ export const updateUser = (userId, update) => async (dispatch) => {
     })
     .catch((error) => {
       dispatch(slice.actions.updateFailure(error.message));
+    });
+};
+
+export const deleteUser = (userId) => async (dispatch) => {
+  dispatch(slice.actions.deleteRequest());
+  await axios
+    .delete(`/api/v1/users/${userId}`)
+    .then((resp) => {
+      dispatch(slice.actions.deleteSuccess({ userId }));
+    })
+    .catch((error) => {
+      dispatch(slice.actions.deleteFailure(error.message));
     });
 };
 

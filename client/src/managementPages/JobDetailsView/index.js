@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/styles";
-import { Container, Grid, Box, Typography, Divider } from "@material-ui/core";
+import {
+  Container,
+  Grid,
+  Box,
+  Typography,
+  Divider,
+  CircularProgress,
+} from "@material-ui/core";
 import Page from "src/components/Page";
 import Header from "./Header";
 import CustomerDetails from "./CustomerDetails";
@@ -64,10 +71,20 @@ function JobDetailsView({ match, history }) {
   }, [event]);
 
   if (!event || !formState) {
-    return null;
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" mt={20}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
-  console.log(formState);
+  // return (
+  //   <Box display="flex" justifyContent="center" alignItems="center" mt={30}>
+  //     <CircularProgress />
+  //   </Box>
+  // );
+
+  // console.log(formState);
 
   const init = {
     job_duration: event.estimated_time[0],

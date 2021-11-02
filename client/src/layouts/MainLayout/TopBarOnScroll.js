@@ -16,7 +16,6 @@ import {
   useScrollTrigger,
   Fade,
   Fab,
-  Slide,
 } from "@material-ui/core";
 import CustomRouterLink from "src/components/CustomRouterLink";
 import Auth from "src/components/Auth";
@@ -30,10 +29,12 @@ const useStyles = makeStyles((theme) => ({
   root: {
     overflow: "hidden",
     justifyContent: "center",
-    backgroundColor: theme.palette.background.default,
+    // backgroundColor: theme.palette.background.default,
     boxShadow: "none",
     borderBottom: `1px solid ${theme.palette.divider}`,
     maxHeight: 56,
+    backdropFilter: "blur(10px)",
+    backgroundColor: "rgba(255,255,255,0.80)",
   },
   flexGrow: {
     flexGrow: 1,
@@ -61,18 +62,15 @@ const useStyles = makeStyles((theme) => ({
   },
   listItem: {
     width: "auto",
-    padding: theme.spacing(1.5, 3),
-    margin: theme.spacing(0, 1),
-    [theme.breakpoints.down("md")]: {
-      padding: theme.spacing(1, 2),
-    },
+    padding: theme.spacing(1, 1.5),
+    margin: theme.spacing(0, 2),
   },
   listItemHover: {
     "&:hover": {
       backgroundColor: theme.palette.background.level2,
       borderRadius: theme.spacing(1),
+      color: theme.palette.primary.main,
     },
-    // margin: theme.spacing(0, 3),
   },
   itemDivider: {
     borderColor: theme.palette.primary.main,
@@ -87,20 +85,15 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 600,
   },
   iconButton: {
-    // marginLeft: theme.spacing(2),
     padding: theme.spacing(0),
     color: theme.palette.text.primary,
-    // border: `1px solid ${theme.palette.text.secondary}`,
-    // borderRadius: theme.spacing(1),
-    // "&:hover": {
-    //   background: "transparent",
-    // },
   },
   listItemLogin: {
     marginRight: theme.spacing(3),
   },
   buttonMargin: {
     marginLeft: theme.spacing(3),
+    borderColor: theme.palette.text.primary,
   },
   userIcon: {
     color: theme.palette.text.primary,
@@ -123,6 +116,7 @@ const useStyles = makeStyles((theme) => ({
     position: "fixed",
     bottom: theme.spacing(4),
     left: theme.spacing(2),
+    zIndex: 1,
   },
   callButton: {
     color: theme.palette.primary.contrastText,
@@ -139,15 +133,14 @@ function ShowOnScroll(props) {
   });
 
   return (
-    <Slide
-      direction="down"
+    <Fade
       in={trigger}
       mountOnEnter
       unmountOnExit
       timeout={{ enter: 300, exit: 100 }}
     >
       {children}
-    </Slide>
+    </Fade>
   );
 }
 
@@ -193,8 +186,9 @@ function TopBarOnScroll({ onSidebarOpen, pages, history }) {
               component={NavLink}
               to="/"
             >
-              Company Logo
+              Insight Moving
             </Typography>
+
             <div className={classes.flexGrow} />
 
             <List className={classes.navigationContainer} disablePadding>
@@ -309,8 +303,8 @@ function TopBarOnScroll({ onSidebarOpen, pages, history }) {
 
             <Hidden smDown>
               <Button
-                variant="contained"
-                color="primary"
+                variant="outlined"
+                color="default"
                 to="/book"
                 component={CustomRouterLink}
                 disableElevation

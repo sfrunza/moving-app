@@ -23,12 +23,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function UserView({ match }) {
+function UserView({ match, history }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const userId = match.params.id;
   const [currentTab, setCurrentTab] = useState("general");
   const { user, userJobs } = useSelector((state) => state.employees);
+
   const tabs = [
     { value: "general", label: "General" },
     { value: "jobs", label: "Jobs" },
@@ -71,7 +72,7 @@ function UserView({ match }) {
         }}
       >
         <Container maxWidth={false}>
-          <Header user={user} />
+          <Header user={user} history={history} />
           <Box mt={3}>
             <Tabs
               onChange={handleTabsChange}
@@ -89,7 +90,7 @@ function UserView({ match }) {
           <Divider />
           <Box mt={3}>
             {currentTab === "general" && <General user={user} />}
-            {currentTab === "jobs" && <Jobs jobs={userJobs} user={user}/>}
+            {currentTab === "jobs" && <Jobs jobs={userJobs} user={user} />}
             {currentTab === "settings" && <Settings user={user} />}
             {currentTab === "security" && (
               <Security

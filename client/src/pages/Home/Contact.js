@@ -52,7 +52,7 @@ const Contact = (props) => {
   return (
     <Section className={clsx(classes.root, className)} {...rest}>
       <SectionHeader
-        title="Why choose us"
+        title="Why Choose Us"
         subtitle="We are a small company of professional movers. Unlike movers from big companies, we will treat your belongings as ours. We will walk you through our smooth and simple process."
         // subtitleProps={{
         //   variant: "body1",

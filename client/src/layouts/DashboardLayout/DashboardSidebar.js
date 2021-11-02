@@ -146,25 +146,6 @@ const DashboardSidebar = (props) => {
             />
           ))}
         </Box>
-        {/* <Box p={2}>
-          <Typography color="textPrimary" variant="subtitle2">
-            Need Help?
-          </Typography>
-          <Typography color="textSecondary" variant="body2">
-            Check our docs
-          </Typography>
-          <Button
-            color="primary"
-            component={RouterLink}
-            fullWidth
-            disableElevation
-            style={{ marginTop: 16 }}
-            to="/docs"
-            variant="contained"
-          >
-            Documentation
-          </Button>
-        </Box> */}
       </Scrollbar>
     </Box>
   );

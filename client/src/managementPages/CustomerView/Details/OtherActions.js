@@ -11,8 +11,6 @@ import {
   Typography,
   makeStyles,
 } from "@material-ui/core";
-import NotInterestedIcon from "@material-ui/icons/NotInterested";
-import GetAppIcon from "@material-ui/icons/GetApp";
 import DeleteIcon from "@material-ui/icons/DeleteOutline";
 
 const useStyles = makeStyles((theme) => ({
@@ -30,16 +28,6 @@ function OtherActions({ className, ...rest }) {
       <CardHeader title="Other actions" />
       <Divider />
       <CardContent>
-        <Box display="flex" flexDirection="column" alignItems="flex-start">
-          <Button>
-            <NotInterestedIcon className={classes.actionIcon} />
-            Close Account
-          </Button>
-          <Button>
-            <GetAppIcon className={classes.actionIcon} />
-            Export Data
-          </Button>
-        </Box>
         <Box mt={1} mb={2}>
           <Typography variant="body2" color="textSecondary">
             Remove this customer’s data if he requested that, if not please be

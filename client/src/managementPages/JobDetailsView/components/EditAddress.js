@@ -1,13 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  FormControl,
-  Grid,
-  MenuItem,
-  Select,
-  TextField,
-} from "@material-ui/core";
-import Users from "src/icons/Users";
+import { Grid, TextField } from "@material-ui/core";
 import LocationMarker from "src/icons/LocationMarker";
 import Hashtag from "src/icons/Hashtag";
 import { jsonCityState } from "src/components/MovingCalculator/UsCities";

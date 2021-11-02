@@ -13,7 +13,6 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TablePagination,
   TableRow,
   withStyles,
   Button,

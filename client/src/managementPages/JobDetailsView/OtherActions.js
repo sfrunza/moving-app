@@ -49,6 +49,14 @@ const useStyles = makeStyles((theme) => ({
   },
   menuBoxActive: {
     backgroundColor: theme.palette.background.level2,
+    "&:hover": {
+      backgroundColor: theme.palette.background.level2,
+    },
+  },
+  menuBoxNotActive: {
+    "&:hover": {
+      backgroundColor: theme.palette.background.level2,
+    },
   },
   statusBox: {
     display: "flex",
@@ -139,7 +147,11 @@ function OtherActions({ customer, event, history, ...rest }) {
                 <MenuItem
                   key={i}
                   open={isOpen}
-                  className={job.id === event.id ? classes.menuBoxActive : null}
+                  className={
+                    job.id === event.id
+                      ? classes.menuBoxActive
+                      : classes.menuBoxNotActive
+                  }
                   onClick={(e) => {
                     job.id !== event.id
                       ? history.push(`/dashboard/jobs/${job.id}`)

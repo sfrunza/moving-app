@@ -74,7 +74,7 @@ module Api::V1
 
       # Only allow a trusted parameter "white list" through.
       def rate_params
-        params.require(:rate).permit(:date, :rates)
+        params.require(:rate).permit(:date, :rates, :rate_type)
       end
   end
 end

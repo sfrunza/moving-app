@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { DatePicker } from "@material-ui/pickers";
 import moment from "moment";
 import { useDispatch, useSelector } from "src/store";
-import { getRates } from "src/slices/rates";
+import { getRates, resetRates } from "src/slices/rates";
 
 const useStyles = makeStyles(() => ({
   dateBox: {
@@ -33,10 +33,14 @@ const CalendarWithRates = ({ ...rest }) => {
 
   useEffect(() => {
     dispatch(getRates());
+    return () => {
+      // dispatch(resetRates());
+    };
   }, [dispatch]);
 
   // if (!rates || isLoading) return <div>Loading...</div>;
   if (error.length > 0) return <div>{error}</div>;
+  // if (!rates) return <div>Loading....</div>;
 
   const isSameDate = (date, rateDate) => {
     let dateFormat = moment(date).format("MM/DD/YYYY");
@@ -64,17 +68,16 @@ const CalendarWithRates = ({ ...rest }) => {
             let selectBorderColor = "transparent";
 
             rates.map((item) => {
-              let rate = item.rates[0] ? item.rates[0] : "120";
               if (isSameDate(day, item.date)) {
-                if (rate === "120") {
-                  selectColor = "rgb(0 186 93 / 25%)";
+                if (item.rate_type === "regular") {
+                  selectColor = "#dcfaeb";
                   selectBorderColor = "rgb(0 186 93 / 10%)";
                 }
-                if (rate === "140") {
+                if (item.rate_type === "subpick") {
                   selectColor = "rgba(253 201 9 / 25%)";
                   selectBorderColor = "rgba(253 201 9 / 10%)";
                 }
-                if (rate === "160") {
+                if (item.rate_type === "pick") {
                   selectColor = "rgba(251 0 9 / 25%)";
                   selectBorderColor = "rgba(253 153 9 / 10%)";
                 }

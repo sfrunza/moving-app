@@ -19,7 +19,6 @@ import PencilAltIcon from "src/icons/PencilAlt";
 import Trash from "src/icons/Trash";
 import { deleteEvent } from "src/slices/calendar";
 import { useDispatch } from "src/store";
-import { history } from "../../App";
 
 function PaperComponent(props) {
   return <Paper {...props} />;

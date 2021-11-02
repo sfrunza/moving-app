@@ -1,9 +1,9 @@
 import React from "react";
 import Page from "src/components/Page";
 import { makeStyles } from "@material-ui/core/styles";
-import { useTheme, useMediaQuery } from "@material-ui/core";
+import { useTheme, useMediaQuery, Divider } from "@material-ui/core";
 import Section from "src/components/Section";
-import { services, faq, properties } from "./data";
+import { services, faq, properties, reviews } from "./data";
 import Services from "./Services";
 import FAQS from "./FAQS";
 import Include from "./Include";
@@ -11,6 +11,7 @@ import Contact from "./Contact";
 import Rates from "./Rates";
 import Hero from "./Hero";
 import Footer from "src/layouts/MainLayout/Footer";
+import Reviews from "./Reviews";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,15 +34,24 @@ const Home = () => {
       className={classes.root}
     >
       <Hero />
-      <Section>
+      <div
+        style={{
+          backgroundImage: ` linear-gradient(rgba(255, 255, 255, 0), ${theme.palette.background.level2}`,
+        }}
+      >
         <Services data={services} id="next" />
+      </div>
+
+      <Section>
+        <Rates />
       </Section>
       <div style={{ backgroundColor: theme.palette.background.level2 }}>
         <Include data={properties} />
       </div>
       <Section>
-        <Rates />
+        <Reviews data={reviews} />
       </Section>
+      <Divider />
       <div
         style={{
           backgroundImage: ` linear-gradient(rgba(255, 255, 255, 0), ${theme.palette.background.level2}`,
