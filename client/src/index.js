@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "src/index.css";
-import "nprogress/nprogress.css";
+// import "nprogress/nprogress.css";
 import App from "src/App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
@@ -20,5 +20,5 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-serviceWorkerRegistration.register();
+serviceWorkerRegistration.unregister();
 reportWebVitals();

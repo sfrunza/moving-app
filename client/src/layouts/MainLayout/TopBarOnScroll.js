@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: `1px solid ${theme.palette.divider}`,
     maxHeight: 56,
     backdropFilter: "blur(10px)",
-    backgroundColor: "rgba(255,255,255,0.80)",
+    backgroundColor: theme.palette.background.default,
   },
   flexGrow: {
     flexGrow: 1,
@@ -149,7 +149,7 @@ function ShowPhoneOnScroll(props) {
 
   const trigger = useScrollTrigger({
     disableHysteresis: true,
-    threshold: 110,
+    threshold: 100,
   });
 
   return (
@@ -200,63 +200,33 @@ function TopBarOnScroll({ onSidebarOpen, pages, history }) {
                   } else {
                     match = path.includes(page.href.slice(1));
                   }
-                  if (i === pages.length - 1) {
-                    return (
-                      <li key={i}>
-                        <ListItem
-                          component="a"
-                          href={page.href}
-                          classes={{
-                            root: match
-                              ? classes.listItem
-                              : clsx(classes.listItem, classes.listItemHover),
-                            divider: classes.itemDivider,
-                          }}
-                          disableGutters
+                  return (
+                    <li key={i}>
+                      <ListItem
+                        component={NavLink}
+                        to={page.href}
+                        classes={{
+                          root: match
+                            ? classes.listItem
+                            : clsx(classes.listItem, classes.listItemHover),
+                          divider: classes.itemDivider,
+                        }}
+                        disableGutters
+                        className={classes.listItem}
+                      >
+                        <Typography
+                          variant="body2"
+                          className={
+                            match
+                              ? classes.listItemTextActive
+                              : classes.listItemText
+                          }
                         >
-                          <Typography
-                            variant="body2"
-                            className={
-                              match
-                                ? classes.listItemTextActive
-                                : classes.listItemText
-                            }
-                          >
-                            {page.title}
-                          </Typography>
-                        </ListItem>
-                      </li>
-                    );
-                  } else {
-                    return (
-                      <li key={i}>
-                        <ListItem
-                          component={NavLink}
-                          to={page.href}
-                          classes={{
-                            root: match
-                              ? classes.listItem
-                              : clsx(classes.listItem, classes.listItemHover),
-                            divider: classes.itemDivider,
-                          }}
-                          disableGutters
-                          className={classes.listItem}
-                          // divider={match ? true : false}
-                        >
-                          <Typography
-                            variant="body2"
-                            className={
-                              match
-                                ? classes.listItemTextActive
-                                : classes.listItemText
-                            }
-                          >
-                            {page.title}
-                          </Typography>
-                        </ListItem>
-                      </li>
-                    );
-                  }
+                          {page.title}
+                        </Typography>
+                      </ListItem>
+                    </li>
+                  );
                 })}
               </Hidden>
               {!isAuthenticated && (
@@ -297,9 +267,9 @@ function TopBarOnScroll({ onSidebarOpen, pages, history }) {
               )}
             </List>
             {isAuthenticated && <Auth history={history} />}
-            <Hidden smDown>
+            {/* <Hidden smDown>
               <div className={classes.flexGrow} />
-            </Hidden>
+            </Hidden> */}
 
             <Hidden smDown>
               <Button
@@ -325,6 +295,8 @@ function TopBarOnScroll({ onSidebarOpen, pages, history }) {
                 <Menu
                   style={{
                     transform: "rotate(180deg)",
+                    width: "auto",
+                    height: 27,
                   }}
                 />
               </IconButton>
@@ -334,7 +306,12 @@ function TopBarOnScroll({ onSidebarOpen, pages, history }) {
       </ShowOnScroll>
       <ShowPhoneOnScroll>
         <div role="presentation" className={classes.callButtonContainer}>
-          <Fab color="primary" aria-label="call" component="a" href="#">
+          <Fab
+            color="primary"
+            aria-label="call"
+            component="a"
+            href="tel:(617) 123-4567"
+          >
             <Phone />
           </Fab>
         </div>

@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     minHeight: "100%",
     position: "relative",
-    top: -65,
+    top: -100,
   },
   main: {
     flex: "1 0 auto",
@@ -43,10 +43,6 @@ function MainLayout({ children, history }) {
     {
       title: "Our work",
       href: "/work",
-    },
-    {
-      title: "+1 (000) 000-0000",
-      href: "tel:0000000000",
     },
   ];
 

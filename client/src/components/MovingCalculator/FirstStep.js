@@ -8,10 +8,6 @@ import {
   Typography,
   Divider,
   Checkbox,
-  MenuItem,
-  FormControl,
-  Select,
-  FormHelperText,
   Box,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -122,9 +118,9 @@ const timeOptions = [
 const movingTypeOptionsSelect = () => {
   let moveType = movingTypeOptions.map((item) => {
     return (
-      <MenuItem key={item.key} value={item.value}>
+      <option key={item.key} value={item.value}>
         {item.text}
-      </MenuItem>
+      </option>
     );
   });
   return moveType;
@@ -133,9 +129,9 @@ const movingTypeOptionsSelect = () => {
 const timeOptionsSelect = () => {
   let moveSize = timeOptions.map((item, index) => {
     return (
-      <MenuItem key={index} value={item.value} disabled={item.value === ""}>
+      <option key={index} value={item.value} disabled={item.value === ""}>
         {item.text}
-      </MenuItem>
+      </option>
     );
   });
   return moveSize;
@@ -495,6 +491,7 @@ const FirstStep = ({ handleNext, initial }) => {
               okLabel={null}
               cancelLabel={null}
               autoOk
+              SelectProps={{ native: true }}
               maxDate={new Date().setMonth(new Date().getMonth() + 3)}
               disablePast
               fullWidth
@@ -514,33 +511,28 @@ const FirstStep = ({ handleNext, initial }) => {
               <Clock className={classes.icon} />
               Time
             </label>
-            <FormControl
+            <TextField
+              fullWidth
+              id="time"
+              name="time"
+              onChange={(e) => {
+                formik.setFieldValue("time", e.target.value);
+                formik.setFieldValue(
+                  "date",
+                  moment(formik.values.date, "YYYY-MM-DDThh:mm:ss").format(
+                    `YYYY-MM-DDT${e.target.value}`
+                  )
+                );
+              }}
+              select
+              // eslint-disable-next-line react/jsx-sort-props
+              SelectProps={{ native: true }}
+              value={formik.values.time}
               variant="outlined"
               size="small"
-              placeholder="Select"
-              fullWidth
             >
-              <Select
-                id="time"
-                variant="outlined"
-                placeholder="Select"
-                name="time"
-                size="small"
-                displayEmpty
-                value={formik.values.time}
-                onChange={(e) => {
-                  formik.setFieldValue("time", e.target.value);
-                  formik.setFieldValue(
-                    "date",
-                    moment(formik.values.date, "YYYY-MM-DDThh:mm:ss").format(
-                      `YYYY-MM-DDT${e.target.value}`
-                    )
-                  );
-                }}
-              >
-                {timeOptionsSelect()}
-              </Select>
-            </FormControl>
+              {timeOptionsSelect()}
+            </TextField>
           </Grid>
           <Grid item xs={6} md={6}>
             <label htmlFor="fromZip" className={classes.label}>
@@ -625,49 +617,34 @@ const FirstStep = ({ handleNext, initial }) => {
                 <TruckFill className={classes.icon} />
                 Service
               </label>
-              <FormControl
+              <TextField
+                fullWidth
+                id="movingService"
+                name="movingService"
+                onChange={(e) => {
+                  formik.setFieldValue("movingService", e.target.value);
+                }}
+                onBlur={(e) => {
+                  if (
+                    e.target.value === "Inside Move" ||
+                    e.target.value === "Loading Help" ||
+                    e.target.value === "Unloading Help" ||
+                    e.target.value === "Packing Only"
+                  ) {
+                    formik.setFieldValue("toZip", "");
+                    dispatch(setDistance(null));
+                    dispatch(setDestination(""));
+                  }
+                }}
+                select
+                // eslint-disable-next-line react/jsx-sort-props
+                SelectProps={{ native: true }}
+                value={formik.values.movingService}
                 variant="outlined"
                 size="small"
-                placeholder="Select"
-                fullWidth
-                error={
-                  formik.touched.movingService &&
-                  Boolean(formik.errors.movingService)
-                }
               >
-                <Select
-                  id="movingService"
-                  variant="outlined"
-                  name="movingService"
-                  size="small"
-                  value={formik.values.movingService}
-                  onChange={(e) => {
-                    formik.setFieldValue("movingService", e.target.value);
-                  }}
-                  onBlur={(e) => {
-                    if (
-                      e.target.value === "Inside Move" ||
-                      e.target.value === "Loading Help" ||
-                      e.target.value === "Unloading Help" ||
-                      e.target.value === "Packing Only"
-                    ) {
-                      formik.setFieldValue("toZip", "");
-                      dispatch(setDistance(null));
-                      dispatch(setDestination(""));
-                    }
-                  }}
-                  error={
-                    formik.touched.movingService &&
-                    Boolean(formik.errors.movingService)
-                  }
-                >
-                  {movingTypeOptionsSelect()}
-                </Select>
-                {formik.touched.movingService &&
-                Boolean(formik.errors.movingService) ? (
-                  <FormHelperText>{formik.errors.movingService}</FormHelperText>
-                ) : null}
-              </FormControl>
+                {movingTypeOptionsSelect()}
+              </TextField>
             </Grid>
           )}
           {formik.values.movingService === "Moving with Storage" ? (
