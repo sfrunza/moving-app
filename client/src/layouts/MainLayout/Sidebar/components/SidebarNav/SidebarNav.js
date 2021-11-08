@@ -13,8 +13,6 @@ import {
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import CustomRouterLink from "src/components/CustomRouterLink";
-import Phone from "src/icons/Phone";
-import Mail from "src/icons/Mail";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -76,7 +74,7 @@ const SidebarNav = ({ pages, onClose, className, history, ...rest }) => {
           } else {
             match = path.includes(page.href.slice(1));
           }
-          if (i === props.pages.length - 1) return null;
+          // if (i === props.pages.length - 1) return null;
           return (
             <ListItem
               disableGutters
@@ -136,26 +134,6 @@ const SidebarNav = ({ pages, onClose, className, history, ...rest }) => {
           disableElevation
         >
           Book Online
-        </Button>
-      </ListItem>
-      <ListItem className={clsx(classes.listItem, classes.buttons)}>
-        <Button
-          color="primary"
-          href="tel:000-000-0000"
-          disableElevation
-          startIcon={<Phone />}
-        >
-          (000) 000-0000
-        </Button>
-      </ListItem>
-      <ListItem className={clsx(classes.listItem, classes.buttons)}>
-        <Button
-          color="secondary"
-          href="mailto:info@insightmoving.com"
-          disableElevation
-          startIcon={<Mail />}
-        >
-          info@insightmoving.com
         </Button>
       </ListItem>
     </List>

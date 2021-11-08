@@ -1,14 +1,7 @@
 import React from "react";
 import { useFormik } from "formik";
 import Button from "@material-ui/core/Button";
-import {
-  Grid,
-  Fade,
-  FormControl,
-  FormHelperText,
-  MenuItem,
-  Select,
-} from "@material-ui/core";
+import { Grid, Fade, FormHelperText, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Home from "src/icons/Home";
 import StairsUp from "src/icons/StairsUp";
@@ -108,9 +101,12 @@ const houseTypeOptions = [
 const movingSizeOptionsSelect = () => {
   let moveSize = movingSizeOptions.map((item, index) => {
     return (
-      <MenuItem key={index} value={item.value} disabled={item.value === ""}>
+      // <MenuItem key={index} value={item.value} disabled={item.value === ""}>
+      //   {item.text}
+      // </MenuItem>
+      <option key={index} value={item.value} disabled={item.value === ""}>
         {item.text}
-      </MenuItem>
+      </option>
     );
   });
   return moveSize;
@@ -202,37 +198,30 @@ const SecondStep = ({ handleNext, handleBack, initial }) => {
               <Home className={classes.icon} />
               Move Size
             </label>
-            <FormControl
-              variant="outlined"
-              size="small"
-              placeholder="Select"
+            <TextField
               fullWidth
+              id="movingSize"
+              name="movingSize"
+              onChange={(e) => {
+                formik.setFieldValue("movingSize", e.target.value);
+              }}
               error={
                 formik.touched.movingSize && Boolean(formik.errors.movingSize)
               }
+              helperText={
+                formik.touched.movingSize &&
+                Boolean(formik.errors.movingSize) &&
+                formik.errors.movingSize
+              }
+              select
+              placeholder="Please select..."
+              SelectProps={{ native: true }}
+              value={formik.values.movingSize}
+              variant="outlined"
+              size="small"
             >
-              <Select
-                id="movingSize"
-                variant="outlined"
-                placeholder="Select"
-                name="movingSize"
-                size="small"
-                displayEmpty
-                value={formik.values.movingSize}
-                onChange={(e) => {
-                  formik.setFieldValue("movingSize", e.target.value);
-                }}
-                error={
-                  formik.touched.movingSize && Boolean(formik.errors.movingSize)
-                }
-              >
-                {movingSizeOptionsSelect()}
-              </Select>
-              {formik.touched.movingSize &&
-              Boolean(formik.errors.movingSize) ? (
-                <FormHelperText>{formik.errors.movingSize}</FormHelperText>
-              ) : null}
-            </FormControl>
+              {movingSizeOptionsSelect()}
+            </TextField>
           </Grid>
           {hideOption(movingService, "to") && (
             <Grid item xs={12}>

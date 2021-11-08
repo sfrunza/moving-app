@@ -85,10 +85,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const onlyNumbers = (e) => {
-  e.target.value = e.target.value.replace(/[^0-9]/g, "");
-};
-
 const phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 
 const validate = (values) => {
@@ -206,7 +202,6 @@ const ContactInfoStep = ({ handleNext, handleBack, initial }) => {
               variant="outlined"
               size="small"
               placeholder="Primary Phone"
-              onInput={(e) => onlyNumbers(e)}
               inputProps={{
                 maxLength: 14,
                 inputMode: "numeric",
@@ -269,7 +264,6 @@ const ContactInfoStep = ({ handleNext, handleBack, initial }) => {
               fullWidth
               type="submit"
               disableElevation
-              // disabled={!formik.isValid}
             >
               Review Quote
             </Button>

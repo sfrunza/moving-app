@@ -13,6 +13,9 @@ import {
   IconButton,
   ListItemIcon,
   Button,
+  Container,
+  Box,
+  useTheme,
 } from "@material-ui/core";
 import CustomRouterLink from "src/components/CustomRouterLink";
 import Auth from "src/components/Auth";
@@ -27,11 +30,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     borderBottom: "1px solid rgb(236 239 241 / 9%)",
     // maxHeight: 56,
-    top: 64,
+    top: 100,
   },
   rootLogin: {
     overflow: "hidden",
-    top: 64,
+    top: 100,
     justifyContent: "center",
     borderBottom: "1px solid rgb(236 239 241 / 9%)",
     backgroundColor: theme.palette.background.footer,
@@ -50,6 +53,16 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
     padding: theme.spacing(0, 2),
   },
+  infoBar: {
+    width: 1200,
+    maxWidth: "100%",
+    margin: "auto",
+    padding: theme.spacing(0, 2),
+  },
+  infoBarItem: {
+    color: "#fff",
+    fontWeight: 600,
+  },
   logoContainer: {
     width: 60,
     height: 35,
@@ -63,6 +76,7 @@ const useStyles = makeStyles((theme) => ({
     width: "auto",
     padding: theme.spacing(1, 1.5),
     margin: theme.spacing(0, 2),
+    color: "#fff",
     // [theme.breakpoints.down("md")]: {
     //   padding: theme.spacing(1, 2),
     // },
@@ -119,9 +133,69 @@ function TopBar({ onSidebarOpen, pages, history }) {
   const classes = useStyles();
   const { isAuthenticated } = useSelector((state) => state.auth);
   let path = history.location.pathname;
+  const theme = useTheme();
   return (
-    <React.Fragment>
+    <>
       <CssBaseline />
+      <Box
+        style={{
+          backgroundColor:
+            path === "/login" || path === "/book"
+              ? theme.palette.background.footer
+              : "transparent",
+          position: "relative",
+          zIndex: 1200,
+          top: 100,
+        }}
+        // className={classes.infoBar}
+      >
+        <Container className={classes.infoBar}>
+          <Box
+            display={"flex"}
+            justifyContent={"flex-end"}
+            alignItems={"baseline"}
+            pt={1}
+          >
+            <Box mr={1}>
+              <Typography
+                component="a"
+                variant="body2"
+                href="tel:(617) 123-4567"
+                classes={{
+                  root: classes.infoBarItem,
+                }}
+              >
+                (617) 123-4567
+              </Typography>
+            </Box>
+            <Box mr={1}>
+              <Typography
+                variant="body2"
+                classes={{
+                  root: classes.infoBarItem,
+                }}
+              >
+                |
+              </Typography>
+            </Box>
+            <Box>
+              <Typography
+                component="a"
+                variant="body2"
+                href="mailto:info@insightmoving.com"
+                classes={{
+                  root: classes.infoBarItem,
+                }}
+              >
+                info@insightmoving.com
+              </Typography>
+            </Box>
+            {/* <Box>
+              <ThemeModeToggler />
+            </Box> */}
+          </Box>
+        </Container>
+      </Box>
       <AppBar
         className={
           path === "/login" || path === "/book"
@@ -153,61 +227,32 @@ function TopBar({ onSidebarOpen, pages, history }) {
                 } else {
                   match = path.includes(page.href.slice(1));
                 }
-                if (i === pages.length - 1) {
-                  return (
-                    <li key={i}>
-                      <ListItem
-                        component="a"
-                        href={page.href}
-                        classes={{
-                          root: match
-                            ? classes.listItem
-                            : clsx(classes.listItem, classes.listItemHover),
-                          divider: classes.itemDivider,
-                        }}
-                        disableGutters
+                return (
+                  <li key={i}>
+                    <ListItem
+                      component={NavLink}
+                      to={page.href}
+                      classes={{
+                        root: match
+                          ? classes.listItem
+                          : clsx(classes.listItem, classes.listItemHover),
+                        divider: classes.itemDivider,
+                      }}
+                      disableGutters
+                    >
+                      <Typography
+                        variant="body2"
+                        className={
+                          match
+                            ? classes.listItemTextActive
+                            : classes.listItemText
+                        }
                       >
-                        <Typography
-                          variant="body2"
-                          className={
-                            match
-                              ? classes.listItemTextActive
-                              : classes.listItemText
-                          }
-                        >
-                          {page.title}
-                        </Typography>
-                      </ListItem>
-                    </li>
-                  );
-                } else {
-                  return (
-                    <li key={i}>
-                      <ListItem
-                        component={NavLink}
-                        to={page.href}
-                        classes={{
-                          root: match
-                            ? classes.listItem
-                            : clsx(classes.listItem, classes.listItemHover),
-                          divider: classes.itemDivider,
-                        }}
-                        disableGutters
-                      >
-                        <Typography
-                          variant="body2"
-                          className={
-                            match
-                              ? classes.listItemTextActive
-                              : classes.listItemText
-                          }
-                        >
-                          {page.title}
-                        </Typography>
-                      </ListItem>
-                    </li>
-                  );
-                }
+                        {page.title}
+                      </Typography>
+                    </ListItem>
+                  </li>
+                );
               })}
             </Hidden>
             {!isAuthenticated && (
@@ -248,9 +293,9 @@ function TopBar({ onSidebarOpen, pages, history }) {
             )}
           </List>
           {isAuthenticated && <Auth history={history} />}
-          <Hidden smDown>
+          {/* <Hidden smDown>
             <div className={classes.flexGrow} />
-          </Hidden>
+          </Hidden> */}
 
           <Hidden smDown>
             <Button
@@ -279,13 +324,15 @@ function TopBar({ onSidebarOpen, pages, history }) {
                 style={{
                   // color: theme.palette.text.secondary,
                   transform: "rotate(180deg)",
+                  width: "auto",
+                  height: 27,
                 }}
               />
             </IconButton>
           </Hidden>
         </Toolbar>
       </AppBar>
-    </React.Fragment>
+    </>
   );
 }
 

@@ -9,7 +9,7 @@ import { Switch, Route, Redirect, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import PrivateRoute from "./PrivateRoute";
 import ScrollReset from "src/components/ScrollReset";
-import LoadingTable from "src/components/LoadingTable";
+// import LoadingTable from "src/components/LoadingTable";
 // import DashboardLayout from "src/layouts/DashboardLayout";
 // import CustomerJobDetailsView from "src/customerPages/JobDetailsView";
 import Home from "src/pages/Home";
@@ -51,13 +51,13 @@ function Routes(props) {
   // console.log(props);
   return (
     <ScrollReset>
-      <Suspense fallback={<LoadingTable />}>
+      <Suspense fallback={"Loading..."}>
         <Switch>
           <PrivateRoute
             path="/dashboard"
             component={(props) => (
               <DashboardLayout {...props}>
-                <Suspense fallback={<LoadingTable />}>
+                <Suspense fallback={"Loading..."}>
                   <Switch location={location}>
                     <Redirect
                       exact
@@ -159,8 +159,8 @@ function Routes(props) {
                   <Route exact path="/work" component={Work} />
                   <Route exact path="/book" component={Book} />
                   <Route exact path="/login" component={Login} />
-                  {/* <Route path="/not-found" component={NotFound} />
-                  <Redirect to="/not-found" /> */}
+                  <Route path="/not-found" component={NotFound} />
+                  <Redirect to="/not-found" />
                 </Switch>
               </MainLayout>
             )}

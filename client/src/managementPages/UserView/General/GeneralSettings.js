@@ -9,9 +9,6 @@ import {
   TextField,
   Card,
   CardContent,
-  FormControl,
-  Select,
-  MenuItem,
 } from "@material-ui/core";
 import { useSnackbar } from "notistack";
 import validate from "validate.js";
@@ -69,9 +66,9 @@ const roles = ["Helper", "Driver", "Foreman", "Manager"];
 const roleSelect = () => {
   let moveSize = roles.map((item, index) => {
     return (
-      <MenuItem key={index} value={item}>
+      <option key={index} value={item}>
         {item}
-      </MenuItem>
+      </option>
     );
   });
   return moveSize;
@@ -279,25 +276,20 @@ const GeneralSettings = ({ user, handleUpdate, isUpdating }) => {
                 <AssignmentIndIcon className={classes.icon} />
                 Role
               </label>
-              <FormControl
+              <TextField
+                fullWidth
+                id="role"
+                name="role"
+                onChange={handleChange}
+                className={classes.inputWidth}
+                select
+                SelectProps={{ native: true }}
+                value={formState.values.role || ""}
                 variant="outlined"
                 size="small"
-                className={classes.inputWidth}
-                placeholder="Select"
               >
-                <Select
-                  id="role"
-                  variant="outlined"
-                  placeholder="Select"
-                  name="role"
-                  size="small"
-                  displayEmpty
-                  value={formState.values.role || ""}
-                  onChange={handleChange}
-                >
-                  {roleSelect()}
-                </Select>
-              </FormControl>
+                {roleSelect()}
+              </TextField>
             </Grid>
           </Grid>
         </CardContent>
