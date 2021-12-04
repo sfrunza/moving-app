@@ -23,5 +23,5 @@ class JobSerializer < ActiveModel::Serializer
             :destination,
             :images,
             :user_ids
-            has_many :users
+  has_many :users
 end

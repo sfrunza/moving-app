@@ -12,6 +12,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: "center center",
     backgroundImage: `url(${road})`,
     minHeight: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   calcBox: {
     backgroundColor: theme.palette.background.paper,
@@ -23,10 +26,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    padding: theme.spacing(20, 1, 0),
-    [theme.breakpoints.down("sm")]: {
-      padding: theme.spacing(15, 1, 0),
-    },
   },
 }));
 

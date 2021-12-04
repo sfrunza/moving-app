@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import configureStore from "src/store";
 import smoothscroll from "smoothscroll-polyfill";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 smoothscroll.polyfill();
 

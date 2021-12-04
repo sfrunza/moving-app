@@ -119,17 +119,11 @@ const validate = (values, movingService) => {
     errors.movingSize = "Required";
   }
 
-  if (movingService !== "Unloading Help") {
-    if (!values.fromHouseType) {
-      errors.fromHouseType = "Required";
-    }
+  if (!values.fromHouseType) {
+    errors.fromHouseType = "Required";
   }
 
-  if (
-    movingService === "Moving" ||
-    movingService === "Moving with Storage" ||
-    movingService === "Unloading Help"
-  ) {
+  if (movingService === "Moving" || movingService === "Moving with Storage") {
     if (!values.toHouseType) {
       errors.toHouseType = "Required";
     }
@@ -171,22 +165,34 @@ const SecondStep = ({ handleNext, handleBack, initial }) => {
     },
   });
 
-  const hideOption = (movingService, type) => {
-    let toReturn = true;
-    if (type === "to" && movingService === "Unloading Help") {
-      toReturn = false;
-    }
+  // const hideOption = (movingService, type) => {
+  //   let toReturn = true;
+  //   if (type === "to" && movingService === "Unloading Help") {
+  //     toReturn = false;
+  //   }
 
-    if (type === "from") {
-      if (
-        movingService === "Loading Help" ||
-        movingService === "Packing Only" ||
-        movingService === "Inside Move"
-      ) {
-        toReturn = false;
-      }
+  //   if (type === "from") {
+  //     if (
+  //       movingService === "Loading Help" ||
+  //       movingService === "Packing Only" ||
+  //       movingService === "Inside Move"
+  //     ) {
+  //       toReturn = false;
+  //     }
+  //   }
+  //   return toReturn;
+  // };
+
+  const showOption = (movingService) => {
+    if (
+      movingService === "Unloading Help" ||
+      movingService === "Loading Help" ||
+      movingService === "Packing Only" ||
+      movingService === "Inside Move"
+    ) {
+      return false;
     }
-    return toReturn;
+    return true;
   };
 
   return (
@@ -223,38 +229,36 @@ const SecondStep = ({ handleNext, handleBack, initial }) => {
               {movingSizeOptionsSelect()}
             </TextField>
           </Grid>
-          {hideOption(movingService, "to") && (
-            <Grid item xs={12}>
-              <label htmlFor="fromHouseType" className={classes.label}>
-                <StairsUp className={classes.icon} />
-                Entrance (from)
-              </label>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                {houseTypeOptions.map((item, index) => {
-                  return (
-                    <CustomButton
-                      key={index}
-                      value={item.text}
-                      onClick={() => {
-                        formik.setFieldValue("fromHouseType", item.text);
-                      }}
-                      selected={
-                        item.text === formik.values.fromHouseType ? true : false
-                      }
-                      text={item.value}
-                    />
-                  );
-                })}
-              </div>
-              {formik.touched.fromHouseType &&
-              Boolean(formik.errors.fromHouseType) ? (
-                <FormHelperText classes={{ root: classes.helperText }}>
-                  {formik.errors.fromHouseType}
-                </FormHelperText>
-              ) : null}
-            </Grid>
-          )}
-          {hideOption(movingService, "from") && (
+          <Grid item xs={12}>
+            <label htmlFor="fromHouseType" className={classes.label}>
+              <StairsUp className={classes.icon} />
+              Entrance ({movingService === "Unloading Help" ? "to" : "from"})
+            </label>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              {houseTypeOptions.map((item, index) => {
+                return (
+                  <CustomButton
+                    key={index}
+                    value={item.text}
+                    onClick={() => {
+                      formik.setFieldValue("fromHouseType", item.text);
+                    }}
+                    selected={
+                      item.text === formik.values.fromHouseType ? true : false
+                    }
+                    text={item.value}
+                  />
+                );
+              })}
+            </div>
+            {formik.touched.fromHouseType &&
+            Boolean(formik.errors.fromHouseType) ? (
+              <FormHelperText classes={{ root: classes.helperText }}>
+                {formik.errors.fromHouseType}
+              </FormHelperText>
+            ) : null}
+          </Grid>
+          {showOption(movingService) && (
             <Grid item xs={12}>
               <label htmlFor="toHouseType" className={classes.label}>
                 <StairsUp className={classes.icon} />

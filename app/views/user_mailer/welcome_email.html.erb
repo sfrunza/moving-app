@@ -4,16 +4,41 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Welcome to <%= link_to "InsightMoving", @url %>, <%= @customer.first_name %></h1>
+    <h2>Welcome to <%= link_to "InsightMoving", @url %>, <%= @customer.first_name %></h2>
+    <br>
+    <h3>Your recent request</h3>
+    <p>
+      Request ID: #<%= @job.id %>.<br>
+    </p>
+    <p>
+      Moving Date: <%= Date.parse(@job.pick_up_date).strftime("%B %e, %Y") %>, <%= Date.parse(@job.pick_up_date).strftime("at %I:%M%p")  %>.<br>
+    </p>
+    <p>
+      Service: <%= @job.job_type %>.<br>
+    </p>
     <p>
       Job Size: <%= @job.job_size %>.<br>
     </p>
     <p>
-      Moving Date: <%= @job.pick_up_date %>.<br>
+      Crew Size: <%= @job.crew_size %>.<br>
     </p>
+    <p>
+      Rate: $<%= @job.job_rate %>/hr.<br>
+    </p>
+    <p>
+      Estimated Job Time: <%= @job.estimated_time[0] %> - <%= @job.estimated_time[1] %> hours.<br>
+    </p>
+    <p>
+      Estimated Quote: $<%= @job.estimated_quote[0] %> - $<%= @job.estimated_quote[1] %>.<br>
+    </p>
+    <p>
+      Additional Info: <%= @job.additional_info %><br>
+    </p>
+    <br>
     <p>
       To view your moving details, just follow this link: <%= link_to "View My Moving Details", @login_url %>.
     </p>
+    <br>
     <p>Thanks for choosing InsightMoving and have a great day!</p>
   </body>
 </html>

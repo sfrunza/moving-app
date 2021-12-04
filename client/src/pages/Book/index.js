@@ -2,6 +2,7 @@ import React from "react";
 import Page from "src/components/Page";
 import { makeStyles } from "@material-ui/core/styles";
 import Hero from "./Hero";
+import Footer from "src/layouts/MainLayout/Footer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,6 +17,7 @@ const Book = () => {
   return (
     <Page title="Get Free Quote | Insight Moving" className={classes.root}>
       <Hero />
+      <Footer />
     </Page>
   );
 };

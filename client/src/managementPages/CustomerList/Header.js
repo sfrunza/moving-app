@@ -47,7 +47,7 @@ function Header() {
             style={{ margin: 8 }}
             variant="contained"
           >
-            New Appointment
+            New Customer
           </Button>
         </Box>
       </Grid>
