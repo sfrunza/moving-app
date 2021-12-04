@@ -8,6 +8,7 @@ import CardPricingStandard from "src/components/CardPricingStandard";
 import Section from "src/components/Section";
 import Check from "src/icons/CheckCircle";
 import Hero from "../../Hero";
+import CustomRouterLink from "src/components/CustomRouterLink";
 
 const useStyles = makeStyles((theme) => ({
   pagePaddingTop: {
@@ -190,6 +191,8 @@ const Main = (props) => {
                           fullWidth
                           size="large"
                           disableElevation
+                          component={CustomRouterLink}
+                          to="/book"
                         >
                           Book now
                         </Button>

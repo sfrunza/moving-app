@@ -21,7 +21,7 @@ import { addUser } from "src/slices/employees";
 
 const useStyles = makeStyles((theme) => ({
   dialogActionsRoot: {
-    padding: theme.spacing(1, 3),
+    padding: theme.spacing(2, 3),
     marginTop: theme.spacing(1),
   },
   label: {
